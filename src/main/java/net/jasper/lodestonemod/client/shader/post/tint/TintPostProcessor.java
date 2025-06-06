@@ -7,17 +7,18 @@ import team.lodestar.lodestone.systems.postprocess.PostProcessor;
 
 public class TintPostProcessor extends PostProcessor {
     public static final TintPostProcessor INSTANCE = new TintPostProcessor();
+    // Static block added to turn the shader off by default
     static {
         INSTANCE.setActive(false);
     }
 
     @Override
     public ResourceLocation getPostChainLocation() {
-        return ResourceLocation.fromNamespaceAndPath(LodestoneMod.MOD_ID, "tint_post");
+        return ResourceLocation.fromNamespaceAndPath(LodestoneMod.MOD_ID, "tint");
     }
 
     @Override
-    public void beforeProcess(PoseStack viewModelStack) {
+    public void beforeProcess(PoseStack poseStack) {
 
     }
 
