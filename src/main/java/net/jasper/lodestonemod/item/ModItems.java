@@ -3,6 +3,7 @@ package net.jasper.lodestonemod.item;
 
 import net.jasper.lodestonemod.LodestoneMod;
 import net.jasper.lodestonemod.item.custom.EffectTesterItem;
+import net.jasper.lodestonemod.item.custom.OrbitalLaserTesterItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -16,6 +17,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> EFFECT_TESTER = ITEMS.register("effect_tester",
             () -> new EffectTesterItem(new Item.Properties()));
+
+    public static final RegistryObject<Item> LASER_EFFECT_TESTER = ITEMS.register("laser_effect_tester",
+            () -> new OrbitalLaserTesterItem(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

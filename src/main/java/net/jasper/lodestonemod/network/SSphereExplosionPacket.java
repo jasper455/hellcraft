@@ -1,13 +1,22 @@
 package net.jasper.lodestonemod.network;
 
+import net.jasper.lodestonemod.event.ModClientEvents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
+import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry;
+import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder;
+import team.lodestar.lodestone.systems.particle.data.GenericParticleData;
+import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
 
+import java.awt.*;
 import java.util.function.Supplier;
 
 public class SSphereExplosionPacket {
@@ -35,7 +44,7 @@ public class SSphereExplosionPacket {
         player.level().explode(player, position.getX(), position.getY(), position.getZ(), radius * 0.75f, true, Level.ExplosionInteraction.BLOCK);
     }
 
-    private void customSphereExplosion(Level level, BlockPos center, int radius) {
+    public boolean customSphereExplosion(Level level, BlockPos center, int radius) {
         for (int x = -radius; x <= radius; x++) {
             for (int y = -radius; y <= radius; y++) {
                 for (int z = -radius; z <= radius; z++) {
@@ -51,5 +60,6 @@ public class SSphereExplosionPacket {
                 }
             }
         }
+        return true;
     }
 }

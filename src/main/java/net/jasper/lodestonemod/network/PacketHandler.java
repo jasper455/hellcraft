@@ -30,10 +30,10 @@ public class PacketHandler {
     }
 
     public static void sendToPlayer(Object msg, ServerPlayer player) {
-        INSTANCE.send((PacketDistributor.PacketTarget) msg, PacketDistributor.PLAYER.with(() -> player));
+        INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), msg);
     }
 
     public static void sendToAllClients(Object msg) {
-        INSTANCE.send((PacketDistributor.PacketTarget) msg, PacketDistributor.ALL.noArg());
+        INSTANCE.send(PacketDistributor.ALL.noArg(), msg);
     }
 }

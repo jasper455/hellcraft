@@ -1,7 +1,10 @@
 package net.jasper.lodestonemod;
 
 import com.mojang.logging.LogUtils;
+import net.jasper.lodestonemod.entity.ModEntities;
+import net.jasper.lodestonemod.entity.client.ExplosiveProjectileRenderer;
 import net.jasper.lodestonemod.item.ModItems;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -32,6 +35,7 @@ public class LodestoneMod {
         modEventBus.addListener(this::commonSetup);
 
         ModItems.register(modEventBus);
+        ModEntities.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -43,15 +47,7 @@ public class LodestoneMod {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        // Some common setup code
-        LOGGER.info("HELLO FROM COMMON SETUP");
-
-        if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
-
-        LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
-
-        Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
+        EntityRenderers.register(ModEntities.EXPLOSIVE_PROJECTILE.get(), ExplosiveProjectileRenderer::new);
     }
 
     // Add the example block item to the building blocks tab

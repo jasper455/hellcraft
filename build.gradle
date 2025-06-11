@@ -132,10 +132,6 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
     mavenCentral()
-    maven {
-        name 'Curios maven'
-        url = "https://maven.theillusivec4.top/"
-    }
     maven { url = 'https://maven.blamejared.com/' }
 }
 
@@ -147,12 +143,6 @@ dependencies {
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
-    //1.18.2 Example: implementation fg.deobf("team.lodestar.lodestone:lodestone:1.18.2-1.4.1.435")
-    //1.19.2 Example: implementation fg.deobf("team.lodestar.lodestone:lodestone:1.19.2-1.4.2.83")
-    //1.20.1 Example: implementation fg.deobf("team.lodestar.lodestone:lodestone:1.20.1-1.4.2.62")
-
-    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}+${minecraft_version}:api")
-    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}+${minecraft_version}")
     implementation fg.deobf("team.lodestar.lodestone:lodestone:1.20.1-1.6.4.252"){
         transitive = false
     }

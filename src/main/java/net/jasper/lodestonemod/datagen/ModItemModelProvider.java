@@ -42,6 +42,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         basicItem(ModItems.EFFECT_TESTER.get());
+        basicItem(ModItems.LASER_EFFECT_TESTER.get());
     }
 
 
