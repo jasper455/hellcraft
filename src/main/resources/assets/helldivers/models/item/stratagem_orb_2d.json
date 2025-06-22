@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "mccourse:item/stratagem_orb_2d"
+    "layer0": "helldivers:item/stratagem_orb_2d"
   }
 }

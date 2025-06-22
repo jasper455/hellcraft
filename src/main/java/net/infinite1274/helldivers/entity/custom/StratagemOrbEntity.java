@@ -24,8 +24,6 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
 public class StratagemOrbEntity extends AbstractArrow {
-//    private static final EntityDataAccessor<Integer> BEAM_COLOR =
-//            SynchedEntityData.defineId(StratagemOrbEntity.class, EntityDataSerializers.INT);
     private float rotation;
     public Vec3 groundedOffset;
     private int groundedTicks = 0;
@@ -124,7 +122,7 @@ public class StratagemOrbEntity extends AbstractArrow {
 
     @Override
     protected ItemStack getPickupItem() {
-        return new ItemStack(Items.AIR);
+        return new ItemStack(ModItems.STRATAGEM_ORB.get(), 1);
     }
 
 }
