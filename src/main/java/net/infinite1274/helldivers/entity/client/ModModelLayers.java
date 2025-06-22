@@ -1,0 +1,10 @@
+package net.infinite1274.helldivers.entity.client;
+
+import net.infinite1274.helldivers.HelldiversMod;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.resources.ResourceLocation;
+
+public class ModModelLayers {
+    public static final ModelLayerLocation MISSILE = new ModelLayerLocation(
+            ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "missile"), "main");
+}

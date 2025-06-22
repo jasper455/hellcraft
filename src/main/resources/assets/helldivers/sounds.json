@@ -1,0 +1,20 @@
+{
+  "stratagem_input": {
+    "subtitles": "sounds.helldivers.stratagem_input",
+    "sounds": [
+      "mccourse:stratagem_input"
+    ]
+  },
+  "falling_shell": {
+    "subtitles": "sounds.helldivers.falling_shell",
+    "sounds": [
+      "helldivers:falling_shell"
+    ]
+  },
+  "explosion": {
+    "subtitles": "sounds.helldivers.explosion",
+    "sounds": [
+      "helldivers:explosion"
+    ]
+  }
+}
