@@ -66,7 +66,7 @@ public class EffectTesterItem extends Item {
             float randomMoveZ = Mth.randomBetween(pLevel.getRandom(), -0.125f, 0.125f);
 
             MissileProjectileEntity explosive = new MissileProjectileEntity(pPlayer, pLevel);
-            explosive.setPos(pPlayer.getX() + randomPosX, 100 + randomPosY, pPlayer.getZ() + randomPosZ);
+            explosive.setPos(pPlayer.getX() + randomPosX, 200 + randomPosY, pPlayer.getZ() + randomPosZ);
             explosive.setDeltaMovement(randomMoveX, 0f, randomMoveZ);
             pLevel.addFreshEntity(explosive);
         }

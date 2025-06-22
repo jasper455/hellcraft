@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:item/handheld",
+  "loader": "forge:separate_transforms",
+  "base": {
+    "parent": "mccourse:item/stratagem_orb_3d"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "mccourse:item/stratagem_orb_2d"
+    },
+    "ground": {
+      "parent": "mccourse:item/stratagem_orb_3d"
+    },
+    "fixed": {
+      "parent": "mccourse:item/stratagem_orb_2d"
+    }
+  }
+}

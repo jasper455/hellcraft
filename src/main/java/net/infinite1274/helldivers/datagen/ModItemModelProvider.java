@@ -38,6 +38,13 @@ public class ModItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         basicItem(ModItems.EFFECT_TESTER.get());
+
+        basicItem(ModItems.HELLDIVER_HELMET.get());
+        basicItem(ModItems.HELLDIVER_CHESTPLATE.get());
+        basicItem(ModItems.HELLDIVER_LEGGINGS.get());
+        basicItem(ModItems.HELLDIVER_BOOTS.get());
+
+
     }
 
 

@@ -3,11 +3,19 @@ package net.infinite1274.helldivers.event;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.infinite1274.helldivers.HelldiversMod;
+import net.infinite1274.helldivers.client.model.HelldiverCapeModel;
+import net.infinite1274.helldivers.client.renderer.entity.layers.HelldiverCapeLayer;
 import net.infinite1274.helldivers.client.shader.post.tint.TintPostProcessor;
+import net.infinite1274.helldivers.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ComputeFovModifierEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -86,5 +94,34 @@ public class ModClientEvents {
         public static void onClientSetup(FMLClientSetupEvent event) {
             PostProcessHandler.addInstance(TintPostProcessor.INSTANCE);
         }
+
+        @SubscribeEvent
+        public static void onKeyRegister(RegisterKeyMappingsEvent event) {
+            event.register(KeyBinding.SHOW_STRATAGEM_KEY);
+            event.register(KeyBinding.UP_INPUT_KEY);
+            event.register(KeyBinding.DOWN_INPUT_KEY);
+            event.register(KeyBinding.LEFT_INPUT_KEY);
+            event.register(KeyBinding.RIGHT_INPUT_KEY);
+        }
+
+        @SubscribeEvent
+        public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
+            for (String skinType : event.getSkins()) {
+                PlayerRenderer renderer = event.getPlayerSkin(skinType);
+                HelldiverCapeModel capeModel = new HelldiverCapeModel(Minecraft.getInstance().getEntityModels()
+                        .bakeLayer(new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(
+                                "helldivers", "textures/entity/helldiver_cape.png"), "main")));
+
+                renderer.addLayer(new HelldiverCapeLayer(renderer, capeModel));
+            }
+        }
+
+        @SubscribeEvent
+        public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+            event.registerLayerDefinition(new ModelLayerLocation(
+                            ResourceLocation.fromNamespaceAndPath("helldivers", "textures/entity/helldiver_cape.png"), "main"),
+                    HelldiverCapeModel::createBodyLayer);
+        }
     }
+
 }

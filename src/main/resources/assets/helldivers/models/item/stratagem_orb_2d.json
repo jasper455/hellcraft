@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "mccourse:item/stratagem_orb_2d"
+  }
+}

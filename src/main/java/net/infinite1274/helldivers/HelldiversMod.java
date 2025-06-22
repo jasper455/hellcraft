@@ -3,6 +3,7 @@ package net.infinite1274.helldivers;
 import com.mojang.logging.LogUtils;
 import net.infinite1274.helldivers.entity.ModEntities;
 import net.infinite1274.helldivers.entity.client.MissileProjectileRenderer;
+import net.infinite1274.helldivers.item.ModCreativeModeTabs;
 import net.infinite1274.helldivers.item.ModItems;
 import net.infinite1274.helldivers.particle.ModParticles;
 import net.infinite1274.helldivers.sound.ModSounds;
@@ -43,6 +44,7 @@ public class HelldiversMod {
         ModEntities.register(modEventBus);
         ModParticles.register(modEventBus);
         ModSounds.register(modEventBus);
+        ModCreativeModeTabs.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
 

@@ -11,10 +11,13 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
+import team.lodestar.lodestone.handlers.ScreenshakeHandler;
 import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry;
+import team.lodestar.lodestone.systems.easing.Easing;
 import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder;
 import team.lodestar.lodestone.systems.particle.data.GenericParticleData;
 import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
+import team.lodestar.lodestone.systems.screenshake.ScreenshakeInstance;
 
 import java.awt.*;
 import java.util.function.Supplier;
@@ -47,6 +50,9 @@ public class CSmallExplosionParticlesPacket {
 
     public static void triggerExplosionEffect(Level level, Vec3 pos) {
         RandomSource random = level.getRandom();
+        ScreenshakeHandler.addScreenshake(new ScreenshakeInstance(20)
+                .setEasing(Easing.SINE_IN_OUT)
+                .setIntensity(5f));
 
         // Light Flash Particle (the cherry on top)
         WorldParticleBuilder.create(LodestoneParticleRegistry.SPARKLE_PARTICLE)

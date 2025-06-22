@@ -1,3 +1,17 @@
 {
-  "item.helldivers.effect_tester": "Effect Tester"
+  "creativetab.helldivers": "BlockDivers",
+
+  "item.helldivers.effect_tester": "Effect Tester",
+  "item.helldivers.stratagem_orb": "Stratagem Orb",
+  "item.helldivers.helldiver_helmet": "B0-1 Tactical Helmet",
+  "item.helldivers.helldiver_chestplate": "B0-1 Tactical Chestplate",
+  "item.helldivers.helldiver_leggings": "B0-1 Tactical Leggings",
+  "item.helldivers.helldiver_boots": "B0-1 Tactical Boots",
+
+  "key.category.helldivers": "Blockdivers",
+  "key.helldivers.show_stratagem_hud": "Show Stratagem HUD",
+  "key.helldivers.up_input": "Up Stratagem Input",
+  "key.helldivers.down_input": "Down Stratagem Input",
+  "key.helldivers.left_input": "Left Stratagem Input",
+  "key.helldivers.right_input": "Right Stratagem Input"
 }

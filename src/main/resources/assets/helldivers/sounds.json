@@ -2,7 +2,7 @@
   "stratagem_input": {
     "subtitles": "sounds.helldivers.stratagem_input",
     "sounds": [
-      "mccourse:stratagem_input"
+      "helldivers:stratagem_input"
     ]
   },
   "falling_shell": {

@@ -33,6 +33,12 @@ public class PacketHandler {
                 .consumerMainThread(SExplosionPacket::handle)
                 .add();
 
+        INSTANCE.messageBuilder(SGiveStratagemOrbPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SGiveStratagemOrbPacket::encode)
+                .decoder(SGiveStratagemOrbPacket::new)
+                .consumerMainThread(SGiveStratagemOrbPacket::handle)
+                .add();
+
         // CLIENT
         INSTANCE.messageBuilder(CSmallExplosionParticlesPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(CSmallExplosionParticlesPacket::encode)
