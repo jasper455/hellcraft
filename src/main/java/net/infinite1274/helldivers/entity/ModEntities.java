@@ -1,6 +1,7 @@
 package net.infinite1274.helldivers.entity;
 
 import net.infinite1274.helldivers.HelldiversMod;
+import net.infinite1274.helldivers.entity.custom.HellpodProjectileEntity;
 import net.infinite1274.helldivers.entity.custom.MissileProjectileEntity;
 import net.infinite1274.helldivers.entity.custom.StratagemOrbEntity;
 import net.minecraft.world.entity.EntityType;
@@ -20,7 +21,12 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<StratagemOrbEntity>> STRATAGEM_ORB =
             ENTITY_TYPES.register("stratagem_orb", () -> EntityType.Builder.<StratagemOrbEntity>of(StratagemOrbEntity::new, MobCategory.MISC)
-                    .sized(1f, 0.75f).build("stratagem_orb"));
+                    .sized(0.3f, 0.4f).build("stratagem_orb"));
+
+
+    public static final RegistryObject<EntityType<HellpodProjectileEntity>> HELLPOD =
+            ENTITY_TYPES.register("hellpod", () -> EntityType.Builder.<HellpodProjectileEntity>of(HellpodProjectileEntity::new, MobCategory.MISC)
+                    .sized(0.3f, 0.4f).build("hellpod"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

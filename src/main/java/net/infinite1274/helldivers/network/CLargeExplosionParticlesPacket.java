@@ -59,7 +59,7 @@ public class CLargeExplosionParticlesPacket {
                 .setScaleData(GenericParticleData.create(150f, 2.5f).build())
                 .setTransparencyData(GenericParticleData.create(0.25f, 0f).build())
                 .setColorData(ColorParticleData.create(new Color(255, 224, 20), new Color(255, 237, 165)).build())
-                .setLifetime(20)
+                .setLifetime(120)
                 .addMotion(0, 0, 0)
                 .setForceSpawn(true)
                 .spawn(level, pos.x, pos.y, pos.z);
@@ -67,14 +67,23 @@ public class CLargeExplosionParticlesPacket {
         // Smoke
         for (int i = 0; i < 30; i++) {
             float angle = random.nextFloat() * ((float) Math.PI * 2);
-            float speed = 0.1f + random.nextFloat() * 0.05f;
+            float speed = 0.1f + random.nextFloat() * 0.2f;
             float dx = Mth.cos(angle) * speed;
             float dz = Mth.sin(angle) * speed;
-            float dy = 0.05f + random.nextFloat() * 0.05f;
+            float dy = 0.05f + random.nextFloat() * 0.1f;
+//            for (int j = 0; j < 100; j++) {
+//                WorldParticleBuilder.create(ModParticles.SMOKE)
+//                        .setScaleData(GenericParticleData.create(5f, 20f).build())
+//                        .setTransparencyData(GenericParticleData.create(0.5f, 0f).build())
+//                        .setLifetime(700)
+//                        .addMotion(dx / 5, dy / 1.5, dz / 4)
+//                        .enableNoClip()
+//                        .spawn(level, pos.x, pos.y, pos.z);
+//            }
 
             // Blast particle outer
             WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)
-                    .setScaleData(GenericParticleData.create(25f, 50f).build())
+                    .setScaleData(GenericParticleData.create(20f, 40f).build())
                     .setTransparencyData(GenericParticleData.create(0.25f, 0f).build())
                     .setColorData(ColorParticleData.create(new Color(255, 146, 22), new Color(255, 39, 39, 200)).build())
                     .addMotion(dx / 1.5, dy, dz / 1.5)
@@ -83,7 +92,7 @@ public class CLargeExplosionParticlesPacket {
                     .spawn(level, pos.x, pos.y, pos.z);
             // Blast particle inner
             WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)
-                    .setScaleData(GenericParticleData.create(12.5f, 25f).build())
+                    .setScaleData(GenericParticleData.create(10f, 20f).build())
                     .setTransparencyData(GenericParticleData.create(0.25f, 0f).build())
                     .setColorData(ColorParticleData.create(new Color(255, 224, 20), new Color(255, 237, 165)).build())
                     .setLifetime(300)
@@ -93,7 +102,7 @@ public class CLargeExplosionParticlesPacket {
 
             // Flash Particle
             WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)
-                    .setScaleData(GenericParticleData.create(15f, 87.5f).build())
+                    .setScaleData(GenericParticleData.create(10f, 60f).build())
                     .setTransparencyData(GenericParticleData.create(0.05f, 0.02f).build())
                     .setColorData(ColorParticleData.create(new Color(255, 146, 22), new Color(255, 39, 39)).build())
                     .setLifetime(300)
@@ -102,10 +111,8 @@ public class CLargeExplosionParticlesPacket {
                     .spawn(level, pos.x, pos.y, pos.z);
 
         }
-
 //        ModClientEvents.triggerFlashEffect(0.00005f);
         TintPostProcessor.INSTANCE.setActive(false);
-        Minecraft.getInstance().player.sendSystemMessage(Component.literal(String.valueOf(level.isClientSide())));
     }
 
 }

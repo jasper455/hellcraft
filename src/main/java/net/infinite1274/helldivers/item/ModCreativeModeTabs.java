@@ -1,6 +1,7 @@
 package net.infinite1274.helldivers.item;
 
 import net.infinite1274.helldivers.HelldiversMod;
+import net.infinite1274.helldivers.block.ModBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -17,12 +18,12 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.helldivers"))
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModItems.EFFECT_TESTER.get());
-//                        output.accept(ModBlocks.HELLBOMB.get());
                         output.accept(ModItems.STRATAGEM_ORB.get());
                         output.accept(ModItems.HELLDIVER_HELMET.get());
                         output.accept(ModItems.HELLDIVER_CHESTPLATE.get());
                         output.accept(ModItems.HELLDIVER_LEGGINGS.get());
                         output.accept(ModItems.HELLDIVER_BOOTS.get());
+                        output.accept(ModBlocks.HELLBOMB.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

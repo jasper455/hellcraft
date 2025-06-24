@@ -2,6 +2,7 @@ package net.infinite1274.helldivers.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import net.infinite1274.helldivers.HelldiversMod;
 import net.infinite1274.helldivers.entity.custom.StratagemOrbEntity;
 import net.minecraft.client.Minecraft;
@@ -12,7 +13,9 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 import static net.minecraft.client.renderer.blockentity.BeaconRenderer.BEAM_LOCATION;
 
@@ -25,24 +28,26 @@ public class StratagemOrbProjectileRenderer extends EntityRenderer<StratagemOrbE
 
     @Override
     public void render(StratagemOrbEntity pEntity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-        poseStack.pushPose();
 
         if (pEntity.isGrounded()) {
 
-
             poseStack.pushPose();
-
 
             poseStack.translate(-0.5, 0, -0.5);
 
-            float[] color = new float[] {235, 64, 52};
+            float[] color = new float[] {0.922f, 0.251f, 0.204f, 1.0f};
 
             BeaconRenderer.renderBeaconBeam(poseStack, buffer, BEAM_LOCATION, partialTicks, 1,
                     Minecraft.getInstance().level.getGameTime(), 0, 999999,
-                    color, 0.2f, 0.25f);
+                    color, 0.1f, 0.125f);
 
             poseStack.popPose();
+        } else {
+            poseStack.mulPose(Axis.YP.rotationDegrees(Mth.lerp(partialTicks, pEntity.yRotO, pEntity.getYRot())));
+            poseStack.mulPose(Axis.XP.rotationDegrees(pEntity.getRenderingRotation() * 5f));
         }
+        poseStack.pushPose();
+//        poseStack.mulPose(Axis.XP.rotationDegrees(180));
 
         poseStack.translate(0, -1.2, 0);
 

@@ -16,5 +16,35 @@
     "sounds": [
       "helldivers:explosion"
     ]
+  },
+  "stratagem_activate": {
+    "subtitles": "sounds.helldivers.stratagem_activate",
+    "sounds": [
+      "helldivers:stratagem_activate"
+    ]
+  },
+  "firing_orbital_strike": {
+    "subtitles": "sounds.helldivers.firing_orbital_strike",
+    "sounds": [
+      "helldivers:firing_orbital_strike"
+    ]
+  },
+  "hellbomb_armed": {
+    "subtitles": "sounds.helldivers.hellbomb_armed",
+    "sounds": [
+      "helldivers:hellbomb_armed"
+    ]
+  },
+  "hellbomb_explosion": {
+    "subtitles": "sounds.helldivers.hellbomb_explosion",
+    "sounds": [
+      "helldivers:hellbomb_explosion"
+    ]
+  },
+  "clear_the_area": {
+    "subtitles": "sounds.helldivers.clear_the_area",
+    "sounds": [
+      "helldivers:clear_the_area"
+    ]
   }
 }

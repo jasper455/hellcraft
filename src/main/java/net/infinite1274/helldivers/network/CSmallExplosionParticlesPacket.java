@@ -71,15 +71,15 @@ public class CSmallExplosionParticlesPacket {
             float dx = Mth.cos(angle) * speed;
             float dz = Mth.sin(angle) * speed;
             float dy = 0.05f + random.nextFloat() * 0.05f;
-            for (int j = 0; j < 100; j++) {
-                WorldParticleBuilder.create(ModParticles.SMOKE)
-                        .setScaleData(GenericParticleData.create(5f, 20f).build())
-                        .setTransparencyData(GenericParticleData.create(0.5f, 0f).build())
-                        .setLifetime(700)
-                        .addMotion(dx / 5, dy / 1.5, dz / 4)
-                        .enableNoClip()
-                        .spawn(level, pos.x, pos.y, pos.z);
-            }
+//            for (int j = 0; j < 100; j++) {
+//                WorldParticleBuilder.create(ModParticles.SMOKE)
+//                        .setScaleData(GenericParticleData.create(5f, 20f).build())
+//                        .setTransparencyData(GenericParticleData.create(0.5f, 0f).build())
+//                        .setLifetime(700)
+//                        .addMotion(dx / 5, dy / 1.5, dz / 4)
+//                        .enableNoClip()
+//                        .spawn(level, pos.x, pos.y, pos.z);
+//            }
 
             // Blast particle outer
             WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)

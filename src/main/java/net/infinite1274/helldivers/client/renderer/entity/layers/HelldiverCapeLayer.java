@@ -3,7 +3,7 @@ package net.infinite1274.helldivers.client.renderer.entity.layers;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import net.infinite1274.helldivers.client.model.HelldiverCapeModel;
+import net.infinite1274.helldivers.client.model.entity.layers.HelldiverCapeModel;
 import net.infinite1274.helldivers.item.ModItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
@@ -37,7 +37,8 @@ public class HelldiverCapeLayer extends RenderLayer<AbstractClientPlayer, Player
                 player.getItemBySlot(EquipmentSlot.LEGS).getItem() != ModItems.HELLDIVER_LEGGINGS.get() ||
                 player.getItemBySlot(EquipmentSlot.FEET).getItem() != ModItems.HELLDIVER_BOOTS.get()) return;
 
-        VertexConsumer vertexConsumer = pBufferSource.getBuffer(this.capeModel.renderType(this.getTextureLocation(player)));
+        VertexConsumer vertexConsumer = pBufferSource.getBuffer(RenderType.entitySolid(ResourceLocation.fromNamespaceAndPath(
+                "helldivers", "textures/entity/helldiver_cape.png")));
 
         pPoseStack.pushPose();
 

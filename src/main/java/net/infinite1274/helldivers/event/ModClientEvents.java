@@ -3,7 +3,9 @@ package net.infinite1274.helldivers.event;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.infinite1274.helldivers.HelldiversMod;
-import net.infinite1274.helldivers.client.model.HelldiverCapeModel;
+import net.infinite1274.helldivers.block.entity.ModBlockEntities;
+import net.infinite1274.helldivers.client.model.entity.layers.HelldiverCapeModel;
+import net.infinite1274.helldivers.client.renderer.block.HellbombBlockRenderer;
 import net.infinite1274.helldivers.client.renderer.entity.layers.HelldiverCapeLayer;
 import net.infinite1274.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.infinite1274.helldivers.util.KeyBinding;
@@ -20,6 +22,9 @@ import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import software.bernie.example.GeckoLibMod;
+import software.bernie.example.client.renderer.block.FertilizerBlockRenderer;
+import software.bernie.example.registry.BlockEntityRegistry;
 import team.lodestar.lodestone.systems.postprocess.PostProcessHandler;
 
 import java.awt.*;
@@ -121,6 +126,13 @@ public class ModClientEvents {
             event.registerLayerDefinition(new ModelLayerLocation(
                             ResourceLocation.fromNamespaceAndPath("helldivers", "textures/entity/helldiver_cape.png"), "main"),
                     HelldiverCapeModel::createBodyLayer);
+        }
+
+        @SubscribeEvent
+        public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            if (HelldiversMod.shouldRegisterExamples()) {
+                event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
+            }
         }
     }
 

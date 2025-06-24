@@ -1,38 +1,38 @@
-[22Jun2025 14:49:24.064] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\ahkin\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.4.1, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, helldivers, --all, --output, C:\Users\ahkin\sandbox\helldivers-mod\src\generated\resources, --existing, C:\Users\ahkin\sandbox\helldivers-mod\src\main\resources]
-[22Jun2025 14:49:24.069] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.15 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
-[22Jun2025 14:49:24.160] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
-[22Jun2025 14:49:24.196] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/ahkin/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
-[22Jun2025 14:49:24.434] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.4.1\97b774cead20444ed9d0c2de762881a15d872397\javafmllanguage-1.20.1-47.4.1.jar is missing mods.toml file
-[22Jun2025 14:49:24.435] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.4.1\da4a2af4a4ebbbb33e35b292a16fe3f7122b236\lowcodelanguage-1.20.1-47.4.1.jar is missing mods.toml file
-[22Jun2025 14:49:24.436] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.4.1\75a8f0757adad78cbd8108dff9e0d39cbdb3d787\mclanguage-1.20.1-47.4.1.jar is missing mods.toml file
-[22Jun2025 14:49:24.439] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.4.1\3061e70b85c05f936d9fa24477be4d4205d8f6b8\fmlcore-1.20.1-47.4.1.jar is missing mods.toml file
-[22Jun2025 14:49:24.563] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
-[22Jun2025 14:49:25.497] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
-[22Jun2025 14:49:25.500] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\ahkin\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, helldivers, --all, --output, C:\Users\ahkin\sandbox\helldivers-mod\src\generated\resources, --existing, C:\Users\ahkin\sandbox\helldivers-mod\src\main\resources]
-[22Jun2025 14:49:25.745] [main/INFO] [mixin/]: Remapping refMap lodestone.refmap.json using C:\Users\ahkin\sandbox\helldivers-mod\build\createSrgToMcp\output.srg
-[22Jun2025 14:49:25.746] [main/INFO] [mixin/]: Remapping refMap geckolib.refmap.json using C:\Users\ahkin\sandbox\helldivers-mod\build\createSrgToMcp\output.srg
-[22Jun2025 14:49:25.817] [main/WARN] [mixin/]: Error loading class: dev/shadowsoffire/attributeslib/client/AttributesLibClient (java.lang.ClassNotFoundException: dev.shadowsoffire.attributeslib.client.AttributesLibClient)
-[22Jun2025 14:49:26.073] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [helldivers]
-[22Jun2025 14:49:28.715] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.4.1, for MC 1.20.1 with MCP 20230612.114412
-[22Jun2025 14:49:28.716] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.4.1 Initialized
-[22Jun2025 14:49:28.831] [modloading-worker-0/WARN] [software.bernie.geckolib.GeckoLib/]: Minecraft.getInstance() was null, could not register reload listeners
-[22Jun2025 14:49:29.147] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/ahkin/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
-[22Jun2025 14:49:29.149] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/ahkin/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
-[22Jun2025 14:49:29.260] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
-[22Jun2025 14:49:29.262] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 2 ms
-[22Jun2025 14:49:29.262] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
-[22Jun2025 14:49:29.271] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 8 ms
-[22Jun2025 14:49:29.271] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block Tags
-[22Jun2025 14:49:29.335] [main/INFO] [net.minecraft.data.DataGenerator/]: Block Tags finished after 62 ms
-[22Jun2025 14:49:29.335] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:fluid mod id helldivers
-[22Jun2025 14:49:29.341] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:fluid mod id helldivers finished after 5 ms
-[22Jun2025 14:49:29.341] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: helldivers
-[22Jun2025 14:49:29.345] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: helldivers finished after 4 ms
-[22Jun2025 14:49:29.345] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Tags
-[22Jun2025 14:49:29.345] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Tags finished after 0 ms
-[22Jun2025 14:49:29.346] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: helldivers
-[22Jun2025 14:49:29.346] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: helldivers finished after 0 ms
-[22Jun2025 14:49:29.346] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Datapack Entries
-[22Jun2025 14:49:29.347] [main/INFO] [net.minecraft.data.DataGenerator/]: Datapack Entries finished after 1 ms
-[22Jun2025 14:49:29.347] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 87 ms
-[22Jun2025 14:49:29.351] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 7, old count: 0, new count: 8, removed stale: 0, written: 7
+[22Jun2025 22:31:58.680] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\ahkin\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.4.1, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, helldivers, --all, --output, C:\Users\ahkin\sandbox\helldivers-mod\src\generated\resources, --existing, C:\Users\ahkin\sandbox\helldivers-mod\src\main\resources]
+[22Jun2025 22:31:58.684] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.15 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
+[22Jun2025 22:31:58.788] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
+[22Jun2025 22:31:58.825] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/ahkin/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
+[22Jun2025 22:31:59.039] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.4.1\97b774cead20444ed9d0c2de762881a15d872397\javafmllanguage-1.20.1-47.4.1.jar is missing mods.toml file
+[22Jun2025 22:31:59.041] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.4.1\da4a2af4a4ebbbb33e35b292a16fe3f7122b236\lowcodelanguage-1.20.1-47.4.1.jar is missing mods.toml file
+[22Jun2025 22:31:59.043] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.4.1\75a8f0757adad78cbd8108dff9e0d39cbdb3d787\mclanguage-1.20.1-47.4.1.jar is missing mods.toml file
+[22Jun2025 22:31:59.044] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.4.1\3061e70b85c05f936d9fa24477be4d4205d8f6b8\fmlcore-1.20.1-47.4.1.jar is missing mods.toml file
+[22Jun2025 22:31:59.154] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
+[22Jun2025 22:32:00.089] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[22Jun2025 22:32:00.094] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\ahkin\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, helldivers, --all, --output, C:\Users\ahkin\sandbox\helldivers-mod\src\generated\resources, --existing, C:\Users\ahkin\sandbox\helldivers-mod\src\main\resources]
+[22Jun2025 22:32:00.299] [main/INFO] [mixin/]: Remapping refMap lodestone.refmap.json using C:\Users\ahkin\sandbox\helldivers-mod\build\createSrgToMcp\output.srg
+[22Jun2025 22:32:00.302] [main/INFO] [mixin/]: Remapping refMap geckolib.refmap.json using C:\Users\ahkin\sandbox\helldivers-mod\build\createSrgToMcp\output.srg
+[22Jun2025 22:32:00.406] [main/WARN] [mixin/]: Error loading class: dev/shadowsoffire/attributeslib/client/AttributesLibClient (java.lang.ClassNotFoundException: dev.shadowsoffire.attributeslib.client.AttributesLibClient)
+[22Jun2025 22:32:01.013] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [helldivers]
+[22Jun2025 22:32:03.879] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.4.1, for MC 1.20.1 with MCP 20230612.114412
+[22Jun2025 22:32:03.880] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.4.1 Initialized
+[22Jun2025 22:32:04.023] [modloading-worker-0/WARN] [software.bernie.geckolib.GeckoLib/]: Minecraft.getInstance() was null, could not register reload listeners
+[22Jun2025 22:32:04.292] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/ahkin/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
+[22Jun2025 22:32:04.292] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/ahkin/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
+[22Jun2025 22:32:04.455] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
+[22Jun2025 22:32:04.459] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 3 ms
+[22Jun2025 22:32:04.459] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
+[22Jun2025 22:32:04.506] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 46 ms
+[22Jun2025 22:32:04.506] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block Tags
+[22Jun2025 22:32:04.536] [main/INFO] [net.minecraft.data.DataGenerator/]: Block Tags finished after 29 ms
+[22Jun2025 22:32:04.537] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:fluid mod id helldivers
+[22Jun2025 22:32:04.543] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:fluid mod id helldivers finished after 6 ms
+[22Jun2025 22:32:04.543] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: helldivers
+[22Jun2025 22:32:04.551] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: helldivers finished after 7 ms
+[22Jun2025 22:32:04.551] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Tags
+[22Jun2025 22:32:04.552] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Tags finished after 1 ms
+[22Jun2025 22:32:04.552] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: helldivers
+[22Jun2025 22:32:04.552] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: helldivers finished after 0 ms
+[22Jun2025 22:32:04.552] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Datapack Entries
+[22Jun2025 22:32:04.553] [main/INFO] [net.minecraft.data.DataGenerator/]: Datapack Entries finished after 1 ms
+[22Jun2025 22:32:04.553] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 99 ms
+[22Jun2025 22:32:04.557] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 8, old count: 7, new count: 9, removed stale: 0, written: 1

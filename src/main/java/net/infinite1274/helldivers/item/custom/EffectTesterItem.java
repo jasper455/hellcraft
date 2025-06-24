@@ -4,6 +4,7 @@ package net.infinite1274.helldivers.item.custom;
 import net.infinite1274.helldivers.HelldiversMod;
 import net.infinite1274.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.infinite1274.helldivers.entity.custom.MissileProjectileEntity;
+import net.infinite1274.helldivers.particle.ModParticles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -11,6 +12,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -138,4 +140,23 @@ public class EffectTesterItem extends Item {
         }
     }
 
+    @Override
+    public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
+        for (int i = 0; i < 30; i++) {
+            WorldParticleBuilder.create(LodestoneParticleRegistry.SMOKE_PARTICLE)
+                    .setScaleData(GenericParticleData.create(5f, 0f).build())
+                    .setTransparencyData(GenericParticleData.create(0.35f, 0f).build())
+                    .setColorData(ColorParticleData.create(
+                            new Color(0x202020),
+                            new Color(0x101010)
+                    ).setCoefficient(0.5f).build())
+                    .enableNoClip()
+                    .setForceSpawn(true)
+                    .setLifetime(40)
+                    .addMotion(0, 0.02f, 0);
+
+
+        }
+        return super.onLeftClickEntity(stack, player, entity);
+    }
 }

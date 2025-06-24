@@ -110,6 +110,7 @@ public class Stratagems {
                 case 7 -> {
                     if (upJustPressed) {
                         player.playSound(ModSounds.STRATAGEM_INPUT.get(), 1f, 1f);
+                        player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 1f, 1f);
                         HellbombHud.eighthInputDown = true;
                         HellbombHud.allInputsDown = true;
                         HellbombHud.inputStep++;
@@ -137,6 +138,7 @@ public class Stratagems {
                     case 2 -> {
                         if (upJustPressed) {
                             player.playSound(ModSounds.STRATAGEM_INPUT.get(), 1f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 1f, 1f);
                             PrecisionStrikeHud.thirdInputDown = true;
                             PrecisionStrikeHud.allInputsDown = true;
                             PrecisionStrikeHud.inputStep++;
@@ -156,7 +158,7 @@ public class Stratagems {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Precision Strike"));
             resetInputValues();
         }
-        }
+    }
 
 
 
@@ -174,7 +176,7 @@ public class Stratagems {
                 player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ModItems.HELLDIVER_CHESTPLATE.get()) {
 
             guiGraphics.blit(StratagemHudOverlay.STRATAGEM_BACKGROUND,
-                    6, 6, 125 , 175, 0, 0, 16, 16,
+                    6, 6, 125 , 125, 0, 0, 16, 16,
                     16, 16);
 
             HellbombHud.renderHellbombHud(guiGraphics);

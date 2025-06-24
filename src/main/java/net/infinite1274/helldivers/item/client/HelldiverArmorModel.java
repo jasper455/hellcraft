@@ -8,7 +8,7 @@ import software.bernie.geckolib.model.GeoModel;
 public class HelldiverArmorModel extends GeoModel<HelldiverArmorItem> {
     @Override
     public ResourceLocation getModelResource(HelldiverArmorItem helldiverArmorItem) {
-        return ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "geo/helldiver_armor.geo.json");
+        return ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "geo/armor/helldiver_armor.geo.json");
     }
 
     @Override

@@ -26,8 +26,8 @@ public class StratagemOrbItem extends Item {
 
         if (!pLevel.isClientSide()) {
             StratagemOrbEntity stratagemOrb = new StratagemOrbEntity(pPlayer, pLevel);
-            stratagemOrb.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0f, 1f, 0f);
-            stratagemOrb.stratagemType = pPlayer.getMainHandItem().getTag().toString();
+            stratagemOrb.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0f, 1.5f, 0f);
+            stratagemOrb.stratagemType = pPlayer.getMainHandItem().getTag().getString("stratagemType");
             pLevel.addFreshEntity(stratagemOrb);
         }
 

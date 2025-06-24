@@ -1,3 +1,6 @@
 {
-  "parent": "helldivers:block/hellbomb"
+  "parent": "helldivers:block/hellbomb",
+  "textures": {
+    "layer0": "helldivers:block/hellbomb"
+  }
 }

@@ -1,11 +1,8 @@
 package net.infinite1274.helldivers.sound;
 
 import net.infinite1274.helldivers.HelldiversMod;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraftforge.common.util.ForgeSoundType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -20,6 +17,16 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> FALLING_SHELL = registerSoundEvent("falling_shell");
 
     public static final RegistryObject<SoundEvent> EXPLOSION = registerSoundEvent("explosion");
+
+    public static final RegistryObject<SoundEvent> STRATAGEM_ACTIVATE = registerSoundEvent("stratagem_activate");
+
+    public static final RegistryObject<SoundEvent> FIRE_ORBITAL_STRIKE = registerSoundEvent("firing_orbital_strike");
+
+    public static final RegistryObject<SoundEvent> HELLBOMB_ARMED = registerSoundEvent("hellbomb_armed");
+
+    public static final RegistryObject<SoundEvent> HELLBOMB_EXPLOSION = registerSoundEvent("hellbomb_explosion");
+
+    public static final RegistryObject<SoundEvent> CLEAR_THE_AREA = registerSoundEvent("clear_the_area");
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, name);

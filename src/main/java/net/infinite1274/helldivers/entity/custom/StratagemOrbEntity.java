@@ -4,6 +4,7 @@ import net.infinite1274.helldivers.entity.ModEntities;
 import net.infinite1274.helldivers.item.ModItems;
 import net.infinite1274.helldivers.network.PacketHandler;
 import net.infinite1274.helldivers.network.SSphereExplosionPacket;
+import net.infinite1274.helldivers.sound.ModSounds;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,7 +30,6 @@ public class StratagemOrbEntity extends AbstractArrow {
     private int groundedTicks = 0;
     public String stratagemType = "";
 
-
     public StratagemOrbEntity(EntityType<? extends AbstractArrow> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
@@ -39,28 +39,23 @@ public class StratagemOrbEntity extends AbstractArrow {
     }
 
     public float getRenderingRotation() {
-        rotation += 0.5f;
-        if (rotation >= 360) {
-            rotation = 0;
-        }
+            rotation += 0.5f;
+            if (rotation >= 360) {
+                rotation = 0;
+            }
         return rotation;
-    }
-
-    public boolean isGrounded() {
-        return inGround;
     }
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
-        super.onHitEntity(result);
-        Entity entity = result.getEntity();
-        entity.hurt(this.damageSources().thrown(this, this.getOwner()), 4);
-
-        if (!this.level().isClientSide) {
-            this.level().broadcastEntityEvent(this, (byte)3);
-            this.discard();
+        if (!this.level().isClientSide && result.getEntity() instanceof LivingEntity) {
+            this.setDeltaMovement(Vec3.ZERO);
         }
+    }
 
+
+    public boolean isGrounded() {
+        return inGround;
     }
 
     @Override
@@ -87,42 +82,45 @@ public class StratagemOrbEntity extends AbstractArrow {
         }
 
         if (stratagemType == null) this.discard();
-
-//        if ("Hellbomb".equals(stratagemType)) {
-//            BlockPos pos = new BlockPos(this.getOnPos().getX(), this.getOnPos().getY() + 300, this.getOnPos().getZ());
-//            FallingBlockEntity fallingBlockEntity = FallingBlockEntity.fall(level(), pos, ModBlocks.HELLBOMB.get().defaultBlockState());
-//            level().addFreshEntity(fallingBlockEntity);
-//        }
-
-        if ("Orbital Precision Strike".equals(stratagemType)) {
-            Minecraft.getInstance().player.sendSystemMessage(Component.literal("Sending in an Eagle!"));
-        }
     }
 
     @Override
     public void tick() {
-        super.tick();
+            super.tick();
+
         if (this.isGrounded()) {
             groundedTicks++;
         }
 
-        if ("Orbital Precision Strike".equals(stratagemType) && groundedTicks == 147) {
-            BlockPos pos = new BlockPos(this.getOnPos().getX(), this.getOnPos().getY() + 300, this.getOnPos().getZ());
-            FallingBlockEntity fallingBlockEntity = FallingBlockEntity.fall(level(), pos, Blocks.BLACK_CONCRETE.defaultBlockState());
-            fallingBlockEntity.setDeltaMovement(0, -8, 0);
-            level().addFreshEntity(fallingBlockEntity);
-        }
+        // Rest of your existing stratagem logic
+        if (stratagemType.equals("Orbital Precision Strike") && groundedTicks == 60 && !this.level().isClientSide) {
+            float randomPosX = (Mth.randomBetween(this.level().getRandom(), 87.5f, 92.5f));
+            float randomPosY = (Mth.randomBetween(this.level().getRandom(), -5.0f, 5.0f));
 
-        if ("Orbital Precision Strike".equals(stratagemType) && groundedTicks >= 200) {
-            PacketHandler.sendToServer(new SSphereExplosionPacket(this.getOnPos(), 10));
+            MissileProjectileEntity explosive = new MissileProjectileEntity(((LivingEntity) this.getOwner()), this.level());
+            explosive.setPos(this.getX() + randomPosX, 200 + randomPosY, this.getZ());
+            explosive.setDeltaMovement(-1.6f, 0f, 0f);
+            this.level().addFreshEntity(explosive);
+            this.playSound(ModSounds.FIRE_ORBITAL_STRIKE.get(), 10000000.0f, 1.0f);
+        }
+        if (stratagemType.equals("Orbital Precision Strike") && groundedTicks == 180) {
             this.discard();
+            groundedTicks = 0;
         }
 
+        if (stratagemType.equals("Hellbomb") && groundedTicks == 120 && !this.level().isClientSide) {
+            HellpodProjectileEntity hellpod = new HellpodProjectileEntity(((LivingEntity) this.getOwner()), this.level());
+            hellpod.setPos(this.getBlockX(), 200, this.getBlockZ());
+            this.level().addFreshEntity(hellpod);
+        }
+        if (stratagemType.equals("Hellbomb") && groundedTicks == 180) {
+            this.discard();
+            groundedTicks = 0;
+        }
     }
 
     @Override
     protected ItemStack getPickupItem() {
-        return new ItemStack(ModItems.STRATAGEM_ORB.get(), 1);
+        return new ItemStack(Items.AIR);
     }
-
 }

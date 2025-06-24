@@ -40,6 +40,13 @@ public class MissileProjectileEntity extends AbstractArrow{
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
+        PacketHandler.sendToAllClients(new CSmallExplosionParticlesPacket(result.getEntity().blockPosition()));
+        PacketHandler.sendToServer(new SExplosionPacket(result.getEntity().blockPosition(), 10));
+        this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(6.0)).forEach(entity -> {
+            entity.hurt(level().damageSources().explosion(null), 30.0F);
+        });
+        this.playSound(ModSounds.EXPLOSION.get(), 10.0f, 1.0f);
+        this.discard();
     }
 
     @Override
@@ -51,18 +58,20 @@ public class MissileProjectileEntity extends AbstractArrow{
             entity.hurt(level().damageSources().explosion(null), 30.0F);
         });
         this.playSound(ModSounds.EXPLOSION.get(), 10.0f, 1.0f);
-        this.kill();
+        this.discard();
     }
 
     @Override
     public void tick() {
-        if (this.level().isClientSide && soundTicks == 0) {
+        if (this.level().isClientSide && soundTicks == 20) {
             Minecraft.getInstance().getSoundManager()
                     .play(new FallingShellSoundInstance(this, ModSounds.FALLING_SHELL.get()));
         }
         if (this.level().isClientSide) {
             this.level().addParticle(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
         }
+        soundTicks++;
+        if (soundTicks == 120) soundTicks = 0;
         super.tick();
     }
 

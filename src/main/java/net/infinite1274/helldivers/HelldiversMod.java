@@ -1,8 +1,12 @@
 package net.infinite1274.helldivers;
 
 import com.mojang.logging.LogUtils;
+import net.infinite1274.helldivers.block.ModBlocks;
+import net.infinite1274.helldivers.block.entity.ModBlockEntities;
 import net.infinite1274.helldivers.entity.ModEntities;
+import net.infinite1274.helldivers.entity.client.HellpodProjectileRenderer;
 import net.infinite1274.helldivers.entity.client.MissileProjectileRenderer;
+import net.infinite1274.helldivers.entity.client.StratagemOrbProjectileRenderer;
 import net.infinite1274.helldivers.item.ModCreativeModeTabs;
 import net.infinite1274.helldivers.item.ModItems;
 import net.infinite1274.helldivers.particle.ModParticles;
@@ -21,9 +25,14 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.slf4j.Logger;
+import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry;
 import team.lodestar.lodestone.systems.particle.screen.LodestoneScreenParticleType;
+import team.lodestar.lodestone.systems.particle.world.LodestoneWorldParticle;
+import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
 
+import static software.bernie.example.GeckoLibMod.DISABLE_EXAMPLES_PROPERTY_KEY;
 import static team.lodestar.lodestone.registry.common.particle.LodestoneScreenParticleRegistry.*;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -41,6 +50,8 @@ public class HelldiversMod {
         modEventBus.addListener(this::commonSetup);
 
         ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
         ModEntities.register(modEventBus);
         ModParticles.register(modEventBus);
         ModSounds.register(modEventBus);
@@ -57,6 +68,12 @@ public class HelldiversMod {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         EntityRenderers.register(ModEntities.MISSILE_PROJECTILE.get(), MissileProjectileRenderer::new);
+        EntityRenderers.register(ModEntities.STRATAGEM_ORB.get(), StratagemOrbProjectileRenderer::new);
+        EntityRenderers.register(ModEntities.HELLPOD.get(), HellpodProjectileRenderer::new);
+    }
+
+    public static boolean shouldRegisterExamples() {
+        return !FMLEnvironment.production && !Boolean.getBoolean(DISABLE_EXAMPLES_PROPERTY_KEY);
     }
 
     // Add the example block item to the building blocks tab
@@ -74,8 +91,7 @@ public class HelldiversMod {
 
         @SubscribeEvent
         public static void registerParticleFactory(RegisterParticleProvidersEvent event) {
-            registerProvider(WISP, new LodestoneScreenParticleType.Factory(getSpriteSet(
-                    ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "smoke_particle"))));
+            event.registerSpriteSet(ModParticles.SMOKE.get(), LodestoneWorldParticleType.Factory::new);
         }
     }
 }

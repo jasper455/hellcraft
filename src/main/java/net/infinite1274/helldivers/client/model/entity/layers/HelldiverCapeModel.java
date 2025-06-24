@@ -1,4 +1,4 @@
-package net.infinite1274.helldivers.client.model;
+package net.infinite1274.helldivers.client.model.entity.layers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

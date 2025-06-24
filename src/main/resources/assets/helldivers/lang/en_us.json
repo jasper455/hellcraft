@@ -1,5 +1,5 @@
 {
-  "creativetab.helldivers": "BlockDivers",
+  "creativetab.helldivers": "Blockdivers",
 
   "item.helldivers.effect_tester": "Effect Tester",
   "item.helldivers.stratagem_orb": "Stratagem Orb",
@@ -13,5 +13,7 @@
   "key.helldivers.up_input": "Up Stratagem Input",
   "key.helldivers.down_input": "Down Stratagem Input",
   "key.helldivers.left_input": "Left Stratagem Input",
-  "key.helldivers.right_input": "Right Stratagem Input"
+  "key.helldivers.right_input": "Right Stratagem Input",
+
+  "block.helldivers.hellbomb": "§e§l§oHellbomb"
 }

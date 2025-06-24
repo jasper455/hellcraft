@@ -10,4 +10,7 @@ public class ModModelLayers {
 
     public static final ModelLayerLocation STRATAGEM_ORB = new ModelLayerLocation(
             ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "stratagem_orb"), "main");
+
+    public static final ModelLayerLocation HELLPOD = new ModelLayerLocation(
+            ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "hellpod"), "main");
 }

@@ -3,6 +3,7 @@ package net.infinite1274.helldivers.datagen.loot;
 import net.infinite1274.helldivers.block.ModBlocks;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
 
@@ -17,7 +18,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-
+        dropOther(ModBlocks.HELLBOMB.get(), Items.AIR);
     }
 
     @Override
