@@ -125,7 +125,8 @@ public class StratagemOrbEntity extends AbstractArrow {
         // 120 Barrage Entity Stuff
         if (stratagemType.equals("Orbital 120MM HE Barrage") && !this.level().isClientSide) {
             if (groundedTicks > 75) {
-                MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 25, 60, groundedTicks, false));
+                MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 25, 60,
+                        groundedTicks, this, false));
             }
         }
         if (stratagemType.equals("Orbital 120MM HE Barrage") && groundedTicks > 750) {
@@ -136,7 +137,8 @@ public class StratagemOrbEntity extends AbstractArrow {
         // 380 Barrage Entity Stuff
         if (stratagemType.equals("Orbital 380MM HE Barrage") && !this.level().isClientSide) {
             if (groundedTicks > 75) {
-                MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 50, 60, groundedTicks, true));
+                MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 50, 60,
+                        groundedTicks, this, true));
             }
         }
         if (stratagemType.equals("Orbital 380MM HE Barrage") && groundedTicks > 750) {

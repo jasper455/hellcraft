@@ -1,4 +1,4 @@
-// 1.20.1	2025-06-25T02:43:25.7655435	Item Models: helldivers
+// 1.20.1	2025-06-25T12:57:12.499943	Item Models: helldivers
 a2817df7d503990bccde8f168033c5e1d3ba09c6 assets/helldivers/models/item/big_barrage.json
 0f08d8de4b4a4faced0496daa24405d1f0f91ca2 assets/helldivers/models/item/effect_tester.json
 5c6bdcd2a329d62fd61c69d7ddedfee7e9483c8f assets/helldivers/models/item/hellbomb_item.json
@@ -9,3 +9,4 @@ a2817df7d503990bccde8f168033c5e1d3ba09c6 assets/helldivers/models/item/big_barra
 1ec3a0283830eece3eec6f2ab9a0ee5889c482f4 assets/helldivers/models/item/precision_strike.json
 949f5bf329a9b2d7a33127cdf36f53713614dbaa assets/helldivers/models/item/small_barrage.json
 e51d9b3fd8c8ed3b8d19119554035dd3cb4242c1 assets/helldivers/models/item/stratagem_picker.json
+9381b222bc74313b8cd6cc005e93c26f50e43423 assets/helldivers/models/item/walking_barrage.json

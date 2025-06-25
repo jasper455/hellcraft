@@ -34,6 +34,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.SMALL_BARRAGE.get());
                         output.accept(ModItems.BIG_BARRAGE.get());
                         output.accept(ModItems.PRECISION_STRIKE.get());
+                        output.accept(ModItems.WALKING_BARRAGE.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

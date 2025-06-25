@@ -1,8 +1,6 @@
 package net.infinite1274.helldivers.client.hud;
 
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.infinite1274.helldivers.HelldiversMod;
 import net.infinite1274.helldivers.item.ModItems;
 import net.infinite1274.helldivers.item.custom.StratagemPickerItem;
@@ -13,7 +11,6 @@ import net.infinite1274.helldivers.sound.ModSounds;
 import net.infinite1274.helldivers.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -22,8 +19,6 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
-import java.util.List;
 
 @Mod.EventBusSubscriber(modid = HelldiversMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class Stratagems {
