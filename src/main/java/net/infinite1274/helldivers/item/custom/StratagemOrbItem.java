@@ -43,7 +43,7 @@ public class StratagemOrbItem extends Item {
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
         if (!getStratagemType(pStack).isEmpty()) {
-            pTooltipComponents.add(Component.literal(getStratagemType(pStack)));
+            pTooltipComponents.add(Component.literal("§c" + getStratagemType(pStack)));
         }
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
     }

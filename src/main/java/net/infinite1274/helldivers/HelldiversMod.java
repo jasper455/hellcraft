@@ -9,8 +9,12 @@ import net.infinite1274.helldivers.entity.client.MissileProjectileRenderer;
 import net.infinite1274.helldivers.entity.client.StratagemOrbProjectileRenderer;
 import net.infinite1274.helldivers.item.ModCreativeModeTabs;
 import net.infinite1274.helldivers.item.ModItems;
+import net.infinite1274.helldivers.item.inventory.StratagemPickerInventory;
 import net.infinite1274.helldivers.particle.ModParticles;
+import net.infinite1274.helldivers.screen.ModMenuTypes;
+import net.infinite1274.helldivers.screen.custom.StratagemPickerScreen;
 import net.infinite1274.helldivers.sound.ModSounds;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -56,6 +60,7 @@ public class HelldiversMod {
         ModParticles.register(modEventBus);
         ModSounds.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
 
@@ -87,7 +92,9 @@ public class HelldiversMod {
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents {
         @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {}
+        public static void onClientSetup(FMLClientSetupEvent event) {
+            MenuScreens.register(ModMenuTypes.STRATAGEM_PICKER.get(), StratagemPickerScreen::new);
+        }
 
         @SubscribeEvent
         public static void registerParticleFactory(RegisterParticleProvidersEvent event) {

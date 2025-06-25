@@ -17,6 +17,18 @@ public class StratagemHudOverlay {
     public static boolean wasRightPressedLastTick = false;
     public static boolean wasRightPressedThisTick = false;
 
+    public static boolean wasUpNotPressedLastTick = false;
+    public static boolean wasUpNotPressedThisTick = false;
+
+    public static boolean wasDownNotPressedLastTick = false;
+    public static boolean wasDownNotPressedThisTick = false;
+
+    public static boolean wasLeftNotPressedLastTick = false;
+    public static boolean wasLeftNotPressedThisTick = false;
+
+    public static boolean wasRightNotPressedLastTick = false;
+    public static boolean wasRightNotPressedThisTick = false;
+
 
     public static final ResourceLocation STRATAGEM_BACKGROUND = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/stratagem_background.png");
@@ -26,6 +38,12 @@ public class StratagemHudOverlay {
 
     public static final ResourceLocation PRECISION_STRIKE = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/precision_strike_gui.png");
+
+    public static final ResourceLocation SMALL_BARRAGE = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/120_barrage_gui.png");
+
+    public static final ResourceLocation BIG_BARRAGE = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/380_barrage_gui.png");
 
     public static void renderUpArrow(GuiGraphics guiGraphics, int pX, int pY, int pWidth,
                                         int pHeight, int pUOffset, int pVOffset, int pUWidth, int pVHeight,

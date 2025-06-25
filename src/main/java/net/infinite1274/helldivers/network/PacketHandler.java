@@ -39,6 +39,12 @@ public class PacketHandler {
                 .consumerMainThread(SGiveStratagemOrbPacket::handle)
                 .add();
 
+        INSTANCE.messageBuilder(SOrbitalBarragePacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SOrbitalBarragePacket::encode)
+                .decoder(SOrbitalBarragePacket::new)
+                .consumerMainThread(SOrbitalBarragePacket::handle)
+                .add();
+
         // CLIENT
         INSTANCE.messageBuilder(CSmallExplosionParticlesPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(CSmallExplosionParticlesPacket::encode)

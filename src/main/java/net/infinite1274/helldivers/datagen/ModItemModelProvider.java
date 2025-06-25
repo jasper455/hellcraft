@@ -44,7 +44,13 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.HELLDIVER_LEGGINGS.get());
         basicItem(ModItems.HELLDIVER_BOOTS.get());
 
+        basicItem(ModItems.STRATAGEM_PICKER.get());
 
+
+        basicItem(ModItems.SMALL_BARRAGE.get());
+        basicItem(ModItems.BIG_BARRAGE.get());
+        basicItem(ModItems.HELLBOMB_ITEM.get());
+        basicItem(ModItems.PRECISION_STRIKE.get());
     }
 
 

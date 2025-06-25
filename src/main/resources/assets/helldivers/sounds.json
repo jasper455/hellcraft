@@ -46,5 +46,23 @@
     "sounds": [
       "helldivers:clear_the_area"
     ]
+  },
+  "stratagem_fail_input": {
+    "subtitles": "sounds.helldivers.stratagem_fail_input",
+    "sounds": [
+      "helldivers:stratagem_fail_input"
+    ]
+  },
+  "stratagem_menu_open": {
+    "subtitles": "sounds.helldivers.stratagem_menu_open",
+    "sounds": [
+      "helldivers:stratagem_menu_open"
+    ]
+  },
+  "stratagem_menu_close": {
+    "subtitles": "sounds.helldivers.stratagem_menu_close",
+    "sounds": [
+      "helldivers:stratagem_menu_close"
+    ]
   }
 }

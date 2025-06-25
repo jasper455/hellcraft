@@ -24,6 +24,16 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.HELLDIVER_LEGGINGS.get());
                         output.accept(ModItems.HELLDIVER_BOOTS.get());
                         output.accept(ModBlocks.HELLBOMB.get());
+                        output.accept(ModItems.STRATAGEM_PICKER.get());
+                    }).build());
+    public static final RegistryObject<CreativeModeTab> STRATAGEMS_TAB = CREATIVE_MODE_TABS.register("stratagems_tab",
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.PRECISION_STRIKE.get()))
+                    .title(Component.translatable("creativetab.stratagems"))
+                    .displayItems((itemDisplayParameters, output) -> {
+                        output.accept(ModItems.HELLBOMB_ITEM.get());
+                        output.accept(ModItems.SMALL_BARRAGE.get());
+                        output.accept(ModItems.BIG_BARRAGE.get());
+                        output.accept(ModItems.PRECISION_STRIKE.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

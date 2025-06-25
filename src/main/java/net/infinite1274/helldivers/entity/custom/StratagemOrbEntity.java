@@ -1,6 +1,8 @@
 package net.infinite1274.helldivers.entity.custom;
 
 import net.infinite1274.helldivers.entity.ModEntities;
+import net.infinite1274.helldivers.helper.DelayedExplosion;
+import net.infinite1274.helldivers.helper.OrbitalBarrage;
 import net.infinite1274.helldivers.item.ModItems;
 import net.infinite1274.helldivers.network.PacketHandler;
 import net.infinite1274.helldivers.network.SSphereExplosionPacket;
@@ -23,6 +25,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.MinecraftForge;
+
+import java.util.TimerTask;
 
 public class StratagemOrbEntity extends AbstractArrow {
     private float rotation;
@@ -87,12 +92,10 @@ public class StratagemOrbEntity extends AbstractArrow {
     @Override
     public void tick() {
             super.tick();
-
         if (this.isGrounded()) {
             groundedTicks++;
         }
-
-        // Rest of your existing stratagem logic
+        // Orbital Precision Strike Entity stuff
         if (stratagemType.equals("Orbital Precision Strike") && groundedTicks == 60 && !this.level().isClientSide) {
             float randomPosX = (Mth.randomBetween(this.level().getRandom(), 87.5f, 92.5f));
             float randomPosY = (Mth.randomBetween(this.level().getRandom(), -5.0f, 5.0f));
@@ -108,12 +111,35 @@ public class StratagemOrbEntity extends AbstractArrow {
             groundedTicks = 0;
         }
 
+        // Hellbomb Entity stuff
         if (stratagemType.equals("Hellbomb") && groundedTicks == 120 && !this.level().isClientSide) {
             HellpodProjectileEntity hellpod = new HellpodProjectileEntity(((LivingEntity) this.getOwner()), this.level());
             hellpod.setPos(this.getBlockX(), 200, this.getBlockZ());
             this.level().addFreshEntity(hellpod);
         }
         if (stratagemType.equals("Hellbomb") && groundedTicks == 180) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
+        // 120 Barrage Entity Stuff
+        if (stratagemType.equals("Orbital 120MM HE Barrage") && !this.level().isClientSide) {
+            if (groundedTicks > 75) {
+                MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 25, 60, groundedTicks, false));
+            }
+        }
+        if (stratagemType.equals("Orbital 120MM HE Barrage") && groundedTicks > 750) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
+        // 380 Barrage Entity Stuff
+        if (stratagemType.equals("Orbital 380MM HE Barrage") && !this.level().isClientSide) {
+            if (groundedTicks > 75) {
+                MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 50, 60, groundedTicks, true));
+            }
+        }
+        if (stratagemType.equals("Orbital 380MM HE Barrage") && groundedTicks > 750) {
             this.discard();
             groundedTicks = 0;
         }

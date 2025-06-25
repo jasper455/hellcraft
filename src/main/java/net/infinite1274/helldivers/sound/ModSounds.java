@@ -28,6 +28,12 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> CLEAR_THE_AREA = registerSoundEvent("clear_the_area");
 
+    public static final RegistryObject<SoundEvent> STRATAGEM_FAIL_INPUT = registerSoundEvent("stratagem_fail_input");
+
+    public static final RegistryObject<SoundEvent> STRATAGEM_MENU_OPEN = registerSoundEvent("stratagem_menu_open");
+
+    public static final RegistryObject<SoundEvent> STRATAGEM_MENU_CLOSE = registerSoundEvent("stratagem_menu_close");
+
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, name);
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));

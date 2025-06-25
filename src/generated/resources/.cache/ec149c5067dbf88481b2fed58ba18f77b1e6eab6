@@ -1,6 +1,11 @@
-// 1.20.1	2025-06-22T12:57:44.8117254	Item Models: helldivers
+// 1.20.1	2025-06-25T02:43:25.7655435	Item Models: helldivers
+a2817df7d503990bccde8f168033c5e1d3ba09c6 assets/helldivers/models/item/big_barrage.json
 0f08d8de4b4a4faced0496daa24405d1f0f91ca2 assets/helldivers/models/item/effect_tester.json
+5c6bdcd2a329d62fd61c69d7ddedfee7e9483c8f assets/helldivers/models/item/hellbomb_item.json
 5109d3e58cb2285f58a2a47cf45918a746c503d3 assets/helldivers/models/item/helldiver_boots.json
 1471e4cf33d047d57b14dc4caffbffda5a1ae2af assets/helldivers/models/item/helldiver_chestplate.json
 7b4e65d0a6df9a71ee9924c6b7fb02d60bc7b33d assets/helldivers/models/item/helldiver_helmet.json
 655ae147214281ee1074aa3eb2ec41e47e610106 assets/helldivers/models/item/helldiver_leggings.json
+1ec3a0283830eece3eec6f2ab9a0ee5889c482f4 assets/helldivers/models/item/precision_strike.json
+949f5bf329a9b2d7a33127cdf36f53713614dbaa assets/helldivers/models/item/small_barrage.json
+e51d9b3fd8c8ed3b8d19119554035dd3cb4242c1 assets/helldivers/models/item/stratagem_picker.json

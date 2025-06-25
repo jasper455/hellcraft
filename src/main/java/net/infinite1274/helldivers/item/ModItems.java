@@ -2,9 +2,7 @@ package net.infinite1274.helldivers.item;
 
 
 import net.infinite1274.helldivers.HelldiversMod;
-import net.infinite1274.helldivers.item.custom.EffectTesterItem;
-import net.infinite1274.helldivers.item.custom.HelldiverArmorItem;
-import net.infinite1274.helldivers.item.custom.StratagemOrbItem;
+import net.infinite1274.helldivers.item.custom.*;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -41,6 +39,18 @@ public class ModItems {
     public static final RegistryObject<Item> HELLDIVER_BOOTS = ITEMS.register("helldiver_boots",
             () -> new HelldiverArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
                     new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> STRATAGEM_PICKER = ITEMS.register("stratagem_picker",
+            () -> new StratagemPickerItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> SMALL_BARRAGE = ITEMS.register("small_barrage",
+            () -> new StratagemItem(new Item.Properties()));
+    public static final RegistryObject<Item> BIG_BARRAGE = ITEMS.register("big_barrage",
+            () -> new StratagemItem(new Item.Properties()));
+    public static final RegistryObject<Item> HELLBOMB_ITEM = ITEMS.register("hellbomb_item",
+            () -> new StratagemItem(new Item.Properties()));
+    public static final RegistryObject<Item> PRECISION_STRIKE = ITEMS.register("precision_strike",
+            () -> new StratagemItem(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

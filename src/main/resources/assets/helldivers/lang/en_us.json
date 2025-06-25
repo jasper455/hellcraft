@@ -1,12 +1,19 @@
 {
-  "creativetab.helldivers": "Blockdivers",
+  "creativetab.helldivers": "Helldivers 2",
+  "creativetab.stratagems": "Stratagems",
 
   "item.helldivers.effect_tester": "Effect Tester",
-  "item.helldivers.stratagem_orb": "Stratagem Orb",
-  "item.helldivers.helldiver_helmet": "B0-1 Tactical Helmet",
-  "item.helldivers.helldiver_chestplate": "B0-1 Tactical Chestplate",
-  "item.helldivers.helldiver_leggings": "B0-1 Tactical Leggings",
-  "item.helldivers.helldiver_boots": "B0-1 Tactical Boots",
+  "item.helldivers.stratagem_orb": "§bStratagem Orb",
+  "item.helldivers.helldiver_helmet": "§bB0-1 Tactical Helmet",
+  "item.helldivers.helldiver_chestplate": "§bB0-1 Tactical Chestplate",
+  "item.helldivers.helldiver_leggings": "§bB0-1 Tactical Leggings",
+  "item.helldivers.helldiver_boots": "§bB0-1 Tactical Boots",
+  "item.helldivers.stratagem_picker": "§dStratagem Selector",
+
+  "item.helldivers.small_barrage": "§b120MM HE Barrage",
+  "item.helldivers.big_barrage": "§b380MM HE Barrage",
+  "item.helldivers.hellbomb_item": "§bHellbomb",
+  "item.helldivers.precision_strike": "§bOrbital Precision Strike",
 
   "key.category.helldivers": "Blockdivers",
   "key.helldivers.show_stratagem_hud": "Show Stratagem HUD",
@@ -15,5 +22,6 @@
   "key.helldivers.left_input": "Left Stratagem Input",
   "key.helldivers.right_input": "Right Stratagem Input",
 
-  "block.helldivers.hellbomb": "§e§l§oHellbomb"
+  "block.helldivers.hellbomb": "§e§oHellbomb",
+  "container.helldivers.stratagem_picker": "Stratagem Picker"
 }
