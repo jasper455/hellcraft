@@ -1,7 +1,7 @@
 package net.team.helldivers.item;
 
 
-import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.HellcraftMod;
 import net.team.helldivers.item.custom.*;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
@@ -13,7 +13,7 @@ import net.minecraftforge.registries.RegistryObject;
 public class ModItems {
 
     public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, HelldiversMod.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.ITEMS, HellcraftMod.MOD_ID);
 
     public static final RegistryObject<Item> EFFECT_TESTER = ITEMS.register("effect_tester",
             () -> new EffectTesterItem(new Item.Properties()));

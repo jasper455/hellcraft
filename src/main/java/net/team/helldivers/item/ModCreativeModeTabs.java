@@ -1,6 +1,6 @@
 package net.team.helldivers.item;
 
-import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.HellcraftMod;
 import net.team.helldivers.block.ModBlocks;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -12,7 +12,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
-            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, HelldiversMod.MOD_ID);
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, HellcraftMod.MOD_ID);
     public static final RegistryObject<CreativeModeTab> HELLDIVERS_TAB = CREATIVE_MODE_TABS.register("helldivers_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.HELLDIVER_HELMET.get()))
                     .title(Component.translatable("creativetab.helldivers"))
@@ -34,7 +34,6 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.SMALL_BARRAGE.get());
                         output.accept(ModItems.BIG_BARRAGE.get());
                         output.accept(ModItems.PRECISION_STRIKE.get());
-                        output.accept(ModItems.WALKING_BARRAGE.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

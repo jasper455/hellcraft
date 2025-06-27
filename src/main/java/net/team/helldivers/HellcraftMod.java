@@ -34,14 +34,14 @@ import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticl
 import static software.bernie.example.GeckoLibMod.DISABLE_EXAMPLES_PROPERTY_KEY;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(HelldiversMod.MOD_ID)
-public class HelldiversMod {
+@Mod(HellcraftMod.MOD_ID)
+public class HellcraftMod {
     // Define mod id in a common place for everything to reference
-    public static final String MOD_ID = "helldivers";
+    public static final String MOD_ID = "hellcraft";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public HelldiversMod(FMLJavaModLoadingContext context) {
+    public HellcraftMod(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
 
         // Register the commonSetup method for modloading

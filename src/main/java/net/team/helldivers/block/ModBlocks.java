@@ -1,6 +1,6 @@
 package net.team.helldivers.block;
 
-import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.HellcraftMod;
 import net.team.helldivers.block.custom.HellbombBlock;
 import net.team.helldivers.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
-            DeferredRegister.create(ForgeRegistries.BLOCKS, HelldiversMod.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.BLOCKS, HellcraftMod.MOD_ID);
 
     public static final RegistryObject<Block> HELLBOMB = registerBlock("hellbomb",
             () -> new HellbombBlock());

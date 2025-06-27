@@ -3,7 +3,7 @@ package net.team.helldivers.entity.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.HellcraftMod;
 import net.team.helldivers.entity.custom.HellpodProjectileEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -22,7 +22,7 @@ public class HellpodProjectileRenderer extends EntityRenderer<HellpodProjectileE
 
     @Override
     public ResourceLocation getTextureLocation(HellpodProjectileEntity ratEntity) {
-        return ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/entity/hellpod/hellpod.png");
+        return ResourceLocation.fromNamespaceAndPath(HellcraftMod.MOD_ID, "textures/entity/hellpod/hellpod.png");
     }
 
     @Override
