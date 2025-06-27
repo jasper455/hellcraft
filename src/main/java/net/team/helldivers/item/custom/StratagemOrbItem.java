@@ -1,5 +1,7 @@
 package net.team.helldivers.item.custom;
 
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.UseAnim;
 import net.team.helldivers.entity.custom.StratagemOrbEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -23,22 +25,40 @@ public class StratagemOrbItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         ItemStack itemstack = pPlayer.getItemInHand(pUsedHand);
-
-        if (!pLevel.isClientSide()) {
-            StratagemOrbEntity stratagemOrb = new StratagemOrbEntity(pPlayer, pLevel);
-            stratagemOrb.shootFromRotation(pPlayer, pPlayer.getXRot(), pPlayer.getYRot(), 0.0f, 1.5f, 0f);
-            stratagemOrb.stratagemType = pPlayer.getMainHandItem().getTag().getString("stratagemType");
-            pLevel.addFreshEntity(stratagemOrb);
-        }
-
-        pPlayer.awardStat(Stats.ITEM_USED.get(this));
-        if (!pPlayer.getAbilities().instabuild) {
-            itemstack.shrink(1);
-        }
-
-        return InteractionResultHolder.sidedSuccess(itemstack, pLevel.isClientSide());
+        pPlayer.startUsingItem(pUsedHand);
+        return InteractionResultHolder.consume(itemstack);
     }
 
+    @Override
+    public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity, int pTimeCharged) {
+        if (pLivingEntity instanceof Player player) {
+            int i = this.getUseDuration(pStack) - pTimeCharged;
+            if (i >= 10) { // Minimum charge time of 0.5 seconds (10 ticks)
+                if (!pLevel.isClientSide()) {
+                    StratagemOrbEntity stratagemOrb = new StratagemOrbEntity(player, pLevel);
+                    float power = Math.min(i / 20F, 1.5F); // Max power after 1 second charge
+                    stratagemOrb.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, power * 1.5F, 0F);
+                    stratagemOrb.stratagemType = player.getMainHandItem().getTag().getString("stratagemType");
+                    pLevel.addFreshEntity(stratagemOrb);
+                }
+
+                player.awardStat(Stats.ITEM_USED.get(this));
+                if (!player.getAbilities().instabuild) {
+                    pStack.shrink(1);
+                }
+            }
+        }
+    }
+
+    @Override
+    public UseAnim getUseAnimation(ItemStack pStack) {
+        return UseAnim.BOW;
+    }
+
+    @Override
+    public int getUseDuration(ItemStack pStack) {
+        return 72000;
+    }
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {

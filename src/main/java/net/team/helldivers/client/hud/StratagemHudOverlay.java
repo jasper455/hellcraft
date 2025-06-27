@@ -1,6 +1,6 @@
 package net.team.helldivers.client.hud;
 
-import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.HellcraftMod;
 import net.team.helldivers.util.KeyBinding;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
@@ -31,25 +31,25 @@ public class StratagemHudOverlay {
 
 
     public static final ResourceLocation STRATAGEM_BACKGROUND = ResourceLocation.fromNamespaceAndPath(
-            HelldiversMod.MOD_ID, "textures/stratagem_hud/stratagem_background.png");
+            HellcraftMod.MOD_ID, "textures/stratagem_hud/stratagem_background.png");
 
     public static final ResourceLocation HELLBOMB = ResourceLocation.fromNamespaceAndPath(
-            HelldiversMod.MOD_ID, "textures/stratagem_hud/hellbomb_gui.png");
+            HellcraftMod.MOD_ID, "textures/stratagem_hud/hellbomb_gui.png");
 
     public static final ResourceLocation PRECISION_STRIKE = ResourceLocation.fromNamespaceAndPath(
-            HelldiversMod.MOD_ID, "textures/stratagem_hud/precision_strike_gui.png");
+            HellcraftMod.MOD_ID, "textures/stratagem_hud/precision_strike_gui.png");
 
     public static final ResourceLocation SMALL_BARRAGE = ResourceLocation.fromNamespaceAndPath(
-            HelldiversMod.MOD_ID, "textures/stratagem_hud/120_barrage_gui.png");
+            HellcraftMod.MOD_ID, "textures/stratagem_hud/120_barrage_gui.png");
 
     public static final ResourceLocation BIG_BARRAGE = ResourceLocation.fromNamespaceAndPath(
-            HelldiversMod.MOD_ID, "textures/stratagem_hud/380_barrage_gui.png");
+            HellcraftMod.MOD_ID, "textures/stratagem_hud/380_barrage_gui.png");
 
     public static void renderUpArrow(GuiGraphics guiGraphics, int pX, int pY, int pWidth,
                                         int pHeight, int pUOffset, int pVOffset, int pUWidth, int pVHeight,
                                         int pTextureWidth, int pTextureHeight, boolean isFilled) {
         guiGraphics.blit(ResourceLocation.fromNamespaceAndPath(
-                        HelldiversMod.MOD_ID, isFilled ? "textures/stratagem_hud/arrows/arrow_up.png" :
+                        HellcraftMod.MOD_ID, isFilled ? "textures/stratagem_hud/arrows/arrow_up.png" :
                                 "textures/stratagem_hud/arrows/arrow_up_hollow.png"),
                 pX, pY, pWidth, pHeight, pUOffset, pVOffset, pUWidth, pVHeight,
                 pTextureWidth, pTextureHeight);
@@ -60,7 +60,7 @@ public class StratagemHudOverlay {
                                         int pHeight, int pUOffset, int pVOffset, int pUWidth, int pVHeight,
                                         int pTextureWidth, int pTextureHeight, boolean isFilled) {
         guiGraphics.blit(ResourceLocation.fromNamespaceAndPath(
-                        HelldiversMod.MOD_ID, isFilled ? "textures/stratagem_hud/arrows/arrow_down.png" :
+                        HellcraftMod.MOD_ID, isFilled ? "textures/stratagem_hud/arrows/arrow_down.png" :
                                 "textures/stratagem_hud/arrows/arrow_down_hollow.png"),
                 pX, pY, pWidth, pHeight, pUOffset, pVOffset, pUWidth, pVHeight,
                 pTextureWidth, pTextureHeight);
@@ -71,7 +71,7 @@ public class StratagemHudOverlay {
                                         int pHeight, int pUOffset, int pVOffset, int pUWidth, int pVHeight,
                                         int pTextureWidth, int pTextureHeight, boolean isFilled) {
         guiGraphics.blit(ResourceLocation.fromNamespaceAndPath(
-                        HelldiversMod.MOD_ID, isFilled ? "textures/stratagem_hud/arrows/arrow_left.png" :
+                        HellcraftMod.MOD_ID, isFilled ? "textures/stratagem_hud/arrows/arrow_left.png" :
                                 "textures/stratagem_hud/arrows/arrow_left_hollow.png"),
                 pX, pY, pWidth, pHeight, pUOffset, pVOffset, pUWidth, pVHeight,
                 pTextureWidth, pTextureHeight);
@@ -82,7 +82,7 @@ public class StratagemHudOverlay {
                                         int pHeight, int pUOffset, int pVOffset, int pUWidth, int pVHeight,
                                         int pTextureWidth, int pTextureHeight, boolean isFilled) {
         guiGraphics.blit(ResourceLocation.fromNamespaceAndPath(
-                        HelldiversMod.MOD_ID, isFilled ? "textures/stratagem_hud/arrows/arrow_right.png" :
+                        HellcraftMod.MOD_ID, isFilled ? "textures/stratagem_hud/arrows/arrow_right.png" :
                                 "textures/stratagem_hud/arrows/arrow_right_hollow.png"),
                 pX, pY, pWidth, pHeight, pUOffset, pVOffset, pUWidth, pVHeight,
                 pTextureWidth, pTextureHeight);

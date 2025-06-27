@@ -1,7 +1,7 @@
 package net.team.helldivers.item.custom;
 
 
-import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.HellcraftMod;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.custom.MissileProjectileEntity;
 import net.minecraft.client.Minecraft;
@@ -32,7 +32,7 @@ import team.lodestar.lodestone.systems.screenshake.ScreenshakeInstance;
 
 import java.awt.*;
 
-@Mod.EventBusSubscriber(modid = HelldiversMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = HellcraftMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class EffectTesterItem extends Item {
     private static float flashTime = 0;
     private static boolean isFlashed = false;

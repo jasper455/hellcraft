@@ -1,7 +1,7 @@
 package net.team.helldivers.client.shader.post.tint;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.HellcraftMod;
 import net.minecraft.resources.ResourceLocation;
 import team.lodestar.lodestone.systems.postprocess.PostProcessor;
 
@@ -14,7 +14,7 @@ public class TintPostProcessor extends PostProcessor {
 
     @Override
     public ResourceLocation getPostChainLocation() {
-        return ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "tint");
+        return ResourceLocation.fromNamespaceAndPath(HellcraftMod.MOD_ID, "tint");
     }
 
     @Override

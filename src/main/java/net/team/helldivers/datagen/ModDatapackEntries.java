@@ -1,6 +1,6 @@
 package net.team.helldivers.datagen;
 
-import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.HellcraftMod;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.data.PackOutput;
@@ -13,7 +13,7 @@ public class ModDatapackEntries extends DatapackBuiltinEntriesProvider {
     public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder();
 
     public ModDatapackEntries(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, BUILDER, Set.of(HelldiversMod.MOD_ID));
+        super(output, registries, BUILDER, Set.of(HellcraftMod.MOD_ID));
     }
 
     @Override

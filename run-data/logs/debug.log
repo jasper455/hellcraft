@@ -403,7 +403,7 @@ java.lang.IllegalAccessException: class io.netty.util.internal.PlatformDependent
 [25Jun2025 12:57:11.807] [main/DEBUG] [net.minecraftforge.fml.javafmlmod.FMLJavaModLanguageProvider/LOADING]: Loading FMLModContainer from classloader cpw.mods.modlauncher.TransformingClassLoader@1d50a7ca - got cpw.mods.cl.ModuleClassLoader@33abde31
 [25Jun2025 12:57:11.807] [main/DEBUG] [net.minecraftforge.fml.javafmlmod.FMLModContainer/LOADING]: Creating FMLModContainer instance for software.bernie.example.GeckoLibMod
 [25Jun2025 12:57:11.807] [main/DEBUG] [net.minecraftforge.fml.javafmlmod.FMLJavaModLanguageProvider/LOADING]: Loading FMLModContainer from classloader cpw.mods.modlauncher.TransformingClassLoader@1d50a7ca - got cpw.mods.cl.ModuleClassLoader@33abde31
-[25Jun2025 12:57:11.808] [main/DEBUG] [net.minecraftforge.fml.javafmlmod.FMLModContainer/LOADING]: Creating FMLModContainer instance for net.team.helldivers.HelldiversMod
+[25Jun2025 12:57:11.808] [main/DEBUG] [net.minecraftforge.fml.javafmlmod.FMLModContainer/LOADING]: Creating FMLModContainer instance for net.team.helldivers.HellcraftMod
 [25Jun2025 12:57:11.831] [modloading-worker-0/DEBUG] [net.minecraftforge.versions.forge.ForgeVersion/CORE]: Forge Version package package net.minecraftforge.versions.forge, Forge, version 47.4 from cpw.mods.modlauncher.TransformingClassLoader@1d50a7ca
 [25Jun2025 12:57:11.831] [modloading-worker-0/DEBUG] [net.minecraftforge.versions.forge.ForgeVersion/CORE]: Found Forge version 47.4.1
 [25Jun2025 12:57:11.831] [modloading-worker-0/DEBUG] [net.minecraftforge.versions.forge.ForgeVersion/CORE]: Found Forge spec 47.4
@@ -448,7 +448,7 @@ java.lang.IllegalAccessException: class io.netty.util.internal.PlatformDependent
 [25Jun2025 12:57:11.986] [modloading-worker-0/DEBUG] [mixin/]: Mixing client.GameRendererMixin from lodestone.mixins.json into net.minecraft.client.renderer.GameRenderer
 [25Jun2025 12:57:11.993] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing net.team.helldivers.event.ModEvents to FORGE
 [25Jun2025 12:57:11.993] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing net.minecraftforge.client.ClientForgeMod to MOD
-[25Jun2025 12:57:11.995] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing net.team.helldivers.HelldiversMod$ClientModEvents to MOD
+[25Jun2025 12:57:11.995] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing net.team.helldivers.HellcraftMod$ClientModEvents to MOD
 [25Jun2025 12:57:12.003] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing net.team.helldivers.item.custom.EffectTesterItem to FORGE
 [25Jun2025 12:57:12.018] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Attempting to inject @EventBusSubscriber classes into the eventbus for geckolib
 [25Jun2025 12:57:12.018] [modloading-worker-0/DEBUG] [net.minecraftforge.fml.javafmlmod.AutomaticEventSubscriber/LOADING]: Auto-subscribing software.bernie.example.GeckoLibMod to FORGE

@@ -1,7 +1,7 @@
 package net.team.helldivers.screen.custom;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.HellcraftMod;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class StratagemPickerScreen extends AbstractContainerScreen<StratagemPickerMenu> {
     private static final ResourceLocation GUI_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/gui/stratagem_picker/stratagem_picker.png");
+            ResourceLocation.fromNamespaceAndPath(HellcraftMod.MOD_ID, "textures/gui/stratagem_picker/stratagem_picker.png");
 
     public StratagemPickerScreen(StratagemPickerMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);

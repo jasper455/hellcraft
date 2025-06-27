@@ -1,6 +1,6 @@
 package net.team.helldivers.sound;
 
-import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.HellcraftMod;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -10,7 +10,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModSounds {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS =
-            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, HelldiversMod.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, HellcraftMod.MOD_ID);
 
     public static final RegistryObject<SoundEvent> STRATAGEM_INPUT = registerSoundEvent("stratagem_input");
 
@@ -35,7 +35,7 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> STRATAGEM_MENU_CLOSE = registerSoundEvent("stratagem_menu_close");
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
-        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, name);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(HellcraftMod.MOD_ID, name);
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
     }
 

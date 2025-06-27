@@ -3,7 +3,7 @@ package net.team.helldivers.entity.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.HellcraftMod;
 import net.team.helldivers.entity.custom.StratagemOrbEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -62,7 +62,7 @@ public class StratagemOrbProjectileRenderer extends EntityRenderer<StratagemOrbE
 
     @Override
     public ResourceLocation getTextureLocation(StratagemOrbEntity pEntity) {
-        return ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/entity/stratagem_orb/stratagem_orb.png");
+        return ResourceLocation.fromNamespaceAndPath(HellcraftMod.MOD_ID, "textures/entity/stratagem_orb/stratagem_orb.png");
     }
 
     @Override

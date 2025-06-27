@@ -1,7 +1,7 @@
 package net.team.helldivers.network;
 
 
-import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.HellcraftMod;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkDirection;
@@ -11,7 +11,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 
 public class PacketHandler {
     private static final SimpleChannel INSTANCE = NetworkRegistry.ChannelBuilder.named(
-            ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "main"))
+            ResourceLocation.fromNamespaceAndPath(HellcraftMod.MOD_ID, "main"))
             .serverAcceptedVersions((status) -> true)
             .clientAcceptedVersions((status) -> true)
             .networkProtocolVersion(() -> "1")
