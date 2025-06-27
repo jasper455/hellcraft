@@ -37,7 +37,7 @@ import static software.bernie.example.GeckoLibMod.DISABLE_EXAMPLES_PROPERTY_KEY;
 @Mod(HellcraftMod.MOD_ID)
 public class HellcraftMod {
     // Define mod id in a common place for everything to reference
-    public static final String MOD_ID = "hellcraft";
+    public static final String MOD_ID = "helldivers";
     // Directly reference a slf4j logger
     private static final Logger LOGGER = LogUtils.getLogger();
 
