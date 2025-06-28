@@ -2,16 +2,13 @@ package net.team.helldivers.event;
 
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.team.helldivers.HellcraftMod;
+import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.client.renderer.block.HellbombBlockRenderer;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.model.geom.ModelLayerLocation;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ComputeFovModifierEvent;
 import net.minecraftforge.client.event.EntityRenderersEvent;
@@ -24,7 +21,7 @@ import team.lodestar.lodestone.systems.postprocess.PostProcessHandler;
 
 import java.awt.*;
 
-@Mod.EventBusSubscriber(modid = HellcraftMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = HelldiversMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ModClientEvents {
     private static float alpha = 0.0f;
     private static float outFadeSpeed;
@@ -87,7 +84,7 @@ public class ModClientEvents {
         }
     }
 
-    @Mod.EventBusSubscriber(modid = HellcraftMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = HelldiversMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public class ModClientBusEvents {
 
         @SubscribeEvent
@@ -106,7 +103,7 @@ public class ModClientEvents {
 
         @SubscribeEvent
         public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-            if (HellcraftMod.shouldRegisterExamples()) {
+            if (HelldiversMod.shouldRegisterExamples()) {
                 event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
             }
         }

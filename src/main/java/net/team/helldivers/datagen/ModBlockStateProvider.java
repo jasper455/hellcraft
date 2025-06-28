@@ -1,6 +1,6 @@
 package net.team.helldivers.datagen;
 
-import net.team.helldivers.HellcraftMod;
+import net.team.helldivers.HelldiversMod;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
@@ -13,7 +13,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModBlockStateProvider extends BlockStateProvider  {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
-        super(output, HellcraftMod.MOD_ID, exFileHelper);
+        super(output, HelldiversMod.MOD_ID, exFileHelper);
     }
 
     @Override

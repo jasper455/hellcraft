@@ -1,7 +1,7 @@
 package net.team.helldivers.client.hud;
 
 
-import net.team.helldivers.HellcraftMod;
+import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.item.custom.IHelldiverArmorItem;
 import net.team.helldivers.item.custom.StratagemPickerItem;
@@ -21,7 +21,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = HellcraftMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = HelldiversMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class Stratagems {
     private static boolean allInputsDown = false;
     private static boolean hasPlayedOpenSound = false;

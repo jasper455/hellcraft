@@ -1,7 +1,7 @@
 package net.team.helldivers.item;
 
 
-import net.team.helldivers.HellcraftMod;
+import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.item.custom.*;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
@@ -9,11 +9,12 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import software.bernie.example.item.JackInTheBoxItem;
 
 public class ModItems {
 
     public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, HellcraftMod.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.ITEMS, HelldiversMod.MOD_ID);
 
     public static final RegistryObject<Item> EFFECT_TESTER = ITEMS.register("effect_tester",
             () -> new EffectTesterItem(new Item.Properties()));
@@ -23,6 +24,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> TITANIUM = ITEMS.register("titanium",
             () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> AR23 = ITEMS.register("ar23",
+            () -> new Ar23Item(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> B01_HELMET = ITEMS.register("b01_helmet",
             () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL , ArmorItem.Type.HELMET,

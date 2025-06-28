@@ -1,6 +1,6 @@
 package net.team.helldivers.datagen;
 
-import net.team.helldivers.HellcraftMod;
+import net.team.helldivers.HelldiversMod;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 public class ModItemTagGenerator extends ItemTagsProvider {
     public ModItemTagGenerator(PackOutput packOutput, CompletableFuture<HolderLookup.Provider> completableFuture,
                                CompletableFuture<TagLookup<Block>> lookupCompletableFuture, @Nullable ExistingFileHelper existingFileHelper) {
-        super(packOutput, completableFuture, lookupCompletableFuture, HellcraftMod.MOD_ID, existingFileHelper);
+        super(packOutput, completableFuture, lookupCompletableFuture, HelldiversMod.MOD_ID, existingFileHelper);
     }
 
     @Override

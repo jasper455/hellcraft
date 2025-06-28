@@ -1,6 +1,6 @@
 package net.team.helldivers.screen;
 
-import net.team.helldivers.HellcraftMod;
+import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.screen.custom.StratagemPickerMenu;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
@@ -13,7 +13,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENUS =
-            DeferredRegister.create(ForgeRegistries.MENU_TYPES, HellcraftMod.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.MENU_TYPES, HelldiversMod.MOD_ID);
 
     public static final RegistryObject<MenuType<StratagemPickerMenu>> STRATAGEM_PICKER =
             registerMenuType("stratagem_picker", StratagemPickerMenu::new);

@@ -1,6 +1,6 @@
 package net.team.helldivers.entity;
 
-import net.team.helldivers.HellcraftMod;
+import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.entity.custom.HellpodProjectileEntity;
 import net.team.helldivers.entity.custom.MissileProjectileEntity;
 import net.team.helldivers.entity.custom.StratagemOrbEntity;
@@ -13,7 +13,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModEntities {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
-            DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, HellcraftMod.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, HelldiversMod.MOD_ID);
 
     public static final RegistryObject<EntityType<MissileProjectileEntity>> MISSILE_PROJECTILE =
             ENTITY_TYPES.register("missile", () -> EntityType.Builder.<MissileProjectileEntity>of(MissileProjectileEntity::new, MobCategory.MISC)

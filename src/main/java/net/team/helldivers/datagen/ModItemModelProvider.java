@@ -1,6 +1,6 @@
 package net.team.helldivers.datagen;
 
-import net.team.helldivers.HellcraftMod;
+import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.item.ModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -32,7 +32,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     }
 
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
-        super(output, HellcraftMod.MOD_ID, existingFileHelper);
+        super(output, HelldiversMod.MOD_ID, existingFileHelper);
     }
 
     @Override
@@ -46,6 +46,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
         basicItem(ModItems.STRATAGEM_PICKER.get());
 
+//        basicItem(ModItems.AR23.get());
+
 
         basicItem(ModItems.SMALL_BARRAGE.get());
         basicItem(ModItems.BIG_BARRAGE.get());
@@ -57,18 +59,18 @@ public class ModItemModelProvider extends ItemModelProvider {
     private ItemModelBuilder handheldItem(RegistryObject<Item> item) {
         return withExistingParent(item.getId().getPath(),
                 ResourceLocation.parse("item/handheld")).texture("layer0",
-                ResourceLocation.fromNamespaceAndPath(HellcraftMod.MOD_ID, "item/" + item.getId().getPath()));
+                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "item/" + item.getId().getPath()));
     }
 
     private ItemModelBuilder simpleBlockBlockItem(RegistryObject<Block> item) {
         return withExistingParent(item.getId().getPath(),
                 ResourceLocation.parse("item/generated")).texture("layer0",
-                ResourceLocation.fromNamespaceAndPath(HellcraftMod.MOD_ID, "block/" + item.getId().getPath()));
+                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "block/" + item.getId().getPath()));
     }
     private ItemModelBuilder simpleBlockItem(RegistryObject<Block> item) {
         return withExistingParent(item.getId().getPath(),
                 ResourceLocation.parse("item/generated")).texture("layer0",
-                ResourceLocation.fromNamespaceAndPath(HellcraftMod.MOD_ID, "item/" + item.getId().getPath()));
+                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "item/" + item.getId().getPath()));
     }
 
 }
