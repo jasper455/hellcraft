@@ -24,20 +24,20 @@ public class ModItems {
     public static final RegistryObject<Item> TITANIUM = ITEMS.register("titanium",
             () -> new Item(new Item.Properties()));
 
-    public static final RegistryObject<Item> HELLDIVER_HELMET = ITEMS.register("helldiver_helmet",
-            () -> new HelldiverArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL , ArmorItem.Type.HELMET,
+    public static final RegistryObject<Item> B01_HELMET = ITEMS.register("b01_helmet",
+            () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL , ArmorItem.Type.HELMET,
                     new Item.Properties().stacksTo(1)));
 
-    public static final RegistryObject<Item> HELLDIVER_CHESTPLATE = ITEMS.register("helldiver_chestplate",
-            () -> new HelldiverArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
+    public static final RegistryObject<Item> B01_CHESTPLATE = ITEMS.register("b01_chestplate",
+            () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
                     new Item.Properties().stacksTo(1)));
 
-    public static final RegistryObject<Item> HELLDIVER_LEGGINGS = ITEMS.register("helldiver_leggings",
-            () -> new HelldiverArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
+    public static final RegistryObject<Item> B01_LEGGINGS = ITEMS.register("b01_leggings",
+            () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
                     new Item.Properties().stacksTo(1)));
 
-    public static final RegistryObject<Item> HELLDIVER_BOOTS = ITEMS.register("helldiver_boots",
-            () -> new HelldiverArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
+    public static final RegistryObject<Item> B01_BOOTS = ITEMS.register("b01_boots",
+            () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
                     new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> STRATAGEM_PICKER = ITEMS.register("stratagem_picker",

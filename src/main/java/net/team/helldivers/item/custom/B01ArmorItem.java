@@ -1,6 +1,6 @@
 package net.team.helldivers.item.custom;
 
-import net.team.helldivers.item.client.HelldiverArmorRenderer;
+import net.team.helldivers.client.renderer.armor.B01ArmorRenderer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,10 +20,10 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.function.Consumer;
 
-public class HelldiverArmorItem extends ArmorItem implements GeoItem {
+public class B01ArmorItem extends ArmorItem implements GeoItem, IHelldiverArmorItem {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
-    public HelldiverArmorItem(ArmorMaterial pMaterial, Type pType, Properties pProperties) {
+    public B01ArmorItem(ArmorMaterial pMaterial, Type pType, Properties pProperties) {
         super(pMaterial, pType, pProperties);
     }
 
@@ -44,12 +44,12 @@ public class HelldiverArmorItem extends ArmorItem implements GeoItem {
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
-            private HelldiverArmorRenderer renderer;
+            private B01ArmorRenderer renderer;
 
             @Override
             public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
                 if (this.renderer == null)
-                    this.renderer = new HelldiverArmorRenderer();
+                    this.renderer = new B01ArmorRenderer();
 
                 this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
                 return this.renderer;

@@ -3,6 +3,7 @@ package net.team.helldivers.client.hud;
 
 import net.team.helldivers.HellcraftMod;
 import net.team.helldivers.item.ModItems;
+import net.team.helldivers.item.custom.IHelldiverArmorItem;
 import net.team.helldivers.item.custom.StratagemPickerItem;
 import net.team.helldivers.item.inventory.StratagemPickerInventory;
 import net.team.helldivers.network.PacketHandler;
@@ -75,7 +76,7 @@ public class Stratagems {
         if (KeyBinding.SHOW_STRATAGEM_KEY.isDown() && !hasPlayedOpenSound && player.getDeltaMovement().x == 0
                 && player.getDeltaMovement().z == 0 && !allInputsDown &&
                 player.getMainHandItem().isEmpty() &&
-                player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ModItems.HELLDIVER_CHESTPLATE.get() && getPickerInventory(player) != null) {
+                player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IHelldiverArmorItem && getPickerInventory(player) != null) {
 
             player.playSound(ModSounds.STRATAGEM_MENU_OPEN.get(), 1f, 1f);
             hasPlayedOpenSound = true;
@@ -86,7 +87,7 @@ public class Stratagems {
         if (!KeyBinding.SHOW_STRATAGEM_KEY.isDown() && !hasPlayedCloseSound && hasPlayedOpenSound && player.getDeltaMovement().x == 0
                 && player.getDeltaMovement().z == 0 && !allInputsDown &&
                 player.getMainHandItem().isEmpty() &&
-                player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ModItems.HELLDIVER_CHESTPLATE.get() && getPickerInventory(player) != null) {
+                player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IHelldiverArmorItem && getPickerInventory(player) != null) {
 
             player.playSound(ModSounds.STRATAGEM_MENU_CLOSE.get(), 1f, 1f);
             hasPlayedOpenSound = false;
@@ -97,7 +98,7 @@ public class Stratagems {
 
         if (KeyBinding.SHOW_STRATAGEM_KEY.isDown() && player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0 && !allInputsDown &&
                 player.getMainHandItem().isEmpty() &&
-                player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ModItems.HELLDIVER_CHESTPLATE.get() && getPickerInventory(player) != null) {
+                player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IHelldiverArmorItem && getPickerInventory(player) != null) {
 
             // Hellbomb inputs
 
@@ -386,7 +387,7 @@ public class Stratagems {
 
         if (KeyBinding.SHOW_STRATAGEM_KEY.isDown() && player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0 && !allInputsDown &&
                 player.getMainHandItem().isEmpty() &&
-                player.getItemBySlot(EquipmentSlot.CHEST).getItem() == ModItems.HELLDIVER_CHESTPLATE.get() && getPickerInventory(player) != null) {
+                player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IHelldiverArmorItem && getPickerInventory(player) != null) {
 
             guiGraphics.blit(StratagemHudOverlay.STRATAGEM_BACKGROUND,
                     6, 6, 132 , 125, 0, 0, 16, 16,

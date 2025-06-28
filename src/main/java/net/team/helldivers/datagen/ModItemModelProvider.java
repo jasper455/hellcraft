@@ -39,10 +39,10 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         basicItem(ModItems.EFFECT_TESTER.get());
 
-        basicItem(ModItems.HELLDIVER_HELMET.get());
-        basicItem(ModItems.HELLDIVER_CHESTPLATE.get());
-        basicItem(ModItems.HELLDIVER_LEGGINGS.get());
-        basicItem(ModItems.HELLDIVER_BOOTS.get());
+        basicItem(ModItems.B01_HELMET.get());
+        basicItem(ModItems.B01_CHESTPLATE.get());
+        basicItem(ModItems.B01_LEGGINGS.get());
+        basicItem(ModItems.B01_BOOTS.get());
 
         basicItem(ModItems.STRATAGEM_PICKER.get());
 

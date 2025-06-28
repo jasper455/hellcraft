@@ -4,10 +4,10 @@
 
   "item.helldivers.effect_tester": "Effect Tester",
   "item.helldivers.stratagem_orb": "§bStratagem Orb",
-  "item.helldivers.helldiver_helmet": "§bB0-1 Tactical Helmet",
-  "item.helldivers.helldiver_chestplate": "§bB0-1 Tactical Chestplate",
-  "item.helldivers.helldiver_leggings": "§bB0-1 Tactical Leggings",
-  "item.helldivers.helldiver_boots": "§bB0-1 Tactical Boots",
+  "item.helldivers.b01_helmet": "§bB0-1 Tactical Helmet",
+  "item.helldivers.b01_chestplate": "§bB0-1 Tactical Chestplate",
+  "item.helldivers.b01_leggings": "§bB0-1 Tactical Leggings",
+  "item.helldivers.b01_boots": "§bB0-1 Tactical Boots",
   "item.helldivers.stratagem_picker": "§dStratagem Selector",
 
   "item.helldivers.small_barrage": "§b120MM HE Barrage",
