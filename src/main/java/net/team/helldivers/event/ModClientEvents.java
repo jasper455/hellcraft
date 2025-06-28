@@ -4,9 +4,7 @@ package net.team.helldivers.event;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.team.helldivers.HellcraftMod;
 import net.team.helldivers.block.entity.ModBlockEntities;
-import net.team.helldivers.client.model.entity.layers.HelldiverCapeModel;
 import net.team.helldivers.client.renderer.block.HellbombBlockRenderer;
-import net.team.helldivers.client.renderer.entity.layers.HelldiverCapeLayer;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.util.KeyBinding;
 import net.minecraft.client.Minecraft;
@@ -104,25 +102,6 @@ public class ModClientEvents {
             event.register(KeyBinding.DOWN_INPUT_KEY);
             event.register(KeyBinding.LEFT_INPUT_KEY);
             event.register(KeyBinding.RIGHT_INPUT_KEY);
-        }
-
-        @SubscribeEvent
-        public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
-            for (String skinType : event.getSkins()) {
-                PlayerRenderer renderer = event.getPlayerSkin(skinType);
-                HelldiverCapeModel capeModel = new HelldiverCapeModel(Minecraft.getInstance().getEntityModels()
-                        .bakeLayer(new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(
-                                "helldivers", "textures/entity/helldiver_cape.png"), "main")));
-
-                renderer.addLayer(new HelldiverCapeLayer(renderer, capeModel));
-            }
-        }
-
-        @SubscribeEvent
-        public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-            event.registerLayerDefinition(new ModelLayerLocation(
-                            ResourceLocation.fromNamespaceAndPath("helldivers", "textures/entity/helldiver_cape.png"), "main"),
-                    HelldiverCapeModel::createBodyLayer);
         }
 
         @SubscribeEvent
