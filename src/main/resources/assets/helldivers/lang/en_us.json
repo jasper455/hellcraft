@@ -1,5 +1,5 @@
 {
-  "creativetab.helldivers": "Helldivers 2",
+  "creativetab.helldivers": "Crafted Democracy",
   "creativetab.stratagems": "Stratagems",
 
   "item.helldivers.effect_tester": "Effect Tester",
@@ -18,12 +18,15 @@
   "item.helldivers.precision_strike": "§bOrbital Precision Strike",
   "item.helldivers.walking_barrage": "§bOrbital Walking Barrage",
 
-  "key.category.helldivers": "Blockdivers",
+  "key.category.helldivers": "Crafted Democracy",
   "key.helldivers.show_stratagem_hud": "Show Stratagem HUD",
   "key.helldivers.up_input": "Up Stratagem Input",
   "key.helldivers.down_input": "Down Stratagem Input",
   "key.helldivers.left_input": "Left Stratagem Input",
   "key.helldivers.right_input": "Right Stratagem Input",
+  "key.helldivers.shoot": "Shoot",
+  "key.helldivers.reload": "Reload",
+  "key.helldivers.aim": "Aim",
 
   "block.helldivers.hellbomb": "§e§oHellbomb",
   "container.helldivers.stratagem_picker": "Stratagem Picker"

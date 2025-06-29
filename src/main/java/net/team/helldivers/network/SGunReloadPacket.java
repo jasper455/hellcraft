@@ -1,0 +1,32 @@
+package net.team.helldivers.network;
+
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.network.NetworkEvent;
+import net.team.helldivers.item.custom.Ar23Item;
+import net.team.helldivers.sound.ModSounds;
+
+import java.util.function.Supplier;
+
+public class SGunReloadPacket {
+
+    public SGunReloadPacket() {}
+
+    public SGunReloadPacket(FriendlyByteBuf buffer) {
+        this();
+    }
+
+    public void encode(FriendlyByteBuf buffer) {
+    }
+
+    public void handle(Supplier<NetworkEvent.Context> context) {
+        ServerPlayer player = context.get().getSender();
+        if (player == null) return;
+        ItemStack heldItem = player.getMainHandItem();
+        player.level().playSound(null, player.blockPosition(), ModSounds.AR_22_RELOAD.get(), SoundSource.PLAYERS, 10.0f, 1.0f);
+        heldItem.setDamageValue(0);
+    }
+
+}

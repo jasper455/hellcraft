@@ -1,14 +1,19 @@
 package net.team.helldivers;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.block.entity.ModBlockEntities;
+import net.team.helldivers.client.renderer.item.AR23Renderer;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.entity.client.BulletProjectileRenderer;
 import net.team.helldivers.entity.client.HellpodProjectileRenderer;
 import net.team.helldivers.entity.client.MissileProjectileRenderer;
 import net.team.helldivers.entity.client.StratagemOrbProjectileRenderer;
 import net.team.helldivers.item.ModCreativeModeTabs;
 import net.team.helldivers.item.ModItems;
+import net.team.helldivers.item.custom.Ar23Item;
 import net.team.helldivers.particle.ModParticles;
 import net.team.helldivers.screen.ModMenuTypes;
 import net.team.helldivers.screen.custom.StratagemPickerScreen;
@@ -29,6 +34,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.slf4j.Logger;
+import software.bernie.geckolib.GeckoLib;
 import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
 
 import static software.bernie.example.GeckoLibMod.DISABLE_EXAMPLES_PROPERTY_KEY;
@@ -43,6 +49,8 @@ public class HelldiversMod {
 
     public HelldiversMod(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
+
+        GeckoLib.initialize();
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -69,10 +77,7 @@ public class HelldiversMod {
         EntityRenderers.register(ModEntities.MISSILE_PROJECTILE.get(), MissileProjectileRenderer::new);
         EntityRenderers.register(ModEntities.STRATAGEM_ORB.get(), StratagemOrbProjectileRenderer::new);
         EntityRenderers.register(ModEntities.HELLPOD.get(), HellpodProjectileRenderer::new);
-    }
-
-    public static boolean shouldRegisterExamples() {
-        return !FMLEnvironment.production && !Boolean.getBoolean(DISABLE_EXAMPLES_PROPERTY_KEY);
+        EntityRenderers.register(ModEntities.BULLET.get(), BulletProjectileRenderer::new);
     }
 
     // Add the example block item to the building blocks tab

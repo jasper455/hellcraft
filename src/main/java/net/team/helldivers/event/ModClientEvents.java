@@ -2,21 +2,22 @@ package net.team.helldivers.event;
 
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraftforge.client.event.*;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.client.renderer.block.HellbombBlockRenderer;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
+import net.team.helldivers.item.ModItems;
+import net.team.helldivers.item.custom.IGunItem;
 import net.team.helldivers.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ComputeFovModifierEvent;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import software.bernie.geckolib.GeckoLib;
+import software.bernie.geckolib.renderer.GeoRenderer;
 import team.lodestar.lodestone.systems.postprocess.PostProcessHandler;
 
 import java.awt.*;
@@ -29,7 +30,8 @@ public class ModClientEvents {
 
     @SubscribeEvent
     public static void onComputerFovModifierEvent(ComputeFovModifierEvent event) {
-        if (Minecraft.getInstance().options.keySaveHotbarActivator.isDown()) {
+        if (Minecraft.getInstance().options.keySaveHotbarActivator.isDown()
+                && !(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem)) {
             float fovModifier = 1f;
             float deltaTicks = ((float) 20) / 20f;
             deltaTicks *= deltaTicks;
@@ -37,9 +39,19 @@ public class ModClientEvents {
             event.setNewFovModifier(fovModifier);
         }
 
-        if (Minecraft.getInstance().options.keyLoadHotbarActivator.isDown()) {
+        if (Minecraft.getInstance().options.keyLoadHotbarActivator.isDown()
+                && !(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem)) {
             float fovModifier = 1f;
             float deltaTicks = ((float) 30) / 20f;
+            deltaTicks *= deltaTicks;
+            fovModifier *=1f - deltaTicks * 0.5f;
+            event.setNewFovModifier(fovModifier);
+        }
+
+        if (KeyBinding.AIM.isDown()
+                && (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem)) {
+            float fovModifier = 1f;
+            float deltaTicks = ((float) 25) / 20f;
             deltaTicks *= deltaTicks;
             fovModifier *=1f - deltaTicks * 0.5f;
             event.setNewFovModifier(fovModifier);
@@ -99,13 +111,19 @@ public class ModClientEvents {
             event.register(KeyBinding.DOWN_INPUT_KEY);
             event.register(KeyBinding.LEFT_INPUT_KEY);
             event.register(KeyBinding.RIGHT_INPUT_KEY);
+            event.register(KeyBinding.SHOOT);
+            event.register(KeyBinding.RELOAD);
+            event.register(KeyBinding.AIM);
         }
 
         @SubscribeEvent
         public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
-            if (HelldiversMod.shouldRegisterExamples()) {
-                event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
-            }
+            event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
+        }
+
+        @SubscribeEvent
+        public static void registerReloadListener(RegisterClientReloadListenersEvent event) {
+            GeckoLib.initialize();
         }
     }
 

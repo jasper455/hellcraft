@@ -13,4 +13,7 @@ public class ModModelLayers {
 
     public static final ModelLayerLocation HELLPOD = new ModelLayerLocation(
             ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "hellpod"), "main");
+
+    public static final ModelLayerLocation BULLET = new ModelLayerLocation(
+            ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "bullet"), "main");
 }

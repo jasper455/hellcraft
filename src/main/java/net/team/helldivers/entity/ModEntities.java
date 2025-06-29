@@ -1,6 +1,7 @@
 package net.team.helldivers.entity;
 
 import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.entity.custom.BulletProjectileEntity;
 import net.team.helldivers.entity.custom.HellpodProjectileEntity;
 import net.team.helldivers.entity.custom.MissileProjectileEntity;
 import net.team.helldivers.entity.custom.StratagemOrbEntity;
@@ -27,6 +28,10 @@ public class ModEntities {
     public static final RegistryObject<EntityType<HellpodProjectileEntity>> HELLPOD =
             ENTITY_TYPES.register("hellpod", () -> EntityType.Builder.<HellpodProjectileEntity>of(HellpodProjectileEntity::new, MobCategory.MISC)
                     .sized(0.3f, 0.4f).build("hellpod"));
+
+    public static final RegistryObject<EntityType<BulletProjectileEntity>> BULLET =
+            ENTITY_TYPES.register("bullet", () -> EntityType.Builder.<BulletProjectileEntity>of(BulletProjectileEntity::new, MobCategory.MISC)
+                    .sized(0.1f, 0.1f).build("bullet"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

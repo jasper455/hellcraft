@@ -34,6 +34,10 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> STRATAGEM_MENU_CLOSE = registerSoundEvent("stratagem_menu_close");
 
+    public static final RegistryObject<SoundEvent> AR_22_RELOAD = registerSoundEvent("ar22_reload");
+
+    public static final RegistryObject<SoundEvent> AR_22_SHOOT = registerSoundEvent("ar22_shoot");
+
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, name);
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));

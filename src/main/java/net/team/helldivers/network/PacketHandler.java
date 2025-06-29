@@ -45,6 +45,18 @@ public class PacketHandler {
                 .consumerMainThread(SOrbitalBarragePacket::handle)
                 .add();
 
+        INSTANCE.messageBuilder(SAr22ShootPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SAr22ShootPacket::encode)
+                .decoder(SAr22ShootPacket::new)
+                .consumerMainThread(SAr22ShootPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(SGunReloadPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SGunReloadPacket::encode)
+                .decoder(SGunReloadPacket::new)
+                .consumerMainThread(SGunReloadPacket::handle)
+                .add();
+
         // CLIENT
         INSTANCE.messageBuilder(CSmallExplosionParticlesPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(CSmallExplosionParticlesPacket::encode)
@@ -56,6 +68,12 @@ public class PacketHandler {
                 .encoder(CLargeExplosionParticlesPacket::encode)
                 .decoder(CLargeExplosionParticlesPacket::new)
                 .consumerMainThread(CLargeExplosionParticlesPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(CApplyRecoilPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(CApplyRecoilPacket::encode)
+                .decoder(CApplyRecoilPacket::new)
+                .consumerMainThread(CApplyRecoilPacket::handle)
                 .add();
     }
 

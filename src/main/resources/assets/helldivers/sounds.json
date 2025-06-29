@@ -64,5 +64,17 @@
     "sounds": [
       "helldivers:stratagem_menu_close"
     ]
+  },
+  "ar22_reload": {
+    "subtitles": "sounds.helldivers.ar22_reload",
+    "sounds": [
+      "helldivers:ar22_reload"
+    ]
+  },
+  "ar22_shoot": {
+    "subtitles": "sounds.helldivers.ar22_shoot",
+    "sounds": [
+      "helldivers:ar22_shoot"
+    ]
   }
 }

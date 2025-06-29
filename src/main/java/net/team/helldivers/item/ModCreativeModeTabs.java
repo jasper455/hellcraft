@@ -25,6 +25,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.B01_BOOTS.get());
                         output.accept(ModBlocks.HELLBOMB.get());
                         output.accept(ModItems.STRATAGEM_PICKER.get());
+                        output.accept(ModItems.AR23.get());
                     }).build());
     public static final RegistryObject<CreativeModeTab> STRATAGEMS_TAB = CREATIVE_MODE_TABS.register("stratagems_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.PRECISION_STRIKE.get()))
