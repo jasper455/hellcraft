@@ -1,6 +1,8 @@
 package net.team.helldivers.block;
 
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.block.custom.AmmoCrateBlock;
 import net.team.helldivers.block.custom.HellbombBlock;
 import net.team.helldivers.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -19,6 +21,9 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> HELLBOMB = registerBlock("hellbomb",
             () -> new HellbombBlock());
+
+    public static final RegistryObject<Block> AMMO_CRATE = registerBlock("ammo_crate",
+            () -> new AmmoCrateBlock(BlockBehaviour.Properties.of().instabreak().noOcclusion().noCollission()));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {

@@ -14,7 +14,11 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.team.helldivers.block.ModBlocks;
+import net.team.helldivers.block.custom.AmmoCrateBlock;
+import net.team.helldivers.block.custom.HellbombBlock;
 import net.team.helldivers.client.renderer.item.AR23Renderer;
+import net.team.helldivers.item.inventory.StratagemPickerInventory;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SAr22ShootPacket;
 import net.team.helldivers.network.SGunReloadPacket;
@@ -195,12 +199,16 @@ public class Ar23Item extends Item implements GeoItem, IGunItem {
 
                 // Handle reload
                 if (KeyBinding.RELOAD.consumeClick()) {
-                    isReloading = true;
-                    hasStartedReload = false; // Reset the flag when starting a new reload
-                    // Reset aiming states when reloading
-                    isAiming = false;
-                    wasAiming = false;
-                    PacketHandler.sendToServer(new SGunReloadPacket()); // Send packet only once
+                    for (ItemStack stack : player.getInventory().items) {
+                        if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof AmmoCrateBlock) {
+                            isReloading = true;
+                            hasStartedReload = false; // Reset the flag when starting a new reload
+                            // Reset aiming states when reloading
+                            isAiming = false;
+                            wasAiming = false;
+                            PacketHandler.sendToServer(new SGunReloadPacket()); // Send packet only once
+                        }
+                    }
                 }
 
                 // Reset reload state when animation is done

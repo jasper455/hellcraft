@@ -2,8 +2,8 @@
 	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "ammo_crate_texture",
-		"particle": "ammo_crate_texture"
+		"0": "helldivers:block/ammo_crate",
+		"particle": "helldivers:block/ammo_crate"
 	},
 	"elements": [
 		{

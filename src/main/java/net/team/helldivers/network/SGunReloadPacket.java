@@ -3,8 +3,10 @@ package net.team.helldivers.network;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
+import net.team.helldivers.block.custom.AmmoCrateBlock;
 import net.team.helldivers.item.custom.Ar23Item;
 import net.team.helldivers.sound.ModSounds;
 
@@ -27,6 +29,11 @@ public class SGunReloadPacket {
         ItemStack heldItem = player.getMainHandItem();
         player.level().playSound(null, player.blockPosition(), ModSounds.AR_22_RELOAD.get(), SoundSource.PLAYERS, 10.0f, 1.0f);
         heldItem.setDamageValue(0);
+        for (ItemStack stack : player.getInventory().items) {
+            if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof AmmoCrateBlock) {
+                stack.shrink(1);
+            }
+        }
     }
 
 }

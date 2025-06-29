@@ -1,0 +1,6 @@
+{
+  "parent": "helldivers:block/ammo_crate",
+  "textures": {
+    "layer0": "helldivers:block/ammo_crate"
+  }
+}

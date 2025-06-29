@@ -1,6 +1,7 @@
 {
   "creativetab.helldivers": "Crafted Democracy",
   "creativetab.stratagems": "Stratagems",
+  "creativetab.guns": "Guns",
 
   "item.helldivers.effect_tester": "Effect Tester",
   "item.helldivers.stratagem_orb": "§bStratagem Orb",
@@ -28,6 +29,8 @@
   "key.helldivers.reload": "Reload",
   "key.helldivers.aim": "Aim",
 
-  "block.helldivers.hellbomb": "§e§oHellbomb",
+  "block.helldivers.hellbomb": "§eHellbomb",
+  "block.helldivers.ammo_crate": "Ammo Crate",
+
   "container.helldivers.stratagem_picker": "Stratagem Picker"
 }
