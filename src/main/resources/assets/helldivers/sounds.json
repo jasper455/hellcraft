@@ -65,6 +65,12 @@
       "helldivers:stratagem_menu_close"
     ]
   },
+  "stratagem_orb_land": {
+    "subtitles": "sounds.helldivers.stratagem_orb_land",
+    "sounds": [
+      "helldivers:stratagem_orb_land"
+    ]
+  },
   "ar22_reload": {
     "subtitles": "sounds.helldivers.ar22_reload",
     "sounds": [
@@ -75,6 +81,12 @@
     "subtitles": "sounds.helldivers.ar22_shoot",
     "sounds": [
       "helldivers:ar22_shoot"
+    ]
+  },
+  "gun_empty": {
+    "subtitles": "sounds.helldivers.gun_empty",
+    "sounds": [
+      "helldivers:gun_empty"
     ]
   }
 }

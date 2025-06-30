@@ -119,6 +119,13 @@ public class Ar23Item extends Item implements GeoItem, IGunItem {
                 shootCooldown = SHOOT_DELAY;
                 return PlayState.CONTINUE;
             }
+            if (isShooting && shootCooldown == 0 &&
+                    !canShoot(Minecraft.getInstance().player.getMainHandItem()) && !isReloading &&
+            !Minecraft.getInstance().player.getCooldowns().isOnCooldown(this)) {
+                PacketHandler.sendToServer(new SAr22ShootPacket());
+                shootCooldown = SHOOT_DELAY;
+                return PlayState.CONTINUE;
+            }
 
             // Handle aiming states only if not reloading or shooting
             if (!isReloading && !isShooting) {

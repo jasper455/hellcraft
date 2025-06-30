@@ -29,7 +29,7 @@ import java.util.Set;
 
 public class AR23Renderer extends GeoItemRenderer<Ar23Item> {
     public AR23Renderer() {
-        super(new DefaultedItemGeoModel<>(ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "ar23")));
+        super(new Ar23Model()); // Use your custom model instead of DefaultedItemGeoModel
     }
 
     @Override

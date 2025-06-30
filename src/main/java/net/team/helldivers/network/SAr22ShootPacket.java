@@ -35,7 +35,7 @@ public class SAr22ShootPacket {
                 // Play sound
                 player.level().playSound(null, player.blockPosition(),
                         ModSounds.AR_22_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
-                PacketHandler.sendToPlayer(new CApplyRecoilPacket(1.0f), player);
+                PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
 
             // Actually shoot the bullet
             BulletProjectileEntity bullet = new BulletProjectileEntity(player, player.level());
@@ -49,7 +49,11 @@ public class SAr22ShootPacket {
             if (!player.getAbilities().instabuild) {
                 heldItem.hurt(1, player.getRandom(), player);
             }
-        }
+            } else {
+                player.level().playSound(null, player.blockPosition(),
+                        ModSounds.GUN_EMPTY.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
+                player.getCooldowns().addCooldown(heldItem.getItem(), 10);
+            }
     }
 }
 }

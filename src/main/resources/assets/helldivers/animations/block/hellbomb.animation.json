@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.model.activate": {
+		"hellbomb.activate": {
 			"loop": "hold_on_last_frame",
 			"animation_length": 4.5,
 			"bones": {
@@ -106,7 +106,7 @@
 				}
 			}
 		},
-		"animation.model.active_idle": {
+		"hellbomb.active_idle": {
 			"loop": true,
 			"animation_length": 0.4167,
 			"bones": {

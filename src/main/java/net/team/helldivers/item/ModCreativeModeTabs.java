@@ -17,31 +17,29 @@ public class ModCreativeModeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.B01_HELMET.get()))
                     .title(Component.translatable("creativetab.helldivers"))
                     .displayItems((itemDisplayParameters, output) -> {
-                        output.accept(ModItems.EFFECT_TESTER.get());
-                        output.accept(ModItems.STRATAGEM_ORB.get());
+                        output.accept(ModBlocks.AMMO_CRATE.get());
+                    }).build());
+    public static final RegistryObject<CreativeModeTab> SEAF_EQUIPMENT = CREATIVE_MODE_TABS.register("seaf_equipment_tab",
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.AR23.get()))
+                    .title(Component.translatable("creativetab.seaf_equipment"))
+                    .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModItems.B01_HELMET.get());
                         output.accept(ModItems.B01_CHESTPLATE.get());
                         output.accept(ModItems.B01_LEGGINGS.get());
                         output.accept(ModItems.B01_BOOTS.get());
+                        output.accept(ModItems.AR23.get());
                     }).build());
     public static final RegistryObject<CreativeModeTab> STRATAGEMS_TAB = CREATIVE_MODE_TABS.register("stratagems_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.PRECISION_STRIKE.get()))
                     .title(Component.translatable("creativetab.stratagems"))
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModItems.STRATAGEM_PICKER.get());
+                        output.accept(ModItems.STRATAGEM_ORB.get());
                         output.accept(ModBlocks.HELLBOMB.get());
                         output.accept(ModItems.HELLBOMB_ITEM.get());
                         output.accept(ModItems.SMALL_BARRAGE.get());
                         output.accept(ModItems.BIG_BARRAGE.get());
                         output.accept(ModItems.PRECISION_STRIKE.get());
-                    }).build());
-    public static final RegistryObject<CreativeModeTab> GUNS_TAB = CREATIVE_MODE_TABS.register("guns_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.AR23.get()))
-                    .title(Component.translatable("creativetab.guns"))
-                    .withTabsBefore(HELLDIVERS_TAB.getId(), STRATAGEMS_TAB.getId())
-                    .displayItems((itemDisplayParameters, output) -> {
-                        output.accept(ModItems.AR23.get());
-                        output.accept(ModBlocks.AMMO_CRATE.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

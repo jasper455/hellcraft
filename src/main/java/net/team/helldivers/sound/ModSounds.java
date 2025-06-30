@@ -34,6 +34,10 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> STRATAGEM_MENU_CLOSE = registerSoundEvent("stratagem_menu_close");
 
+    public static final RegistryObject<SoundEvent> STRATAGEM_ORB_LAND = registerSoundEvent("stratagem_orb_land");
+
+    public static final RegistryObject<SoundEvent> GUN_EMPTY = registerSoundEvent("gun_empty");
+
     public static final RegistryObject<SoundEvent> AR_22_RELOAD = registerSoundEvent("ar22_reload");
 
     public static final RegistryObject<SoundEvent> AR_22_SHOOT = registerSoundEvent("ar22_shoot");

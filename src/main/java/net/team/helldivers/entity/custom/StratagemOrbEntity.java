@@ -1,5 +1,6 @@
 package net.team.helldivers.entity.custom;
 
+import net.minecraft.sounds.SoundEvent;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.helper.OrbitalBarrage;
 import net.team.helldivers.sound.ModSounds;
@@ -138,5 +139,10 @@ public class StratagemOrbEntity extends AbstractArrow {
     @Override
     protected ItemStack getPickupItem() {
         return new ItemStack(Items.AIR);
+    }
+
+    @Override
+    protected SoundEvent getDefaultHitGroundSoundEvent() {
+        return ModSounds.STRATAGEM_ORB_LAND.get();
     }
 }

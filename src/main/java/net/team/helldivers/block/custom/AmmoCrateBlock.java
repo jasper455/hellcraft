@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class AmmoCrateBlock extends Block {
+public class AmmoCrateBlock extends HorizontalDirectionalBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public AmmoCrateBlock(Properties pProperties) {
         super(pProperties);
@@ -29,7 +29,7 @@ public class AmmoCrateBlock extends Block {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(FACING,
-                context.getHorizontalDirection().getClockWise().getClockWise());
+                context.getHorizontalDirection().getOpposite());
     }
 
     @Override
@@ -41,6 +41,6 @@ public class AmmoCrateBlock extends Block {
             pPlayer.getInventory().add(this.asItem().getDefaultInstance());
             pLevel.destroyBlock(pPos, false);
         }
-        return InteractionResult.CONSUME;
+        return InteractionResult.SUCCESS;
     }
 }

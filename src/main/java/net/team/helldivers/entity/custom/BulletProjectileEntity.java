@@ -4,9 +4,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,6 +20,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.GlassBlock;
+import net.minecraft.world.level.block.IronBarsBlock;
+import net.minecraft.world.level.block.StainedGlassPaneBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -52,7 +58,10 @@ public class BulletProjectileEntity extends AbstractArrow {
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
         Entity entity = result.getEntity();
-        entity.hurt(this.damageSources().arrow(this, this.getOwner()), 1);
+        entity.hurt(this.damageSources().thrown(this, this.getOwner()), 3);
+        if (!this.level().isClientSide) {
+            this.level().broadcastEntityEvent(this, (byte)3);
+        }
         this.discard();
     }
 
@@ -61,7 +70,7 @@ public class BulletProjectileEntity extends AbstractArrow {
         super.onHitBlock(result);
         BlockPos pos = result.getBlockPos();
         BlockState block = Minecraft.getInstance().level.getBlockState(pos);
-        if (block.getBlock() == Blocks.GLASS_PANE || block.getBlock() == Blocks.GLASS) {
+        if (block.is(BlockTags.IMPERMEABLE) || block.getBlock() instanceof IronBarsBlock) {
             this.level().destroyBlock(pos, false);
         }
         this.discard();
@@ -73,7 +82,7 @@ public class BulletProjectileEntity extends AbstractArrow {
 
         super.tick();
         lifetime++;
-        this.setDeltaMovement(this.getDeltaMovement().x * 4, this.getDeltaMovement().y * 4, this.getDeltaMovement().z * 4);
+        this.setDeltaMovement(this.getDeltaMovement().normalize().scale(3f));
         if (this.level().isClientSide) {
             Entity owner = this.getOwner();
             if (owner instanceof Player player) {
