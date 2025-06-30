@@ -1,5 +1,7 @@
 package net.team.helldivers.entity.custom;
 
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.entity.ModEntities;
 import net.minecraft.core.Direction;
@@ -71,7 +73,7 @@ public class HellpodProjectileEntity extends AbstractArrow {
 
         if (groundedTicks == 60 && !this.level().isClientSide) {
             BlockState state = this.level().getBlockState(this.blockPosition());
-            this.level().setBlockAndUpdate(this.blockPosition(), ModBlocks.HELLBOMB.get().defaultBlockState().setValue(FACING, Direction.SOUTH));
+            this.level().setBlockAndUpdate(this.blockPosition(), ModBlocks.HELLBOMB.get().defaultBlockState().setValue(FACING, this.getOwner().getDirection().getOpposite()));
             this.discard();
         }
         super.tick();
@@ -80,5 +82,10 @@ public class HellpodProjectileEntity extends AbstractArrow {
     @Override
     protected ItemStack getPickupItem() {
         return Items.AIR.getDefaultInstance();
+    }
+
+    @Override
+    protected SoundEvent getDefaultHitGroundSoundEvent() {
+        return SoundEvents.DRAGON_FIREBALL_EXPLODE;
     }
 }

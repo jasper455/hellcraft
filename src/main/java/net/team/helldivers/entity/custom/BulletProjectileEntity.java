@@ -86,17 +86,6 @@ public class BulletProjectileEntity extends AbstractArrow {
         if (this.level().isClientSide) {
             Entity owner = this.getOwner();
             if (owner instanceof Player player) {
-                // Get player's look vector (direction they're facing)
-                Vec3 lookVec = player.getLookAngle();
-
-                // Calculate offset from eye position based on rotation
-                double distance = 1.0; // Distance in front of player
-                Vec3 muzzlePos = player.getEyePosition().add(
-                        lookVec.x * distance,
-                        lookVec.y * distance,
-                        lookVec.z * distance
-                );
-
                 // Create particles along the path
                 Vec3 current = new Vec3(this.getX(), this.getY(), this.getZ());
                 Vec3 direction = current.subtract(previousPos);
