@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"hellbomb.activate": {
+		"animation.model.activate": {
 			"loop": "hold_on_last_frame",
 			"animation_length": 4.5,
 			"bones": {
@@ -24,7 +24,8 @@
 							"vector": [0.25, 0, 0]
 						},
 						"1.9167": {
-							"vector": [26.73821, 7.35047, -39.16065]
+							"vector": [26.73821, 7.35047, -39.16065],
+							"easing": "easeInOutExpo"
 						}
 					},
 					"position": {
@@ -32,7 +33,8 @@
 							"vector": [0, 0, 0]
 						},
 						"0.6667": {
-							"vector": [-0.75, 0, -0.75]
+							"vector": [-0.75, 0, -0.75],
+							"easing": "easeInOutExpo"
 						}
 					}
 				},
@@ -42,7 +44,8 @@
 							"vector": [0, 0, 0]
 						},
 						"1.9167": {
-							"vector": [26.3918, -7.12687, 39.30207]
+							"vector": [26.3918, -7.12687, 39.30207],
+							"easing": "easeInOutExpo"
 						}
 					},
 					"position": {
@@ -50,7 +53,8 @@
 							"vector": [0, 0, 0]
 						},
 						"0.6667": {
-							"vector": [0.75, 0, -0.75]
+							"vector": [0.75, 0, -0.75],
+							"easing": "easeInOutExpo"
 						}
 					}
 				},
@@ -60,7 +64,8 @@
 							"vector": [0, 0, 0]
 						},
 						"1.9167": {
-							"vector": [-30, 0, 0]
+							"vector": [-30, 0, 0],
+							"easing": "easeInOutExpo"
 						}
 					},
 					"position": {
@@ -68,7 +73,8 @@
 							"vector": [0, 0, 0]
 						},
 						"0.6667": {
-							"vector": [0, 0, 1]
+							"vector": [0, 0, 1],
+							"easing": "easeInOutExpo"
 						}
 					}
 				},
@@ -78,7 +84,8 @@
 							"vector": [0, 0, 0]
 						},
 						"4.5": {
-							"vector": [0, 3, 0]
+							"vector": [0, 3, 0],
+							"easing": "easeInOutExpo"
 						}
 					}
 				},
@@ -88,16 +95,18 @@
 							"vector": [0, 0, 0]
 						},
 						"1.5": {
-							"vector": [0, 0, 0]
+							"vector": [0, 0, 0],
+							"easing": "easeInOutExpo"
 						},
 						"2.0": {
-							"vector": [22.5, 0, 0]
+							"vector": [22.5, 0, 0],
+							"easing": "easeInOutExpo"
 						}
 					}
 				}
 			}
 		},
-		"hellbomb.active_idle": {
+		"animation.model.active_idle": {
 			"loop": true,
 			"animation_length": 0.4167,
 			"bones": {
@@ -141,16 +150,6 @@
 				"upper": {
 					"position": {
 						"vector": [0, 3, 0]
-					}
-				}
-			}
-		},
-		"hellbomb.idle": {
-			"loop": true,
-			"bones": {
-				"hellbomb": {
-					"position": {
-						"vector": [0, 0, 0]
 					}
 				}
 			}
