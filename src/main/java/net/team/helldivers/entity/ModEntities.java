@@ -25,10 +25,13 @@ public class ModEntities {
             ENTITY_TYPES.register("stratagem_orb", () -> EntityType.Builder.<StratagemOrbEntity>of(StratagemOrbEntity::new, MobCategory.MISC)
                     .sized(0.3f, 0.4f).build("stratagem_orb"));
 
-
     public static final RegistryObject<EntityType<HellpodProjectileEntity>> HELLPOD =
             ENTITY_TYPES.register("hellpod", () -> EntityType.Builder.<HellpodProjectileEntity>of(HellpodProjectileEntity::new, MobCategory.MISC)
                     .sized(0.3f, 0.4f).build("hellpod"));
+
+    public static final RegistryObject<EntityType<SupportHellpodEntity>> SUPPORT_HELLPOD =
+            ENTITY_TYPES.register("support_hellpod", () -> EntityType.Builder.<SupportHellpodEntity>of(SupportHellpodEntity::new, MobCategory.MISC)
+                    .sized(0.63f, 2.3f).build("support_hellpod"));
 
     public static final RegistryObject<EntityType<BulletProjectileEntity>> BULLET =
             ENTITY_TYPES.register("bullet", () -> EntityType.Builder.<BulletProjectileEntity>of(BulletProjectileEntity::new, MobCategory.MISC)

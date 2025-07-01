@@ -1,23 +1,17 @@
 package net.team.helldivers;
 
 import com.mojang.logging.LogUtils;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.block.entity.ModBlockEntities;
-import net.team.helldivers.client.renderer.entity.EagleAirshipRenderer;
-import net.team.helldivers.client.renderer.item.AR23Renderer;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.client.*;
 import net.team.helldivers.item.ModCreativeModeTabs;
 import net.team.helldivers.item.ModItems;
-import net.team.helldivers.item.custom.Ar23Item;
-import net.team.helldivers.item.custom.StratagemOrbItem;
 import net.team.helldivers.particle.ModParticles;
 import net.team.helldivers.screen.ModMenuTypes;
 import net.team.helldivers.screen.custom.StratagemPickerScreen;
+import net.team.helldivers.screen.custom.SupportHellpodMenu;
+import net.team.helldivers.screen.custom.SupportHellpodScreen;
 import net.team.helldivers.sound.ModSounds;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -33,12 +27,9 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
-
-import static software.bernie.example.GeckoLibMod.DISABLE_EXAMPLES_PROPERTY_KEY;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(HelldiversMod.MOD_ID)
@@ -95,6 +86,7 @@ public class HelldiversMod {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             MenuScreens.register(ModMenuTypes.STRATAGEM_PICKER.get(), StratagemPickerScreen::new);
+            MenuScreens.register(ModMenuTypes.SUPPORT_HELLPOD_MENU.get(), SupportHellpodScreen::new);
         }
 
         @SubscribeEvent

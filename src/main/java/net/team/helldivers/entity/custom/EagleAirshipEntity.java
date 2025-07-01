@@ -42,8 +42,6 @@ public class EagleAirshipEntity extends FlyingMob implements GeoEntity {
                             if (player != null)
                                 player.displayClientMessage(Component.literal("KeyFraming"), true);
                         })
-                // Add our generic living animation controller
-//                DefaultAnimations.genericLivingController(this)
         );
     }
 
