@@ -40,6 +40,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.SMALL_BARRAGE.get());
                         output.accept(ModItems.BIG_BARRAGE.get());
                         output.accept(ModItems.PRECISION_STRIKE.get());
+                        output.accept(ModItems.EAGLE_500KG_BOMB.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

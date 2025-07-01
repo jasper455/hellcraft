@@ -1,6 +1,12 @@
 package net.team.helldivers.entity.custom;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.helper.OrbitalBarrage;
 import net.team.helldivers.sound.ModSounds;
@@ -19,6 +25,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 
 public class StratagemOrbEntity extends AbstractArrow {
+    private static final EntityDataAccessor<String> STRATAGEM_TYPE =
+            SynchedEntityData.defineId(StratagemOrbEntity.class, EntityDataSerializers.STRING);
     private float rotation;
     public Vec3 groundedOffset;
     private int groundedTicks = 0;
@@ -28,8 +36,9 @@ public class StratagemOrbEntity extends AbstractArrow {
         super(pEntityType, pLevel);
     }
 
-    public StratagemOrbEntity(LivingEntity shooter, Level level) {
+    public StratagemOrbEntity(LivingEntity shooter, Level level, String stratagemType) {
         super(ModEntities.STRATAGEM_ORB.get(), shooter, level);
+        setStratagemType(stratagemType);
     }
 
     public float getRenderingRotation() {
@@ -75,7 +84,7 @@ public class StratagemOrbEntity extends AbstractArrow {
             groundedOffset = new Vec3(270f, 0f, Mth.randomBetween(RandomSource.create(), 0f, 360f));
         }
 
-        if (stratagemType == null) this.discard();
+        if (getStratagemType() == null) this.discard();
     }
 
     @Override
@@ -85,7 +94,7 @@ public class StratagemOrbEntity extends AbstractArrow {
             groundedTicks++;
         }
         // Orbital Precision Strike Entity stuff
-        if (stratagemType.equals("Orbital Precision Strike") && groundedTicks == 60 && !this.level().isClientSide) {
+        if (getStratagemType().equals("Orbital Precision Strike") && groundedTicks == 60 && !this.level().isClientSide) {
             float randomPosX = (Mth.randomBetween(this.level().getRandom(), 87.5f, 92.5f));
             float randomPosY = (Mth.randomBetween(this.level().getRandom(), -5.0f, 5.0f));
 
@@ -95,42 +104,55 @@ public class StratagemOrbEntity extends AbstractArrow {
             this.level().addFreshEntity(explosive);
             this.playSound(ModSounds.FIRE_ORBITAL_STRIKE.get(), 10000000.0f, 1.0f);
         }
-        if (stratagemType.equals("Orbital Precision Strike") && groundedTicks == 180) {
+        if (getStratagemType().equals("Orbital Precision Strike") && groundedTicks == 180) {
             this.discard();
             groundedTicks = 0;
         }
 
         // Hellbomb Entity stuff
-        if (stratagemType.equals("Hellbomb") && groundedTicks == 120 && !this.level().isClientSide) {
+        if (getStratagemType().equals("Hellbomb") && groundedTicks == 120 && !this.level().isClientSide) {
             HellpodProjectileEntity hellpod = new HellpodProjectileEntity(((LivingEntity) this.getOwner()), this.level());
             hellpod.setPos(this.getBlockX(), 200, this.getBlockZ());
             this.level().addFreshEntity(hellpod);
         }
-        if (stratagemType.equals("Hellbomb") && groundedTicks == 180) {
+        if (getStratagemType().equals("Hellbomb") && groundedTicks == 180) {
             this.discard();
             groundedTicks = 0;
         }
 
         // 120 Barrage Entity Stuff
-        if (stratagemType.equals("Orbital 120MM HE Barrage") && !this.level().isClientSide) {
+        if (getStratagemType().equals("Orbital 120MM HE Barrage") && !this.level().isClientSide) {
             if (groundedTicks > 75) {
                 MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 25, 60,
                         groundedTicks, this, false));
             }
         }
-        if (stratagemType.equals("Orbital 120MM HE Barrage") && groundedTicks > 750) {
+        if (getStratagemType().equals("Orbital 120MM HE Barrage") && groundedTicks > 750) {
             this.discard();
             groundedTicks = 0;
         }
 
         // 380 Barrage Entity Stuff
-        if (stratagemType.equals("Orbital 380MM HE Barrage") && !this.level().isClientSide) {
+        if (getStratagemType().equals("Orbital 380MM HE Barrage") && !this.level().isClientSide) {
             if (groundedTicks > 75) {
                 MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 50, 60,
                         groundedTicks, this, true));
             }
         }
-        if (stratagemType.equals("Orbital 380MM HE Barrage") && groundedTicks > 750) {
+        if (getStratagemType().equals("Orbital 380MM HE Barrage") && groundedTicks > 750) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
+        // 500Kg Bomb Entity Stuff
+        if (getStratagemType().equals("Eagle 500KG Bomb") && !this.level().isClientSide) {
+            if (groundedTicks == 80) {
+                EagleAirshipEntity eagleAirshipEntity = new EagleAirshipEntity(ModEntities.EAGLE_AIRSHIP.get(), this.level());
+                eagleAirshipEntity.setPos(this.getX(), this.getY() + 5, this.getZ());
+                this.level().addFreshEntity(eagleAirshipEntity);
+            }
+        }
+        if (getStratagemType().equals("Eagle 500KG Bomb") && groundedTicks > 90) {
             this.discard();
             groundedTicks = 0;
         }
@@ -145,4 +167,19 @@ public class StratagemOrbEntity extends AbstractArrow {
     protected SoundEvent getDefaultHitGroundSoundEvent() {
         return ModSounds.STRATAGEM_ORB_LAND.get();
     }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(STRATAGEM_TYPE, "");
+    }
+
+    public String getStratagemType() {
+        return this.entityData.get(STRATAGEM_TYPE);
+    }
+
+    public void setStratagemType(String type) {
+        this.entityData.set(STRATAGEM_TYPE, type);
+    }
+
 }

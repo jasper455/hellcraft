@@ -1,8 +1,11 @@
 package net.team.helldivers.event;
 
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.client.renderer.item.AR23Renderer;
+import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.client.*;
+import net.team.helldivers.entity.custom.EagleAirshipEntity;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.item.custom.Ar23Item;
 import net.team.helldivers.network.PacketHandler;
@@ -20,9 +23,15 @@ public class ModEventBusEvents {
     @SubscribeEvent
     public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(ModModelLayers.MISSILE, MissileProjectileModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.MISSILE, Eagle500KgModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.STRATAGEM_ORB, StratagemOrbProjectileModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HELLPOD, HellpodProjectileModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.BULLET, BulletProjectileModel::createBodyLayer);
+    }
+
+    @SubscribeEvent
+    public static void registerAttributes(EntityAttributeCreationEvent event) {
+        event.put(ModEntities.EAGLE_AIRSHIP.get(), EagleAirshipEntity.createAttributes().build());
     }
 
     @SubscribeEvent

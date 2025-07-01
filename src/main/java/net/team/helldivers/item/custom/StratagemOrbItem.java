@@ -35,10 +35,9 @@ public class StratagemOrbItem extends Item {
             int i = this.getUseDuration(pStack) - pTimeCharged;
             if (i >= 10) { // Minimum charge time of 0.5 seconds (10 ticks)
                 if (!pLevel.isClientSide()) {
-                    StratagemOrbEntity stratagemOrb = new StratagemOrbEntity(player, pLevel);
+                    StratagemOrbEntity stratagemOrb = new StratagemOrbEntity(player, pLevel, player.getMainHandItem().getTag().getString("stratagemType"));
                     float power = Math.min(i / 20F, 1.5F); // Max power after 1 second charge
                     stratagemOrb.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, power * 1.5F, 0F);
-                    stratagemOrb.stratagemType = player.getMainHandItem().getTag().getString("stratagemType");
                     pLevel.addFreshEntity(stratagemOrb);
                 }
 
@@ -52,7 +51,7 @@ public class StratagemOrbItem extends Item {
 
     @Override
     public UseAnim getUseAnimation(ItemStack pStack) {
-        return UseAnim.BOW;
+        return UseAnim.SPEAR;
     }
 
     @Override

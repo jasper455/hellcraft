@@ -3,6 +3,7 @@ package net.team.helldivers.entity.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.network.chat.Component;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.entity.custom.StratagemOrbEntity;
 import net.minecraft.client.Minecraft;
@@ -16,6 +17,8 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
+import java.util.Arrays;
+
 import static net.minecraft.client.renderer.blockentity.BeaconRenderer.BEAM_LOCATION;
 
 public class StratagemOrbProjectileRenderer extends EntityRenderer<StratagemOrbEntity> {
@@ -27,14 +30,11 @@ public class StratagemOrbProjectileRenderer extends EntityRenderer<StratagemOrbE
 
     @Override
     public void render(StratagemOrbEntity pEntity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-
         if (pEntity.isGrounded()) {
-
             poseStack.pushPose();
-
             poseStack.translate(-0.5, 0, -0.5);
 
-            float[] color = new float[] {0.922f, 0.251f, 0.204f, 1.0f};
+            float[] color = getBeamColor(pEntity.getStratagemType());
 
             BeaconRenderer.renderBeaconBeam(poseStack, buffer, BEAM_LOCATION, partialTicks, 1,
                     Minecraft.getInstance().level.getGameTime(), 0, 999999,
@@ -46,9 +46,8 @@ public class StratagemOrbProjectileRenderer extends EntityRenderer<StratagemOrbE
             poseStack.mulPose(Axis.XP.rotationDegrees(pEntity.getRenderingRotation() * 5f));
         }
         poseStack.pushPose();
-//        poseStack.mulPose(Axis.XP.rotationDegrees(180));
-
-        poseStack.translate(0, -1.2, 0);
+        poseStack.translate(0, 1, 0);
+        poseStack.mulPose(Axis.XP.rotationDegrees(180));
 
         VertexConsumer vertexconsumer = ItemRenderer.getFoilBufferDirect(
                 buffer, this.model.renderType(this.getTextureLocation(pEntity)), false, false);
@@ -60,9 +59,26 @@ public class StratagemOrbProjectileRenderer extends EntityRenderer<StratagemOrbE
         super.render(pEntity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
 
+    private float[] getBeamColor(String stratagemType) {
+        return switch (stratagemType) {
+            case "Orbital Precision Strike" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
+            case "Hellbomb" -> new float[]{0.51f, 0.996f, 1.0f, 1.0f}; // Support blue color
+            case "Orbital 120MM HE Barrage" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
+            case "Orbital 380MM HE Barrage" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
+            case "Eagle 500KG Bomb" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
+            default -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
+        };
+    }
+
+    private boolean isBlueBeam(String stratagemType) {
+        return Arrays.equals(getBeamColor(stratagemType), new float[]{0.51f, 0.996f, 1.0f, 1.0f});
+    }
+
+
     @Override
     public ResourceLocation getTextureLocation(StratagemOrbEntity pEntity) {
-        return ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/entity/stratagem_orb/stratagem_orb.png");
+        return ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, isBlueBeam(pEntity.getStratagemType()) ?
+                "textures/entity/stratagem_orb/stratagem_support_orb_3d.png" : "textures/entity/stratagem_orb/stratagem_offense_orb_3d.png");
     }
 
     @Override

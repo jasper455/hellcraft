@@ -55,6 +55,8 @@ public class ModItems {
             () -> new StratagemItem(new Item.Properties()));
     public static final RegistryObject<Item> PRECISION_STRIKE = ITEMS.register("precision_strike",
             () -> new StratagemItem(new Item.Properties()));
+    public static final RegistryObject<Item> EAGLE_500KG_BOMB = ITEMS.register("500kg_bomb",
+            () -> new StratagemItem(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

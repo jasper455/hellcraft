@@ -352,6 +352,60 @@ public class Stratagems {
                 }
             }
 
+            // 500KG Bomb inputs
+
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())) {
+                switch (Eagle500KgBombHud.inputStep) {
+                    case 0 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            Eagle500KgBombHud.firstInputDown = true;
+                            Eagle500KgBombHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            Eagle500KgBombHud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            Eagle500KgBombHud.secondInputDown = true;
+                            Eagle500KgBombHud.inputStep++;
+                        } else if (downNotPressed) {
+                            Eagle500KgBombHud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            Eagle500KgBombHud.thirdInputDown = true;
+                            Eagle500KgBombHud.inputStep++;
+                        } else if (upNotPressed) {
+                            Eagle500KgBombHud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            Eagle500KgBombHud.fourthInputDown = true;
+                            Eagle500KgBombHud.inputStep++;
+                        } else if (upNotPressed) {
+                            Eagle500KgBombHud.resetInputValues();
+                        }
+                    }
+                    case 4 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            Eagle500KgBombHud.fifthInputDown = true;
+                            Eagle500KgBombHud.allInputsDown = true;
+                            Eagle500KgBombHud.inputStep++;
+                        } else if (downNotPressed) {
+                            Eagle500KgBombHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
         } else {
             resetInputValues();
         }
@@ -359,7 +413,6 @@ public class Stratagems {
         if (HellbombHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Hellbomb"));
             resetInputValues();
-
         }
         if (PrecisionStrikeHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Precision Strike"));
@@ -371,6 +424,9 @@ public class Stratagems {
         }
         if (BigBarrageHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital 380MM HE Barrage"));
+        }
+        if (Eagle500KgBombHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Eagle 500KG Bomb"));
         }
     }
 
@@ -408,6 +464,9 @@ public class Stratagems {
             if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.BIG_BARRAGE.get().getDefaultInstance())) {
                 BigBarrageHud.renderBigBarrageHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.BIG_BARRAGE.get().getDefaultInstance()));
             }
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())) {
+                Eagle500KgBombHud.render500KgBombHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()));
+            }
 
         }
     }
@@ -433,6 +492,7 @@ public class Stratagems {
         PrecisionStrikeHud.resetInputValues();
         SmallBarrageHud.resetInputValues();
         BigBarrageHud.resetInputValues();
+        Eagle500KgBombHud.resetInputValues();
         allInputsDown = false;
     }
 

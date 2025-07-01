@@ -2,18 +2,19 @@ package net.team.helldivers;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.block.entity.ModBlockEntities;
+import net.team.helldivers.client.renderer.entity.EagleAirshipRenderer;
 import net.team.helldivers.client.renderer.item.AR23Renderer;
 import net.team.helldivers.entity.ModEntities;
-import net.team.helldivers.entity.client.BulletProjectileRenderer;
-import net.team.helldivers.entity.client.HellpodProjectileRenderer;
-import net.team.helldivers.entity.client.MissileProjectileRenderer;
-import net.team.helldivers.entity.client.StratagemOrbProjectileRenderer;
+import net.team.helldivers.entity.client.*;
 import net.team.helldivers.item.ModCreativeModeTabs;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.item.custom.Ar23Item;
+import net.team.helldivers.item.custom.StratagemOrbItem;
 import net.team.helldivers.particle.ModParticles;
 import net.team.helldivers.screen.ModMenuTypes;
 import net.team.helldivers.screen.custom.StratagemPickerScreen;
@@ -75,6 +76,7 @@ public class HelldiversMod {
 
     private void commonSetup(final FMLCommonSetupEvent event) {
         EntityRenderers.register(ModEntities.MISSILE_PROJECTILE.get(), MissileProjectileRenderer::new);
+        EntityRenderers.register(ModEntities.EAGLE_500KG_BOMB.get(), Eagle500KgRenderer::new);
         EntityRenderers.register(ModEntities.STRATAGEM_ORB.get(), StratagemOrbProjectileRenderer::new);
         EntityRenderers.register(ModEntities.HELLPOD.get(), HellpodProjectileRenderer::new);
         EntityRenderers.register(ModEntities.BULLET.get(), BulletProjectileRenderer::new);

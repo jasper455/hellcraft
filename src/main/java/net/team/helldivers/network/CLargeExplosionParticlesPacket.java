@@ -66,7 +66,7 @@ public class CLargeExplosionParticlesPacket {
         // Smoke
         for (int i = 0; i < 30; i++) {
             float angle = random.nextFloat() * ((float) Math.PI * 2);
-            float speed = 0.1f + random.nextFloat() * 0.2f;
+            float speed = 0.2f + random.nextFloat() * 0.5f;
             float dx = Mth.cos(angle) * speed;
             float dz = Mth.sin(angle) * speed;
             float dy = 0.05f + random.nextFloat() * 0.1f;

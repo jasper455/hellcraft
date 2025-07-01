@@ -6,7 +6,9 @@ import net.minecraftforge.client.event.*;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.client.renderer.block.HellbombBlockRenderer;
+import net.team.helldivers.client.renderer.entity.EagleAirshipRenderer;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
+import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.item.custom.IGunItem;
 import net.team.helldivers.util.KeyBinding;
@@ -118,6 +120,8 @@ public class ModClientEvents {
 
         @SubscribeEvent
         public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+            event.registerEntityRenderer(ModEntities.EAGLE_AIRSHIP.get(), EagleAirshipRenderer::new);
+
             event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
         }
 
