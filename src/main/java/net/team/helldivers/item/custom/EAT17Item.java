@@ -14,79 +14,72 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.team.helldivers.block.ModBlocks;
-import net.team.helldivers.block.custom.AmmoCrateBlock;
-import net.team.helldivers.block.custom.HellbombBlock;
-import net.team.helldivers.client.renderer.item.AR23Renderer;
-import net.team.helldivers.item.inventory.StratagemPickerInventory;
+import net.team.helldivers.client.renderer.item.EAT17Renderer;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SShootPacket;
-import net.team.helldivers.network.SGunReloadPacket;
 import net.team.helldivers.util.KeyBinding;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 import java.util.function.Consumer;
 
-public class Ar23Item extends Item implements GeoItem, IGunItem {
+public class EAT17Item extends Item implements GeoItem, IGunItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public String animationprocedure = "empty";
     private boolean isShooting = false;
-    private boolean isReloading = false;
-    private boolean hasStartedReload = false; // Add this flag
     private boolean isAiming = false;
     private boolean wasAiming = false; // Track previous aiming state
     private int shootCooldown = 0;
     // Adjust this value to control fire rate (in ticks, 20 ticks = 1 second)
-    private static final int SHOOT_DELAY = 2; // This will give you about 600 RPM
+    private static final int SHOOT_DELAY = 10; // This will give you about 600 RPM
 
-
-    public Ar23Item(Item.Properties properties) {
-        super(new Item.Properties().durability(47).rarity(Rarity.COMMON));
+    public EAT17Item(Properties properties) {
+        super(new Properties().durability(47).rarity(Rarity.COMMON));
     }
 
     private boolean canShoot(ItemStack stack) {
-        return stack.getDamageValue() < stack.getMaxDamage() - 5;
+        return stack.getDamageValue() < 1;
     }
 
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         super.initializeClient(consumer);
         consumer.accept(new IClientItemExtensions() {
-            private final BlockEntityWithoutLevelRenderer renderer = new AR23Renderer();
+            private final BlockEntityWithoutLevelRenderer renderer = new EAT17Renderer();
 
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 return renderer;
             }
 
-            // Changing the players arm pose when holding the item
-            private static final HumanoidModel.ArmPose AR23Pose = HumanoidModel.ArmPose.create("AR23",
-                    false, (model, entity, arm) -> {
-                        if (arm == HumanoidArm.LEFT) {
-                        } else {
-                            model.rightArm.xRot = 30F + model.head.xRot;
-                            model.rightArm.yRot = 0F + model.head.yRot;
-                            model.leftArm.xRot = 30F + model.head.xRot;
-                            model.leftArm.yRot = 0.5F + model.head.yRot;
-                        }
-                    });
+            private static final HumanoidModel.ArmPose EAT17Pose = HumanoidModel.ArmPose.create("EAT17", false, (model, entity, arm) -> {
+                if (arm == HumanoidArm.LEFT) {
+                } else {
+                    model.rightArm.xRot = 30F + model.head.xRot;
+                    model.rightArm.yRot = 0F + model.head.yRot;
+                    model.leftArm.xRot = 30F + model.head.xRot;
+                    model.leftArm.yRot = 0.5F + model.head.yRot;
+                }
+            });
+
             @Override
             public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
                 if (!itemStack.isEmpty()) {
                     if (entityLiving.getUsedItemHand() == hand) {
-                        return AR23Pose;
+                        return EAT17Pose;
                     }
                 }
                 return HumanoidModel.ArmPose.EMPTY;
             }
 
-            public boolean applyForgeHandTransform(PoseStack poseStack, LocalPlayer player, HumanoidArm arm,
-                                                   ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
+            public boolean applyForgeHandTransform(PoseStack poseStack, LocalPlayer player, HumanoidArm arm, ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
                 int i = arm == HumanoidArm.RIGHT ? 1 : -1;
                 poseStack.translate(i * 0.56F, -0.52F, -0.72F);
                 if (player.getUseItem() == itemInHand) {
@@ -100,18 +93,11 @@ public class Ar23Item extends Item implements GeoItem, IGunItem {
     // Animations
     private PlayState idlePredicate(AnimationState event) {
         if (this.animationprocedure.equals("empty")) {
-            // Handle reloading
-            if (isReloading && !hasStartedReload) {
-                event.getController().setAnimation(RawAnimation.begin().thenPlay("reload"));
-                hasStartedReload = true;
-                return PlayState.CONTINUE;
-            }
-
             // Handle shooting with proper aim state
             if (isShooting && shootCooldown == 0 &&
-                    canShoot(Minecraft.getInstance().player.getMainHandItem()) && !isReloading) {
+                    canShoot(Minecraft.getInstance().player.getMainHandItem())) {
                 if (isAiming) {
-                    event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot_aim").thenPlay("aim"));
+                    event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot_aim").thenPlay("aim_idle"));
                 } else {
                     event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot"));
                 }
@@ -119,16 +105,17 @@ public class Ar23Item extends Item implements GeoItem, IGunItem {
                 shootCooldown = SHOOT_DELAY;
                 return PlayState.CONTINUE;
             }
+
             if (isShooting && shootCooldown == 0 &&
-                    !canShoot(Minecraft.getInstance().player.getMainHandItem()) && !isReloading &&
-                    !Minecraft.getInstance().player.getCooldowns().isOnCooldown(this)) {
+                    !canShoot(Minecraft.getInstance().player.getMainHandItem()) &&
+            !Minecraft.getInstance().player.getCooldowns().isOnCooldown(this)) {
                 PacketHandler.sendToServer(new SShootPacket());
                 shootCooldown = SHOOT_DELAY;
                 return PlayState.CONTINUE;
             }
 
-            // Handle aiming states only if not reloading or shooting
-            if (!isReloading && !isShooting) {
+            // Handle aiming states only if not shooting
+            if (!isShooting) {
                 if (isAiming && !wasAiming) {
                     event.getController().setAnimation(RawAnimation.begin().thenPlay("aim"));
                     wasAiming = true;
@@ -190,8 +177,8 @@ public class Ar23Item extends Item implements GeoItem, IGunItem {
     @Override
     public void appendHoverText(ItemStack itemstack, Level level, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, level, list, flag);
-        list.add(Component.literal("§e[Assault-Rifle]"));
-        list.add(Component.literal("[Reloadable]"));
+        list.add(Component.literal("§e[Expendable-Anti-Tank]"));
+        list.add(Component.literal("[Not Reloadable]"));
     }
 
     @Override
@@ -199,43 +186,17 @@ public class Ar23Item extends Item implements GeoItem, IGunItem {
         if (world.isClientSide() && entity instanceof Player player) {
             if (selected) {
                 isShooting = KeyBinding.SHOOT.isDown();
-
                 if (shootCooldown > 0) {
                     shootCooldown--;
                 }
-
-                // Handle reload
-                if (KeyBinding.RELOAD.consumeClick()) {
-                    for (ItemStack stack : player.getInventory().items) {
-                        if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof AmmoCrateBlock) {
-                            isReloading = true;
-                            hasStartedReload = false; // Reset the flag when starting a new reload
-                            // Reset aiming states when reloading
-                            isAiming = false;
-                            wasAiming = false;
-                            PacketHandler.sendToServer(new SGunReloadPacket()); // Send packet only once
-                        }
-                    }
-                }
-
-                // Reset reload state when animation is done
-                if (isReloading && hasStartedReload) {
-                    isReloading = false;
-                    hasStartedReload = false;
-                }
-
-                // Handle aiming only if not reloading
-                if (!isReloading) {
-                    boolean newAimingState = KeyBinding.AIM.isDown();
-                    if (newAimingState != isAiming) {
-                        wasAiming = isAiming;
-                        isAiming = newAimingState;
-                    }
+                // Handle aiming
+                boolean newAimingState = KeyBinding.AIM.isDown();
+                if (newAimingState != isAiming) {
+                    wasAiming = isAiming;
+                    isAiming = newAimingState;
                 }
             } else {
                 isShooting = false;
-                isReloading = false;
-                hasStartedReload = false;
                 isAiming = false;
                 wasAiming = false;
                 shootCooldown = 0;

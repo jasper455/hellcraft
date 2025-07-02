@@ -360,6 +360,14 @@
 					}
 				}
 			}
+		},
+		"aim_idle": {
+			"loop": true,
+			"bones": {
+				"root": {
+					"position": [8, 0.5, 0]
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

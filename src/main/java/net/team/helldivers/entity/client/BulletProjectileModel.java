@@ -2,6 +2,7 @@ package net.team.helldivers.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
@@ -12,6 +13,7 @@ public class BulletProjectileModel extends EntityModel<BulletProjectileEntity> {
     private final ModelPart bullet;
 
     public BulletProjectileModel(ModelPart root) {
+        System.out.println(root.getAllParts());
         this.bullet = root.getChild("bullet");
     }
 
@@ -20,9 +22,9 @@ public class BulletProjectileModel extends EntityModel<BulletProjectileEntity> {
         MeshDefinition meshdefinition = new MeshDefinition();
         PartDefinition partdefinition = meshdefinition.getRoot();
 
-        PartDefinition bb_main = partdefinition.addOrReplaceChild("bullet", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
+        PartDefinition bullet = partdefinition.addOrReplaceChild("bullet", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        PartDefinition cube_r1 = bb_main.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -4.0F, 0.0F, 0.0F, 1.5708F, 0.0F));
+        PartDefinition cube_r1 = bullet.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -1.0F, 0.0F, 0.0F, 0.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -4.0F, 0.0F, 0.0F, 1.5708F, 0.0F));
 
         return LayerDefinition.create(meshdefinition, 16, 16);
     }
@@ -37,4 +39,3 @@ public class BulletProjectileModel extends EntityModel<BulletProjectileEntity> {
         bullet.render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);
     }
 }
-

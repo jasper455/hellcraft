@@ -5,7 +5,7 @@
     "dstrgb": "1-srcalpha"
   },
   "vertex": "blit",
-  "fragment": "lodestonemod:tint",
+  "fragment": "helldivers:tint",
   "attributes": [ "Position" ],
   "samplers": [
     { "name": "DiffuseSampler" }

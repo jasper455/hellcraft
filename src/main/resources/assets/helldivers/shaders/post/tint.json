@@ -4,7 +4,7 @@
   ],
   "passes": [
     {
-      "name": "lodestonemod:tint",
+      "name": "helldivers:tint",
       "intarget": "minecraft:main",
       "outtarget": "final"
     },

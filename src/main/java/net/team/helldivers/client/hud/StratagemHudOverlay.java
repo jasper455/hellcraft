@@ -48,6 +48,9 @@ public class StratagemHudOverlay {
     public static final ResourceLocation EAGLE_500KG_BOMB = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/500kg_bomb.png");
 
+    public static final ResourceLocation EAT_17 = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/eat.png");
+
     public static void renderUpArrow(GuiGraphics guiGraphics, int pX, int pY, int pWidth,
                                         int pHeight, int pUOffset, int pVOffset, int pUWidth, int pVHeight,
                                         int pTextureWidth, int pTextureHeight, boolean isFilled) {

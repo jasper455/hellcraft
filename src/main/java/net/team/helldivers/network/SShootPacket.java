@@ -1,23 +1,25 @@
 package net.team.helldivers.network;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 import net.team.helldivers.entity.custom.BulletProjectileEntity;
+import net.team.helldivers.entity.custom.MissileProjectileEntity;
+import net.team.helldivers.entity.custom.RocketProjectileEntity;
 import net.team.helldivers.item.custom.Ar23Item;
+import net.team.helldivers.item.custom.EAT17Item;
 import net.team.helldivers.sound.ModSounds;
 
 import java.util.function.Supplier;
 
-public class SAr22ShootPacket {
+public class SShootPacket {
 
-    public SAr22ShootPacket() {}
+    public SShootPacket() {}
 
-    public SAr22ShootPacket(FriendlyByteBuf buffer) {
+    public SShootPacket(FriendlyByteBuf buffer) {
         this();
     }
 
@@ -29,6 +31,9 @@ public class SAr22ShootPacket {
         if (player == null) return;
 
         ItemStack heldItem = player.getMainHandItem();
+
+        // Ar-23 Liberator Shooting Logic
+
         if (heldItem.getItem() instanceof Ar23Item ar23Item) {
             // Check if we can still shoot
             if (heldItem.getDamageValue() < heldItem.getMaxDamage() - 5) {
@@ -55,5 +60,29 @@ public class SAr22ShootPacket {
                 player.getCooldowns().addCooldown(heldItem.getItem(), 10);
             }
     }
-}
+
+        // Expendable Anti-Tank Shooting Logic
+
+        if (heldItem.getItem() instanceof EAT17Item eat17Item) {
+            if (heldItem.getDamageValue() < heldItem.getMaxDamage()) {
+
+                player.level().playSound(null, player.blockPosition(),
+                        ModSounds.EAT_FIRE.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
+
+                PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
+                // Actually shoot the rocket
+                RocketProjectileEntity rocket = new RocketProjectileEntity(player, player.level());
+                rocket.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 3f, 0.0f);
+                rocket.setXRot(player.getXRot());
+                rocket.setYRot(player.getYRot());
+                rocket.setNoGravity(true);
+                player.level().addFreshEntity(rocket);
+
+                heldItem.hurtAndBreak(47, player, (serverPlayer) -> {
+                        player.broadcastBreakEvent(EquipmentSlot.MAINHAND);
+                    });
+
+            }
+        }
+    }
 }

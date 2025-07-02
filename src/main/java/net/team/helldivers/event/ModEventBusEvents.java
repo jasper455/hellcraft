@@ -27,6 +27,7 @@ public class ModEventBusEvents {
         event.registerLayerDefinition(ModModelLayers.STRATAGEM_ORB, StratagemOrbProjectileModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HELLPOD, HellpodProjectileModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.BULLET, BulletProjectileModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.ROCKET, RocketProjectileModel::createBodyLayer);
     }
 
     @SubscribeEvent

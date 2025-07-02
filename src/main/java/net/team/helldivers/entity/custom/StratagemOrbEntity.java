@@ -156,6 +156,19 @@ public class StratagemOrbEntity extends AbstractArrow {
             this.discard();
             groundedTicks = 0;
         }
+
+        // Expendable Anti-Tank Entity Stuff
+        if (getStratagemType().equals("Expendable Anti-Tank") && !this.level().isClientSide) {
+            if (groundedTicks == 100) {
+                SupportHellpodEntity eagleAirshipEntity = new SupportHellpodEntity(this.level(), getStratagemType());
+                eagleAirshipEntity.setPos(this.getX(), 200, this.getZ());
+                this.level().addFreshEntity(eagleAirshipEntity);
+            }
+        }
+        if (getStratagemType().equals("Expendable Anti-Tank") && groundedTicks > 140) {
+            this.discard();
+            groundedTicks = 0;
+        }
     }
 
     @Override

@@ -22,6 +22,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.item.ModItems;
 import net.team.helldivers.screen.custom.SupportHellpodMenu;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -119,7 +120,7 @@ public class SupportHellpodEntity extends Entity implements GeoEntity {
             groundedTicks++;
         }
         if (this.isGrounded() && !hasBeenSet) {
-            this.setPos(this.getX(), this.getY() - 0.6, this.getZ());
+            this.setPos(this.getX(), this.getY(), this.getZ());
             hasBeenSet = true;
         }
         if (hasBeenClicked && hasBeenSet && !shouldStopCounting) {
@@ -271,7 +272,8 @@ public class SupportHellpodEntity extends Entity implements GeoEntity {
             this.inventory.setItem(1, new ItemStack(Items.AIR));
         }
         if (stratagemType.equals("Expendable Anti-Tank")) {
-            this.inventory.setItem(0, new ItemStack(Items.DIAMOND));
+            this.inventory.setItem(0, new ItemStack(ModItems.EAT_17.get()));
+            this.inventory.setItem(1, new ItemStack(ModItems.EAT_17.get()));
         }
     }
 

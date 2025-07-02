@@ -71,6 +71,7 @@ public class HelldiversMod {
         EntityRenderers.register(ModEntities.STRATAGEM_ORB.get(), StratagemOrbProjectileRenderer::new);
         EntityRenderers.register(ModEntities.HELLPOD.get(), HellpodProjectileRenderer::new);
         EntityRenderers.register(ModEntities.BULLET.get(), BulletProjectileRenderer::new);
+        EntityRenderers.register(ModEntities.ROCKET.get(), RocketProjectileRenderer::new);
     }
 
     // Add the example block item to the building blocks tab

@@ -37,6 +37,10 @@ public class ModEntities {
             ENTITY_TYPES.register("bullet", () -> EntityType.Builder.<BulletProjectileEntity>of(BulletProjectileEntity::new, MobCategory.MISC)
                     .sized(0.1f, 0.1f).build("bullet"));
 
+    public static final RegistryObject<EntityType<RocketProjectileEntity>> ROCKET =
+            ENTITY_TYPES.register("rocket", () -> EntityType.Builder.<RocketProjectileEntity>of(RocketProjectileEntity::new, MobCategory.MISC)
+                    .sized(0.3f, 0.3f).build("rocket"));
+
     public static final RegistryObject<EntityType<EagleAirshipEntity>> EAGLE_AIRSHIP =
             ENTITY_TYPES.register("eagle_airship", () -> EntityType.Builder.of(EagleAirshipEntity::new, MobCategory.MISC)
                     .sized(0.00001f, 0.00001f).build("eagle_airship"));

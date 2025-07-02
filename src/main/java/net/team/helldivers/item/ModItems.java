@@ -9,7 +9,6 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import software.bernie.example.item.JackInTheBoxItem;
 
 public class ModItems {
 
@@ -27,6 +26,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> AR23 = ITEMS.register("ar23",
             () -> new Ar23Item(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> EAT_17 = ITEMS.register("eat_17",
+            () -> new EAT17Item(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> B01_HELMET = ITEMS.register("b01_helmet",
             () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL , ArmorItem.Type.HELMET,
@@ -56,6 +58,8 @@ public class ModItems {
     public static final RegistryObject<Item> PRECISION_STRIKE = ITEMS.register("precision_strike",
             () -> new StratagemItem(new Item.Properties()));
     public static final RegistryObject<Item> EAGLE_500KG_BOMB = ITEMS.register("500kg_bomb",
+            () -> new StratagemItem(new Item.Properties()));
+    public static final RegistryObject<Item> ANTI_TANK_STRATAGEM = ITEMS.register("eat_stratagem",
             () -> new StratagemItem(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {

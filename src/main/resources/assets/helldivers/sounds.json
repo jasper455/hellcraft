@@ -83,6 +83,12 @@
       "helldivers:ar22_shoot"
     ]
   },
+  "eat_fire": {
+    "subtitles": "sounds.helldivers.eat_fire",
+    "sounds": [
+      "helldivers:eat_fire"
+    ]
+  },
   "gun_empty": {
     "subtitles": "sounds.helldivers.gun_empty",
     "sounds": [

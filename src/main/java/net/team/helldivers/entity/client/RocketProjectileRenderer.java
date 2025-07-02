@@ -2,28 +2,27 @@ package net.team.helldivers.entity.client;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.entity.custom.BulletProjectileEntity;
+import net.team.helldivers.entity.custom.RocketProjectileEntity;
 
-public class BulletProjectileRenderer extends EntityRenderer<BulletProjectileEntity> {
-    private BulletProjectileModel model;
+public class RocketProjectileRenderer extends EntityRenderer<RocketProjectileEntity> {
+    private RocketProjectileModel model;
 
-    public BulletProjectileRenderer(EntityRendererProvider.Context pContext) {
+    public RocketProjectileRenderer(EntityRendererProvider.Context pContext) {
         super(pContext);
-        model = new BulletProjectileModel(pContext.bakeLayer(ModModelLayers.BULLET));
+        model = new RocketProjectileModel(pContext.bakeLayer(ModModelLayers.ROCKET));
     }
 
 
     @Override
-    public void render(BulletProjectileEntity pEntity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public void render(RocketProjectileEntity pEntity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
         VertexConsumer vertexconsumer = ItemRenderer.getFoilBufferDirect(
                 buffer, this.model.renderType(this.getTextureLocation(pEntity)),false, false);
@@ -34,8 +33,8 @@ public class BulletProjectileRenderer extends EntityRenderer<BulletProjectileEnt
     }
 
     @Override
-    public ResourceLocation getTextureLocation(BulletProjectileEntity bulletProjectileEntity) {
-        return ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/entity/bullet/bullet.png");
+    public ResourceLocation getTextureLocation(RocketProjectileEntity bulletProjectileEntity) {
+        return ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/entity/rocket/rocket.png");
     }
 
 }

@@ -45,10 +45,10 @@ public class PacketHandler {
                 .consumerMainThread(SOrbitalBarragePacket::handle)
                 .add();
 
-        INSTANCE.messageBuilder(SAr22ShootPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
-                .encoder(SAr22ShootPacket::encode)
-                .decoder(SAr22ShootPacket::new)
-                .consumerMainThread(SAr22ShootPacket::handle)
+        INSTANCE.messageBuilder(SShootPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SShootPacket::encode)
+                .decoder(SShootPacket::new)
+                .consumerMainThread(SShootPacket::handle)
                 .add();
 
         INSTANCE.messageBuilder(SGunReloadPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)

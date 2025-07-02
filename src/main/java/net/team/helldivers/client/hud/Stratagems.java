@@ -361,7 +361,7 @@ public class Stratagems {
                             player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
                             Eagle500KgBombHud.firstInputDown = true;
                             Eagle500KgBombHud.inputStep++;
-                        } else if (rightNotPressed) {
+                        } else if (upNotPressed) {
                             Eagle500KgBombHud.resetInputValues();
                         }
                     }
@@ -370,7 +370,7 @@ public class Stratagems {
                             player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
                             Eagle500KgBombHud.secondInputDown = true;
                             Eagle500KgBombHud.inputStep++;
-                        } else if (downNotPressed) {
+                        } else if (rightNotPressed) {
                             Eagle500KgBombHud.resetInputValues();
                         }
                     }
@@ -379,7 +379,7 @@ public class Stratagems {
                             player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
                             Eagle500KgBombHud.thirdInputDown = true;
                             Eagle500KgBombHud.inputStep++;
-                        } else if (upNotPressed) {
+                        } else if (downNotPressed) {
                             Eagle500KgBombHud.resetInputValues();
                         }
                     }
@@ -388,7 +388,7 @@ public class Stratagems {
                             player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
                             Eagle500KgBombHud.fourthInputDown = true;
                             Eagle500KgBombHud.inputStep++;
-                        } else if (upNotPressed) {
+                        } else if (downNotPressed) {
                             Eagle500KgBombHud.resetInputValues();
                         }
                     }
@@ -401,6 +401,60 @@ public class Stratagems {
                             Eagle500KgBombHud.inputStep++;
                         } else if (downNotPressed) {
                             Eagle500KgBombHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
+            // Expendable Anti-Tank inputs
+
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
+                switch (EAT17Hud.inputStep) {
+                    case 0 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            EAT17Hud.firstInputDown = true;
+                            EAT17Hud.inputStep++;
+                        } else if (downNotPressed) {
+                            EAT17Hud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            EAT17Hud.secondInputDown = true;
+                            EAT17Hud.inputStep++;
+                        } else if (downNotPressed) {
+                            EAT17Hud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (leftJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            EAT17Hud.thirdInputDown = true;
+                            EAT17Hud.inputStep++;
+                        } else if (leftNotPressed) {
+                            EAT17Hud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            EAT17Hud.fourthInputDown = true;
+                            EAT17Hud.inputStep++;
+                        } else if (upNotPressed) {
+                            EAT17Hud.resetInputValues();
+                        }
+                    }
+                    case 4 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            EAT17Hud.fifthInputDown = true;
+                            EAT17Hud.allInputsDown = true;
+                            EAT17Hud.inputStep++;
+                        } else if (rightNotPressed) {
+                            EAT17Hud.resetInputValues();
                         }
                     }
                 }
@@ -424,9 +478,15 @@ public class Stratagems {
         }
         if (BigBarrageHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital 380MM HE Barrage"));
+            resetInputValues();
         }
         if (Eagle500KgBombHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Eagle 500KG Bomb"));
+            resetInputValues();
+        }
+        if (EAT17Hud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Expendable Anti-Tank"));
+            resetInputValues();
         }
     }
 
@@ -467,6 +527,9 @@ public class Stratagems {
             if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())) {
                 Eagle500KgBombHud.render500KgBombHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()));
             }
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
+                EAT17Hud.renderEAT17Hud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()));
+            }
 
         }
     }
@@ -493,6 +556,7 @@ public class Stratagems {
         SmallBarrageHud.resetInputValues();
         BigBarrageHud.resetInputValues();
         Eagle500KgBombHud.resetInputValues();
+        EAT17Hud.resetInputValues();
         allInputsDown = false;
     }
 
