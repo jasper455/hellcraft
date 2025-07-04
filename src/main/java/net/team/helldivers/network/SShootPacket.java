@@ -7,10 +7,13 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 import net.team.helldivers.entity.custom.BulletProjectileEntity;
+import net.team.helldivers.entity.custom.HeatedGasProjectileEntity;
 import net.team.helldivers.entity.custom.MissileProjectileEntity;
 import net.team.helldivers.entity.custom.RocketProjectileEntity;
 import net.team.helldivers.item.custom.Ar23Item;
 import net.team.helldivers.item.custom.EAT17Item;
+import net.team.helldivers.item.custom.P2Item;
+import net.team.helldivers.item.custom.Plas1Item;
 import net.team.helldivers.sound.ModSounds;
 
 import java.util.function.Supplier;
@@ -82,6 +85,64 @@ public class SShootPacket {
                         player.broadcastBreakEvent(EquipmentSlot.MAINHAND);
                     });
 
+            }
+        }
+
+        // P2 Peacemaker Shooting Logic
+
+        if (heldItem.getItem() instanceof P2Item) {
+            // Check if we can still shoot
+            if (heldItem.getDamageValue() < heldItem.getMaxDamage() - 1) {
+                // Play sound
+                player.level().playSound(null, player.blockPosition(),
+                        ModSounds.P2_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
+                PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
+
+                // Actually shoot the bullet
+                BulletProjectileEntity bullet = new BulletProjectileEntity(player, player.level());
+                bullet.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 5f, 0.0f);
+                bullet.setXRot(player.getXRot());
+                bullet.setYRot(player.getYRot());
+                bullet.setNoGravity(true);
+                player.level().addFreshEntity(bullet);
+
+                // Damage the item
+                if (!player.getAbilities().instabuild) {
+                    heldItem.hurt(1, player.getRandom(), player);
+                }
+            } else {
+                player.level().playSound(null, player.blockPosition(),
+                        ModSounds.GUN_EMPTY.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
+                player.getCooldowns().addCooldown(heldItem.getItem(), 10);
+            }
+        }
+
+        // PLAS-1 Scorcher Shooting Logic
+
+        if (heldItem.getItem() instanceof Plas1Item) {
+            // Check if we can still shoot
+            if (heldItem.getDamageValue() < heldItem.getMaxDamage() - 1) {
+                // Play sound
+                player.level().playSound(null, player.blockPosition(),
+                        ModSounds.PLAS1_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
+                PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
+
+                // Actually shoot the bullet
+                HeatedGasProjectileEntity heatedGas = new HeatedGasProjectileEntity(player, player.level());
+                heatedGas.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 5f, 0.0f);
+                heatedGas.setXRot(player.getXRot());
+                heatedGas.setYRot(player.getYRot());
+                heatedGas.setNoGravity(true);
+                player.level().addFreshEntity(heatedGas);
+
+                // Damage the item
+                if (!player.getAbilities().instabuild) {
+                    heldItem.hurt(1, player.getRandom(), player);
+                }
+            } else {
+                player.level().playSound(null, player.blockPosition(),
+                        ModSounds.GUN_EMPTY.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
+                player.getCooldowns().addCooldown(heldItem.getItem(), 10);
             }
         }
     }

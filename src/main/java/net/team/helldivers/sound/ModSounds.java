@@ -44,6 +44,10 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> EAT_FIRE = registerSoundEvent("eat_fire");
 
+    public static final RegistryObject<SoundEvent> P2_SHOOT = registerSoundEvent("p2_shoot");
+
+    public static final RegistryObject<SoundEvent> PLAS1_SHOOT = registerSoundEvent("plas1_shoot");
+
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, name);
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));

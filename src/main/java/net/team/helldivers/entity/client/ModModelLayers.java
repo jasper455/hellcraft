@@ -19,4 +19,7 @@ public class ModModelLayers {
 
     public static final ModelLayerLocation ROCKET = new ModelLayerLocation(
             ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "rocket"), "main");
+
+    public static final ModelLayerLocation FRAG_GRENADE = new ModelLayerLocation(
+            ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "frag_grenade"), "main");
 }

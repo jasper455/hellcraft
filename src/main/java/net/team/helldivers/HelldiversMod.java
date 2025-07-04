@@ -72,6 +72,8 @@ public class HelldiversMod {
         EntityRenderers.register(ModEntities.HELLPOD.get(), HellpodProjectileRenderer::new);
         EntityRenderers.register(ModEntities.BULLET.get(), BulletProjectileRenderer::new);
         EntityRenderers.register(ModEntities.ROCKET.get(), RocketProjectileRenderer::new);
+        EntityRenderers.register(ModEntities.FRAG_GRENADE.get(), FragGrenadeProjectileRenderer::new);
+        EntityRenderers.register(ModEntities.HEATED_GAS.get(), HeatedGasProjectileRenderer::new);
     }
 
     // Add the example block item to the building blocks tab

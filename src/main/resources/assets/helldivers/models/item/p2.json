@@ -1,0 +1,6 @@
+{
+  "parent": "helldivers:displaysettings/unknown_display",
+  "textures": {
+    "layer0": "helldivers:item/p2"
+  }
+}
