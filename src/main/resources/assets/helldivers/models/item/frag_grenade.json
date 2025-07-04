@@ -1,0 +1,88 @@
+{
+	"format_version": "1.21.6",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "helldivers:item/frag_grenade",
+		"particle": "helldivers:item/frag_grenade"
+	},
+	"elements": [
+		{
+			"from": [6, 7, 6],
+			"to": [10, 13, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 9, 8]},
+			"faces": {
+				"north": {"uv": [2, 2, 4, 5], "texture": "#0"},
+				"east": {"uv": [0, 2, 2, 5], "texture": "#0"},
+				"south": {"uv": [6, 2, 8, 5], "texture": "#0"},
+				"west": {"uv": [4, 2, 6, 5], "texture": "#0"},
+				"up": {"uv": [4, 2, 2, 0], "texture": "#0"},
+				"down": {"uv": [6, 0, 4, 2], "texture": "#0"}
+			}
+		},
+		{
+			"from": [7, 13, 7],
+			"to": [9, 14, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 15, 8]},
+			"faces": {
+				"north": {"uv": [10, 6, 11, 6.5], "texture": "#0"},
+				"east": {"uv": [9, 6, 10, 6.5], "texture": "#0"},
+				"south": {"uv": [8, 6, 9, 6.5], "texture": "#0"},
+				"west": {"uv": [7, 6, 8, 6.5], "texture": "#0"},
+				"up": {"uv": [11, 6, 10, 5], "rotation": 180, "texture": "#0"},
+				"down": {"uv": [11, 5, 10, 6], "rotation": 180, "texture": "#0"}
+			}
+		},
+		{
+			"from": [7, 8, 5],
+			"to": [9, 14, 10],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 15, 7]},
+			"faces": {
+				"north": {"uv": [2.5, 7.5, 3.5, 10.5], "texture": "#0"},
+				"east": {"uv": [0, 7.5, 2.5, 10.5], "texture": "#0"},
+				"south": {"uv": [6, 7.5, 7, 10.5], "texture": "#0"},
+				"west": {"uv": [3.5, 7.5, 6, 10.5], "texture": "#0"},
+				"up": {"uv": [3.5, 7.5, 2.5, 5], "texture": "#0"},
+				"down": {"uv": [4.5, 5, 3.5, 7.5], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"scale": [0.9, 0.9, 0.9]
+		},
+		"thirdperson_lefthand": {
+			"scale": [0.9, 0.9, 0.9]
+		},
+		"firstperson_righthand": {
+			"rotation": [-180, 20, -180]
+		},
+		"firstperson_lefthand": {
+			"rotation": [-180, 20, -180]
+		},
+		"ground": {
+			"translation": [0, -0.75, 0]
+		},
+		"gui": {
+			"rotation": [30, 130, 0],
+			"translation": [0, -1, 0]
+		},
+		"fixed": {
+			"translation": [0, -2, 0]
+		}
+	},
+	"groups": [
+		{
+			"name": "frag_grenade",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [
+				{
+					"name": "bone",
+					"origin": [8, 0, 8],
+					"color": 0,
+					"children": [0, 1, 2]
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "helldivers:displaysettings/geckolib_item",
+  "textures": {
+    "layer0": "helldivers:item/plas1"
+  }
+}

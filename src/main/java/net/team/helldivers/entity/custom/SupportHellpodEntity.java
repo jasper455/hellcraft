@@ -48,7 +48,7 @@ public class SupportHellpodEntity extends Entity implements GeoEntity {
     public static final RawAnimation FALL = RawAnimation.begin().thenLoop("fall");
     public static final RawAnimation LAND = RawAnimation.begin().thenLoop("land");
 
-    protected SimpleContainer inventory;
+    public SimpleContainer inventory;
 
     private int groundedTicks = 0;
     private int clickedTicks = 0;
@@ -281,4 +281,7 @@ public class SupportHellpodEntity extends Entity implements GeoEntity {
         checkInventoryEmpty();
     }
 
+    public int getGroundedTicks() {
+        return groundedTicks;
+    }
 }

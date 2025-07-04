@@ -41,6 +41,14 @@ public class ModEntities {
             ENTITY_TYPES.register("rocket", () -> EntityType.Builder.<RocketProjectileEntity>of(RocketProjectileEntity::new, MobCategory.MISC)
                     .sized(0.3f, 0.3f).build("rocket"));
 
+    public static final RegistryObject<EntityType<HeatedGasProjectileEntity>> HEATED_GAS =
+            ENTITY_TYPES.register("heated_gas", () -> EntityType.Builder.<HeatedGasProjectileEntity>of(HeatedGasProjectileEntity::new, MobCategory.MISC)
+                    .sized(0.2f, 0.2f).build("heated_gas"));
+
+    public static final RegistryObject<EntityType<FragGrenadeEntity>> FRAG_GRENADE =
+            ENTITY_TYPES.register("frag_grenade", () -> EntityType.Builder.<FragGrenadeEntity>of(FragGrenadeEntity::new, MobCategory.MISC)
+                    .sized(0.15f, 0.15f).build("frag_grenade"));
+
     public static final RegistryObject<EntityType<EagleAirshipEntity>> EAGLE_AIRSHIP =
             ENTITY_TYPES.register("eagle_airship", () -> EntityType.Builder.of(EagleAirshipEntity::new, MobCategory.MISC)
                     .sized(0.00001f, 0.00001f).build("eagle_airship"));

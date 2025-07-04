@@ -30,6 +30,15 @@ public class ModItems {
     public static final RegistryObject<Item> EAT_17 = ITEMS.register("eat_17",
             () -> new EAT17Item(new Item.Properties().stacksTo(1)));
 
+    public static final RegistryObject<Item> FRAG_GRENADE = ITEMS.register("frag_grenade",
+            () -> new FragGrenadeItem(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> P2_PEACEMAKER = ITEMS.register("p2",
+            () -> new P2Item(new Item.Properties().stacksTo(1)));
+
+    public static final RegistryObject<Item> PLAS1 = ITEMS.register("plas1",
+            () -> new Plas1Item(new Item.Properties().stacksTo(1)));
+
     public static final RegistryObject<Item> B01_HELMET = ITEMS.register("b01_helmet",
             () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL , ArmorItem.Type.HELMET,
                     new Item.Properties().stacksTo(1)));
@@ -50,17 +59,17 @@ public class ModItems {
             () -> new StratagemPickerItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> SMALL_BARRAGE = ITEMS.register("small_barrage",
-            () -> new StratagemItem(new Item.Properties()));
+            () -> new StratagemItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> BIG_BARRAGE = ITEMS.register("big_barrage",
-            () -> new StratagemItem(new Item.Properties()));
+            () -> new StratagemItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> HELLBOMB_ITEM = ITEMS.register("hellbomb_item",
-            () -> new StratagemItem(new Item.Properties()));
+            () -> new StratagemItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> PRECISION_STRIKE = ITEMS.register("precision_strike",
-            () -> new StratagemItem(new Item.Properties()));
+            () -> new StratagemItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> EAGLE_500KG_BOMB = ITEMS.register("500kg_bomb",
-            () -> new StratagemItem(new Item.Properties()));
+            () -> new StratagemItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> ANTI_TANK_STRATAGEM = ITEMS.register("eat_stratagem",
-            () -> new StratagemItem(new Item.Properties()));
+            () -> new StratagemItem(new Item.Properties().stacksTo(1)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

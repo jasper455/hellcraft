@@ -28,7 +28,10 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.B01_LEGGINGS.get());
                         output.accept(ModItems.B01_BOOTS.get());
                         output.accept(ModItems.AR23.get());
+                        output.accept(ModItems.P2_PEACEMAKER.get());
+                        output.accept(ModItems.PLAS1.get());
                         output.accept(ModItems.EAT_17.get());
+                        output.accept(ModItems.FRAG_GRENADE.get());
                     }).build());
     public static final RegistryObject<CreativeModeTab> STRATAGEMS_TAB = CREATIVE_MODE_TABS.register("stratagems_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.PRECISION_STRIKE.get()))

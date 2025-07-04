@@ -3,6 +3,7 @@ package net.team.helldivers.entity.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.entity.custom.HellpodProjectileEntity;
 import net.minecraft.client.renderer.MultiBufferSource;

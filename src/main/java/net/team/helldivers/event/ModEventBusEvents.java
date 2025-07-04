@@ -6,6 +6,7 @@ import net.team.helldivers.client.renderer.item.AR23Renderer;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.client.*;
 import net.team.helldivers.entity.custom.EagleAirshipEntity;
+import net.team.helldivers.entity.custom.HeatedGasProjectileEntity;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.item.custom.Ar23Item;
 import net.team.helldivers.network.PacketHandler;
@@ -27,7 +28,9 @@ public class ModEventBusEvents {
         event.registerLayerDefinition(ModModelLayers.STRATAGEM_ORB, StratagemOrbProjectileModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.HELLPOD, HellpodProjectileModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.BULLET, BulletProjectileModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.BULLET, HeatedGasProjectileModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.ROCKET, RocketProjectileModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.FRAG_GRENADE, FragGrenadeProjectileModel::createBodyLayer);
     }
 
     @SubscribeEvent

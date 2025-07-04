@@ -94,5 +94,17 @@
     "sounds": [
       "helldivers:gun_empty"
     ]
+  },
+  "p2_shoot": {
+    "subtitles": "sounds.helldivers.p2_shoot",
+    "sounds": [
+      "helldivers:p2_shoot"
+    ]
+  },
+  "plas1_shoot": {
+    "subtitles": "sounds.helldivers.plas1_shoot",
+    "sounds": [
+      "helldivers:plas1_shoot"
+    ]
   }
 }
