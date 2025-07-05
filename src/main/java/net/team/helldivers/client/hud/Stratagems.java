@@ -460,6 +460,60 @@ public class Stratagems {
                 }
             }
 
+            // Orbital Laser inputs
+
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ORBITAL_LASER.get().getDefaultInstance())) {
+                switch (OrbitalLaserHud.inputStep) {
+                    case 0 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            OrbitalLaserHud.firstInputDown = true;
+                            OrbitalLaserHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            OrbitalLaserHud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            OrbitalLaserHud.secondInputDown = true;
+                            OrbitalLaserHud.inputStep++;
+                        } else if (downNotPressed) {
+                            OrbitalLaserHud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            OrbitalLaserHud.thirdInputDown = true;
+                            OrbitalLaserHud.inputStep++;
+                        } else if (upNotPressed) {
+                            OrbitalLaserHud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            OrbitalLaserHud.fourthInputDown = true;
+                            OrbitalLaserHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            OrbitalLaserHud.resetInputValues();
+                        }
+                    }
+                    case 4 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            OrbitalLaserHud.fifthInputDown = true;
+                            OrbitalLaserHud.allInputsDown = true;
+                            OrbitalLaserHud.inputStep++;
+                        } else if (downNotPressed) {
+                            OrbitalLaserHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
         } else {
             resetInputValues();
         }
@@ -486,6 +540,10 @@ public class Stratagems {
         }
         if (EAT17Hud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Expendable Anti-Tank"));
+            resetInputValues();
+        }
+        if (OrbitalLaserHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Laser"));
             resetInputValues();
         }
     }
@@ -530,6 +588,9 @@ public class Stratagems {
             if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
                 EAT17Hud.renderEAT17Hud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()));
             }
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ORBITAL_LASER.get().getDefaultInstance())) {
+                OrbitalLaserHud.renderOrbitalLaserHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.ORBITAL_LASER.get().getDefaultInstance()));
+            }
 
         }
     }
@@ -557,6 +618,7 @@ public class Stratagems {
         BigBarrageHud.resetInputValues();
         Eagle500KgBombHud.resetInputValues();
         EAT17Hud.resetInputValues();
+        OrbitalLaserHud.resetInputValues();
         allInputsDown = false;
     }
 

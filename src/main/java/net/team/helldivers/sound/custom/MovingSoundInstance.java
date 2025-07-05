@@ -6,28 +6,28 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 
-public class FallingShellSoundInstance extends AbstractTickableSoundInstance {
-    private final Entity missile;
+public class MovingSoundInstance extends AbstractTickableSoundInstance {
+    private final Entity entity;
 
-    public FallingShellSoundInstance(Entity missile, SoundEvent sound) {
+    public MovingSoundInstance(Entity entity, SoundEvent sound, float volume) {
         super(sound, SoundSource.AMBIENT, RandomSource.create()); // Or use SoundSource.NEUTRAL
-        this.missile = missile;
+        this.entity = entity;
         this.looping = true;
-        this.volume = 5.0F;
+        this.volume = volume;
         this.pitch = 1.0F;
-        this.x = missile.getX();
-        this.y = missile.getY();
-        this.z = missile.getZ();
+        this.x = entity.getX();
+        this.y = entity.getY();
+        this.z = entity.getZ();
     }
     @Override
     public void tick() {
         // Update position
-        this.x = missile.getX();
-        this.y = missile.getY();
-        this.z = missile.getZ();
+        this.x = entity.getX();
+        this.y = entity.getY();
+        this.z = entity.getZ();
 
         // Stop if missile is removed or dead
-        if (!missile.isAlive() || missile.isRemoved()) {
+        if (!entity.isAlive() || entity.isRemoved()) {
             this.stop();
         }
     }

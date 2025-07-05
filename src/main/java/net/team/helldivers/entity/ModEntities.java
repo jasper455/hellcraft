@@ -53,6 +53,10 @@ public class ModEntities {
             ENTITY_TYPES.register("eagle_airship", () -> EntityType.Builder.of(EagleAirshipEntity::new, MobCategory.MISC)
                     .sized(0.00001f, 0.00001f).build("eagle_airship"));
 
+    public static final RegistryObject<EntityType<OrbitalLaserEntity>> ORBITAL_LASER =
+            ENTITY_TYPES.register("orbital_laser", () -> EntityType.Builder.of(OrbitalLaserEntity::new, MobCategory.MISC)
+                    .sized(1f, 2f).build("orbital_laser"));
+
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
     }

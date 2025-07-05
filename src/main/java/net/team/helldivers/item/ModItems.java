@@ -41,22 +41,22 @@ public class ModItems {
 
     public static final RegistryObject<Item> B01_HELMET = ITEMS.register("b01_helmet",
             () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL , ArmorItem.Type.HELMET,
-                    new Item.Properties().stacksTo(1)));
+                    new Item.Properties().stacksTo(1).fireResistant()));
 
     public static final RegistryObject<Item> B01_CHESTPLATE = ITEMS.register("b01_chestplate",
             () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
-                    new Item.Properties().stacksTo(1)));
+                    new Item.Properties().stacksTo(1).fireResistant()));
 
     public static final RegistryObject<Item> B01_LEGGINGS = ITEMS.register("b01_leggings",
             () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
-                    new Item.Properties().stacksTo(1)));
+                    new Item.Properties().stacksTo(1).fireResistant()));
 
     public static final RegistryObject<Item> B01_BOOTS = ITEMS.register("b01_boots",
             () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
-                    new Item.Properties().stacksTo(1)));
+                    new Item.Properties().stacksTo(1).fireResistant()));
 
     public static final RegistryObject<Item> STRATAGEM_PICKER = ITEMS.register("stratagem_picker",
-            () -> new StratagemPickerItem(new Item.Properties().stacksTo(1)));
+            () -> new StratagemPickerItem(new Item.Properties().stacksTo(1).fireResistant()));
 
     public static final RegistryObject<Item> SMALL_BARRAGE = ITEMS.register("small_barrage",
             () -> new StratagemItem(new Item.Properties().stacksTo(1)));
@@ -69,6 +69,8 @@ public class ModItems {
     public static final RegistryObject<Item> EAGLE_500KG_BOMB = ITEMS.register("500kg_bomb",
             () -> new StratagemItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> ANTI_TANK_STRATAGEM = ITEMS.register("eat_stratagem",
+            () -> new StratagemItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> ORBITAL_LASER = ITEMS.register("orbital_laser",
             () -> new StratagemItem(new Item.Properties().stacksTo(1)));
 
     public static void register(IEventBus eventBus) {

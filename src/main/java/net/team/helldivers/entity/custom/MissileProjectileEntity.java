@@ -7,7 +7,7 @@ import net.team.helldivers.network.CSmallExplosionParticlesPacket;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SExplosionPacket;
 import net.team.helldivers.sound.ModSounds;
-import net.team.helldivers.sound.custom.FallingShellSoundInstance;
+import net.team.helldivers.sound.custom.MovingSoundInstance;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
@@ -64,7 +64,7 @@ public class MissileProjectileEntity extends AbstractArrow{
     public void tick() {
         if (this.level().isClientSide && soundTicks == 20) {
             Minecraft.getInstance().getSoundManager()
-                    .play(new FallingShellSoundInstance(this, ModSounds.FALLING_SHELL.get()));
+                    .play(new MovingSoundInstance(this, ModSounds.FALLING_SHELL.get(), 5.0f));
         }
         if (this.level().isClientSide) {
             this.level().addParticle(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);

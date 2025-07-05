@@ -7,6 +7,7 @@ import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.client.*;
 import net.team.helldivers.entity.custom.EagleAirshipEntity;
 import net.team.helldivers.entity.custom.HeatedGasProjectileEntity;
+import net.team.helldivers.entity.custom.OrbitalLaserEntity;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.item.custom.Ar23Item;
 import net.team.helldivers.network.PacketHandler;
@@ -36,6 +37,7 @@ public class ModEventBusEvents {
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(ModEntities.EAGLE_AIRSHIP.get(), EagleAirshipEntity.createAttributes().build());
+        event.put(ModEntities.ORBITAL_LASER.get(), OrbitalLaserEntity.createAttributes().build());
     }
 
     @SubscribeEvent

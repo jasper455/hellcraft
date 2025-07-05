@@ -44,6 +44,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.SMALL_BARRAGE.get());
                         output.accept(ModItems.BIG_BARRAGE.get());
                         output.accept(ModItems.PRECISION_STRIKE.get());
+                        output.accept(ModItems.ORBITAL_LASER.get());
                         output.accept(ModItems.EAGLE_500KG_BOMB.get());
                         output.accept(ModItems.ANTI_TANK_STRATAGEM.get());
                     }).build());

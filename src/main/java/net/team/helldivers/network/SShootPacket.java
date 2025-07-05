@@ -16,9 +16,15 @@ import net.team.helldivers.item.custom.P2Item;
 import net.team.helldivers.item.custom.Plas1Item;
 import net.team.helldivers.sound.ModSounds;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 public class SShootPacket {
+    private static final Map<UUID, Long> lastShootTime = new HashMap<>();
+    private static final long SHOOT_COOLDOWN = 50; // milliseconds
+
 
     public SShootPacket() {}
 
@@ -33,7 +39,16 @@ public class SShootPacket {
         ServerPlayer player = context.get().getSender();
         if (player == null) return;
 
+        // Add cooldown check to prevent multiple shots
+        long currentTime = System.currentTimeMillis();
+        long lastTime = lastShootTime.getOrDefault(player.getUUID(), 0L);
+        if (currentTime - lastTime < SHOOT_COOLDOWN) {
+            return;
+        }
+        lastShootTime.put(player.getUUID(), currentTime);
+
         ItemStack heldItem = player.getMainHandItem();
+
 
         // Ar-23 Liberator Shooting Logic
 

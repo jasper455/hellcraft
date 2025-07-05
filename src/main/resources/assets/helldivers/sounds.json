@@ -106,5 +106,17 @@
     "sounds": [
       "helldivers:plas1_shoot"
     ]
+  },
+  "plas1_reload": {
+    "subtitles": "sounds.helldivers.plas1_reload",
+    "sounds": [
+      "helldivers:plas1_reload"
+    ]
+  },
+  "orbital_laser_idle": {
+    "subtitles": "sounds.helldivers.orbital_laser_idle",
+    "sounds": [
+      "helldivers:orbital_laser_idle"
+    ]
   }
 }

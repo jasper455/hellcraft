@@ -1,8 +1,6 @@
 package net.team.helldivers.entity.custom;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
@@ -13,14 +11,12 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec2;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.network.CLargeExplosionParticlesPacket;
 import net.team.helldivers.network.CSmallExplosionParticlesPacket;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SExplosionPacket;
 import net.team.helldivers.sound.ModSounds;
-import net.team.helldivers.sound.custom.FallingShellSoundInstance;
 
 public class Eagle500KgEntity extends AbstractArrow {
     private int soundTicks = 0;

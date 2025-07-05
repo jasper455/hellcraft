@@ -11,12 +11,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.team.helldivers.client.model.entity.SupportHellpodModel;
+import net.team.helldivers.client.renderer.entity.layer.SupportHellpodLayer;
 import net.team.helldivers.entity.custom.SupportHellpodEntity;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class SupportHellpodRenderer extends GeoEntityRenderer<SupportHellpodEntity> {
     public SupportHellpodRenderer(EntityRendererProvider.Context context) {
         super(context, new SupportHellpodModel());
+        this.shadowRadius = 0.5f;
+        this.addRenderLayer(new SupportHellpodLayer(this));
     }
 
     @Override

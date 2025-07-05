@@ -1,8 +1,6 @@
 package net.team.helldivers.entity.custom;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.DustParticleOptions;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
@@ -14,11 +12,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
 import net.team.helldivers.entity.ModEntities;
-import net.team.helldivers.network.CSmallExplosionParticlesPacket;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SExplosionPacket;
 import net.team.helldivers.sound.ModSounds;
-import net.team.helldivers.sound.custom.FallingShellSoundInstance;
 
 public class RocketProjectileEntity extends AbstractArrow {
     private int lifetime = 0;

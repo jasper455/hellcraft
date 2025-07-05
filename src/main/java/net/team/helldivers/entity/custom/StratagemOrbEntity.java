@@ -160,12 +160,26 @@ public class StratagemOrbEntity extends AbstractArrow {
         // Expendable Anti-Tank Entity Stuff
         if (getStratagemType().equals("Expendable Anti-Tank") && !this.level().isClientSide) {
             if (groundedTicks == 100) {
-                SupportHellpodEntity eagleAirshipEntity = new SupportHellpodEntity(this.level(), getStratagemType());
-                eagleAirshipEntity.setPos(this.getX(), 200, this.getZ());
-                this.level().addFreshEntity(eagleAirshipEntity);
+                SupportHellpodEntity supportHellpodEntity = new SupportHellpodEntity(this.level(), getStratagemType());
+                supportHellpodEntity.setPos(this.getX(), 200, this.getZ());
+                this.level().addFreshEntity(supportHellpodEntity);
             }
         }
         if (getStratagemType().equals("Expendable Anti-Tank") && groundedTicks > 140) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
+        // Orbital Laser Entity Stuff
+        if (getStratagemType().equals("Orbital Laser") && !this.level().isClientSide) {
+            if (groundedTicks == 60) {
+                OrbitalLaserEntity laserEntity = new OrbitalLaserEntity(ModEntities.ORBITAL_LASER.get(), this.level());
+                laserEntity.setOwner(this.getOwner());
+                laserEntity.setPos(this.getX(), this.getY(), this.getZ());
+                this.level().addFreshEntity(laserEntity);
+            }
+        }
+        if (getStratagemType().equals("Orbital Laser") && groundedTicks > 60) {
             this.discard();
             groundedTicks = 0;
         }

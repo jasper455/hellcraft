@@ -48,6 +48,10 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> PLAS1_SHOOT = registerSoundEvent("plas1_shoot");
 
+    public static final RegistryObject<SoundEvent> PLAS1_RELOAD = registerSoundEvent("plas1_reload");
+
+    public static final RegistryObject<SoundEvent> ORBITAL_LASER_IDLE = registerSoundEvent("orbital_laser_idle");
+
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, name);
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));

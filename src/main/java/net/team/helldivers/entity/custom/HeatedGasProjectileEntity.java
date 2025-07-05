@@ -49,7 +49,7 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
         super.onHitEntity(result);
         Entity entity = result.getEntity();
         BlockPos pos = entity.blockPosition();
-        entity.hurt(this.damageSources().thrown(this, this.getOwner()), 10);
+        entity.hurt(this.damageSources().thrown(this, this.getOwner()), 30);
         if (!this.level().isClientSide) {
             this.level().broadcastEntityEvent(this, (byte)3);
         }

@@ -24,6 +24,7 @@
   "item.helldivers.walking_barrage": "§bOrbital Walking Barrage",
   "item.helldivers.500kg_bomb": "§bEagle 500KG Bomb",
   "item.helldivers.eat_stratagem": "§bExpendable Anti-Tank",
+  "item.helldivers.orbital_laser": "§bOrbital Laser",
 
   "key.category.helldivers": "Crafted Democracy",
   "key.helldivers.show_stratagem_hud": "Show Stratagem HUD",
@@ -38,5 +39,8 @@
   "block.helldivers.hellbomb": "§eHellbomb",
   "block.helldivers.ammo_crate": "Ammo Crate",
 
-  "container.helldivers.stratagem_picker": "Stratagem Picker"
+  "container.helldivers.stratagem_picker": "Stratagem Picker",
+
+  "death.attack.orbitalLaser": "%1$s was vaporized by an Orbital Laser",
+  "death.attack.orbitalLaser.player": "%1$s was strategically eliminated by %2$s's Orbital Laser"
 }

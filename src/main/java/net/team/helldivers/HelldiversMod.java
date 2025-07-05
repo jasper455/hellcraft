@@ -1,6 +1,10 @@
 package net.team.helldivers;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraftforge.registries.RegisterEvent;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.entity.ModEntities;
@@ -96,5 +100,11 @@ public class HelldiversMod {
         public static void registerParticleFactory(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(ModParticles.SMOKE.get(), LodestoneWorldParticleType.Factory::new);
         }
+        @SubscribeEvent
+        public static void registerDamageTypes(RegisterEvent event) {
+            event.register(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "orbital_laser"),
+                    () -> new DamageType("orbital_laser", 0.1F));
+        }
+
     }
 }
