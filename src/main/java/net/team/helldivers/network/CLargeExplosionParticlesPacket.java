@@ -1,5 +1,13 @@
 package net.team.helldivers.network;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.datafix.fixes.EntityHealthFix;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.entity.item.PrimedTnt;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Snowball;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -10,6 +18,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
+import net.team.helldivers.event.ModClientEvents;
 import team.lodestar.lodestone.handlers.ScreenshakeHandler;
 import team.lodestar.lodestone.registry.common.particle.LodestoneParticleRegistry;
 import team.lodestar.lodestone.systems.easing.Easing;
@@ -19,6 +28,7 @@ import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
 import team.lodestar.lodestone.systems.screenshake.ScreenshakeInstance;
 
 import java.awt.*;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class CLargeExplosionParticlesPacket {
@@ -39,6 +49,7 @@ public class CLargeExplosionParticlesPacket {
     public void handle(Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
             if (Minecraft.getInstance().level == null) return;
+            if (!Minecraft.getInstance().player.getPersistentData().getBoolean("helldivers.useLodestone")) return;
 
             ClientLevel level = Minecraft.getInstance().level;
 
@@ -59,8 +70,8 @@ public class CLargeExplosionParticlesPacket {
                 .setTransparencyData(GenericParticleData.create(0.25f, 0f).build())
                 .setColorData(ColorParticleData.create(new Color(255, 224, 20), new Color(255, 237, 165)).build())
                 .setLifetime(120)
+                .enableForcedSpawn()
                 .addMotion(0, 0, 0)
-                .setForceSpawn(true)
                 .spawn(level, pos.x, pos.y, pos.z);
 
         // Smoke
@@ -87,7 +98,7 @@ public class CLargeExplosionParticlesPacket {
                     .setColorData(ColorParticleData.create(new Color(255, 146, 22), new Color(255, 39, 39, 200)).build())
                     .addMotion(dx / 1.5, dy, dz / 1.5)
                     .setLifetime(300)
-                    .setForceSpawn(true)
+                    .enableForcedSpawn()
                     .spawn(level, pos.x, pos.y, pos.z);
             // Blast particle inner
             WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)
@@ -95,8 +106,8 @@ public class CLargeExplosionParticlesPacket {
                     .setTransparencyData(GenericParticleData.create(0.25f, 0f).build())
                     .setColorData(ColorParticleData.create(new Color(255, 224, 20), new Color(255, 237, 165)).build())
                     .setLifetime(300)
+                    .enableForcedSpawn()
                     .addMotion(dx / 2, dy, dz / 2)
-                    .setForceSpawn(true)
                     .spawn(level, pos.x, pos.y, pos.z);
 
             // Flash Particle
@@ -105,12 +116,12 @@ public class CLargeExplosionParticlesPacket {
                     .setTransparencyData(GenericParticleData.create(0.05f, 0.02f).build())
                     .setColorData(ColorParticleData.create(new Color(255, 146, 22), new Color(255, 39, 39)).build())
                     .setLifetime(300)
+                    .enableForcedSpawn()
                     .addMotion(dx * 4, dy, dz * 4)
-                    .setForceSpawn(true)
                     .spawn(level, pos.x, pos.y, pos.z);
-
         }
-//        ModClientEvents.triggerFlashEffect(0.00005f);
+        // TODO: Make the screen flash if the player is close enough to the explosion
+//        ModClientEvents.triggerFlashEffect(0.0005f);
         TintPostProcessor.INSTANCE.setActive(false);
     }
 

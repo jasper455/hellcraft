@@ -1,7 +1,9 @@
 package net.team.helldivers.entity.custom;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.entity.ModEntities;
 import net.minecraft.core.Direction;
@@ -45,7 +47,7 @@ public class HellpodProjectileEntity extends AbstractArrow {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
-        this.discard();
+        result.getEntity().kill();
     }
 
     @Override
@@ -55,7 +57,8 @@ public class HellpodProjectileEntity extends AbstractArrow {
 
     @Override
     public void tick() {
-        if (this.level().isClientSide && !this.isGrounded()) {
+        if (this.level().isClientSide && !this.isGrounded() && Minecraft.getInstance().player.getPersistentData()
+                .getBoolean("helldivers.useLodestone")) {
                 WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)
                         .setScaleData(GenericParticleData.create(3f, 0f).build())
                         .setTransparencyData(GenericParticleData.create(1f, 0f).build())
@@ -71,9 +74,11 @@ public class HellpodProjectileEntity extends AbstractArrow {
             groundedTicks++;
         }
 
-        if (groundedTicks == 60 && !this.level().isClientSide) {
-            BlockState state = this.level().getBlockState(this.blockPosition());
-            this.level().setBlockAndUpdate(this.blockPosition(), ModBlocks.HELLBOMB.get().defaultBlockState().setValue(FACING, this.getOwner().getDirection().getOpposite()));
+        if (groundedTicks >= 60 && !this.level().isClientSide) {
+            if (this.getOwner() != null) {
+                BlockState state = this.level().getBlockState(this.blockPosition());
+                this.level().setBlockAndUpdate(this.blockPosition(), ModBlocks.HELLBOMB.get().defaultBlockState().setValue(FACING, this.getOwner().getDirection().getOpposite()));
+            }
             this.discard();
         }
         super.tick();
@@ -87,5 +92,10 @@ public class HellpodProjectileEntity extends AbstractArrow {
     @Override
     protected SoundEvent getDefaultHitGroundSoundEvent() {
         return SoundEvents.DRAGON_FIREBALL_EXPLODE;
+    }
+
+    @Override
+    protected boolean canHitEntity(Entity entity) {
+        return false;
     }
 }

@@ -18,6 +18,7 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.helldivers"))
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModBlocks.AMMO_CRATE.get());
+                        output.accept(ModBlocks.BARBED_WIRE.get());
                     }).build());
     public static final RegistryObject<CreativeModeTab> SEAF_EQUIPMENT = CREATIVE_MODE_TABS.register("seaf_equipment_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.AR23.get()))
@@ -27,6 +28,12 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.B01_CHESTPLATE.get());
                         output.accept(ModItems.B01_LEGGINGS.get());
                         output.accept(ModItems.B01_BOOTS.get());
+
+                        output.accept(ModItems.FS05_HELMET.get());
+                        output.accept(ModItems.FS05_CHESTPLATE.get());
+                        output.accept(ModItems.FS05_LEGGINGS.get());
+                        output.accept(ModItems.FS05_BOOTS.get());
+
                         output.accept(ModItems.AR23.get());
                         output.accept(ModItems.P2_PEACEMAKER.get());
                         output.accept(ModItems.PLAS1.get());
@@ -39,8 +46,11 @@ public class ModCreativeModeTabs {
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModItems.STRATAGEM_PICKER.get());
                         output.accept(ModItems.STRATAGEM_ORB.get());
+
                         output.accept(ModBlocks.HELLBOMB.get());
+
                         output.accept(ModItems.HELLBOMB_ITEM.get());
+                        output.accept(ModItems.RESUPPLY.get());
                         output.accept(ModItems.SMALL_BARRAGE.get());
                         output.accept(ModItems.BIG_BARRAGE.get());
                         output.accept(ModItems.PRECISION_STRIKE.get());

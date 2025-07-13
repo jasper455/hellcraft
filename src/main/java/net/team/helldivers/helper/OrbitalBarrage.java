@@ -32,7 +32,7 @@ public class OrbitalBarrage {
             ticksRemaining--;
             if (ticksRemaining <= 0) {
                 for (int i = 0; i < 600; i += 10) {
-                    if (groundedTicks == 150 + (i * (is380Barrage ? 12 : 8))) {
+                    if (groundedTicks == 150 + (i * (is380Barrage ? 6 : 8))) {
                         // Trigger the barrage explosion
                         PacketHandler.sendToServer(new SOrbitalBarragePacket(pos, radius));
                         MinecraftForge.EVENT_BUS.unregister(this);

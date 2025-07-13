@@ -1,8 +1,10 @@
 package net.team.helldivers.block;
 
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.custom.AmmoCrateBlock;
+import net.team.helldivers.block.custom.BarbedWireBlock;
 import net.team.helldivers.block.custom.HellbombBlock;
 import net.team.helldivers.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -23,7 +25,11 @@ public class ModBlocks {
             () -> new HellbombBlock());
 
     public static final RegistryObject<Block> AMMO_CRATE = registerBlock("ammo_crate",
-            () -> new AmmoCrateBlock(BlockBehaviour.Properties.of().instabreak().noOcclusion().noCollission()));
+            () -> new AmmoCrateBlock(BlockBehaviour.Properties.of().instabreak().noOcclusion().noCollission().lightLevel((level) -> 5)));
+
+    public static final RegistryObject<Block> BARBED_WIRE = registerBlock("barbed_wire",
+            () -> new BarbedWireBlock(BlockBehaviour.Properties.of().instabreak().noCollission().speedFactor(0.0125f)
+                    .noOcclusion().lightLevel((level) -> 2).sound(SoundType.GRAVEL)));
 
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {

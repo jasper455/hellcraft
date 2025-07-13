@@ -1,6 +1,14 @@
 package net.team.helldivers.block.custom;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraftforge.network.NetworkHooks;
 import net.team.helldivers.block.entity.ModBlockEntities;
+import net.team.helldivers.block.entity.custom.HellbombBlockEntity;
 import net.team.helldivers.helper.DelayedExplosion;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.InteractionHand;
@@ -29,7 +37,7 @@ public class HellbombBlock extends BaseEntityBlock implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static BooleanProperty isActivated = BooleanProperty.create("is_activated");
     public HellbombBlock() {
-        super(Properties.of().noOcclusion());
+        super(Properties.of().noOcclusion().lightLevel((level) -> 3));
         this.registerDefaultState(this.getStateDefinition().any()
                 .setValue(isActivated, false));
     }
@@ -58,17 +66,16 @@ public class HellbombBlock extends BaseEntityBlock implements EntityBlock {
 
     @Override
     public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return Block.box(0, 0, 0, 18, 32, 18);
+        return Block.box(0, 0, 0, 16, 32, 16);
     }
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer,
                                  InteractionHand pHand, BlockHitResult pHit) {
-        if (!pLevel.isClientSide() && !pState.getValue(isActivated)) {
-            pLevel.setBlockAndUpdate(pPos, pState.setValue(isActivated, true));
-            MinecraftForge.EVENT_BUS.register(new DelayedExplosion(pLevel, pPos, 25, 300));
+        if (!pLevel.isClientSide() && !pState.getValue(isActivated) &&
+                pLevel.getBlockEntity(pPos) instanceof HellbombBlockEntity hellbombBlockEntity) {
+            NetworkHooks.openScreen(((ServerPlayer) pPlayer), hellbombBlockEntity, pPos);
         }
-
         return InteractionResult.sidedSuccess(pLevel.isClientSide());
     }
 }

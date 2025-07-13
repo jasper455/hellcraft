@@ -8,6 +8,7 @@ import net.team.helldivers.item.custom.StratagemPickerItem;
 import net.team.helldivers.item.inventory.StratagemPickerInventory;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SGiveStratagemOrbPacket;
+import net.team.helldivers.network.SStratagemGiveCooldownPacket;
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.util.KeyBinding;
 import net.minecraft.client.Minecraft;
@@ -53,7 +54,7 @@ public class Stratagems {
 
         //Checking if inputs weren't pressed
 
-        StratagemHudOverlay.wasUpNotPressedLastTick = KeyBinding.DOWN_INPUT_KEY.consumeClick()
+        StratagemHudOverlay.wasUpNotPressedThisTick = KeyBinding.DOWN_INPUT_KEY.consumeClick()
                 || KeyBinding.LEFT_INPUT_KEY.consumeClick()
                 || KeyBinding.RIGHT_INPUT_KEY.consumeClick();
         boolean upNotPressed = downJustPressed || leftJustPressed || rightJustPressed;
@@ -102,7 +103,8 @@ public class Stratagems {
 
             // Hellbomb inputs
 
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.HELLBOMB_ITEM.get().getDefaultInstance())) {
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.HELLBOMB_ITEM.get().getDefaultInstance())) {
                 switch (HellbombHud.inputStep) {
                     case 0 -> {
                         if (downJustPressed) {
@@ -183,7 +185,8 @@ public class Stratagems {
 
             // Precision Strike inputs
 
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.PRECISION_STRIKE.get().getDefaultInstance())) {
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.PRECISION_STRIKE.get().getDefaultInstance())) {
                 switch (PrecisionStrikeHud.inputStep) {
                     case 0 -> {
                         if (rightJustPressed) {
@@ -219,7 +222,8 @@ public class Stratagems {
 
             // 120MM Barrage inputs
 
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.SMALL_BARRAGE.get().getDefaultInstance())) {
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.SMALL_BARRAGE.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.SMALL_BARRAGE.get().getDefaultInstance())) {
                 switch (SmallBarrageHud.inputStep) {
                     case 0 -> {
                         if (rightJustPressed) {
@@ -282,7 +286,8 @@ public class Stratagems {
 
             // 380MM Barrage inputs
 
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.BIG_BARRAGE.get().getDefaultInstance())) {
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.BIG_BARRAGE.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.BIG_BARRAGE.get().getDefaultInstance())) {
                 switch (BigBarrageHud.inputStep) {
                     case 0 -> {
                         if (rightJustPressed) {
@@ -354,7 +359,8 @@ public class Stratagems {
 
             // 500KG Bomb inputs
 
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())) {
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())) {
                 switch (Eagle500KgBombHud.inputStep) {
                     case 0 -> {
                         if (upJustPressed) {
@@ -408,7 +414,8 @@ public class Stratagems {
 
             // Expendable Anti-Tank inputs
 
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
                 switch (EAT17Hud.inputStep) {
                     case 0 -> {
                         if (downJustPressed) {
@@ -462,7 +469,8 @@ public class Stratagems {
 
             // Orbital Laser inputs
 
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ORBITAL_LASER.get().getDefaultInstance())) {
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ORBITAL_LASER.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.ORBITAL_LASER.get().getDefaultInstance())) {
                 switch (OrbitalLaserHud.inputStep) {
                     case 0 -> {
                         if (rightJustPressed) {
@@ -514,36 +522,104 @@ public class Stratagems {
                 }
             }
 
+
+            // Resupply inputs
+
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.RESUPPLY.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.RESUPPLY.get().getDefaultInstance())) {
+                switch (ResupplyHud.inputStep) {
+                    case 0 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            ResupplyHud.firstInputDown = true;
+                            ResupplyHud.inputStep++;
+                        } else if (downNotPressed) {
+                            ResupplyHud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            ResupplyHud.secondInputDown = true;
+                            ResupplyHud.inputStep++;
+                        } else if (downNotPressed) {
+                            ResupplyHud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            ResupplyHud.thirdInputDown = true;
+                            ResupplyHud.inputStep++;
+                        } else if (upNotPressed) {
+                            ResupplyHud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            ResupplyHud.fourthInputDown = true;
+                            ResupplyHud.inputStep++;
+                            ResupplyHud.allInputsDown = true;
+                        } else if (rightNotPressed) {
+                            ResupplyHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
+
         } else {
             resetInputValues();
         }
 
         if (HellbombHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Hellbomb"));
+            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.HELLBOMB_ITEM.get().getDefaultInstance())), 3600));
             resetInputValues();
         }
         if (PrecisionStrikeHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Precision Strike"));
+            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.PRECISION_STRIKE.get().getDefaultInstance())), 3600));
             resetInputValues();
         }
         if (SmallBarrageHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital 120MM HE Barrage"));
+            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.SMALL_BARRAGE.get().getDefaultInstance())), 3600));
             resetInputValues();
         }
         if (BigBarrageHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital 380MM HE Barrage"));
+            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.BIG_BARRAGE.get().getDefaultInstance())), 3600));
             resetInputValues();
         }
         if (Eagle500KgBombHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Eagle 500KG Bomb"));
+            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())), 3600));
             resetInputValues();
         }
         if (EAT17Hud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Expendable Anti-Tank"));
+            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())), 3600));
             resetInputValues();
         }
         if (OrbitalLaserHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Laser"));
+            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.ORBITAL_LASER.get().getDefaultInstance())), 3600));
+            resetInputValues();
+        }
+        if (ResupplyHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Resupply"));
+            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.RESUPPLY.get().getDefaultInstance())), 3600));
             resetInputValues();
         }
     }
@@ -559,44 +635,94 @@ public class Stratagems {
         int screenWidth = minecraft.getWindow().getGuiScaledWidth();
         int screenHeight = minecraft.getWindow().getGuiScaledHeight();
 
+        // only render the menu if your not moving, all inputs aren't down, your hand is empty, you have a helldiver chestplate on,
+        // and the stratagem picker inventory exists
         if (KeyBinding.SHOW_STRATAGEM_KEY.isDown() && player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0 && !allInputsDown &&
                 player.getMainHandItem().isEmpty() &&
                 player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IHelldiverArmorItem && getPickerInventory(player) != null) {
 
+            // render the background
             guiGraphics.blit(StratagemHudOverlay.STRATAGEM_BACKGROUND,
                     6, 6, 132 , 125, 0, 0, 16, 16,
                     16, 16);
 
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.HELLBOMB_ITEM.get().getDefaultInstance())) {
+            // Hellbomb Render HUD Code
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.HELLBOMB_ITEM.get().getDefaultInstance())) {
                 HellbombHud.renderHellbombHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()));
-            }
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.PRECISION_STRIKE.get().getDefaultInstance())) {
-                PrecisionStrikeHud.renderPrecisionStrikeHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.PRECISION_STRIKE.get().getDefaultInstance()));
-            }
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.PRECISION_STRIKE.get().getDefaultInstance())) {
-                PrecisionStrikeHud.renderPrecisionStrikeHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.PRECISION_STRIKE.get().getDefaultInstance()));
-            }
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.SMALL_BARRAGE.get().getDefaultInstance())) {
-                SmallBarrageHud.renderSmallBarrageHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.SMALL_BARRAGE.get().getDefaultInstance()));
-            }
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.BIG_BARRAGE.get().getDefaultInstance())) {
-                BigBarrageHud.renderBigBarrageHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.BIG_BARRAGE.get().getDefaultInstance()));
-            }
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())) {
-                Eagle500KgBombHud.render500KgBombHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()));
-            }
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
-                EAT17Hud.renderEAT17Hud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()));
-            }
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ORBITAL_LASER.get().getDefaultInstance())) {
-                OrbitalLaserHud.renderOrbitalLaserHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.ORBITAL_LASER.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (!getPickerInventory(player).isOnCooldown(ModItems.HELLBOMB_ITEM.get().getDefaultInstance())) {
+                HellbombHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()));
             }
 
+            // Precision Strike HUD Render Code
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.PRECISION_STRIKE.get().getDefaultInstance())) {
+                PrecisionStrikeHud.renderPrecisionStrikeHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.PRECISION_STRIKE.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (!getPickerInventory(player).isOnCooldown(ModItems.PRECISION_STRIKE.get().getDefaultInstance())) {
+                PrecisionStrikeHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.PRECISION_STRIKE.get().getDefaultInstance()));
+            }
+
+            // 120 Barrage Render HUD Code
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.SMALL_BARRAGE.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.SMALL_BARRAGE.get().getDefaultInstance())) {
+                SmallBarrageHud.renderSmallBarrageHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.SMALL_BARRAGE.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (!getPickerInventory(player).isOnCooldown(ModItems.SMALL_BARRAGE.get().getDefaultInstance())) {
+                SmallBarrageHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.SMALL_BARRAGE.get().getDefaultInstance()));
+            }
+
+            // 380 Barrage Render HUD Code
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.BIG_BARRAGE.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.BIG_BARRAGE.get().getDefaultInstance())) {
+                BigBarrageHud.renderBigBarrageHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.BIG_BARRAGE.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (!getPickerInventory(player).isOnCooldown(ModItems.BIG_BARRAGE.get().getDefaultInstance())) {
+                BigBarrageHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.BIG_BARRAGE.get().getDefaultInstance()));
+            }
+
+            // 500 KG Render HUD Code
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())) {
+                Eagle500KgBombHud.render500KgBombHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (!getPickerInventory(player).isOnCooldown(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())) {
+                Eagle500KgBombHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()));
+            }
+
+            // EAT Render HUD Code
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
+                EAT17Hud.renderEAT17Hud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (!getPickerInventory(player).isOnCooldown(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
+                EAT17Hud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()));
+            }
+
+            // Orbital Laser Render HUD Code
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ORBITAL_LASER.get().getDefaultInstance()) &&
+            getPickerInventory(player).isOnCooldown(ModItems.ORBITAL_LASER.get().getDefaultInstance())) {
+                OrbitalLaserHud.renderOrbitalLaserHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.ORBITAL_LASER.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (!getPickerInventory(player).isOnCooldown(ModItems.ORBITAL_LASER.get().getDefaultInstance())) {
+                OrbitalLaserHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.ORBITAL_LASER.get().getDefaultInstance()));
+            }
+
+            // Resupply Render HUD Code
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.RESUPPLY.get().getDefaultInstance()) &&
+            getPickerInventory(player).isOnCooldown(ModItems.RESUPPLY.get().getDefaultInstance())) {
+                ResupplyHud.renderResupplyHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.RESUPPLY.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (!getPickerInventory(player).isOnCooldown(ModItems.RESUPPLY.get().getDefaultInstance())) {
+                ResupplyHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.RESUPPLY.get().getDefaultInstance()));
+            }
         }
     }
 
     @SubscribeEvent
     public static void onInputUpdate(MovementInputUpdateEvent event) {
+        // Stop the player from moving when the stratagem menu is open
         Player player = Minecraft.getInstance().player;
         if (KeyBinding.SHOW_STRATAGEM_KEY.isDown() && player.getDeltaMovement().x == 0
                 && player.getDeltaMovement().z == 0 && !allInputsDown &&
@@ -619,9 +745,11 @@ public class Stratagems {
         Eagle500KgBombHud.resetInputValues();
         EAT17Hud.resetInputValues();
         OrbitalLaserHud.resetInputValues();
+        ResupplyHud.resetInputValues();
         allInputsDown = false;
     }
 
+    // get the stratagem picker item's inventory
     public static StratagemPickerInventory getPickerInventory(Player player) {
         for (ItemStack stack : player.getInventory().items) {
                 if (stack.getItem() instanceof StratagemPickerItem) {

@@ -44,6 +44,11 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.B01_LEGGINGS.get());
         basicItem(ModItems.B01_BOOTS.get());
 
+        basicItem(ModItems.FS05_HELMET.get());
+        basicItem(ModItems.FS05_CHESTPLATE.get());
+        basicItem(ModItems.FS05_LEGGINGS.get());
+        basicItem(ModItems.FS05_BOOTS.get());
+
         basicItem(ModItems.STRATAGEM_PICKER.get());
 
 //        basicItem(ModItems.AR23.get());
@@ -56,6 +61,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.EAGLE_500KG_BOMB.get());
         basicItem(ModItems.ANTI_TANK_STRATAGEM.get());
         basicItem(ModItems.ORBITAL_LASER.get());
+        basicItem(ModItems.RESUPPLY.get());
     }
 
 

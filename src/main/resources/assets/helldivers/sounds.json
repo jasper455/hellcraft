@@ -71,16 +71,16 @@
       "helldivers:stratagem_orb_land"
     ]
   },
-  "ar22_reload": {
-    "subtitles": "sounds.helldivers.ar22_reload",
+  "ar23_reload": {
+    "subtitles": "sounds.helldivers.ar23_reload",
     "sounds": [
-      "helldivers:ar22_reload"
+      "helldivers:ar23_reload"
     ]
   },
-  "ar22_shoot": {
-    "subtitles": "sounds.helldivers.ar22_shoot",
+  "ar23_shoot": {
+    "subtitles": "sounds.helldivers.ar23_shoot",
     "sounds": [
-      "helldivers:ar22_shoot"
+      "helldivers:ar23_shoot"
     ]
   },
   "eat_fire": {
@@ -117,6 +117,12 @@
     "subtitles": "sounds.helldivers.orbital_laser_idle",
     "sounds": [
       "helldivers:orbital_laser_idle"
+    ]
+  },
+  "easter_egg": {
+    "subtitles": "sounds.helldivers.easter_egg",
+    "sounds": [
+      "helldivers:easter_egg"
     ]
   }
 }

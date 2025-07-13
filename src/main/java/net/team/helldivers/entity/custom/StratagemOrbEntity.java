@@ -98,13 +98,15 @@ public class StratagemOrbEntity extends AbstractArrow {
             float randomPosX = (Mth.randomBetween(this.level().getRandom(), 87.5f, 92.5f));
             float randomPosY = (Mth.randomBetween(this.level().getRandom(), -5.0f, 5.0f));
 
-            MissileProjectileEntity explosive = new MissileProjectileEntity(((LivingEntity) this.getOwner()), this.level());
+            MissileProjectileEntity explosive = new MissileProjectileEntity(((LivingEntity) this.getOwner()), this.level(), 17);
             explosive.setPos(this.getX() + randomPosX, 200 + randomPosY, this.getZ());
             explosive.setDeltaMovement(-1.6f, 0f, 0f);
             this.level().addFreshEntity(explosive);
-            this.playSound(ModSounds.FIRE_ORBITAL_STRIKE.get(), 10000000.0f, 1.0f);
+            if (random.nextBoolean() && random.nextBoolean()) {
+                this.playSound(ModSounds.FIRE_ORBITAL_STRIKE.get(), 10000000.0f, 1.0f);
+            }
         }
-        if (getStratagemType().equals("Orbital Precision Strike") && groundedTicks == 180) {
+        if (getStratagemType().equals("Orbital Precision Strike") && groundedTicks == 100) {
             this.discard();
             groundedTicks = 0;
         }
@@ -180,6 +182,19 @@ public class StratagemOrbEntity extends AbstractArrow {
             }
         }
         if (getStratagemType().equals("Orbital Laser") && groundedTicks > 60) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
+        // Orbital Laser Entity Stuff
+        if (getStratagemType().equals("Resupply") && !this.level().isClientSide) {
+            if (groundedTicks == 300) {
+                SupportHellpodEntity supportHellpodEntity = new SupportHellpodEntity(this.level(), getStratagemType());
+                supportHellpodEntity.setPos(this.getX(), 200, this.getZ());
+                this.level().addFreshEntity(supportHellpodEntity);
+            }
+        }
+        if (getStratagemType().equals("Resupply") && groundedTicks > 320) {
             this.discard();
             groundedTicks = 0;
         }

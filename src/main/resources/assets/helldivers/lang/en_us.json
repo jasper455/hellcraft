@@ -5,10 +5,17 @@
 
   "item.helldivers.effect_tester": "Effect Tester",
   "item.helldivers.stratagem_orb": "§bStratagem Orb",
+
   "item.helldivers.b01_helmet": "§bB0-1 Tactical Helmet",
   "item.helldivers.b01_chestplate": "§bB0-1 Tactical Chestplate",
   "item.helldivers.b01_leggings": "§bB0-1 Tactical Leggings",
   "item.helldivers.b01_boots": "§bB0-1 Tactical Boots",
+
+  "item.helldivers.fs05_helmet": "§bFS-05 Marksman Helmet",
+  "item.helldivers.fs05_chestplate": "§bFS-05 Marksman Chestplate",
+  "item.helldivers.fs05_leggings": "§bFS-05 Marksman Leggings",
+  "item.helldivers.fs05_boots": "§bFS-05 Marksman Boots",
+
   "item.helldivers.stratagem_picker": "§dStratagem Selector",
 
   "item.helldivers.ar23": "AR-23 Liberator",
@@ -25,6 +32,7 @@
   "item.helldivers.500kg_bomb": "§bEagle 500KG Bomb",
   "item.helldivers.eat_stratagem": "§bExpendable Anti-Tank",
   "item.helldivers.orbital_laser": "§bOrbital Laser",
+  "item.helldivers.resupply": "§bResupply",
 
   "key.category.helldivers": "Crafted Democracy",
   "key.helldivers.show_stratagem_hud": "Show Stratagem HUD",
@@ -38,8 +46,43 @@
 
   "block.helldivers.hellbomb": "§eHellbomb",
   "block.helldivers.ammo_crate": "Ammo Crate",
+  "block.helldivers.barbed_wire": "Barbed Wire",
 
-  "container.helldivers.stratagem_picker": "Stratagem Picker",
+  "entity.helldivers.missile": "Missile",
+  "entity.helldivers.eagle_500kg_bomb": "Eagle 500KG Bomb",
+  "entity.helldivers.stratagem_orb": "Stratagem Orb",
+  "entity.helldivers.hellpod": "Hellpod",
+  "entity.helldivers.support_hellpod": "Support Hellpod",
+  "entity.helldivers.bullet": "Bullet",
+  "entity.helldivers.rocket": "Rocket",
+  "entity.helldivers.heated_gas": "Heated Gas",
+  "entity.helldivers.frag_grenade": "Frag Grenade",
+  "entity.helldivers.eagle_airship": "Eagle Airship",
+  "entity.helldivers.orbital_laser": "Orbital Laser",
+
+  "sounds.helldivers.stratagem_input": "Stratagem Input",
+  "sounds.helldivers.falling_shell": "Missile Falls",
+  "sounds.helldivers.explosion": "Explosion",
+  "sounds.helldivers.stratagem_activate": "Stratagem Activation",
+  "sounds.helldivers.firing_orbital_strike": "Firing Orbital Strike",
+  "sounds.helldivers.hellbomb_armed": "Hellbomb Arms",
+  "sounds.helldivers.hellbomb_explosion": "Hellbomb Explodes",
+  "sounds.helldivers.clear_the_area": "Hellbomb Armed, Clear the Area!",
+  "sounds.helldivers.stratagem_fail_input": "Failed Stratagem Input",
+  "sounds.helldivers.stratagem_menu_open": "Stratagem Menu Opens",
+  "sounds.helldivers.stratagem_menu_close": "Stratagem Menu Closes",
+  "sounds.helldivers.stratagem_orb_land": "Stratagem Orb Lands",
+  "sounds.helldivers.ar23_reload": "AR-23 Liberator Reloads",
+  "sounds.helldivers.ar23_shoot": "AR-23 Liberator Shoots",
+  "sounds.helldivers.eat_fire": "Expendable Anti-Tank Fires",
+  "sounds.helldivers.gun_empty": "Gun Runs Out of Ammo",
+  "sounds.helldivers.p2_shoot": "P2 Peacemaker Shoots",
+  "sounds.helldivers.plas1_shoot": "PLAS-1 Scorcher Shoots",
+  "sounds.helldivers.plas1_reload": "PLAS-1 Scorcher Reloads",
+  "sounds.helldivers.orbital_laser_idle": "Orbital Laser Idle",
+  "sounds.helldivers.easter_egg": "BUUUUUUM, BUM BUM BUM, BUM BUM BUUUUUUUM",
+
+  "container.helldivers.stratagem_picker": "§oStratagem Picker",
 
   "death.attack.orbitalLaser": "%1$s was vaporized by an Orbital Laser",
   "death.attack.orbitalLaser.player": "%1$s was strategically eliminated by %2$s's Orbital Laser"

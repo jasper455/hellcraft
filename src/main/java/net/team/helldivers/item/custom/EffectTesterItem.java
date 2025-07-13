@@ -57,8 +57,6 @@ public class EffectTesterItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
-
-        for (int i = 0; i < 5; i++) {
             float randomPosX = (Mth.randomBetween(pLevel.getRandom(), 85.0f, 95.0f));
             float randomPosY = (Mth.randomBetween(pLevel.getRandom(), -5.0f, 5.0f));
             float randomPosZ = Mth.randomBetween(pLevel.getRandom(), -5.0f, 5.0f);
@@ -66,15 +64,16 @@ public class EffectTesterItem extends Item {
             float randomMoveX = Mth.randomBetween(pLevel.getRandom(), -1.8f, -1.5f);
             float randomMoveZ = Mth.randomBetween(pLevel.getRandom(), -0.125f, 0.125f);
 
-            MissileProjectileEntity explosive = new MissileProjectileEntity(pPlayer, pLevel);
+            MissileProjectileEntity explosive = new MissileProjectileEntity(pPlayer, pLevel, 12);
             explosive.setPos(pPlayer.getX() + randomPosX, 200 + randomPosY, pPlayer.getZ() + randomPosZ);
             explosive.setDeltaMovement(randomMoveX, 0f, randomMoveZ);
             pLevel.addFreshEntity(explosive);
-        }
         return super.use(pLevel, pPlayer, pUsedHand);
     }
 
     public static void triggerExplosionEffect(Level level, Vec3 pos) {
+        if (!Minecraft.getInstance().player.getPersistentData().getBoolean("helldivers.useLodestone")) return;
+
         RandomSource random = level.getRandom();
 
         // Smoke
@@ -141,6 +140,8 @@ public class EffectTesterItem extends Item {
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
+        if (!Minecraft.getInstance().player.getPersistentData().getBoolean("helldivers.useLodestone"))
+            return super.onLeftClickEntity(stack, player, entity);
         for (int i = 0; i < 30; i++) {
             WorldParticleBuilder.create(LodestoneParticleRegistry.SMOKE_PARTICLE)
                     .setScaleData(GenericParticleData.create(5f, 0f).build())
@@ -153,7 +154,6 @@ public class EffectTesterItem extends Item {
                     .setForceSpawn(true)
                     .setLifetime(40)
                     .addMotion(0, 0.02f, 0);
-
 
         }
         return super.onLeftClickEntity(stack, player, entity);

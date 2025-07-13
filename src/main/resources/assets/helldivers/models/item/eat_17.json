@@ -1,6 +1,7 @@
 {
   "parent": "helldivers:displaysettings/eat_display_02",
   "textures": {
-    "layer0": "helldivers:item/eat_17"
+    "layer0": "helldivers:item/eat_17",
+    "particle": "helldivers:item/eat_17"
   }
 }

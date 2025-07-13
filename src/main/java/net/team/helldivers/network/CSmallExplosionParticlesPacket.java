@@ -39,6 +39,7 @@ public class CSmallExplosionParticlesPacket {
     public void handle(Supplier<NetworkEvent.Context> context) {
         context.get().enqueueWork(() -> {
             if (Minecraft.getInstance().level == null) return;
+            if (!Minecraft.getInstance().player.getPersistentData().getBoolean("helldivers.useLodestone")) return;
 
             ClientLevel level = Minecraft.getInstance().level;
 

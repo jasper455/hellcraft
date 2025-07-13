@@ -1,0 +1,6 @@
+{
+  "parent": "helldivers:block/barbed_wire",
+  "textures": {
+    "layer0": "helldivers:block/barbed_wire"
+  }
+}

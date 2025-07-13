@@ -8,8 +8,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 import net.team.helldivers.block.custom.AmmoCrateBlock;
 import net.team.helldivers.item.ModItems;
-import net.team.helldivers.item.custom.Ar23Item;
-import net.team.helldivers.item.custom.Plas1Item;
 import net.team.helldivers.sound.ModSounds;
 
 import java.util.function.Supplier;
@@ -32,7 +30,7 @@ public class SGunReloadPacket {
         if (heldItem.is(ModItems.PLAS1.get())) {
             player.level().playSound(null, player.blockPosition(), ModSounds.PLAS1_RELOAD.get(), SoundSource.PLAYERS, 10.0f, 1.0f);
         } else {
-            player.level().playSound(null, player.blockPosition(), ModSounds.AR_22_RELOAD.get(), SoundSource.PLAYERS, 10.0f, 1.0f);
+            player.level().playSound(null, player.blockPosition(), ModSounds.AR_23_RELOAD.get(), SoundSource.PLAYERS, 10.0f, 1.0f);
         }
         heldItem.setDamageValue(0);
         for (ItemStack stack : player.getInventory().items) {

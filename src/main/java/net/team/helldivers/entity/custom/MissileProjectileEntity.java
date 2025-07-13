@@ -2,6 +2,7 @@ package net.team.helldivers.entity.custom;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.entity.Entity;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.network.CSmallExplosionParticlesPacket;
 import net.team.helldivers.network.PacketHandler;
@@ -20,16 +21,18 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec2;
 
-public class MissileProjectileEntity extends AbstractArrow{
+public class MissileProjectileEntity extends AbstractArrow {
     public Vec2 groundedOffset;
     private int soundTicks = 0;
+    private int power = 0;
 
     public MissileProjectileEntity(EntityType<? extends AbstractArrow> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
-    public MissileProjectileEntity(LivingEntity shooter, Level level) {
+    public MissileProjectileEntity(LivingEntity shooter, Level level, int power) {
         super(ModEntities.MISSILE_PROJECTILE.get(), shooter, level);
+        this.power = power;
     }
 
     public boolean isGrounded() {
@@ -40,9 +43,9 @@ public class MissileProjectileEntity extends AbstractArrow{
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
         PacketHandler.sendToAllClients(new CSmallExplosionParticlesPacket(result.getEntity().blockPosition()));
-        PacketHandler.sendToServer(new SExplosionPacket(result.getEntity().blockPosition(), 10));
+        PacketHandler.sendToServer(new SExplosionPacket(result.getEntity().blockPosition(), this.power));
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(6.0)).forEach(entity -> {
-            entity.hurt(level().damageSources().explosion(null), 30.0F);
+            entity.hurt(level().damageSources().explosion(null), this.power * 1.5f);
         });
         this.playSound(ModSounds.EXPLOSION.get(), 10.0f, 1.0f);
         this.discard();
@@ -52,9 +55,9 @@ public class MissileProjectileEntity extends AbstractArrow{
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
         PacketHandler.sendToAllClients(new CSmallExplosionParticlesPacket(result.getBlockPos()));
-        PacketHandler.sendToServer(new SExplosionPacket(result.getBlockPos(), 10));
+        PacketHandler.sendToServer(new SExplosionPacket(result.getBlockPos(), this.power));
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(6.0)).forEach(entity -> {
-            entity.hurt(level().damageSources().explosion(null), 30.0F);
+            entity.hurt(level().damageSources().explosion(null), this.power * 1.5f);
         });
         this.playSound(ModSounds.EXPLOSION.get(), 10.0f, 1.0f);
         this.discard();
@@ -82,5 +85,10 @@ public class MissileProjectileEntity extends AbstractArrow{
     @Override
     protected SoundEvent getDefaultHitGroundSoundEvent() {
         return SoundEvents.DRAGON_FIREBALL_EXPLODE;
+    }
+
+    @Override
+    protected boolean canHitEntity(Entity entity) {
+        return false;
     }
 }

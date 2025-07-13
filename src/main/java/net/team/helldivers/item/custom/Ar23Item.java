@@ -16,7 +16,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.block.custom.AmmoCrateBlock;
-import net.team.helldivers.block.custom.HellbombBlock;
 import net.team.helldivers.client.renderer.item.AR23Renderer;
 import net.team.helldivers.item.inventory.StratagemPickerInventory;
 import net.team.helldivers.network.PacketHandler;

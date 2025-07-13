@@ -73,6 +73,24 @@ public class SmallBarrageHud {
                 0, 0, 16, 16, 16, 16, sixthInputDown);
     }
 
+    public static void renderCooldownHud(GuiGraphics guiGraphics, int cooldownLeft) {
+        guiGraphics.blit(StratagemHudOverlay.BIG_BARRAGE,
+                12, imgHeight, 20, 20, 0, 0, 16, 16,
+                16, 16);
+
+        guiGraphics.pose().pushPose();
+
+        guiGraphics.pose().scale(0.7f, 0.7f, 0.7f);
+
+        guiGraphics.pose().translate(16, translateHeight, 1);
+
+        guiGraphics.drawString(Minecraft.getInstance().font, "ORBITAL 120MM HE BARRAGE", 35, textHeight, 0xFFFFFF);
+
+        guiGraphics.pose().popPose();
+
+        guiGraphics.drawString(Minecraft.getInstance().font, String.valueOf(cooldownLeft) + "%", 35, arrowHeight, 0xFFFFFF);
+    }
+
     public static void resetInputValues() {
         firstInputDown = false;
         secondInputDown = false;

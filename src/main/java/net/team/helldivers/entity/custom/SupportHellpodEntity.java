@@ -5,12 +5,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
-import net.minecraft.world.Container;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Inventory;
@@ -19,8 +21,10 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkHooks;
+import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.screen.custom.SupportHellpodMenu;
@@ -41,6 +45,9 @@ import java.awt.*;
 
 
 public class SupportHellpodEntity extends Entity implements GeoEntity {
+    private static final EntityDataAccessor<Integer> SUPPLY_COUNT =
+            SynchedEntityData.defineId(SupportHellpodEntity.class, EntityDataSerializers.INT);
+
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public static final RawAnimation DEPLOY = RawAnimation.begin().thenPlayAndHold("deploy");
@@ -104,7 +111,8 @@ public class SupportHellpodEntity extends Entity implements GeoEntity {
             this.move(MoverType.SELF, this.getDeltaMovement());
         }
 
-        if (this.level().isClientSide && !this.isGrounded()) {
+        if (this.level().isClientSide && !this.isGrounded() && Minecraft.getInstance().player.getPersistentData()
+                .getBoolean("helldivers.useLodestone")) {
                 WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)
                         .setScaleData(GenericParticleData.create(3f, 0f).build())
                         .setTransparencyData(GenericParticleData.create(1f, 0f).build())
@@ -130,6 +138,13 @@ public class SupportHellpodEntity extends Entity implements GeoEntity {
         if (groundedTicks >= clickedTicks + 60 && hasBeenClicked) {
             this.discard();
         }
+        setSupplyCount(this.inventory.countItem(ModBlocks.AMMO_CRATE.get().asItem()));
+
+        if (!this.isGrounded()) {
+            this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(1.0)).forEach(entity -> {
+                entity.hurt(level().damageSources().explosion(null), 9999.0F);
+            });
+        }
         super.tick();
     }
 
@@ -154,9 +169,6 @@ public class SupportHellpodEntity extends Entity implements GeoEntity {
 
         return InteractionResult.SUCCESS;
     }
-
-
-
 
     private PlayState animations(AnimationState event) {
         if (isGrounded() && groundedTicks >= 20 && hasBeenClicked) {
@@ -198,8 +210,6 @@ public class SupportHellpodEntity extends Entity implements GeoEntity {
     }
 
     @Override
-    protected void defineSynchedData() {}
-    @Override
     protected void addAdditionalSaveData(CompoundTag pCompound) {
         ListTag listTag = new ListTag();
         for (int i = 0; i < inventory.getContainerSize(); i++) {
@@ -213,7 +223,6 @@ public class SupportHellpodEntity extends Entity implements GeoEntity {
         }
         pCompound.put("Items", listTag);
     }
-
     @Override
     protected void readAdditionalSaveData(CompoundTag pCompound) {
         ListTag listTag = pCompound.getList("Items", 10);
@@ -257,6 +266,7 @@ public class SupportHellpodEntity extends Entity implements GeoEntity {
     }
 
     // Add this method to handle the client-side sync
+
     @Override
     public void handleEntityEvent(byte id) {
         if (id == 1) {
@@ -275,6 +285,10 @@ public class SupportHellpodEntity extends Entity implements GeoEntity {
             this.inventory.setItem(0, new ItemStack(ModItems.EAT_17.get()));
             this.inventory.setItem(1, new ItemStack(ModItems.EAT_17.get()));
         }
+        if (stratagemType.equals("Resupply")) {
+            this.inventory.setItem(0, new ItemStack(ModBlocks.AMMO_CRATE.get(), 2));
+            this.inventory.setItem(1, new ItemStack(ModBlocks.AMMO_CRATE.get(), 2));
+        }
     }
 
     public void onInventoryClosed() {
@@ -283,5 +297,18 @@ public class SupportHellpodEntity extends Entity implements GeoEntity {
 
     public int getGroundedTicks() {
         return groundedTicks;
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        this.entityData.define(SUPPLY_COUNT, 0);
+    }
+
+    public int getSupplyCount() {
+        return this.entityData.get(SUPPLY_COUNT);
+    }
+
+    public void setSupplyCount(int number) {
+        this.entityData.set(SUPPLY_COUNT, number);
     }
 }

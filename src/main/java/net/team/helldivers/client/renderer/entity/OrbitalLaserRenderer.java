@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.team.helldivers.client.model.entity.EagleAirshipModel;
 import net.team.helldivers.client.model.entity.OrbitalLaserModel;
-import net.team.helldivers.client.renderer.entity.layer.SupportHellpodLayer;
 import net.team.helldivers.entity.custom.EagleAirshipEntity;
 import net.team.helldivers.entity.custom.OrbitalLaserEntity;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;

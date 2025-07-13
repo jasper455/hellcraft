@@ -2,7 +2,15 @@ package net.team.helldivers.event;
 
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.client.event.*;
+import net.minecraftforge.event.TickEvent;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.client.renderer.block.HellbombBlockRenderer;
@@ -13,6 +21,8 @@ import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.item.custom.IGunItem;
+import net.team.helldivers.screen.custom.StratagemPickerMenu;
+import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.util.KeyBinding;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -25,9 +35,12 @@ import software.bernie.geckolib.renderer.GeoRenderer;
 import team.lodestar.lodestone.systems.postprocess.PostProcessHandler;
 
 import java.awt.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @Mod.EventBusSubscriber(modid = HelldiversMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ModClientEvents {
+    private static boolean SHOW_INVINCIBLE_HUD = false;
     private static float alpha = 0.0f;
     private static float outFadeSpeed;
     private static boolean hasFadedIn = false;
@@ -99,6 +112,49 @@ public class ModClientEvents {
             alpha -= outFadeSpeed; // Tweak as needed
         }
     }
+
+    @SubscribeEvent
+    public static void onChat(ClientChatReceivedEvent event) {
+        String message = event.getMessage().getString();
+        Timer timer = new Timer();
+        Minecraft minecraft = Minecraft.getInstance();
+        Player player = minecraft.player;
+
+        if (message.contains("invincible")) {
+            SHOW_INVINCIBLE_HUD = true;
+            player.level().playSound(player, player.getX(), player.getY(), player.getZ(),
+                    ModSounds.EASTER_EGG.get(), SoundSource.NEUTRAL, 1f, 1f);
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    player.sendSystemMessage(Component.literal("I'm leaving this in because it's funny, and you can't do shit about it silver"));
+                }
+            }, 2350);
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    SHOW_INVINCIBLE_HUD = false;
+                }
+            }, 4700);
+        }
+    }
+
+    @SubscribeEvent
+    public static void registerGuiOverlays(CustomizeGuiOverlayEvent event) {
+        GuiGraphics guiGraphics = event.getGuiGraphics();
+        Minecraft minecraft = Minecraft.getInstance();
+        Player player = minecraft.player;
+
+        int screenWidth = minecraft.getWindow().getGuiScaledWidth();
+        int screenHeight = minecraft.getWindow().getGuiScaledHeight();
+        if (SHOW_INVINCIBLE_HUD) {
+            guiGraphics.blit(ResourceLocation.fromNamespaceAndPath(
+                            HelldiversMod.MOD_ID, "textures/easter_egg/easter_egg.png"),
+                    -20, -20, (int) (480 * 1.4), (int) (270 * 1.4), 0, 0, 1920, 1080,
+                    1920, 1080);
+        }
+    }
+
 
     @Mod.EventBusSubscriber(modid = HelldiversMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public class ModClientBusEvents {

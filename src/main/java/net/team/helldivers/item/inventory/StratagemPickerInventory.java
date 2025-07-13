@@ -1,5 +1,7 @@
 package net.team.helldivers.item.inventory;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.player.Player;
 import net.team.helldivers.item.custom.IStratagemItem;
 import net.minecraft.world.item.ItemStack;
 import team.lodestar.lodestone.systems.container.ItemInventory;
@@ -10,7 +12,7 @@ public class StratagemPickerInventory extends ItemInventory {
         super(stack, expectedSize);
     }
 
-    public boolean isStratagemItem(ItemStack stack) {
+    public boolean isValidItem(ItemStack stack) {
         return stack.getItem() instanceof IStratagemItem;
     }
 
@@ -32,5 +34,15 @@ public class StratagemPickerInventory extends ItemInventory {
             }
         }
         return -1;
+    }
+
+    public boolean isOnCooldown(ItemStack stack) {
+        Player player = Minecraft.getInstance().player;
+        return !player.getCooldowns().isOnCooldown(this.getItem(getSlotWithItem(stack)).getItem());
+    }
+
+    public int getCooldownLeft(ItemStack stack) {
+        Player player = Minecraft.getInstance().player;
+        return (int) (player.getCooldowns().getCooldownPercent(stack.getItem(), 1) * 100);
     }
 }

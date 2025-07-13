@@ -34,6 +34,8 @@ public class StratagemHudOverlay {
             HelldiversMod.MOD_ID, "textures/stratagem_hud/stratagem_background.png");
     public static final ResourceLocation HELLBOMB = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/hellbomb_gui.png");
+    public static final ResourceLocation RESUPPLY = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/resupply_gui.png");
     public static final ResourceLocation PRECISION_STRIKE = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/precision_strike_gui.png");
     public static final ResourceLocation SMALL_BARRAGE = ResourceLocation.fromNamespaceAndPath(

@@ -63,6 +63,24 @@ public class PrecisionStrikeHud {
                 0, 0, 16, 16, 16, 16, thirdInputDown);
     }
 
+    public static void renderCooldownHud(GuiGraphics guiGraphics, int cooldownLeft) {
+        guiGraphics.blit(StratagemHudOverlay.PRECISION_STRIKE,
+                12, imgHeight, 20, 20, 0, 0, 16, 16,
+                16, 16);
+
+        guiGraphics.pose().pushPose();
+
+        guiGraphics.pose().scale(0.7f, 0.7f, 0.7f);
+
+        guiGraphics.pose().translate(16, translateHeight, 1);
+
+        guiGraphics.drawString(Minecraft.getInstance().font, "ORBITAL PRECISION STRIKE", 35, textHeight, 0xFFFFFF);
+
+        guiGraphics.pose().popPose();
+
+        guiGraphics.drawString(Minecraft.getInstance().font, String.valueOf(cooldownLeft) + "%", 35, arrowHeight, 0xFFFFFF);
+    }
+
     public static void resetInputValues() {
         firstInputDown = false;
         secondInputDown = false;

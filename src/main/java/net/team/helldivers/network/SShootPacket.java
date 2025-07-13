@@ -8,7 +8,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 import net.team.helldivers.entity.custom.BulletProjectileEntity;
 import net.team.helldivers.entity.custom.HeatedGasProjectileEntity;
-import net.team.helldivers.entity.custom.MissileProjectileEntity;
 import net.team.helldivers.entity.custom.RocketProjectileEntity;
 import net.team.helldivers.item.custom.Ar23Item;
 import net.team.helldivers.item.custom.EAT17Item;
@@ -57,7 +56,7 @@ public class SShootPacket {
             if (heldItem.getDamageValue() < heldItem.getMaxDamage() - 5) {
                 // Play sound
                 player.level().playSound(null, player.blockPosition(),
-                        ModSounds.AR_22_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
+                        ModSounds.AR_23_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                 PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
 
             // Actually shoot the bullet

@@ -13,6 +13,7 @@ import net.team.helldivers.item.ModCreativeModeTabs;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.particle.ModParticles;
 import net.team.helldivers.screen.ModMenuTypes;
+import net.team.helldivers.screen.custom.HellbombInputScreen;
 import net.team.helldivers.screen.custom.StratagemPickerScreen;
 import net.team.helldivers.screen.custom.SupportHellpodMenu;
 import net.team.helldivers.screen.custom.SupportHellpodScreen;
@@ -94,6 +95,7 @@ public class HelldiversMod {
         public static void onClientSetup(FMLClientSetupEvent event) {
             MenuScreens.register(ModMenuTypes.STRATAGEM_PICKER.get(), StratagemPickerScreen::new);
             MenuScreens.register(ModMenuTypes.SUPPORT_HELLPOD_MENU.get(), SupportHellpodScreen::new);
+            MenuScreens.register(ModMenuTypes.HELLBOMB_INPUT_MENU.get(), HellbombInputScreen::new);
         }
 
         @SubscribeEvent

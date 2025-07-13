@@ -71,6 +71,43 @@
 						},
 						{"origin": [-7, 36, -7], "size": [14, 1, 14], "uv": [0, 79]}
 					]
+				},
+				{
+					"name": "supplies",
+					"parent": "bone",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "supplyBox1",
+					"parent": "supplies",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-4, 11, -7.5], "size": [8, 6, 4], "uv": [72, 26]}
+					]
+				},
+				{
+					"name": "supplyBox2",
+					"parent": "supplies",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-4, 23, -7.5], "size": [8, 6, 4], "uv": [72, 36]}
+					]
+				},
+				{
+					"name": "supplyBox3",
+					"parent": "supplies",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-4, 11, 3.5], "size": [8, 6, 4], "uv": [72, 6]}
+					]
+				},
+				{
+					"name": "supplyBox4",
+					"parent": "supplies",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [-4, 23, 3.5], "size": [8, 6, 4], "uv": [72, 16]}
+					]
 				}
 			]
 		}

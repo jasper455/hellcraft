@@ -57,6 +57,18 @@ public class PacketHandler {
                 .consumerMainThread(SGunReloadPacket::handle)
                 .add();
 
+        INSTANCE.messageBuilder(SHellbombExplodePacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SHellbombExplodePacket::encode)
+                .decoder(SHellbombExplodePacket::new)
+                .consumerMainThread(SHellbombExplodePacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(SStratagemGiveCooldownPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SStratagemGiveCooldownPacket::encode)
+                .decoder(SStratagemGiveCooldownPacket::new)
+                .consumerMainThread(SStratagemGiveCooldownPacket::handle)
+                .add();
+
         // CLIENT
         INSTANCE.messageBuilder(CSmallExplosionParticlesPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(CSmallExplosionParticlesPacket::encode)

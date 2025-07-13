@@ -38,9 +38,9 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> GUN_EMPTY = registerSoundEvent("gun_empty");
 
-    public static final RegistryObject<SoundEvent> AR_22_RELOAD = registerSoundEvent("ar22_reload");
+    public static final RegistryObject<SoundEvent> AR_23_RELOAD = registerSoundEvent("ar23_reload");
 
-    public static final RegistryObject<SoundEvent> AR_22_SHOOT = registerSoundEvent("ar22_shoot");
+    public static final RegistryObject<SoundEvent> AR_23_SHOOT = registerSoundEvent("ar23_shoot");
 
     public static final RegistryObject<SoundEvent> EAT_FIRE = registerSoundEvent("eat_fire");
 
@@ -51,6 +51,8 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> PLAS1_RELOAD = registerSoundEvent("plas1_reload");
 
     public static final RegistryObject<SoundEvent> ORBITAL_LASER_IDLE = registerSoundEvent("orbital_laser_idle");
+
+    public static final RegistryObject<SoundEvent> EASTER_EGG = registerSoundEvent("easter_egg");
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, name);
