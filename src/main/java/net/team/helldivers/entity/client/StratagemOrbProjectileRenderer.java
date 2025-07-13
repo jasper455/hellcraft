@@ -61,14 +61,19 @@ public class StratagemOrbProjectileRenderer extends EntityRenderer<StratagemOrbE
 
     private float[] getBeamColor(String stratagemType) {
         return switch (stratagemType) {
-            case "Orbital Precision Strike" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
+            // Other
             case "Hellbomb" -> new float[]{0.51f, 0.996f, 1.0f, 1.0f}; // Support blue color
+            // Support
+            case "Resupply" -> new float[]{0.51f, 0.996f, 1.0f, 1.0f}; // Support blue color
+            case "Expendable Anti-Tank" -> new float[]{0.51f, 0.996f, 1.0f, 1.0f}; // Support blue color
+            // Orbital
+            case "Orbital Precision Strike" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
             case "Orbital 120MM HE Barrage" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
             case "Orbital 380MM HE Barrage" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
-            case "Eagle 500KG Bomb" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
-            case "Expendable Anti-Tank" -> new float[]{0.51f, 0.996f, 1.0f, 1.0f}; // Support blue color
             case "Orbital Laser" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
-            case "Resupply" -> new float[]{0.51f, 0.996f, 1.0f, 1.0f}; // Support blue color
+            //Eagle
+            case "Eagle 500KG Bomb" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
+            case "Eagle Cluster Bomb" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
             default -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
         };
     }

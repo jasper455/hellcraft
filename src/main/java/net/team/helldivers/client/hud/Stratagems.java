@@ -183,6 +183,107 @@ public class Stratagems {
                 }
             }
 
+            // Resupply inputs
+
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.RESUPPLY.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.RESUPPLY.get().getDefaultInstance())) {
+                switch (ResupplyHud.inputStep) {
+                    case 0 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            ResupplyHud.firstInputDown = true;
+                            ResupplyHud.inputStep++;
+                        } else if (downNotPressed) {
+                            ResupplyHud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            ResupplyHud.secondInputDown = true;
+                            ResupplyHud.inputStep++;
+                        } else if (downNotPressed) {
+                            ResupplyHud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            ResupplyHud.thirdInputDown = true;
+                            ResupplyHud.inputStep++;
+                        } else if (upNotPressed) {
+                            ResupplyHud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            ResupplyHud.fourthInputDown = true;
+                            ResupplyHud.inputStep++;
+                            ResupplyHud.allInputsDown = true;
+                        } else if (rightNotPressed) {
+                            ResupplyHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
+            // Expendable Anti-Tank inputs
+
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
+                switch (EAT17Hud.inputStep) {
+                    case 0 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            EAT17Hud.firstInputDown = true;
+                            EAT17Hud.inputStep++;
+                        } else if (downNotPressed) {
+                            EAT17Hud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            EAT17Hud.secondInputDown = true;
+                            EAT17Hud.inputStep++;
+                        } else if (downNotPressed) {
+                            EAT17Hud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (leftJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            EAT17Hud.thirdInputDown = true;
+                            EAT17Hud.inputStep++;
+                        } else if (leftNotPressed) {
+                            EAT17Hud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            EAT17Hud.fourthInputDown = true;
+                            EAT17Hud.inputStep++;
+                        } else if (upNotPressed) {
+                            EAT17Hud.resetInputValues();
+                        }
+                    }
+                    case 4 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            EAT17Hud.fifthInputDown = true;
+                            EAT17Hud.allInputsDown = true;
+                            EAT17Hud.inputStep++;
+                        } else if (rightNotPressed) {
+                            EAT17Hud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
             // Precision Strike inputs
 
             if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) &&
@@ -357,116 +458,6 @@ public class Stratagems {
                 }
             }
 
-            // 500KG Bomb inputs
-
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()) &&
-                    getPickerInventory(player).isOnCooldown(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())) {
-                switch (Eagle500KgBombHud.inputStep) {
-                    case 0 -> {
-                        if (upJustPressed) {
-                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                            Eagle500KgBombHud.firstInputDown = true;
-                            Eagle500KgBombHud.inputStep++;
-                        } else if (upNotPressed) {
-                            Eagle500KgBombHud.resetInputValues();
-                        }
-                    }
-                    case 1 -> {
-                        if (rightJustPressed) {
-                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                            Eagle500KgBombHud.secondInputDown = true;
-                            Eagle500KgBombHud.inputStep++;
-                        } else if (rightNotPressed) {
-                            Eagle500KgBombHud.resetInputValues();
-                        }
-                    }
-                    case 2 -> {
-                        if (downJustPressed) {
-                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                            Eagle500KgBombHud.thirdInputDown = true;
-                            Eagle500KgBombHud.inputStep++;
-                        } else if (downNotPressed) {
-                            Eagle500KgBombHud.resetInputValues();
-                        }
-                    }
-                    case 3 -> {
-                        if (downJustPressed) {
-                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                            Eagle500KgBombHud.fourthInputDown = true;
-                            Eagle500KgBombHud.inputStep++;
-                        } else if (downNotPressed) {
-                            Eagle500KgBombHud.resetInputValues();
-                        }
-                    }
-                    case 4 -> {
-                        if (downJustPressed) {
-                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
-                            Eagle500KgBombHud.fifthInputDown = true;
-                            Eagle500KgBombHud.allInputsDown = true;
-                            Eagle500KgBombHud.inputStep++;
-                        } else if (downNotPressed) {
-                            Eagle500KgBombHud.resetInputValues();
-                        }
-                    }
-                }
-            }
-
-            // Expendable Anti-Tank inputs
-
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()) &&
-                    getPickerInventory(player).isOnCooldown(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
-                switch (EAT17Hud.inputStep) {
-                    case 0 -> {
-                        if (downJustPressed) {
-                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                            EAT17Hud.firstInputDown = true;
-                            EAT17Hud.inputStep++;
-                        } else if (downNotPressed) {
-                            EAT17Hud.resetInputValues();
-                        }
-                    }
-                    case 1 -> {
-                        if (downJustPressed) {
-                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                            EAT17Hud.secondInputDown = true;
-                            EAT17Hud.inputStep++;
-                        } else if (downNotPressed) {
-                            EAT17Hud.resetInputValues();
-                        }
-                    }
-                    case 2 -> {
-                        if (leftJustPressed) {
-                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                            EAT17Hud.thirdInputDown = true;
-                            EAT17Hud.inputStep++;
-                        } else if (leftNotPressed) {
-                            EAT17Hud.resetInputValues();
-                        }
-                    }
-                    case 3 -> {
-                        if (upJustPressed) {
-                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                            EAT17Hud.fourthInputDown = true;
-                            EAT17Hud.inputStep++;
-                        } else if (upNotPressed) {
-                            EAT17Hud.resetInputValues();
-                        }
-                    }
-                    case 4 -> {
-                        if (rightJustPressed) {
-                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
-                            EAT17Hud.fifthInputDown = true;
-                            EAT17Hud.allInputsDown = true;
-                            EAT17Hud.inputStep++;
-                        } else if (rightNotPressed) {
-                            EAT17Hud.resetInputValues();
-                        }
-                    }
-                }
-            }
-
             // Orbital Laser inputs
 
             if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ORBITAL_LASER.get().getDefaultInstance()) &&
@@ -522,48 +513,111 @@ public class Stratagems {
                 }
             }
 
+            // 500KG Bomb inputs
 
-            // Resupply inputs
-
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.RESUPPLY.get().getDefaultInstance()) &&
-                    getPickerInventory(player).isOnCooldown(ModItems.RESUPPLY.get().getDefaultInstance())) {
-                switch (ResupplyHud.inputStep) {
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())) {
+                switch (Eagle500KgBombHud.inputStep) {
                     case 0 -> {
-                        if (downJustPressed) {
+                        if (upJustPressed) {
                             player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                            ResupplyHud.firstInputDown = true;
-                            ResupplyHud.inputStep++;
-                        } else if (downNotPressed) {
-                            ResupplyHud.resetInputValues();
+                            Eagle500KgBombHud.firstInputDown = true;
+                            Eagle500KgBombHud.inputStep++;
+                        } else if (upNotPressed) {
+                            Eagle500KgBombHud.resetInputValues();
                         }
                     }
                     case 1 -> {
-                        if (downJustPressed) {
+                        if (rightJustPressed) {
                             player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                            ResupplyHud.secondInputDown = true;
-                            ResupplyHud.inputStep++;
-                        } else if (downNotPressed) {
-                            ResupplyHud.resetInputValues();
+                            Eagle500KgBombHud.secondInputDown = true;
+                            Eagle500KgBombHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            Eagle500KgBombHud.resetInputValues();
                         }
                     }
                     case 2 -> {
-                        if (upJustPressed) {
+                        if (downJustPressed) {
                             player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                            ResupplyHud.thirdInputDown = true;
-                            ResupplyHud.inputStep++;
-                        } else if (upNotPressed) {
-                            ResupplyHud.resetInputValues();
+                            Eagle500KgBombHud.thirdInputDown = true;
+                            Eagle500KgBombHud.inputStep++;
+                        } else if (downNotPressed) {
+                            Eagle500KgBombHud.resetInputValues();
                         }
                     }
                     case 3 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            Eagle500KgBombHud.fourthInputDown = true;
+                            Eagle500KgBombHud.inputStep++;
+                        } else if (downNotPressed) {
+                            Eagle500KgBombHud.resetInputValues();
+                        }
+                    }
+                    case 4 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            Eagle500KgBombHud.fifthInputDown = true;
+                            Eagle500KgBombHud.allInputsDown = true;
+                            Eagle500KgBombHud.inputStep++;
+                        } else if (downNotPressed) {
+                            Eagle500KgBombHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
+            // Cluster Bomb inputs
+
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.CLUSTER_BOMB.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.CLUSTER_BOMB.get().getDefaultInstance())) {
+                switch (ClusterBombHud.inputStep) {
+                    case 0 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            ClusterBombHud.firstInputDown = true;
+                            ClusterBombHud.inputStep++;
+                        } else if (upNotPressed) {
+                            ClusterBombHud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            ClusterBombHud.secondInputDown = true;
+                            ClusterBombHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            ClusterBombHud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            ClusterBombHud.thirdInputDown = true;
+                            ClusterBombHud.inputStep++;
+                        } else if (downNotPressed) {
+                            ClusterBombHud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            ClusterBombHud.fourthInputDown = true;
+                            ClusterBombHud.inputStep++;
+                        } else if (downNotPressed) {
+                            ClusterBombHud.resetInputValues();
+                        }
+                    }
+                    case 4 -> {
                         if (rightJustPressed) {
                             player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
                             player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
-                            ResupplyHud.fourthInputDown = true;
-                            ResupplyHud.inputStep++;
-                            ResupplyHud.allInputsDown = true;
+                            ClusterBombHud.fifthInputDown = true;
+                            ClusterBombHud.allInputsDown = true;
+                            ClusterBombHud.inputStep++;
                         } else if (rightNotPressed) {
-                            ResupplyHud.resetInputValues();
+                            ClusterBombHud.resetInputValues();
                         }
                     }
                 }
@@ -578,6 +632,18 @@ public class Stratagems {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Hellbomb"));
             PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
                     .getItem(getPickerInventory(player).getSlotWithItem(ModItems.HELLBOMB_ITEM.get().getDefaultInstance())), 3600));
+            resetInputValues();
+        }
+        if (ResupplyHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Resupply"));
+            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.RESUPPLY.get().getDefaultInstance())), 3600));
+            resetInputValues();
+        }
+        if (EAT17Hud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Expendable Anti-Tank"));
+            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())), 3600));
             resetInputValues();
         }
         if (PrecisionStrikeHud.allInputsDown) {
@@ -598,28 +664,22 @@ public class Stratagems {
                     .getItem(getPickerInventory(player).getSlotWithItem(ModItems.BIG_BARRAGE.get().getDefaultInstance())), 3600));
             resetInputValues();
         }
-        if (Eagle500KgBombHud.allInputsDown) {
-            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Eagle 500KG Bomb"));
-            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
-                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())), 3600));
-            resetInputValues();
-        }
-        if (EAT17Hud.allInputsDown) {
-            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Expendable Anti-Tank"));
-            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
-                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())), 3600));
-            resetInputValues();
-        }
         if (OrbitalLaserHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Laser"));
             PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
                     .getItem(getPickerInventory(player).getSlotWithItem(ModItems.ORBITAL_LASER.get().getDefaultInstance())), 3600));
             resetInputValues();
         }
-        if (ResupplyHud.allInputsDown) {
-            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Resupply"));
+        if (Eagle500KgBombHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Eagle 500KG Bomb"));
             PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
-                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.RESUPPLY.get().getDefaultInstance())), 3600));
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())), 3600));
+            resetInputValues();
+        }
+        if (ClusterBombHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Eagle Cluster Bomb"));
+            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.CLUSTER_BOMB.get().getDefaultInstance())), 3600));
             resetInputValues();
         }
     }
@@ -646,6 +706,8 @@ public class Stratagems {
                     6, 6, 132 , 125, 0, 0, 16, 16,
                     16, 16);
 
+            // OTHER
+
             // Hellbomb Render HUD Code
             if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()) &&
                     getPickerInventory(player).isOnCooldown(ModItems.HELLBOMB_ITEM.get().getDefaultInstance())) {
@@ -654,6 +716,28 @@ public class Stratagems {
             else if (!getPickerInventory(player).isOnCooldown(ModItems.HELLBOMB_ITEM.get().getDefaultInstance())) {
                 HellbombHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()));
             }
+
+            // SUPPORT
+
+            // Resupply Render HUD Code
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.RESUPPLY.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.RESUPPLY.get().getDefaultInstance())) {
+                ResupplyHud.renderResupplyHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.RESUPPLY.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (!getPickerInventory(player).isOnCooldown(ModItems.RESUPPLY.get().getDefaultInstance())) {
+                ResupplyHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.RESUPPLY.get().getDefaultInstance()));
+            }
+
+            // EAT Render HUD Code
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
+                EAT17Hud.renderEAT17Hud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (!getPickerInventory(player).isOnCooldown(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
+                EAT17Hud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()));
+            }
+
+            // ORBITAL
 
             // Precision Strike HUD Render Code
             if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) &&
@@ -682,6 +766,17 @@ public class Stratagems {
                 BigBarrageHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.BIG_BARRAGE.get().getDefaultInstance()));
             }
 
+            // Orbital Laser Render HUD Code
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ORBITAL_LASER.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.ORBITAL_LASER.get().getDefaultInstance())) {
+                OrbitalLaserHud.renderOrbitalLaserHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.ORBITAL_LASER.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (!getPickerInventory(player).isOnCooldown(ModItems.ORBITAL_LASER.get().getDefaultInstance())) {
+                OrbitalLaserHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.ORBITAL_LASER.get().getDefaultInstance()));
+            }
+
+            // EAGLES
+
             // 500 KG Render HUD Code
             if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()) &&
                     getPickerInventory(player).isOnCooldown(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())) {
@@ -691,32 +786,15 @@ public class Stratagems {
                 Eagle500KgBombHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()));
             }
 
-            // EAT Render HUD Code
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()) &&
-                    getPickerInventory(player).isOnCooldown(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
-                EAT17Hud.renderEAT17Hud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()));
+            // Cluster Bomb Render HUD Code
+            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.CLUSTER_BOMB.get().getDefaultInstance()) &&
+                    getPickerInventory(player).isOnCooldown(ModItems.CLUSTER_BOMB.get().getDefaultInstance())) {
+                ClusterBombHud.renderClusterBombHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.CLUSTER_BOMB.get().getDefaultInstance()));
             } // Render the cooldown hud
-            else if (!getPickerInventory(player).isOnCooldown(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
-                EAT17Hud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()));
+            else if (!getPickerInventory(player).isOnCooldown(ModItems.CLUSTER_BOMB.get().getDefaultInstance())) {
+                ClusterBombHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.CLUSTER_BOMB.get().getDefaultInstance()));
             }
 
-            // Orbital Laser Render HUD Code
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.ORBITAL_LASER.get().getDefaultInstance()) &&
-            getPickerInventory(player).isOnCooldown(ModItems.ORBITAL_LASER.get().getDefaultInstance())) {
-                OrbitalLaserHud.renderOrbitalLaserHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.ORBITAL_LASER.get().getDefaultInstance()));
-            } // Render the cooldown hud
-            else if (!getPickerInventory(player).isOnCooldown(ModItems.ORBITAL_LASER.get().getDefaultInstance())) {
-                OrbitalLaserHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.ORBITAL_LASER.get().getDefaultInstance()));
-            }
-
-            // Resupply Render HUD Code
-            if (getPickerInventory(player) != null && getPickerInventory(player).contains(ModItems.RESUPPLY.get().getDefaultInstance()) &&
-            getPickerInventory(player).isOnCooldown(ModItems.RESUPPLY.get().getDefaultInstance())) {
-                ResupplyHud.renderResupplyHud(guiGraphics, getPickerInventory(player).getSlotWithItem(ModItems.RESUPPLY.get().getDefaultInstance()));
-            } // Render the cooldown hud
-            else if (!getPickerInventory(player).isOnCooldown(ModItems.RESUPPLY.get().getDefaultInstance())) {
-                ResupplyHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.RESUPPLY.get().getDefaultInstance()));
-            }
         }
     }
 
@@ -746,6 +824,7 @@ public class Stratagems {
         EAT17Hud.resetInputValues();
         OrbitalLaserHud.resetInputValues();
         ResupplyHud.resetInputValues();
+        ClusterBombHud.resetInputValues();
         allInputsDown = false;
     }
 

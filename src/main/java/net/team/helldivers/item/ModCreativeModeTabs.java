@@ -48,15 +48,19 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.STRATAGEM_ORB.get());
 
                         output.accept(ModBlocks.HELLBOMB.get());
-
+                        //Other
                         output.accept(ModItems.HELLBOMB_ITEM.get());
+                        //Supports
                         output.accept(ModItems.RESUPPLY.get());
+                        output.accept(ModItems.ANTI_TANK_STRATAGEM.get());
+                        //Orbitals
                         output.accept(ModItems.SMALL_BARRAGE.get());
                         output.accept(ModItems.BIG_BARRAGE.get());
                         output.accept(ModItems.PRECISION_STRIKE.get());
                         output.accept(ModItems.ORBITAL_LASER.get());
+                        //Eagles
                         output.accept(ModItems.EAGLE_500KG_BOMB.get());
-                        output.accept(ModItems.ANTI_TANK_STRATAGEM.get());
+                        output.accept(ModItems.CLUSTER_BOMB.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

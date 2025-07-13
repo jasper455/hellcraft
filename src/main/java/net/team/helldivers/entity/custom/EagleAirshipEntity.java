@@ -25,6 +25,8 @@ public class EagleAirshipEntity extends FlyingMob implements GeoEntity {
     public static final RawAnimation FLY_BY = RawAnimation.begin().thenLoop("swoop");
     private int ticksLeft = 30;
 
+    public String stratagemType = "";
+
     public EagleAirshipEntity(EntityType<? extends FlyingMob> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
@@ -62,14 +64,27 @@ public class EagleAirshipEntity extends FlyingMob implements GeoEntity {
         ticksLeft--;
         this.setInvisible(ticksLeft > 30);
 
-        if (ticksLeft == 10) {
-            Eagle500KgEntity explosive = new Eagle500KgEntity(this, this.level());
-            explosive.setPos(this.getX(), this.getY() + 44, this.getZ() - 10);
-            explosive.setDeltaMovement(0, -2, 0.5f);
-            this.level().addFreshEntity(explosive);
+        if (this.stratagemType.equals("Eagle 500KG Bomb")) {
+            if (ticksLeft == 10) {
+                Eagle500KgEntity explosive = new Eagle500KgEntity(this, this.level());
+                explosive.setPos(this.getX(), this.getY() + 44, this.getZ() - 10);
+                explosive.setDeltaMovement(0, -2, 0.5f);
+                this.level().addFreshEntity(explosive);
+            }
+            if (ticksLeft <= 0) {
+                this.discard();
+            }
         }
-        if (ticksLeft <= 0) {
-            this.discard();
+        if (this.stratagemType.equals("Eagle Cluster Bomb")) {
+            if (ticksLeft == 10) {
+                MissileProjectileEntity explosive = new MissileProjectileEntity(this, this.level(), 6);
+                explosive.setPos(this.getX(), this.getY() + 44, this.getZ() - 10);
+                explosive.setDeltaMovement(0, -4, 0.5f);
+                this.level().addFreshEntity(explosive);
+            }
+            if (ticksLeft <= 0) {
+                this.discard();
+            }
         }
     }
 
@@ -96,5 +111,13 @@ public class EagleAirshipEntity extends FlyingMob implements GeoEntity {
     @Override
     public boolean canBeCollidedWith() {
         return false;  // Prevents other entities from colliding with this entity
+    }
+
+    public void setStratagemType(String stratagemType) {
+        this.stratagemType = stratagemType;
+    }
+
+    public String getStratagemType() {
+        return stratagemType;
     }
 }

@@ -32,22 +32,28 @@ public class StratagemHudOverlay {
 
     public static final ResourceLocation STRATAGEM_BACKGROUND = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/stratagem_background.png");
+    //Other
     public static final ResourceLocation HELLBOMB = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/hellbomb_gui.png");
+    //Support
     public static final ResourceLocation RESUPPLY = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/resupply_gui.png");
+    public static final ResourceLocation EAT_17 = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/eat.png");
+    //Orbitals
     public static final ResourceLocation PRECISION_STRIKE = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/precision_strike_gui.png");
     public static final ResourceLocation SMALL_BARRAGE = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/120_barrage_gui.png");
     public static final ResourceLocation BIG_BARRAGE = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/380_barrage_gui.png");
-    public static final ResourceLocation EAGLE_500KG_BOMB = ResourceLocation.fromNamespaceAndPath(
-            HelldiversMod.MOD_ID, "textures/stratagem_hud/500kg_bomb.png");
-    public static final ResourceLocation EAT_17 = ResourceLocation.fromNamespaceAndPath(
-            HelldiversMod.MOD_ID, "textures/stratagem_hud/eat.png");
     public static final ResourceLocation ORBITAL_LASER = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/orbital_laser.png");
+    // Eagles
+    public static final ResourceLocation EAGLE_500KG_BOMB = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/500kg_bomb.png");
+    public static final ResourceLocation CLUSTER_BOMB = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/cluster_bomb.png");
 
     public static void renderUpArrow(GuiGraphics guiGraphics, int pX, int pY, int pWidth,
                                         int pHeight, int pUOffset, int pVOffset, int pUWidth, int pVHeight,

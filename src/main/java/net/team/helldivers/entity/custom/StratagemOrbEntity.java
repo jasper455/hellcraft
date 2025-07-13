@@ -7,6 +7,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.fml.common.Mod;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.helper.OrbitalBarrage;
 import net.team.helldivers.sound.ModSounds;
@@ -30,7 +31,6 @@ public class StratagemOrbEntity extends AbstractArrow {
     private float rotation;
     public Vec3 groundedOffset;
     private int groundedTicks = 0;
-    public String stratagemType = "";
 
     public StratagemOrbEntity(EntityType<? extends AbstractArrow> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -93,6 +93,50 @@ public class StratagemOrbEntity extends AbstractArrow {
         if (this.isGrounded()) {
             groundedTicks++;
         }
+
+        // OTHER
+
+        // Hellbomb Entity stuff
+        if (getStratagemType().equals("Hellbomb") && groundedTicks == 120 && !this.level().isClientSide) {
+            HellpodProjectileEntity hellpod = new HellpodProjectileEntity(((LivingEntity) this.getOwner()), this.level());
+            hellpod.setPos(this.getBlockX(), 200, this.getBlockZ());
+            this.level().addFreshEntity(hellpod);
+        }
+        if (getStratagemType().equals("Hellbomb") && groundedTicks == 180) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
+        // SUPPORT
+
+        // Resupply Entity Stuff
+        if (getStratagemType().equals("Resupply") && !this.level().isClientSide) {
+            if (groundedTicks == 300) {
+                SupportHellpodEntity supportHellpodEntity = new SupportHellpodEntity(this.level(), getStratagemType());
+                supportHellpodEntity.setPos(this.getX(), 200, this.getZ());
+                this.level().addFreshEntity(supportHellpodEntity);
+            }
+        }
+        if (getStratagemType().equals("Resupply") && groundedTicks > 320) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
+        // Expendable Anti-Tank Entity Stuff
+        if (getStratagemType().equals("Expendable Anti-Tank") && !this.level().isClientSide) {
+            if (groundedTicks == 100) {
+                SupportHellpodEntity supportHellpodEntity = new SupportHellpodEntity(this.level(), getStratagemType());
+                supportHellpodEntity.setPos(this.getX(), 200, this.getZ());
+                this.level().addFreshEntity(supportHellpodEntity);
+            }
+        }
+        if (getStratagemType().equals("Expendable Anti-Tank") && groundedTicks > 140) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
+        // ORBITAL
+
         // Orbital Precision Strike Entity stuff
         if (getStratagemType().equals("Orbital Precision Strike") && groundedTicks == 60 && !this.level().isClientSide) {
             float randomPosX = (Mth.randomBetween(this.level().getRandom(), 87.5f, 92.5f));
@@ -111,16 +155,6 @@ public class StratagemOrbEntity extends AbstractArrow {
             groundedTicks = 0;
         }
 
-        // Hellbomb Entity stuff
-        if (getStratagemType().equals("Hellbomb") && groundedTicks == 120 && !this.level().isClientSide) {
-            HellpodProjectileEntity hellpod = new HellpodProjectileEntity(((LivingEntity) this.getOwner()), this.level());
-            hellpod.setPos(this.getBlockX(), 200, this.getBlockZ());
-            this.level().addFreshEntity(hellpod);
-        }
-        if (getStratagemType().equals("Hellbomb") && groundedTicks == 180) {
-            this.discard();
-            groundedTicks = 0;
-        }
 
         // 120 Barrage Entity Stuff
         if (getStratagemType().equals("Orbital 120MM HE Barrage") && !this.level().isClientSide) {
@@ -146,32 +180,6 @@ public class StratagemOrbEntity extends AbstractArrow {
             groundedTicks = 0;
         }
 
-        // 500Kg Bomb Entity Stuff
-        if (getStratagemType().equals("Eagle 500KG Bomb") && !this.level().isClientSide) {
-            if (groundedTicks == 80) {
-                EagleAirshipEntity eagleAirshipEntity = new EagleAirshipEntity(ModEntities.EAGLE_AIRSHIP.get(), this.level());
-                eagleAirshipEntity.setPos(this.getX(), this.getY() + 5, this.getZ());
-                this.level().addFreshEntity(eagleAirshipEntity);
-            }
-        }
-        if (getStratagemType().equals("Eagle 500KG Bomb") && groundedTicks > 90) {
-            this.discard();
-            groundedTicks = 0;
-        }
-
-        // Expendable Anti-Tank Entity Stuff
-        if (getStratagemType().equals("Expendable Anti-Tank") && !this.level().isClientSide) {
-            if (groundedTicks == 100) {
-                SupportHellpodEntity supportHellpodEntity = new SupportHellpodEntity(this.level(), getStratagemType());
-                supportHellpodEntity.setPos(this.getX(), 200, this.getZ());
-                this.level().addFreshEntity(supportHellpodEntity);
-            }
-        }
-        if (getStratagemType().equals("Expendable Anti-Tank") && groundedTicks > 140) {
-            this.discard();
-            groundedTicks = 0;
-        }
-
         // Orbital Laser Entity Stuff
         if (getStratagemType().equals("Orbital Laser") && !this.level().isClientSide) {
             if (groundedTicks == 60) {
@@ -186,18 +194,37 @@ public class StratagemOrbEntity extends AbstractArrow {
             groundedTicks = 0;
         }
 
-        // Orbital Laser Entity Stuff
-        if (getStratagemType().equals("Resupply") && !this.level().isClientSide) {
-            if (groundedTicks == 300) {
-                SupportHellpodEntity supportHellpodEntity = new SupportHellpodEntity(this.level(), getStratagemType());
-                supportHellpodEntity.setPos(this.getX(), 200, this.getZ());
-                this.level().addFreshEntity(supportHellpodEntity);
+        // EAGLE
+
+        // 500Kg Bomb Entity Stuff
+        if (getStratagemType().equals("Eagle 500KG Bomb") && !this.level().isClientSide) {
+            if (groundedTicks == 80) {
+                EagleAirshipEntity eagleAirshipEntity = new EagleAirshipEntity(ModEntities.EAGLE_AIRSHIP.get(), this.level());
+                eagleAirshipEntity.setStratagemType(getStratagemType());
+                eagleAirshipEntity.setPos(this.getX(), this.getY() + 5, this.getZ());
+                this.level().addFreshEntity(eagleAirshipEntity);
             }
         }
-        if (getStratagemType().equals("Resupply") && groundedTicks > 320) {
+        if (getStratagemType().equals("Eagle 500KG Bomb") && groundedTicks > 90) {
             this.discard();
             groundedTicks = 0;
         }
+
+        // Cluster Bomb Entity Stuff
+        if (getStratagemType().equals("Eagle Cluster Bomb") && !this.level().isClientSide) {
+            if (groundedTicks == 82) {
+                EagleAirshipEntity eagleAirshipEntity = new EagleAirshipEntity(ModEntities.EAGLE_AIRSHIP.get(), this.level());
+                eagleAirshipEntity.setStratagemType(getStratagemType());
+                eagleAirshipEntity.setPos(this.getX(), this.getY() + 5, this.getZ());
+                this.level().addFreshEntity(eagleAirshipEntity);
+            }
+        }
+        if (getStratagemType().equals("Eagle Cluster Bomb") && groundedTicks > 90) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
+
     }
 
     @Override
