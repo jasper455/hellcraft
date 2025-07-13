@@ -363,6 +363,7 @@ public class HellbombInputScreen extends AbstractContainerScreen<HellbombInputMe
                 if (upPressed && inputStep == 5) {
                     player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
                     sixthInputDown = true;
+                    allInputsDown = true;
                     inputStep++;
                 }
 
@@ -370,6 +371,7 @@ public class HellbombInputScreen extends AbstractContainerScreen<HellbombInputMe
                 if (downPressed && inputStep == 5) {
                     player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
                     sixthInputDown = true;
+                    allInputsDown = true;
                     inputStep++;
                 }
 
@@ -377,6 +379,7 @@ public class HellbombInputScreen extends AbstractContainerScreen<HellbombInputMe
                 if (leftPressed && inputStep == 5) {
                     player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
                     sixthInputDown = true;
+                    allInputsDown = true;
                     inputStep++;
                 }
 
