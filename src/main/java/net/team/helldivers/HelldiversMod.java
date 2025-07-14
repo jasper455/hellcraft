@@ -9,6 +9,8 @@ import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.client.*;
+import net.team.helldivers.entity.custom.ClusterBombProjectileEntity;
+import net.team.helldivers.item.ModArmorItems;
 import net.team.helldivers.item.ModCreativeModeTabs;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.particle.ModParticles;
@@ -53,6 +55,7 @@ public class HelldiversMod {
         modEventBus.addListener(this::commonSetup);
 
         ModItems.register(modEventBus);
+        ModArmorItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModEntities.register(modEventBus);
@@ -79,6 +82,7 @@ public class HelldiversMod {
         EntityRenderers.register(ModEntities.ROCKET.get(), RocketProjectileRenderer::new);
         EntityRenderers.register(ModEntities.FRAG_GRENADE.get(), FragGrenadeProjectileRenderer::new);
         EntityRenderers.register(ModEntities.HEATED_GAS.get(), HeatedGasProjectileRenderer::new);
+        EntityRenderers.register(ModEntities.CLUSTER_BOMB.get(), ClusterBombProjectileRenderer::new);
     }
 
     // Add the example block item to the building blocks tab

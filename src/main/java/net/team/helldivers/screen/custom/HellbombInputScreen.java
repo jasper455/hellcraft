@@ -19,6 +19,7 @@ import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.entity.custom.HellbombBlockEntity;
 import net.team.helldivers.client.hud.StratagemHudOverlay;
 import net.team.helldivers.helper.DelayedExplosion;
+import net.team.helldivers.helper.HellbombCombinations;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SHellbombExplodePacket;
 import net.team.helldivers.sound.ModSounds;
@@ -65,112 +66,24 @@ public class HellbombInputScreen extends AbstractContainerScreen<HellbombInputMe
         super.render(guiGraphics, mouseX, mouseY, delta);
 
         HellbombBlockEntity hellbombBlockEntity = this.menu.hellbombBlockEntity;
-        // hellbombBlockEntity != null is only here for organization, you can minimize the if statements by pressing "ctrl" + "-"
-        // each one just renders a random arrow 20 units further to the right than the last
-        if (hellbombBlockEntity != null) {
-            if (hellbombBlockEntity.input1 == 1) {
-                StratagemHudOverlay.renderUpArrow(guiGraphics, 260, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, firstInputDown);
-            } else if (hellbombBlockEntity.input1 == 2) {
-                StratagemHudOverlay.renderDownArrow(guiGraphics, 260, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, firstInputDown);
-            } else if (hellbombBlockEntity.input1 == 3) {
-                StratagemHudOverlay.renderLeftArrow(guiGraphics, 260, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, firstInputDown);
-            } else if (hellbombBlockEntity.input1 == 4) {
-                StratagemHudOverlay.renderRightArrow(guiGraphics, 260, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, firstInputDown);
-            }
+
+        if (hellbombBlockEntity.randomCode == 1) {
+            HellbombCombinations.combo1render(guiGraphics, firstInputDown, secondInputDown,
+                    thirdInputDown, fourthInputDown, fifthInputDown, sixthInputDown);
+        }
+        if (hellbombBlockEntity.randomCode == 2) {
+            HellbombCombinations.combo2render(guiGraphics, firstInputDown, secondInputDown,
+                    thirdInputDown, fourthInputDown, fifthInputDown, sixthInputDown);
+        }
+        if (hellbombBlockEntity.randomCode == 3) {
+            HellbombCombinations.combo3render(guiGraphics, firstInputDown, secondInputDown,
+                    thirdInputDown, fourthInputDown, fifthInputDown, sixthInputDown);
+        }
+        if (hellbombBlockEntity.randomCode == 4) {
+            HellbombCombinations.combo4render(guiGraphics, firstInputDown, secondInputDown,
+                    thirdInputDown, fourthInputDown, fifthInputDown, sixthInputDown);
         }
 
-        if (hellbombBlockEntity != null) {
-            if (hellbombBlockEntity.input2 == 1) {
-                StratagemHudOverlay.renderUpArrow(guiGraphics, 280, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, secondInputDown);
-            } else if (hellbombBlockEntity.input2 == 2) {
-                StratagemHudOverlay.renderDownArrow(guiGraphics, 280, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, secondInputDown);
-            } else if (hellbombBlockEntity.input2 == 3) {
-                StratagemHudOverlay.renderLeftArrow(guiGraphics, 280, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, secondInputDown);
-            } else if (hellbombBlockEntity.input2 == 4) {
-                StratagemHudOverlay.renderRightArrow(guiGraphics, 280, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, secondInputDown);
-            }
-        }
-
-        if (hellbombBlockEntity != null) {
-            if (hellbombBlockEntity.input3 == 1) {
-                StratagemHudOverlay.renderUpArrow(guiGraphics, 300, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, thirdInputDown);
-            } else if (hellbombBlockEntity.input3 == 2) {
-                StratagemHudOverlay.renderDownArrow(guiGraphics, 300, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, thirdInputDown);
-            } else if (hellbombBlockEntity.input3 == 3) {
-                StratagemHudOverlay.renderLeftArrow(guiGraphics, 300, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, thirdInputDown);
-            } else if (hellbombBlockEntity.input3 == 4) {
-                StratagemHudOverlay.renderRightArrow(guiGraphics, 300, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, thirdInputDown);
-            }
-        }
-
-        if (hellbombBlockEntity != null) {
-            if (hellbombBlockEntity.input4 == 1) {
-                StratagemHudOverlay.renderUpArrow(guiGraphics, 320, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, fourthInputDown);
-            }
-            else if (hellbombBlockEntity.input4 == 2) {
-                StratagemHudOverlay.renderDownArrow(guiGraphics, 320, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, fourthInputDown);
-            }
-            else if (hellbombBlockEntity.input4 == 3) {
-                StratagemHudOverlay.renderLeftArrow(guiGraphics, 320, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, fourthInputDown);
-            }
-            else if (hellbombBlockEntity.input4 == 4) {
-                StratagemHudOverlay.renderRightArrow(guiGraphics, 320, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, fourthInputDown);
-            }
-        }
-
-        if (hellbombBlockEntity != null) {
-            if (hellbombBlockEntity.input5 == 1) {
-                StratagemHudOverlay.renderUpArrow(guiGraphics, 340, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, fifthInputDown);
-            }
-            else if (hellbombBlockEntity.input5 == 2) {
-                StratagemHudOverlay.renderDownArrow(guiGraphics, 340, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, fifthInputDown);
-            }
-            else if (hellbombBlockEntity.input5 == 3) {
-                StratagemHudOverlay.renderLeftArrow(guiGraphics, 340, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, fifthInputDown);
-            }
-            else if (hellbombBlockEntity.input5 == 4) {
-                StratagemHudOverlay.renderRightArrow(guiGraphics, 340, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, fifthInputDown);
-            }
-        }
-
-        if (hellbombBlockEntity != null) {
-            if (hellbombBlockEntity.input6 == 1) {
-                StratagemHudOverlay.renderUpArrow(guiGraphics, 360, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, sixthInputDown);
-            }
-            else if (hellbombBlockEntity.input6 == 2) {
-                StratagemHudOverlay.renderDownArrow(guiGraphics, 360, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, sixthInputDown);
-            }
-            else if (hellbombBlockEntity.input6 == 3) {
-                StratagemHudOverlay.renderLeftArrow(guiGraphics, 360, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, sixthInputDown);
-            }
-            else if (hellbombBlockEntity.input6 == 4) {
-                StratagemHudOverlay.renderRightArrow(guiGraphics, 360, 162, 20, 20,
-                        0, 0, 16, 16, 16, 16, sixthInputDown);
-            }
-        }
 
         if (allInputsDown) {
             Minecraft.getInstance().player.closeContainer();
@@ -181,10 +94,10 @@ public class HellbombInputScreen extends AbstractContainerScreen<HellbombInputMe
         }
     }
 
-    // TODO: Fix issue with multiple inputs being pressed at once
 
     @Override
     public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
+        HellbombBlockEntity hellbombBlockEntity = this.menu.hellbombBlockEntity;
         boolean upPressed = KeyBinding.UP_INPUT_KEY.matches(pKeyCode, pScanCode);
         boolean downPressed = KeyBinding.DOWN_INPUT_KEY.matches(pKeyCode, pScanCode);
         boolean leftPressed = KeyBinding.LEFT_INPUT_KEY.matches(pKeyCode, pScanCode);
@@ -195,202 +108,17 @@ public class HellbombInputScreen extends AbstractContainerScreen<HellbombInputMe
         boolean leftNotPressed = upPressed || downPressed || rightPressed;
         boolean rightNotPressed = upPressed || downPressed || leftPressed;
 
-        HellbombBlockEntity hellbombBlockEntity = this.menu.hellbombBlockEntity;
-
-        Player player = Minecraft.getInstance().player;
-
-        // Same thing here, only checking if it's not null for organization
-
-        if (hellbombBlockEntity != null) {
-            if (hellbombBlockEntity.input1 == 1) {
-                if (upPressed && inputStep == 0) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    firstInputDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input1 == 2) {
-                if (downPressed && inputStep == 0) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    firstInputDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input1 == 3) {
-                if (leftPressed && inputStep == 0) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    firstInputDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input1 == 4) {
-                if (rightPressed && inputStep == 0) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    firstInputDown = true;
-                    inputStep++;
-                }
-
-            }
+        if (hellbombBlockEntity.randomCode == 1) {
+            HellbombCombinations.combo1Inputs(this, upPressed, downPressed, leftPressed, rightPressed);
         }
-
-        if (hellbombBlockEntity != null) {
-            if (hellbombBlockEntity.input2 == 1) {
-                if (upPressed && inputStep == 1) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    secondInputDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input2 == 2) {
-                if (downPressed && inputStep == 1) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    secondInputDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input2 == 3) {
-                if (leftPressed && inputStep == 1) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    secondInputDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input2 == 4) {
-                if (rightPressed && inputStep == 1) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    secondInputDown = true;
-                    inputStep++;
-                }
-            }
+        if (hellbombBlockEntity.randomCode == 2) {
+            HellbombCombinations.combo2Inputs(this, upPressed, downPressed, leftPressed, rightPressed);
         }
-
-        if (hellbombBlockEntity != null) {
-            if (hellbombBlockEntity.input3 == 1) {
-                if (upPressed && inputStep == 2) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    thirdInputDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input3 == 2) {
-                if (downPressed && inputStep == 2) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    thirdInputDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input3 == 3) {
-                if (leftPressed && inputStep == 2) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    thirdInputDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input3 == 4) {
-                if (rightPressed && inputStep == 2) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    thirdInputDown = true;
-                    inputStep++;
-                }
-            }
+        if (hellbombBlockEntity.randomCode == 3) {
+            HellbombCombinations.combo3Inputs(this, upPressed, downPressed, leftPressed, rightPressed);
         }
-
-        if (hellbombBlockEntity != null) {
-            if (hellbombBlockEntity.input4 == 1) {
-                if (upPressed && inputStep == 3) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    fourthInputDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input4 == 2) {
-                if (downPressed && inputStep == 3) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    fourthInputDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input4 == 3) {
-                if (leftPressed && inputStep == 3) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    fourthInputDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input4 == 4) {
-                if (rightPressed && inputStep == 3) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    fourthInputDown = true;
-                    inputStep++;
-                }
-
-            }
-        }
-
-        if (hellbombBlockEntity != null) {
-            if (hellbombBlockEntity.input5 == 1) {
-                if (upPressed && inputStep == 4) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    fifthInputDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input5 == 2) {
-                if (downPressed && inputStep == 4) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    fifthInputDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input5 == 3) {
-                if (leftPressed && inputStep == 4) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    fifthInputDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input5 == 4) {
-                if (rightPressed && inputStep == 4) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    fifthInputDown = true;
-                    inputStep++;
-                }
-            }
-        }
-
-        if (hellbombBlockEntity != null) {
-            if (hellbombBlockEntity.input6 == 1) {
-                if (upPressed && inputStep == 5) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    sixthInputDown = true;
-                    allInputsDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input6 == 2) {
-                if (downPressed && inputStep == 5) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    sixthInputDown = true;
-                    allInputsDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input6 == 3) {
-                if (leftPressed && inputStep == 5) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    sixthInputDown = true;
-                    allInputsDown = true;
-                    inputStep++;
-                }
-
-            } else if (hellbombBlockEntity.input6 == 4) {
-                if (rightPressed && inputStep == 5) {
-                    player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
-                    sixthInputDown = true;
-                    allInputsDown = true;
-                    inputStep++;
-                }
-            }
+        if (hellbombBlockEntity.randomCode == 4) {
+            HellbombCombinations.combo4Inputs(this, upPressed, downPressed, leftPressed, rightPressed);
         }
 
         return super.keyPressed(pKeyCode, pScanCode, pModifiers);

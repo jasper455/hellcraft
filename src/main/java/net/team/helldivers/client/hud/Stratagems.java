@@ -631,7 +631,7 @@ public class Stratagems {
         if (HellbombHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Hellbomb"));
             PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
-                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.HELLBOMB_ITEM.get().getDefaultInstance())), 3600));
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.HELLBOMB_ITEM.get().getDefaultInstance())), 9999));
             resetInputValues();
         }
         if (ResupplyHud.allInputsDown) {
@@ -643,13 +643,13 @@ public class Stratagems {
         if (EAT17Hud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Expendable Anti-Tank"));
             PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
-                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())), 3600));
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())), 1400));
             resetInputValues();
         }
         if (PrecisionStrikeHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Precision Strike"));
             PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
-                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.PRECISION_STRIKE.get().getDefaultInstance())), 3600));
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.PRECISION_STRIKE.get().getDefaultInstance())), 1800));
             resetInputValues();
         }
         if (SmallBarrageHud.allInputsDown) {
@@ -661,25 +661,25 @@ public class Stratagems {
         if (BigBarrageHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital 380MM HE Barrage"));
             PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
-                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.BIG_BARRAGE.get().getDefaultInstance())), 3600));
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.BIG_BARRAGE.get().getDefaultInstance())), 4800));
             resetInputValues();
         }
         if (OrbitalLaserHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Laser"));
             PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
-                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.ORBITAL_LASER.get().getDefaultInstance())), 3600));
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.ORBITAL_LASER.get().getDefaultInstance())), 6000));
             resetInputValues();
         }
         if (Eagle500KgBombHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Eagle 500KG Bomb"));
             PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
-                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())), 3600));
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())), 3000));
             resetInputValues();
         }
         if (ClusterBombHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Eagle Cluster Bomb"));
             PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(getPickerInventory(player)
-                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.CLUSTER_BOMB.get().getDefaultInstance())), 3600));
+                    .getItem(getPickerInventory(player).getSlotWithItem(ModItems.CLUSTER_BOMB.get().getDefaultInstance())), 3000));
             resetInputValues();
         }
     }
@@ -794,7 +794,72 @@ public class Stratagems {
             else if (!getPickerInventory(player).isOnCooldown(ModItems.CLUSTER_BOMB.get().getDefaultInstance())) {
                 ClusterBombHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.CLUSTER_BOMB.get().getDefaultInstance()));
             }
+        }
 
+        // render the popups in the top left if the stratagem is almost done cooling down
+        if (!allInputsDown &&
+                player.getMainHandItem().isEmpty() &&
+                player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IHelldiverArmorItem && getPickerInventory(player) != null) {
+            // OTHER
+
+            // Hellbomb Cooldown Complete Popup Code
+            if (!getPickerInventory(player).isOnCooldown(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()) &&
+                    getPickerInventory(player).getCooldownLeft(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()) <= 5) {
+                HellbombHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()));
+            }
+
+            // SUPPORT
+
+            // Resupply Cooldown Complete Popup Code
+            if (!getPickerInventory(player).isOnCooldown(ModItems.RESUPPLY.get().getDefaultInstance()) &&
+                    getPickerInventory(player).getCooldownLeft(ModItems.RESUPPLY.get().getDefaultInstance()) <= 5) {
+                ResupplyHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.RESUPPLY.get().getDefaultInstance()));
+            }
+
+            // EAT Cooldown Complete Popup Code
+            if (!getPickerInventory(player).isOnCooldown(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()) &&
+                    getPickerInventory(player).getCooldownLeft(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()) <= 5) {
+                EAT17Hud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()));
+            }
+
+            // ORBITAL
+
+            if (!getPickerInventory(player).isOnCooldown(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) &&
+                    getPickerInventory(player).getCooldownLeft(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) <= 5) {
+                PrecisionStrikeHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.PRECISION_STRIKE.get().getDefaultInstance()));
+            }
+
+            // 120 Barrage Cooldown Complete Popup Code
+            if (!getPickerInventory(player).isOnCooldown(ModItems.SMALL_BARRAGE.get().getDefaultInstance()) &&
+                    getPickerInventory(player).getCooldownLeft(ModItems.SMALL_BARRAGE.get().getDefaultInstance()) <= 5) {
+                SmallBarrageHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.SMALL_BARRAGE.get().getDefaultInstance()));
+            }
+
+            // 380 Barrage Cooldown Complete Popup Code
+            if (!getPickerInventory(player).isOnCooldown(ModItems.BIG_BARRAGE.get().getDefaultInstance()) &&
+                    getPickerInventory(player).getCooldownLeft(ModItems.BIG_BARRAGE.get().getDefaultInstance()) <= 5) {
+                BigBarrageHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.BIG_BARRAGE.get().getDefaultInstance()));
+            }
+
+            // Orbital Laser Cooldown Complete Popup Code
+            if (!getPickerInventory(player).isOnCooldown(ModItems.ORBITAL_LASER.get().getDefaultInstance()) &&
+                    getPickerInventory(player).getCooldownLeft(ModItems.ORBITAL_LASER.get().getDefaultInstance()) <= 5) {
+                OrbitalLaserHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.ORBITAL_LASER.get().getDefaultInstance()));
+            }
+
+            // EAGLES
+
+            // 500 KG Cooldown Complete Popup Code
+            if (!getPickerInventory(player).isOnCooldown(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()) &&
+                    getPickerInventory(player).getCooldownLeft(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()) <= 5) {
+                Eagle500KgBombHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()));
+            }
+
+            // Cluster Bomb Cooldown Complete Popup Code
+            if (!getPickerInventory(player).isOnCooldown(ModItems.CLUSTER_BOMB.get().getDefaultInstance()) &&
+                    getPickerInventory(player).getCooldownLeft(ModItems.CLUSTER_BOMB.get().getDefaultInstance()) <= 5) {
+                ClusterBombHud.renderCooldownHud(guiGraphics, getPickerInventory(player).getCooldownLeft(ModItems.CLUSTER_BOMB.get().getDefaultInstance()));
+            }
         }
     }
 

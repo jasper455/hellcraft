@@ -32,6 +32,7 @@ public class ModEventBusEvents {
         event.registerLayerDefinition(ModModelLayers.BULLET, HeatedGasProjectileModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.ROCKET, RocketProjectileModel::createBodyLayer);
         event.registerLayerDefinition(ModModelLayers.FRAG_GRENADE, FragGrenadeProjectileModel::createBodyLayer);
+        event.registerLayerDefinition(ModModelLayers.CLUSTER_BOMB, ClusterBombProjectileModel::createBodyLayer);
     }
 
     @SubscribeEvent

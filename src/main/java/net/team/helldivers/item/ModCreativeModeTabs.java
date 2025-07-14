@@ -14,7 +14,7 @@ public class ModCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, HelldiversMod.MOD_ID);
     public static final RegistryObject<CreativeModeTab> HELLDIVERS_TAB = CREATIVE_MODE_TABS.register("helldivers_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.B01_HELMET.get()))
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModArmorItems.B01_HELMET.get()))
                     .title(Component.translatable("creativetab.helldivers"))
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModBlocks.AMMO_CRATE.get());
@@ -24,15 +24,15 @@ public class ModCreativeModeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.AR23.get()))
                     .title(Component.translatable("creativetab.seaf_equipment"))
                     .displayItems((itemDisplayParameters, output) -> {
-                        output.accept(ModItems.B01_HELMET.get());
-                        output.accept(ModItems.B01_CHESTPLATE.get());
-                        output.accept(ModItems.B01_LEGGINGS.get());
-                        output.accept(ModItems.B01_BOOTS.get());
+                        output.accept(ModArmorItems.B01_HELMET.get());
+                        output.accept(ModArmorItems.B01_CHESTPLATE.get());
+                        output.accept(ModArmorItems.B01_LEGGINGS.get());
+                        output.accept(ModArmorItems.B01_BOOTS.get());
 
-                        output.accept(ModItems.FS05_HELMET.get());
-                        output.accept(ModItems.FS05_CHESTPLATE.get());
-                        output.accept(ModItems.FS05_LEGGINGS.get());
-                        output.accept(ModItems.FS05_BOOTS.get());
+                        output.accept(ModArmorItems.FS05_HELMET.get());
+                        output.accept(ModArmorItems.FS05_CHESTPLATE.get());
+                        output.accept(ModArmorItems.FS05_LEGGINGS.get());
+                        output.accept(ModArmorItems.FS05_BOOTS.get());
 
                         output.accept(ModItems.AR23.get());
                         output.accept(ModItems.P2_PEACEMAKER.get());

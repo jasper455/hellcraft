@@ -50,13 +50,6 @@ public class OrbitalLaserEntity extends Monster implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-        for (int i = 0; i < 100; i++) {
-            if (!this.level().isClientSide)
-                ((ServerLevel) this.level()).sendParticles(ParticleTypes.FLAME,
-                        this.getX(), this.getY() + i,
-                        this.getZ(), 10,
-                        0.0, 0.05, 0.0, 0.1f);
-        }
 
         if (onGround()) {
             this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER,

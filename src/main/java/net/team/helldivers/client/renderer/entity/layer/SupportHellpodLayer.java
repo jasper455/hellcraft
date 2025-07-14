@@ -13,6 +13,7 @@ import net.team.helldivers.item.ModItems;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
+import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry;
 
 public class SupportHellpodLayer extends GeoRenderLayer<SupportHellpodEntity> {
     private static final ResourceLocation EMMISSIVE = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID,
@@ -39,7 +40,7 @@ public class SupportHellpodLayer extends GeoRenderLayer<SupportHellpodEntity> {
         RenderType supply4RenderType = RenderType.armorCutoutNoCull(SUPPLY4);
         poseStack.pushPose();
         getRenderer().reRender(getDefaultBakedModel(hellpodEntity), poseStack, bufferSource, hellpodEntity,
-                glowRenderType, bufferSource.getBuffer(glowRenderType), partialTick, packedLight,
+                LodestoneRenderTypeRegistry.TRANSPARENT_SOLID, bufferSource.getBuffer(glowRenderType), partialTick, packedLight,
                 OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
         poseStack.popPose();
     }

@@ -15,6 +15,7 @@ import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.client.renderer.block.HellbombBlockRenderer;
 import net.team.helldivers.client.renderer.entity.EagleAirshipRenderer;
+import net.team.helldivers.client.renderer.entity.HellbombHellpodRenderer;
 import net.team.helldivers.client.renderer.entity.OrbitalLaserRenderer;
 import net.team.helldivers.client.renderer.entity.SupportHellpodRenderer;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
@@ -181,6 +182,7 @@ public class ModClientEvents {
             event.registerEntityRenderer(ModEntities.EAGLE_AIRSHIP.get(), EagleAirshipRenderer::new);
             event.registerEntityRenderer(ModEntities.SUPPORT_HELLPOD.get(), SupportHellpodRenderer::new);
             event.registerEntityRenderer(ModEntities.ORBITAL_LASER.get(), OrbitalLaserRenderer::new);
+            event.registerEntityRenderer(ModEntities.HELLBOMB_HELLPOD.get(), HellbombHellpodRenderer::new);
 
             event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
         }

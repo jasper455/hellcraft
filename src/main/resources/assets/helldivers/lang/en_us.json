@@ -16,6 +16,11 @@
   "item.helldivers.fs05_leggings": "§bFS-05 Marksman Leggings",
   "item.helldivers.fs05_boots": "§bFS-05 Marksman Boots",
 
+  "item.helldivers.dp40_helmet": "§bDp-40 Hero of the Federation Helmet",
+  "item.helldivers.dp40_chestplate": "§bDp-40 Hero of the Federation Chestplate",
+  "item.helldivers.dp40_leggings": "§bDp-40 Hero of the Federation Leggings",
+  "item.helldivers.dp40_boots": "§bDp-40 Hero of the Federation Boots",
+
   "item.helldivers.stratagem_picker": "§dStratagem Selector",
 
   "item.helldivers.ar23": "AR-23 Liberator",
@@ -60,6 +65,7 @@
   "entity.helldivers.frag_grenade": "Frag Grenade",
   "entity.helldivers.eagle_airship": "Eagle Airship",
   "entity.helldivers.orbital_laser": "Orbital Laser",
+  "entity.helldivers.cluster_bomb": "Cluster Bomb Projectile",
 
   "sounds.helldivers.stratagem_input": "Stratagem Input",
   "sounds.helldivers.falling_shell": "Missile Falls",

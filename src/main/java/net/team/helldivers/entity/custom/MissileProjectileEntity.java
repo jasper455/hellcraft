@@ -45,7 +45,7 @@ public class MissileProjectileEntity extends AbstractArrow {
         PacketHandler.sendToAllClients(new CSmallExplosionParticlesPacket(result.getEntity().blockPosition()));
         PacketHandler.sendToServer(new SExplosionPacket(result.getEntity().blockPosition(), this.power));
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(6.0)).forEach(entity -> {
-            entity.hurt(level().damageSources().explosion(null), this.power * 1.5f);
+            entity.hurt(level().damageSources().explosion(null), this.power * 2.5f);
         });
         this.playSound(ModSounds.EXPLOSION.get(), 10.0f, 1.0f);
         this.discard();
@@ -57,7 +57,7 @@ public class MissileProjectileEntity extends AbstractArrow {
         PacketHandler.sendToAllClients(new CSmallExplosionParticlesPacket(result.getBlockPos()));
         PacketHandler.sendToServer(new SExplosionPacket(result.getBlockPos(), this.power));
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(6.0)).forEach(entity -> {
-            entity.hurt(level().damageSources().explosion(null), this.power * 1.5f);
+            entity.hurt(level().damageSources().explosion(null), this.power * 2.5f);
         });
         this.playSound(ModSounds.EXPLOSION.get(), 10.0f, 1.0f);
         this.discard();

@@ -87,6 +87,12 @@ public class PacketHandler {
                 .decoder(CApplyRecoilPacket::new)
                 .consumerMainThread(CApplyRecoilPacket::handle)
                 .add();
+
+        INSTANCE.messageBuilder(CClusterBombExplosionParticlesPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(CClusterBombExplosionParticlesPacket::encode)
+                .decoder(CClusterBombExplosionParticlesPacket::new)
+                .consumerMainThread(CClusterBombExplosionParticlesPacket::handle)
+                .add();
     }
 
     public static void sendToServer(Object msg) {

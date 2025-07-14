@@ -33,6 +33,10 @@ public class ModEntities {
             ENTITY_TYPES.register("support_hellpod", () -> EntityType.Builder.<SupportHellpodEntity>of(SupportHellpodEntity::new, MobCategory.MISC)
                     .sized(0.63f, 2.3f).build("support_hellpod"));
 
+    public static final RegistryObject<EntityType<HellbombHellpodEntity>> HELLBOMB_HELLPOD =
+            ENTITY_TYPES.register("support_hellpod", () -> EntityType.Builder.<HellbombHellpodEntity>of(HellbombHellpodEntity::new, MobCategory.MISC)
+                    .sized(0.63f, 2.3f).build("hellbomb_hellpod"));
+
     public static final RegistryObject<EntityType<BulletProjectileEntity>> BULLET =
             ENTITY_TYPES.register("bullet", () -> EntityType.Builder.<BulletProjectileEntity>of(BulletProjectileEntity::new, MobCategory.MISC)
                     .sized(0.1f, 0.1f).build("bullet"));
@@ -56,6 +60,10 @@ public class ModEntities {
     public static final RegistryObject<EntityType<OrbitalLaserEntity>> ORBITAL_LASER =
             ENTITY_TYPES.register("orbital_laser", () -> EntityType.Builder.of(OrbitalLaserEntity::new, MobCategory.MISC)
                     .sized(1f, 2f).build("orbital_laser"));
+
+    public static final RegistryObject<EntityType<ClusterBombProjectileEntity>> CLUSTER_BOMB =
+            ENTITY_TYPES.register("cluster_bomb", () -> EntityType.Builder.<ClusterBombProjectileEntity>of(ClusterBombProjectileEntity::new, MobCategory.MISC)
+                    .sized(1f, 2f).build("cluster_bomb"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

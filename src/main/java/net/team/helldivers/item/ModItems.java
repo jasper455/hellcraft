@@ -24,6 +24,9 @@ public class ModItems {
     public static final RegistryObject<Item> TITANIUM = ITEMS.register("titanium",
             () -> new Item(new Item.Properties().fireResistant()));
 
+    public static final RegistryObject<Item> SUPPLIES = ITEMS.register("supplies",
+            () -> new Item(new Item.Properties().fireResistant()));
+
     public static final RegistryObject<Item> AR23 = ITEMS.register("ar23",
             () -> new Ar23Item(new Item.Properties().stacksTo(1).fireResistant()));
 
@@ -39,31 +42,6 @@ public class ModItems {
     public static final RegistryObject<Item> PLAS1 = ITEMS.register("plas1",
             () -> new Plas1Item(new Item.Properties().stacksTo(1).fireResistant()));
 
-    public static final RegistryObject<Item> B01_HELMET = ITEMS.register("b01_helmet",
-            () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL , ArmorItem.Type.HELMET,
-                    new Item.Properties().stacksTo(1).fireResistant()));
-    public static final RegistryObject<Item> B01_CHESTPLATE = ITEMS.register("b01_chestplate",
-            () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
-                    new Item.Properties().stacksTo(1).fireResistant()));
-    public static final RegistryObject<Item> B01_LEGGINGS = ITEMS.register("b01_leggings",
-            () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
-                    new Item.Properties().stacksTo(1).fireResistant()));
-    public static final RegistryObject<Item> B01_BOOTS = ITEMS.register("b01_boots",
-            () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
-                    new Item.Properties().stacksTo(1).fireResistant()));
-
-    public static final RegistryObject<Item> FS05_HELMET = ITEMS.register("fs05_helmet",
-            () -> new Fs05ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL , ArmorItem.Type.HELMET,
-                    new Item.Properties().stacksTo(1).fireResistant()));
-    public static final RegistryObject<Item> FS05_CHESTPLATE = ITEMS.register("fs05_chestplate",
-            () -> new Fs05ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
-                    new Item.Properties().stacksTo(1).fireResistant()));
-    public static final RegistryObject<Item> FS05_LEGGINGS = ITEMS.register("fs05_leggings",
-            () -> new Fs05ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
-                    new Item.Properties().stacksTo(1).fireResistant()));
-    public static final RegistryObject<Item> FS05_BOOTS = ITEMS.register("fs05_boots",
-            () -> new Fs05ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
-                    new Item.Properties().stacksTo(1).fireResistant()));
 
     public static final RegistryObject<Item> STRATAGEM_PICKER = ITEMS.register("stratagem_picker",
             () -> new StratagemPickerItem(new Item.Properties().stacksTo(1).fireResistant()));

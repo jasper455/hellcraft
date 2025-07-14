@@ -3,8 +3,10 @@ package net.team.helldivers.network;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraftforge.network.NetworkEvent;
 import net.team.helldivers.client.hud.Stratagems;
+import net.team.helldivers.item.ModItems;
 import net.team.helldivers.item.inventory.StratagemPickerInventory;
 
 import java.util.function.Supplier;
@@ -30,6 +32,11 @@ public class SStratagemGiveCooldownPacket {
     public void handle(Supplier<NetworkEvent.Context> context) {
         ServerPlayer player = context.get().getSender();
         if (player == null || Stratagems.getPickerInventory(player) == null) return;
+        if (itemStack.is(ModItems.HELLBOMB_ITEM.get())) {
+            Stratagems.getPickerInventory(player).removeItem(Stratagems.getPickerInventory(player).getSlotWithItem(
+                    ModItems.HELLBOMB_ITEM.get().getDefaultInstance()), 64);
+            return;
+        }
         player.getCooldowns().addCooldown(itemStack.getItem(), cooldownTime);
     }
 

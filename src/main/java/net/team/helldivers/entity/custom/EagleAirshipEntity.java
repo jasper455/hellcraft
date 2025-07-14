@@ -1,9 +1,14 @@
 package net.team.helldivers.entity.custom;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
+import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
@@ -69,17 +74,6 @@ public class EagleAirshipEntity extends FlyingMob implements GeoEntity {
                 Eagle500KgEntity explosive = new Eagle500KgEntity(this, this.level());
                 explosive.setPos(this.getX(), this.getY() + 44, this.getZ() - 10);
                 explosive.setDeltaMovement(0, -2, 0.5f);
-                this.level().addFreshEntity(explosive);
-            }
-            if (ticksLeft <= 0) {
-                this.discard();
-            }
-        }
-        if (this.stratagemType.equals("Eagle Cluster Bomb")) {
-            if (ticksLeft == 10) {
-                MissileProjectileEntity explosive = new MissileProjectileEntity(this, this.level(), 6);
-                explosive.setPos(this.getX(), this.getY() + 44, this.getZ() - 10);
-                explosive.setDeltaMovement(0, -4, 0.5f);
                 this.level().addFreshEntity(explosive);
             }
             if (ticksLeft <= 0) {

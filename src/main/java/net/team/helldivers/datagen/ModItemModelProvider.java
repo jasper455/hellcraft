@@ -1,6 +1,7 @@
 package net.team.helldivers.datagen;
 
 import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.item.ModArmorItems;
 import net.team.helldivers.item.ModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -39,15 +40,15 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         basicItem(ModItems.EFFECT_TESTER.get());
 
-        basicItem(ModItems.B01_HELMET.get());
-        basicItem(ModItems.B01_CHESTPLATE.get());
-        basicItem(ModItems.B01_LEGGINGS.get());
-        basicItem(ModItems.B01_BOOTS.get());
+        basicItem(ModArmorItems.B01_HELMET.get());
+        basicItem(ModArmorItems.B01_CHESTPLATE.get());
+        basicItem(ModArmorItems.B01_LEGGINGS.get());
+        basicItem(ModArmorItems.B01_BOOTS.get());
 
-        basicItem(ModItems.FS05_HELMET.get());
-        basicItem(ModItems.FS05_CHESTPLATE.get());
-        basicItem(ModItems.FS05_LEGGINGS.get());
-        basicItem(ModItems.FS05_BOOTS.get());
+        basicItem(ModArmorItems.FS05_HELMET.get());
+        basicItem(ModArmorItems.FS05_CHESTPLATE.get());
+        basicItem(ModArmorItems.FS05_LEGGINGS.get());
+        basicItem(ModArmorItems.FS05_BOOTS.get());
 
         basicItem(ModItems.STRATAGEM_PICKER.get());
 

@@ -29,12 +29,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class HellbombBlockEntity extends BlockEntity implements GeoBlockEntity, Container, MenuProvider {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    public final int input1 = Mth.randomBetweenInclusive(RandomSource.create(), 1, 4);
-    public final int input2 = Mth.randomBetweenInclusive(RandomSource.create(), 1, 4);
-    public final int input3 = Mth.randomBetweenInclusive(RandomSource.create(), 1, 4);
-    public final int input4 = Mth.randomBetweenInclusive(RandomSource.create(), 1, 4);
-    public final int input5 = Mth.randomBetweenInclusive(RandomSource.create(), 1, 4);
-    public final int input6 = Mth.randomBetweenInclusive(RandomSource.create(), 1, 4);
+    public final int randomCode = Mth.randomBetweenInclusive(RandomSource.create(), 1, 4);
 
     // We statically instantiate our RawAnimations for efficiency, consistency, and error-proofing
     private static final RawAnimation HELLBOMB_ANIMS = RawAnimation.begin().thenPlay("hellbomb.activate").thenLoop("hellbomb.active_idle");

@@ -6,6 +6,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.common.Mod;
 import net.team.helldivers.entity.ModEntities;
@@ -213,18 +214,47 @@ public class StratagemOrbEntity extends AbstractArrow {
         // Cluster Bomb Entity Stuff
         if (getStratagemType().equals("Eagle Cluster Bomb") && !this.level().isClientSide) {
             if (groundedTicks == 82) {
-                EagleAirshipEntity eagleAirshipEntity = new EagleAirshipEntity(ModEntities.EAGLE_AIRSHIP.get(), this.level());
-                eagleAirshipEntity.setStratagemType(getStratagemType());
-                eagleAirshipEntity.setPos(this.getX(), this.getY() + 5, this.getZ());
-                this.level().addFreshEntity(eagleAirshipEntity);
+                for (int i = 0; i < 4; i++) {
+                    spawnClusterBomb();
+                }
+            }
+            if (groundedTicks == 87) {
+                for (int i = 0; i < 4; i++) {
+                    spawnClusterBomb();
+                }
+            }
+            if (groundedTicks == 92) {
+                for (int i = 0; i < 4; i++) {
+                    spawnClusterBomb();
+                }
+            }
+            if (groundedTicks == 97) {
+                for (int i = 0; i < 4; i++) {
+                    spawnClusterBomb();
+                }
+            }
+            if (groundedTicks == 102) {
+                for (int i = 0; i < 4; i++) {
+                    spawnClusterBomb();
+                }
             }
         }
-        if (getStratagemType().equals("Eagle Cluster Bomb") && groundedTicks > 90) {
+        if (getStratagemType().equals("Eagle Cluster Bomb") && groundedTicks > 102) {
             this.discard();
             groundedTicks = 0;
         }
 
 
+    }
+
+    private void spawnClusterBomb() {
+        Player player = ((Player) this.getOwner());
+        float randomPosX = (Mth.randomBetween(player.level().getRandom(), 17 * -1, 17));
+        float randomPosZ = (Mth.randomBetween(player.level().getRandom(), 17 * -1, 17));
+
+        ClusterBombProjectileEntity explosive = new ClusterBombProjectileEntity(player, player.level(), 3);
+        explosive.setPos(this.getX() + randomPosX, this.getY() + 44, this.getZ() - randomPosZ);
+        player.level().addFreshEntity(explosive);
     }
 
     @Override
