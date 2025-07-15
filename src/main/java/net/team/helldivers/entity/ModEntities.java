@@ -34,8 +34,8 @@ public class ModEntities {
                     .sized(0.63f, 2.3f).build("support_hellpod"));
 
     public static final RegistryObject<EntityType<HellbombHellpodEntity>> HELLBOMB_HELLPOD =
-            ENTITY_TYPES.register("support_hellpod", () -> EntityType.Builder.<HellbombHellpodEntity>of(HellbombHellpodEntity::new, MobCategory.MISC)
-                    .sized(0.63f, 2.3f).build("hellbomb_hellpod"));
+            ENTITY_TYPES.register("hellbomb_hellpod", () -> EntityType.Builder.<HellbombHellpodEntity>of(HellbombHellpodEntity::new, MobCategory.MISC)
+                    .sized(1f, 2.2f).build("hellbomb_hellpod"));
 
     public static final RegistryObject<EntityType<BulletProjectileEntity>> BULLET =
             ENTITY_TYPES.register("bullet", () -> EntityType.Builder.<BulletProjectileEntity>of(BulletProjectileEntity::new, MobCategory.MISC)

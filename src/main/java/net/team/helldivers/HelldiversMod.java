@@ -15,10 +15,7 @@ import net.team.helldivers.item.ModCreativeModeTabs;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.particle.ModParticles;
 import net.team.helldivers.screen.ModMenuTypes;
-import net.team.helldivers.screen.custom.HellbombInputScreen;
-import net.team.helldivers.screen.custom.StratagemPickerScreen;
-import net.team.helldivers.screen.custom.SupportHellpodMenu;
-import net.team.helldivers.screen.custom.SupportHellpodScreen;
+import net.team.helldivers.screen.custom.*;
 import net.team.helldivers.sound.ModSounds;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -100,6 +97,7 @@ public class HelldiversMod {
             MenuScreens.register(ModMenuTypes.STRATAGEM_PICKER.get(), StratagemPickerScreen::new);
             MenuScreens.register(ModMenuTypes.SUPPORT_HELLPOD_MENU.get(), SupportHellpodScreen::new);
             MenuScreens.register(ModMenuTypes.HELLBOMB_INPUT_MENU.get(), HellbombInputScreen::new);
+            MenuScreens.register(ModMenuTypes.HELLBOMB_ENTITY_INPUT_MENU.get(), HellbombEntityInputScreen::new);
         }
 
         @SubscribeEvent

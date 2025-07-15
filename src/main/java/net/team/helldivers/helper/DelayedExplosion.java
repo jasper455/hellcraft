@@ -27,7 +27,6 @@ public class DelayedExplosion {
 
     @SubscribeEvent
     public void onServerTick(TickEvent.ServerTickEvent event) {
-        System.out.println("test");
         if (event.phase == TickEvent.Phase.END && !this.level.isClientSide()) {
             if (!hasPlayedSound) {
                 level.playSound(null, pos, ModSounds.HELLBOMB_ARMED.get(), SoundSource.BLOCKS, 10.0f, 1.0f);

@@ -3,7 +3,9 @@ package net.team.helldivers.screen;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.Level;
 import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.entity.custom.HellbombHellpodEntity;
 import net.team.helldivers.entity.custom.SupportHellpodEntity;
+import net.team.helldivers.screen.custom.HellbombEntityInputMenu;
 import net.team.helldivers.screen.custom.HellbombInputMenu;
 import net.team.helldivers.screen.custom.StratagemPickerMenu;
 import net.team.helldivers.screen.custom.SupportHellpodMenu;
@@ -40,6 +42,21 @@ public class ModMenuTypes {
 
                         throw new IllegalStateException("Invalid entity type for menu!");
                     }));
+
+    public static final RegistryObject<MenuType<HellbombEntityInputMenu>> HELLBOMB_ENTITY_INPUT_MENU =
+            MENUS.register("hellbomb_input_menu",
+                    () -> IForgeMenuType.create((windowId, inv, data) -> {
+                        int entityId = data.readInt();
+                        Level level = inv.player.level();
+                        Entity entity = level.getEntity(entityId);
+
+                        if (entity instanceof HellbombHellpodEntity hellbombEntity) {
+                            return new HellbombEntityInputMenu(windowId, inv, hellbombEntity);
+                        }
+
+                        throw new IllegalStateException("Invalid entity type for menu!");
+                    }));
+
 
 
 

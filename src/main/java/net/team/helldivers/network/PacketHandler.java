@@ -69,6 +69,12 @@ public class PacketHandler {
                 .consumerMainThread(SStratagemGiveCooldownPacket::handle)
                 .add();
 
+        INSTANCE.messageBuilder(SHellbombActivatePacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SHellbombActivatePacket::encode)
+                .decoder(SHellbombActivatePacket::new)
+                .consumerMainThread(SHellbombActivatePacket::handle)
+                .add();
+
         // CLIENT
         INSTANCE.messageBuilder(CSmallExplosionParticlesPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(CSmallExplosionParticlesPacket::encode)

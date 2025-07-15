@@ -1,7 +1,9 @@
 package net.team.helldivers.entity.custom;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -99,8 +101,18 @@ public class StratagemOrbEntity extends AbstractArrow {
 
         // Hellbomb Entity stuff
         if (getStratagemType().equals("Hellbomb") && groundedTicks == 120 && !this.level().isClientSide) {
-            HellpodProjectileEntity hellpod = new HellpodProjectileEntity(((LivingEntity) this.getOwner()), this.level());
+            HellbombHellpodEntity hellpod = new HellbombHellpodEntity(this.level());
             hellpod.setPos(this.getBlockX(), 200, this.getBlockZ());
+
+            // Get the owner (player)
+            if (this.getOwner() instanceof Player player) {
+                // Set the entity's rotation to face the player
+                double deltaX = player.getX() - this.getBlockX();
+                double deltaZ = player.getZ() - this.getBlockZ();
+                float yRot = (float) (Math.atan2(deltaZ, deltaX) * (180.0D / Math.PI)) - 90.0F;
+                hellpod.setYRot(yRot);
+            }
+
             this.level().addFreshEntity(hellpod);
         }
         if (getStratagemType().equals("Hellbomb") && groundedTicks == 180) {

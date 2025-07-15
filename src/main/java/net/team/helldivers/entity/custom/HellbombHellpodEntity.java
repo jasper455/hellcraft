@@ -30,6 +30,7 @@ import net.minecraftforge.network.NetworkHooks;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.item.ModItems;
+import net.team.helldivers.screen.custom.HellbombEntityInputMenu;
 import net.team.helldivers.screen.custom.SupportHellpodMenu;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -48,29 +49,31 @@ import java.awt.*;
 
 
 public class HellbombHellpodEntity extends Entity implements GeoEntity {
-
+    private static final EntityDataAccessor<Boolean> IS_ACTIVATED =
+            SynchedEntityData.defineId(HellbombHellpodEntity.class, EntityDataSerializers.BOOLEAN);
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    public final int randomCode = Mth.randomBetweenInclusive(RandomSource.create(), 1, 4);
 
     public static final RawAnimation DEPLOY = RawAnimation.begin().thenPlayAndHold("deploy");
     public static final RawAnimation EMPTY = RawAnimation.begin().thenPlayAndHold("empty");
     public static final RawAnimation FALL = RawAnimation.begin().thenLoop("fall");
     public static final RawAnimation LAND = RawAnimation.begin().thenLoop("land");
-    public static final RawAnimation ACTIVATE = RawAnimation.begin().thenLoop("hellbomb.activate");
+    public static final RawAnimation ACTIVATE = RawAnimation.begin().thenPlayAndHold("hellbomb.activate");
     public static final RawAnimation ACTIVE_IDLE = RawAnimation.begin().thenLoop("hellbomb.active_idle");
 
     private int groundedTicks = 0;
+    private int groundedTicksSinceActivation = 0;
     private int clickedTicks = 0;
     private boolean shouldStopCounting = false;
     private boolean hasBeenClicked = false;
     private boolean hasLanded = false;
     private boolean hasBeenSet = false;
-    private boolean isActivated = false;
 
     public HellbombHellpodEntity(EntityType<? extends Entity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
-    public HellbombHellpodEntity(Level level, String stratagemType) {
+    public HellbombHellpodEntity(Level level) {
         super(ModEntities.HELLBOMB_HELLPOD.get(), level);
     }
 
@@ -103,7 +106,7 @@ public class HellbombHellpodEntity extends Entity implements GeoEntity {
         if (!hasLanded) {
             // Apply gravity
             Vec3 movement = this.getDeltaMovement();
-            this.setDeltaMovement(movement.x, movement.y - 0.04, movement.z);
+            this.setDeltaMovement(movement.x, movement.y - 0.1, movement.z);
             this.move(MoverType.SELF, this.getDeltaMovement());
         }
 
@@ -123,6 +126,9 @@ public class HellbombHellpodEntity extends Entity implements GeoEntity {
         if (this.isGrounded()) {
             groundedTicks++;
         }
+        if (this.isGrounded() && isActivated()) {
+            groundedTicksSinceActivation++;
+        }
         if (this.isGrounded() && !hasBeenSet) {
             this.setPos(this.getX(), this.getY(), this.getZ());
             hasBeenSet = true;
@@ -135,6 +141,10 @@ public class HellbombHellpodEntity extends Entity implements GeoEntity {
             this.discard();
         }
 
+        if (this.isGrounded() && isActivated() && groundedTicksSinceActivation >= 300) {
+            this.discard();
+        }
+
         if (!this.isGrounded()) {
             this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(1.0)).forEach(entity -> {
                 entity.hurt(level().damageSources().explosion(null), 9999.0F);
@@ -144,38 +154,39 @@ public class HellbombHellpodEntity extends Entity implements GeoEntity {
     }
 
     @Override
-    public InteractionResult interactAt(Player pPlayer, Vec3 pVec, InteractionHand pHand) {
-        if (!this.level().isClientSide && this.isGrounded()) {
-            if (pPlayer instanceof ServerPlayer serverPlayer) {
-//                NetworkHooks.openScreen(serverPlayer, new MenuProvider() {
-//                    @Override
-//                    public Component getDisplayName() {
-//                        return Component.literal("Hellbomb");
-//                    }
-//
-//                    @Override
-//                    public AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-//                        return new SupportHellpodMenu(pContainerId, pPlayerInventory, inventory, HellbombHellpodEntity.this);
-//                    }
-//                }, buffer -> buffer.writeInt(getId()));
-            }
-            return InteractionResult.CONSUME;
-        }
+    public InteractionResult interact(Player player, InteractionHand hand) {
+        if (!player.level().isClientSide && hand == InteractionHand.MAIN_HAND) {
+            NetworkHooks.openScreen(
+                    (ServerPlayer) player,
+                    new MenuProvider() {
+                        @Override
+                        public Component getDisplayName() {
+                            return Component.literal("Hellbomb");
+                        }
 
-        return InteractionResult.SUCCESS;
+                        @Override
+                        public AbstractContainerMenu createMenu(int windowId, Inventory inventory, Player player) {
+                            return new HellbombEntityInputMenu(windowId, inventory, HellbombHellpodEntity.this);
+                        }
+                    },
+                    buf -> buf.writeInt(this.getId())
+            );
+        }
+        return InteractionResult.sidedSuccess(player.level().isClientSide);
     }
+
 
     private PlayState animations(AnimationState event) {
         if (isGrounded() && groundedTicks >= 20 && hasBeenClicked) {
             event.getController().setAnimation(EMPTY);
             return PlayState.CONTINUE;
         }
-        if (isGrounded() && groundedTicks >= 20) {
-            event.getController().setAnimation(DEPLOY);
+        if (isGrounded() && isActivated()) {
+            event.getController().setAnimation(ACTIVATE);
             return PlayState.CONTINUE;
         }
-        if (isGrounded() && isActivated) {
-            event.getController().setAnimation(ACTIVATE);
+        if (isGrounded() && groundedTicks >= 20) {
+            event.getController().setAnimation(DEPLOY);
             return PlayState.CONTINUE;
         }
         if (!isGrounded()) {
@@ -238,14 +249,17 @@ public class HellbombHellpodEntity extends Entity implements GeoEntity {
         return groundedTicks;
     }
 
+    @Override
+    protected void defineSynchedData() {
+        this.entityData.define(IS_ACTIVATED, false);
+    }
+
     public boolean isActivated() {
-        return isActivated;
+        return this.entityData.get(IS_ACTIVATED);
     }
 
     public void setActivated(boolean activated) {
-        isActivated = activated;
+        this.entityData.set(IS_ACTIVATED, activated);
     }
 
-    @Override
-    protected void defineSynchedData() {}
 }

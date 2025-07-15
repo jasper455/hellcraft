@@ -32,6 +32,7 @@ public class SStratagemGiveCooldownPacket {
     public void handle(Supplier<NetworkEvent.Context> context) {
         ServerPlayer player = context.get().getSender();
         if (player == null || Stratagems.getPickerInventory(player) == null) return;
+        if (player.isCreative()) return;
         if (itemStack.is(ModItems.HELLBOMB_ITEM.get())) {
             Stratagems.getPickerInventory(player).removeItem(Stratagems.getPickerInventory(player).getSlotWithItem(
                     ModItems.HELLBOMB_ITEM.get().getDefaultInstance()), 64);
