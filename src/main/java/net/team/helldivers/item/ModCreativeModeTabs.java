@@ -19,6 +19,7 @@ public class ModCreativeModeTabs {
                     .displayItems((itemDisplayParameters, output) -> {
                         output.accept(ModBlocks.AMMO_CRATE.get());
                         output.accept(ModBlocks.BARBED_WIRE.get());
+                        output.accept(ModItems.EXTRACTION_TERMINAL_BLOCK_ITEM.get());
                     }).build());
     public static final RegistryObject<CreativeModeTab> SEAF_EQUIPMENT = CREATIVE_MODE_TABS.register("seaf_equipment_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.AR23.get()))
@@ -33,6 +34,11 @@ public class ModCreativeModeTabs {
                         output.accept(ModArmorItems.FS05_CHESTPLATE.get());
                         output.accept(ModArmorItems.FS05_LEGGINGS.get());
                         output.accept(ModArmorItems.FS05_BOOTS.get());
+
+                        output.accept(ModArmorItems.DP40_HELMET.get());
+                        output.accept(ModArmorItems.DP40_CHESTPLATE.get());
+                        output.accept(ModArmorItems.DP40_LEGGINGS.get());
+                        output.accept(ModArmorItems.DP40_BOOTS.get());
 
                         output.accept(ModItems.AR23.get());
                         output.accept(ModItems.P2_PEACEMAKER.get());

@@ -5,10 +5,7 @@ import net.minecraft.world.level.Level;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.entity.custom.HellbombHellpodEntity;
 import net.team.helldivers.entity.custom.SupportHellpodEntity;
-import net.team.helldivers.screen.custom.HellbombEntityInputMenu;
-import net.team.helldivers.screen.custom.HellbombInputMenu;
-import net.team.helldivers.screen.custom.StratagemPickerMenu;
-import net.team.helldivers.screen.custom.SupportHellpodMenu;
+import net.team.helldivers.screen.custom.*;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
@@ -24,6 +21,9 @@ public class ModMenuTypes {
 
     public static final RegistryObject<MenuType<StratagemPickerMenu>> STRATAGEM_PICKER =
             registerMenuType("stratagem_picker", StratagemPickerMenu::new);
+
+    public static final RegistryObject<MenuType<ExtractionTerminalMenu>> EXTRACTION_TERMINAL =
+            registerMenuType("extraction_terminal", ExtractionTerminalMenu::new);
 
     public static final RegistryObject<MenuType<HellbombInputMenu>> HELLBOMB_INPUT_MENU =
             registerMenuType("hellbomb", HellbombInputMenu::new);

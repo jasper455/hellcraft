@@ -13,6 +13,7 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.event.TickEvent;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.entity.ModBlockEntities;
+import net.team.helldivers.client.renderer.block.ExtractionTerminalBlockRenderer;
 import net.team.helldivers.client.renderer.block.HellbombBlockRenderer;
 import net.team.helldivers.client.renderer.entity.EagleAirshipRenderer;
 import net.team.helldivers.client.renderer.entity.HellbombHellpodRenderer;
@@ -185,6 +186,7 @@ public class ModClientEvents {
             event.registerEntityRenderer(ModEntities.HELLBOMB_HELLPOD.get(), HellbombHellpodRenderer::new);
 
             event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
+            event.registerBlockEntityRenderer(ModBlockEntities.EXTRACTION_TERMINAL.get(), context -> new ExtractionTerminalBlockRenderer());
         }
 
         @SubscribeEvent

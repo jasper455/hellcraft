@@ -5,6 +5,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.custom.AmmoCrateBlock;
 import net.team.helldivers.block.custom.BarbedWireBlock;
+import net.team.helldivers.block.custom.ExtractionTerminalBlock;
 import net.team.helldivers.block.custom.HellbombBlock;
 import net.team.helldivers.item.ModItems;
 import net.minecraft.world.item.BlockItem;
@@ -24,6 +25,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> HELLBOMB = registerBlock("hellbomb",
             () -> new HellbombBlock());
 
+    public static final RegistryObject<Block> EXTRACTION_TERMINAL = registerBlock("extraction_terminal",
+            () -> new ExtractionTerminalBlock(BlockBehaviour.Properties.of().instabreak().noOcclusion().lightLevel((level) -> 5)));
+
     public static final RegistryObject<Block> AMMO_CRATE = registerBlock("ammo_crate",
             () -> new AmmoCrateBlock(BlockBehaviour.Properties.of().instabreak().noOcclusion().noCollission().lightLevel((level) -> 5)));
 
@@ -39,7 +43,7 @@ public class ModBlocks {
     }
 
     private static <T extends Block> void registerBlockItem(String name, RegistryObject<T> toReturn) {
-        ModItems.ITEMS.register(name, () -> new BlockItem(toReturn.get(), new Item.Properties()));
+            ModItems.ITEMS.register(name, () -> new BlockItem(toReturn.get(), new Item.Properties()));
     }
 
 

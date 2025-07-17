@@ -37,7 +37,7 @@ public class HellbombBlock extends BaseEntityBlock implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
     public static BooleanProperty isActivated = BooleanProperty.create("is_activated");
     public HellbombBlock() {
-        super(Properties.of().noOcclusion().lightLevel((level) -> 3));
+        super(Properties.of().noOcclusion().lightLevel((level) -> 3).dynamicShape());
         this.registerDefaultState(this.getStateDefinition().any()
                 .setValue(isActivated, false));
     }

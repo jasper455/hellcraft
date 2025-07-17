@@ -15,6 +15,7 @@ public class ModArmorItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, HelldiversMod.MOD_ID);
 
+    // B0-1 Tactical Armor
     public static final RegistryObject<Item> B01_HELMET = ITEMS.register("b01_helmet",
             () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL , ArmorItem.Type.HELMET,
                     new Item.Properties().stacksTo(1).fireResistant()));
@@ -28,6 +29,7 @@ public class ModArmorItems {
             () -> new B01ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
                     new Item.Properties().stacksTo(1).fireResistant()));
 
+    // FS-05 Marksman Armor
     public static final RegistryObject<Item> FS05_HELMET = ITEMS.register("fs05_helmet",
             () -> new Fs05ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL , ArmorItem.Type.HELMET,
                     new Item.Properties().stacksTo(1).fireResistant()));
@@ -41,6 +43,7 @@ public class ModArmorItems {
             () -> new Fs05ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
                     new Item.Properties().stacksTo(1).fireResistant()));
 
+    // DP-40 Hero of The Federation Armor
     public static final RegistryObject<Item> DP40_HELMET = ITEMS.register("dp40_helmet",
             () -> new Dp40ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL , ArmorItem.Type.HELMET,
                     new Item.Properties().stacksTo(1).fireResistant()));

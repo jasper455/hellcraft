@@ -2,6 +2,7 @@ package net.team.helldivers.item;
 
 
 import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.item.custom.*;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
@@ -45,6 +46,11 @@ public class ModItems {
 
     public static final RegistryObject<Item> STRATAGEM_PICKER = ITEMS.register("stratagem_picker",
             () -> new StratagemPickerItem(new Item.Properties().stacksTo(1).fireResistant()));
+
+    public static final RegistryObject<Item> EXTRACTION_TERMINAL_BLOCK_ITEM = ITEMS.register("extraction_terminal_block_item",
+            () -> new ExtractionTerminalBlockItem(ModBlocks.EXTRACTION_TERMINAL.get(), new Item.Properties().stacksTo(1).fireResistant()));
+
+    // STRATAGEMS
 
     // OTHER
     public static final RegistryObject<Item> HELLBOMB_ITEM = ITEMS.register("hellbomb_item",

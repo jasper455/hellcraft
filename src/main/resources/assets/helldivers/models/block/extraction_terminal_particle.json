@@ -1,0 +1,6 @@
+{
+  "parent": "helldivers:displaysettings/extraction_terminal",
+  "textures": {
+    "particle": "helldivers:block/extraction_terminal"
+  }
+}

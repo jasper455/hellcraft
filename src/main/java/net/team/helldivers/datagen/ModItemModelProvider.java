@@ -50,10 +50,14 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModArmorItems.FS05_LEGGINGS.get());
         basicItem(ModArmorItems.FS05_BOOTS.get());
 
+        basicItem(ModArmorItems.DP40_HELMET.get());
+        basicItem(ModArmorItems.DP40_CHESTPLATE.get());
+        basicItem(ModArmorItems.DP40_LEGGINGS.get());
+        basicItem(ModArmorItems.DP40_BOOTS.get());
+
         basicItem(ModItems.STRATAGEM_PICKER.get());
 
 //        basicItem(ModItems.AR23.get());
-
 
         basicItem(ModItems.HELLBOMB_ITEM.get());
         basicItem(ModItems.RESUPPLY.get());
