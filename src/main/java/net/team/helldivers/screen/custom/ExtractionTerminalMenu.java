@@ -1,8 +1,7 @@
 package net.team.helldivers.screen.custom;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
@@ -12,18 +11,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.team.helldivers.block.entity.custom.ExtractionTerminalBlockEntity;
-import net.team.helldivers.item.ModItems;
-import net.team.helldivers.item.custom.IStratagemItem;
 import net.team.helldivers.screen.ModMenuTypes;
 
 public class ExtractionTerminalMenu extends AbstractContainerMenu {
     private final Container inventory;
     private final Player player;
     private final BlockPos pos;
-    private final ItemStack menuStack; // Add this to store the stratagem NBT
 
     public ExtractionTerminalMenu(int containerId, Inventory playerInventory, Container inventory, BlockPos pos) {
         super(ModMenuTypes.EXTRACTION_TERMINAL.get(), containerId);
@@ -31,61 +26,14 @@ public class ExtractionTerminalMenu extends AbstractContainerMenu {
         this.player = playerInventory.player;
         this.pos = pos;
 
-        // Create menu stack with inventory data
-        this.menuStack = new ItemStack(ModItems.STRATAGEM_PICKER.get());
-        CompoundTag tag = menuStack.getOrCreateTag();
-        ListTag listTag = new ListTag();
-        for (int i = 0; i < inventory.getContainerSize(); i++) {
-            ItemStack stack = inventory.getItem(i);
-            if (!stack.isEmpty()) {
-                CompoundTag itemTag = new CompoundTag();
-                itemTag.putByte("Slot", (byte) i);
-                stack.save(itemTag);
-                listTag.add(itemTag);
-            }
-        }
-        tag.put("Items", listTag);
-
         // Add the stratagem inventory slots
         for (int i = 0; i < 4; i++) {
-            this.addSlot(new Slot(inventory, i, 44 + i * 24, 35) {
-                @Override
-                public boolean mayPlace(ItemStack stack) {
-                    return stack.getItem() instanceof IStratagemItem;
-                }
-
-                @Override
-                public void setChanged() {
-                    super.setChanged();
-                    updateMenuStack();
-                }
-            });
+            this.addSlot(new Slot(inventory, i, 44 + i * 24, 35));
         }
 
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
     }
-
-    private void updateMenuStack() {
-        CompoundTag tag = menuStack.getOrCreateTag();
-        ListTag listTag = new ListTag();
-        for (int i = 0; i < inventory.getContainerSize(); i++) {
-            ItemStack stack = inventory.getItem(i);
-            if (!stack.isEmpty()) {
-                CompoundTag itemTag = new CompoundTag();
-                itemTag.putByte("Slot", (byte) i);
-                stack.save(itemTag);
-                listTag.add(itemTag);
-            }
-        }
-        tag.put("Items", listTag);
-    }
-
-    public ItemStack getMenuStack() {
-        return menuStack;
-    }
-
-
 
     // Client-side constructor
     public ExtractionTerminalMenu(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
@@ -99,6 +47,7 @@ public class ExtractionTerminalMenu extends AbstractContainerMenu {
         addPlayerInventory(playerInventory);
         addPlayerHotbar(playerInventory);
     }
+
 
     private void addPlayerInventory(Inventory playerInventory) {
         for (int i = 0; i < 3; ++i) {
@@ -159,6 +108,36 @@ public class ExtractionTerminalMenu extends AbstractContainerMenu {
                 extractionTerminal.savePlayerInventory(player, this.inventory);
             }
         }
+    }
+
+    public boolean contains(ItemStack stack) {
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
+            ItemStack itemStack = this.inventory.getItem(i);
+            if (itemStack.is(stack.getItem())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getSlotWithItem(ItemStack stack) {
+        for (int i = 0; i < inventory.getContainerSize(); i++) {
+            ItemStack itemStack = this.inventory.getItem(i);
+            if (itemStack.is(stack.getItem())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean isOnCooldown(ItemStack stack) {
+        Player player = Minecraft.getInstance().player;
+        return !player.getCooldowns().isOnCooldown(this.inventory.getItem(getSlotWithItem(stack)).getItem());
+    }
+
+    public int getCooldownLeft(ItemStack stack) {
+        Player player = Minecraft.getInstance().player;
+        return (int) (player.getCooldowns().getCooldownPercent(stack.getItem(), 1) * 100);
     }
 
 }
