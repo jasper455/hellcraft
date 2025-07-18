@@ -15,6 +15,10 @@ public class ItemRequestPacket {
         this.slot = slot;
     }
 
+    public ItemRequestPacket(FriendlyByteBuf buf) {
+        this.slot = buf.readInt();
+    }
+
     public static void encode(ItemRequestPacket msg, FriendlyByteBuf buf) {
         buf.writeInt(msg.slot);
     }
@@ -27,10 +31,10 @@ public class ItemRequestPacket {
         ctx.get().enqueueWork(() -> {
             ServerPlayer player = ctx.get().getSender();
             if (player != null) {
-                ItemStack result = Stratagems.getItem(player, msg.slot);
+//                ItemStack result = Stratagems.getItem(msg.slot);
 
                 // Send result back to client
-                PacketHandler.sendToPlayer(new ItemResponsePacket(msg.slot, result), player);
+//                PacketHandler.sendToPlayer(new ItemResponsePacket(msg.slot, result), player);
             }
         });
         ctx.get().setPacketHandled(true);

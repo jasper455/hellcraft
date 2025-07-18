@@ -31,11 +31,10 @@ public class SStratagemGiveCooldownPacket {
 
     public void handle(Supplier<NetworkEvent.Context> context) {
         ServerPlayer player = context.get().getSender();
-        if (player == null) return;
-        if (player.isCreative()) return;
+        if (player == null || Stratagems.getPickerInventory(player) == null) return;
         if (itemStack.is(ModItems.HELLBOMB_ITEM.get())) {
-            Stratagems.getItem(Stratagems.getSlotWithItem(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()))
-                    .shrink(64);
+            Stratagems.getPickerInventory(player).removeItem(Stratagems.getPickerInventory(player).getSlotWithItem(
+                    ModItems.HELLBOMB_ITEM.get().getDefaultInstance()), 64);
             return;
         }
         player.getCooldowns().addCooldown(itemStack.getItem(), cooldownTime);

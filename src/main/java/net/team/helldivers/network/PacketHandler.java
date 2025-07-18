@@ -75,6 +75,14 @@ public class PacketHandler {
                 .consumerMainThread(SHellbombActivatePacket::handle)
                 .add();
 
+        INSTANCE.messageBuilder(ItemRequestPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(ItemRequestPacket::encode)
+                .decoder(ItemRequestPacket::new)
+                .consumerMainThread(ItemRequestPacket::handle)
+                .add();
+
+
+
         // CLIENT
         INSTANCE.messageBuilder(CSmallExplosionParticlesPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(CSmallExplosionParticlesPacket::encode)
@@ -98,6 +106,12 @@ public class PacketHandler {
                 .encoder(CClusterBombExplosionParticlesPacket::encode)
                 .decoder(CClusterBombExplosionParticlesPacket::new)
                 .consumerMainThread(CClusterBombExplosionParticlesPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(ItemResponsePacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(ItemResponsePacket::encode)
+                .decoder(ItemResponsePacket::new)
+                .consumerMainThread(ItemResponsePacket::handle)
                 .add();
     }
 

@@ -143,4 +143,16 @@ public class StratagemHudOverlay {
         return KeyBinding.UP_INPUT_KEY.isDown() || KeyBinding.DOWN_INPUT_KEY.isDown() || KeyBinding.LEFT_INPUT_KEY.isDown();
     }
 
+    public static String percentageToTime(int percentage, int totalMinutes, int extraSeconds) {
+        int totalSeconds = totalMinutes * 60 + extraSeconds;
+
+        // Cast percentage to double to avoid integer division
+        int remainingSeconds = (int) ((percentage / 100.0) * totalSeconds);
+
+        int minutes = remainingSeconds / 60;
+        int seconds = remainingSeconds % 60;
+
+        return String.format("%02d:%02d", minutes, seconds);
+    }
+
 }

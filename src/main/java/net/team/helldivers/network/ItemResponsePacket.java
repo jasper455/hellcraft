@@ -16,15 +16,14 @@ public class ItemResponsePacket {
         this.stack = stack;
     }
 
-    public static void encode(ItemResponsePacket msg, FriendlyByteBuf buf) {
-        buf.writeInt(msg.slot);
-        buf.writeItem(msg.stack);
+    public ItemResponsePacket(FriendlyByteBuf buf) {
+        this.slot = buf.readInt();
+        this.stack = buf.readItem();
     }
 
-    public static ItemResponsePacket decode(FriendlyByteBuf buf) {
-        int slot = buf.readInt();
-        ItemStack stack = buf.readItem();
-        return new ItemResponsePacket(slot, stack);
+    public void encode(FriendlyByteBuf buf) {
+        buf.writeInt(this.slot);
+        buf.writeItem(this.stack);
     }
 
     public static void handle(ItemResponsePacket msg, Supplier<NetworkEvent.Context> ctx) {

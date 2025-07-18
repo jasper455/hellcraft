@@ -91,7 +91,9 @@ public class BigBarrageHud {
 
         guiGraphics.pose().popPose();
 
-        guiGraphics.drawString(Minecraft.getInstance().font, String.valueOf(cooldownLeft) + "%", 35, arrowHeight, 0xFFFFFF);
+        guiGraphics.drawString(Minecraft.getInstance().font, StratagemHudOverlay.percentageToTime(cooldownLeft, 4, 0),
+                35, arrowHeight, 0xFFFFFF);
+
     }
 
     public static void resetInputValues() {
