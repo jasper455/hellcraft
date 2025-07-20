@@ -8,8 +8,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -19,9 +19,12 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class AmmoCrateBlock extends HorizontalDirectionalBlock {
-    public static final DirectionProperty FACING = BlockStateProperties.FACING;
-    public AmmoCrateBlock(Properties pProperties) {
-        super(pProperties);
+    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    public AmmoCrateBlock(Properties properties) {
+        super(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(1f, 100f)
+                .hasPostProcess((bs, br, bp) -> true)
+                .emissiveRendering((bs, br, bp) -> true)
+                .isRedstoneConductor((bs, br, bp) -> false));
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
     }
 
@@ -30,11 +33,10 @@ public class AmmoCrateBlock extends HorizontalDirectionalBlock {
         pBuilder.add(FACING);
     }
 
-    @javax.annotation.Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(FACING,
-                context.getHorizontalDirection().getOpposite());
+                context.getHorizontalDirection().getClockWise());
     }
 
     @Override
@@ -50,7 +52,20 @@ public class AmmoCrateBlock extends HorizontalDirectionalBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return Block.box(3.5F, 0, 0.5F, 12.5, 9, 16.5);
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return switch (state.getValue(FACING)) {
+            case NORTH -> box(4, 0, 1, 12, 9, 15);
+            case EAST -> box(1, 0, 4, 15, 9, 12);
+            case WEST -> box(1, 0, 4, 15, 9, 12);
+            default -> box(4, 0, 1, 12, 9, 15);
+        };
+    }
+
+    public BlockState rotate(BlockState state, Rotation rot) {
+        return state.setValue(FACING, rot.rotate(state.getValue(FACING)));
+    }
+
+    public BlockState mirror(BlockState state, Mirror mirrorIn) {
+        return state.rotate(mirrorIn.getRotation(state.getValue(FACING)));
     }
 }

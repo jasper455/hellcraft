@@ -6,6 +6,7 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
+import net.team.helldivers.item.ModItems;
 
 import java.util.Set;
 
@@ -21,7 +22,10 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         dropOther(ModBlocks.HELLBOMB.get(), Items.AIR);
         dropSelf(ModBlocks.AMMO_CRATE.get());
         dropSelf(ModBlocks.BARBED_WIRE.get());
-        dropSelf(ModBlocks.EXTRACTION_TERMINAL.get());
+        dropOther(ModBlocks.EXTRACTION_TERMINAL.get(), ModItems.EXTRACTION_TERMINAL_BLOCK_ITEM.get());
+        dropSelf(ModBlocks.COMMON_SAMPLE.get());
+        dropSelf(ModBlocks.RARE_SAMPLE.get());
+        dropSelf(ModBlocks.SUPER_SAMPLE.get());
     }
 
     @Override

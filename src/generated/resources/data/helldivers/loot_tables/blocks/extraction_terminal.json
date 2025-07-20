@@ -11,7 +11,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "helldivers:extraction_terminal"
+          "name": "helldivers:extraction_terminal_block_item"
         }
       ],
       "rolls": 1.0

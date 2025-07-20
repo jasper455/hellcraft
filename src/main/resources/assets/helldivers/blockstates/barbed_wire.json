@@ -1,7 +1,8 @@
 {
   "variants": {
-    "": {
-      "model": "helldivers:block/barbed_wire"
-    }
+    "facing=north": { "model": "helldivers:block/barbed_wire", "y": 180 },
+    "facing=south": { "model": "helldivers:block/barbed_wire", "y": 0 },
+    "facing=west":  { "model": "helldivers:block/barbed_wire", "y": 90 },
+    "facing=east":  { "model": "helldivers:block/barbed_wire", "y": 270 }
   }
 }
