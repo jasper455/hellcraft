@@ -1,5 +1,8 @@
-// 1.20.1	2025-07-15T15:44:26.6536712	Loot Tables
+// 1.20.1	2025-07-19T19:44:21.2000046	Loot Tables
 2781dc527c86d991ff95271bad7f0d27ab810942 data/helldivers/loot_tables/blocks/ammo_crate.json
 8deb12268b199f353932113da132eb14a17e7fa4 data/helldivers/loot_tables/blocks/barbed_wire.json
-c862fd1f7cef26c80815576fe4204591fbe144b0 data/helldivers/loot_tables/blocks/extraction_terminal.json
+c10eaac9a478485e801e69252f092b285bc143ce data/helldivers/loot_tables/blocks/common_sample.json
+33a23be1709331f387b058c27820124bbcf4d81f data/helldivers/loot_tables/blocks/extraction_terminal.json
 3e4189777d2baefe68d0af040e2b7b8db95554e0 data/helldivers/loot_tables/blocks/hellbomb.json
+16ef11cee27d069e04407f8fe0351f744c860238 data/helldivers/loot_tables/blocks/rare_sample.json
+30bffda8af8dc9c4992e88b71b502b701af97012 data/helldivers/loot_tables/blocks/super_sample.json

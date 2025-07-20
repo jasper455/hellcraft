@@ -39,15 +39,19 @@ public class BarbedWireBlock extends HorizontalDirectionalBlock {
         pBuilder.add(FACING);
     }
 
-    @javax.annotation.Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext pContext) {
-        return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection().getOpposite());
+        return this.defaultBlockState().setValue(FACING, pContext.getHorizontalDirection());
     }
 
     @Override
-    public VoxelShape getShape(BlockState pState, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
-        return Block.box(-1, 0, 2, 17, 11, 14);
+    public VoxelShape getShape(BlockState state, BlockGetter pLevel, BlockPos pPos, CollisionContext pContext) {
+        return switch (state.getValue(FACING)) {
+            case NORTH -> box(-1, 0, 2, 17, 11, 14);
+            case EAST -> box(2, 0, -1, 14, 11, 17);
+            case WEST -> box(2, 0, -1, 14, 11, 17);
+            default -> box(-1, 0, 2, 17, 11, 14);
+        };
     }
 
     @Override

@@ -55,6 +55,9 @@
   "block.helldivers.ammo_crate": "Ammo Crate",
   "block.helldivers.barbed_wire": "Barbed Wire",
   "block.helldivers.extraction_terminal": "§dExtraction Terminal",
+  "block.helldivers.common_sample": "Common Sample",
+  "block.helldivers.rare_sample": "Rare Sample",
+  "block.helldivers.super_sample": "Super Sample",
 
   "entity.helldivers.missile": "Missile",
   "entity.helldivers.eagle_500kg_bomb": "Eagle 500KG Bomb",

@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "helldivers:extraction_terminal_block_item"
+          "name": "helldivers:super_sample"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "helldivers:blocks/extraction_terminal"
+  "random_sequence": "helldivers:blocks/super_sample"
 }

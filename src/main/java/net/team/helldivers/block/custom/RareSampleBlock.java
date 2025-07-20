@@ -9,19 +9,17 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public class AmmoCrateBlock extends HorizontalDirectionalBlock {
+public class RareSampleBlock extends HorizontalDirectionalBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public AmmoCrateBlock(Properties properties) {
-        super(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(1f, 100f)
+    public RareSampleBlock(Properties properties) {
+        super(Properties.of().sound(SoundType.AMETHYST_CLUSTER).strength(1f, 100f)
                 .hasPostProcess((bs, br, bp) -> true)
                 .emissiveRendering((bs, br, bp) -> true)
                 .isRedstoneConductor((bs, br, bp) -> false));
@@ -36,7 +34,7 @@ public class AmmoCrateBlock extends HorizontalDirectionalBlock {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return this.defaultBlockState().setValue(FACING,
-                context.getHorizontalDirection().getClockWise());
+                context.getHorizontalDirection().getCounterClockWise());
     }
 
     @Override
@@ -54,10 +52,10 @@ public class AmmoCrateBlock extends HorizontalDirectionalBlock {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return switch (state.getValue(FACING)) {
-            case NORTH -> box(4, 0, 1, 12, 9, 15);
-            case EAST -> box(1, 0, 4, 15, 9, 12);
-            case WEST -> box(1, 0, 4, 15, 9, 12);
-            default -> box(4, 0, 1, 12, 9, 15);
+            case NORTH -> box(5, 0, 6, 10, 7, 11);
+            case EAST -> box(5, 0, 5.5, 10, 7, 10.5);
+            case WEST -> box(6, 0, 5.5, 11, 7, 10.5);
+            default -> box(5, 0, 5.5, 10, 7, 10.5);
         };
     }
 

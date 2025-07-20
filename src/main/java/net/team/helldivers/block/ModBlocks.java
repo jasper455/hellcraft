@@ -1,12 +1,10 @@
 package net.team.helldivers.block;
 
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.team.helldivers.HelldiversMod;
-import net.team.helldivers.block.custom.AmmoCrateBlock;
-import net.team.helldivers.block.custom.BarbedWireBlock;
-import net.team.helldivers.block.custom.ExtractionTerminalBlock;
-import net.team.helldivers.block.custom.HellbombBlock;
+import net.team.helldivers.block.custom.*;
 import net.team.helldivers.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -35,6 +33,14 @@ public class ModBlocks {
             () -> new BarbedWireBlock(BlockBehaviour.Properties.of().instabreak().noCollission().speedFactor(0.0125f)
                     .noOcclusion().lightLevel((level) -> 2).sound(SoundType.GRAVEL)));
 
+    public static final RegistryObject<Block> COMMON_SAMPLE = registerBlock("common_sample",
+            () -> new CommonSampleBlock(BlockBehaviour.Properties.of().instabreak().noOcclusion().noCollission().lightLevel((level) -> 5)));
+
+    public static final RegistryObject<Block> RARE_SAMPLE = registerBlock("rare_sample",
+            () -> new RareSampleBlock(BlockBehaviour.Properties.of().instabreak().noOcclusion().noCollission().lightLevel((level) -> 5)));
+
+    public static final RegistryObject<Block> SUPER_SAMPLE = registerBlock("super_sample",
+            () -> new SuperSampleBlock(BlockBehaviour.Properties.of().instabreak().noOcclusion().noCollission().lightLevel((level) -> 5)));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
