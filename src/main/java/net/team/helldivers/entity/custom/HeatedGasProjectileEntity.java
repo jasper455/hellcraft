@@ -15,9 +15,11 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
+import net.team.helldivers.block.custom.BotContactMineBlock;
 import net.team.helldivers.entity.ModEntities;
 
 public class HeatedGasProjectileEntity extends AbstractArrow {
@@ -74,6 +76,12 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(1.5)).forEach(entity -> {
             entity.hurt(level().damageSources().explosion(null), 10.0F);
         });
+        if (block.getBlock() instanceof BotContactMineBlock) {
+            this.level().setBlockAndUpdate(result.getBlockPos(), Blocks.AIR.defaultBlockState());
+            this.level().getEntitiesOfClass(LivingEntity.class, new AABB(result.getBlockPos()).inflate(3.0)).forEach(entity -> {
+                entity.hurt(this.level().damageSources().explosion(null), 12.5F);
+            });
+        }
         this.discard();
     }
 

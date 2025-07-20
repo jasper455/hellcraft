@@ -11,12 +11,15 @@ import net.minecraftforge.common.world.BiomeModifier;
 import net.minecraftforge.common.world.ForgeBiomeModifiers;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.worldgen.biome.ModBiomes;
 
 public class ModBiomeModifiers {
+    public static final ResourceKey<BiomeModifier> ADD_GRAVEL_PATCH = registerKey("add_gravel_patch");
 
     public static void bootstrap(BootstapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
         var biomes = context.lookup(Registries.BIOME);
+
     }
 
 

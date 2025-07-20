@@ -1,5 +1,7 @@
 package net.team.helldivers.entity.custom;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -10,7 +12,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
+import net.team.helldivers.block.custom.BotContactMineBlock;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SExplosionPacket;
@@ -43,8 +48,16 @@ public class RocketProjectileEntity extends AbstractArrow {
     @Override
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
+        BlockPos pos = result.getBlockPos();
+        BlockState block = Minecraft.getInstance().level.getBlockState(pos);
         PacketHandler.sendToServer(new SExplosionPacket(result.getBlockPos(), 3));
         this.playSound(ModSounds.EXPLOSION.get(), 10.0f, 1.0f);
+        if (block.getBlock() instanceof BotContactMineBlock) {
+            this.level().setBlockAndUpdate(result.getBlockPos(), Blocks.AIR.defaultBlockState());
+            this.level().getEntitiesOfClass(LivingEntity.class, new AABB(result.getBlockPos()).inflate(3.0)).forEach(entity -> {
+                entity.hurt(this.level().damageSources().explosion(null), 12.5F);
+            });
+        }
         this.discard();
     }
 

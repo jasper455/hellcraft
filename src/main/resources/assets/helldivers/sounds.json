@@ -124,5 +124,13 @@
     "sounds": [
       "helldivers:easter_egg"
     ]
+  },
+  "trap_royalty": {
+    "sounds": [
+      {
+      "name": "helldivers:trap_royalty",
+        "stream": true
+      }
+    ]
   }
 }

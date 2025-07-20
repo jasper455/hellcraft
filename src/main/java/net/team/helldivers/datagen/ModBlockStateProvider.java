@@ -17,8 +17,7 @@ public class ModBlockStateProvider extends BlockStateProvider  {
     }
 
     @Override
-    protected void registerStatesAndModels() {
-    }
+    protected void registerStatesAndModels() {}
 
     private void leavesBlock(RegistryObject<Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(),

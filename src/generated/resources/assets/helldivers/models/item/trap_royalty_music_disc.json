@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "helldivers:item/trap_royalty_music_disc"
+  }
+}

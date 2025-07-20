@@ -1,5 +1,7 @@
 package net.team.helldivers.sound;
 
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.team.helldivers.HelldiversMod;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
@@ -53,6 +55,8 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> ORBITAL_LASER_IDLE = registerSoundEvent("orbital_laser_idle");
 
     public static final RegistryObject<SoundEvent> EASTER_EGG = registerSoundEvent("easter_egg");
+
+    public static final RegistryObject<SoundEvent> TRAP_ROYALTY = registerSoundEvent("trap_royalty");
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, name);

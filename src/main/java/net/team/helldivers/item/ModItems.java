@@ -1,6 +1,7 @@
 package net.team.helldivers.item;
 
 
+import net.minecraft.world.item.RecordItem;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.item.custom.*;
@@ -10,11 +11,15 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import net.team.helldivers.sound.ModSounds;
 
 public class ModItems {
 
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, HelldiversMod.MOD_ID);
+
+    public static final RegistryObject<Item> TRAP_ROYALTY_MUSIC_DISC = ITEMS.register("trap_royalty_music_disc",
+            () -> new RecordItem(6, ModSounds.TRAP_ROYALTY, new Item.Properties().stacksTo(1), 3300));
 
     public static final RegistryObject<Item> EFFECT_TESTER = ITEMS.register("effect_tester",
             () -> new EffectTesterItem(new Item.Properties()));
@@ -49,6 +54,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> EXTRACTION_TERMINAL_BLOCK_ITEM = ITEMS.register("extraction_terminal_block_item",
             () -> new ExtractionTerminalBlockItem(ModBlocks.EXTRACTION_TERMINAL.get(), new Item.Properties().stacksTo(1).fireResistant()));
+
+    public static final RegistryObject<Item> BOT_CONTACT_MINE_BLOCK_ITEM = ITEMS.register("bot_contact_mine_block_item",
+            () -> new BotContactMineBlockItem(ModBlocks.BOT_CONTACT_MINE.get(), new Item.Properties().fireResistant()));
 
     // STRATAGEMS
 

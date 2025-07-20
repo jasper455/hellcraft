@@ -1,4 +1,4 @@
-// 1.20.1	2025-07-15T12:14:13.0175191	Item Models: helldivers
+// 1.20.1	2025-07-19T23:25:15.9442668	Item Models: helldivers
 975afeeffe669bd7a27ffebc2f385a50bc6897c4 assets/helldivers/models/item/500kg_bomb.json
 1e70d3b46a91d0a9f10f4a23e869ed2a037b2476 assets/helldivers/models/item/b01_boots.json
 fd49abbcbe58c4c800f408349a84e554eba0fb4d assets/helldivers/models/item/b01_chestplate.json
@@ -22,3 +22,4 @@ dbcc18d882ec334612f2fd276174a69918fe31e8 assets/helldivers/models/item/fs05_legg
 5f23624013f02a4223cf7f1cf15e39290a9f6b8d assets/helldivers/models/item/resupply.json
 949f5bf329a9b2d7a33127cdf36f53713614dbaa assets/helldivers/models/item/small_barrage.json
 e51d9b3fd8c8ed3b8d19119554035dd3cb4242c1 assets/helldivers/models/item/stratagem_picker.json
+ea6307b87155f47489ef83f16c020d48565f41a9 assets/helldivers/models/item/trap_royalty_music_disc.json

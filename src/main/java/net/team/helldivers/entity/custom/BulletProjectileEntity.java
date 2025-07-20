@@ -24,10 +24,8 @@ import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.StainedGlassPaneBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.*;
+import net.team.helldivers.block.custom.BotContactMineBlock;
 import net.team.helldivers.entity.ModEntities;
 
 public class BulletProjectileEntity extends AbstractArrow {
@@ -72,6 +70,12 @@ public class BulletProjectileEntity extends AbstractArrow {
         BlockState block = Minecraft.getInstance().level.getBlockState(pos);
         if (block.is(BlockTags.IMPERMEABLE) || block.getBlock() instanceof IronBarsBlock) {
             this.level().destroyBlock(pos, false);
+        }
+        if (block.getBlock() instanceof BotContactMineBlock) {
+            this.level().setBlockAndUpdate(result.getBlockPos(), Blocks.AIR.defaultBlockState());
+            this.level().getEntitiesOfClass(LivingEntity.class, new AABB(result.getBlockPos()).inflate(3.0)).forEach(entity -> {
+                entity.hurt(this.level().damageSources().explosion(null), 12.5F);
+            });
         }
         this.discard();
     }

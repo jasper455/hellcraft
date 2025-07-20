@@ -1,0 +1,6 @@
+{
+  "parent": "helldivers:displaysettings/bot_contact_mine",
+  "textures": {
+    "particle": "helldivers:block/bot_contact_mine"
+  }
+}

@@ -23,6 +23,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         dropSelf(ModBlocks.AMMO_CRATE.get());
         dropSelf(ModBlocks.BARBED_WIRE.get());
         dropOther(ModBlocks.EXTRACTION_TERMINAL.get(), ModItems.EXTRACTION_TERMINAL_BLOCK_ITEM.get());
+        dropOther(ModBlocks.BOT_CONTACT_MINE.get(), ModItems.BOT_CONTACT_MINE_BLOCK_ITEM.get());
         dropSelf(ModBlocks.COMMON_SAMPLE.get());
         dropSelf(ModBlocks.RARE_SAMPLE.get());
         dropSelf(ModBlocks.SUPER_SAMPLE.get());

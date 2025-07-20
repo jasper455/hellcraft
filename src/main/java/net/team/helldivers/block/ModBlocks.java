@@ -42,6 +42,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> SUPER_SAMPLE = registerBlock("super_sample",
             () -> new SuperSampleBlock(BlockBehaviour.Properties.of().instabreak().noOcclusion().noCollission().lightLevel((level) -> 5)));
 
+    public static final RegistryObject<Block> BOT_CONTACT_MINE = registerBlock("bot_contact_mine",
+            () -> new BotContactMineBlock(BlockBehaviour.Properties.of().instabreak().noCollission().lightLevel((level) -> 5)));
+
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

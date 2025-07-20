@@ -155,7 +155,7 @@ public class HellbombHellpodEntity extends Entity implements GeoEntity {
 
     @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
-        if (!player.level().isClientSide && hand == InteractionHand.MAIN_HAND) {
+        if (!player.level().isClientSide && hand == InteractionHand.MAIN_HAND && !this.isActivated()) {
             NetworkHooks.openScreen(
                     (ServerPlayer) player,
                     new MenuProvider() {

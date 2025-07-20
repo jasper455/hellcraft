@@ -13,6 +13,7 @@ import net.minecraftforge.client.event.*;
 import net.minecraftforge.event.TickEvent;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.entity.ModBlockEntities;
+import net.team.helldivers.client.renderer.block.BotContactMineBlockRenderer;
 import net.team.helldivers.client.renderer.block.ExtractionTerminalBlockRenderer;
 import net.team.helldivers.client.renderer.block.HellbombBlockRenderer;
 import net.team.helldivers.client.renderer.entity.EagleAirshipRenderer;
@@ -187,6 +188,7 @@ public class ModClientEvents {
 
             event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
             event.registerBlockEntityRenderer(ModBlockEntities.EXTRACTION_TERMINAL.get(), context -> new ExtractionTerminalBlockRenderer());
+            event.registerBlockEntityRenderer(ModBlockEntities.BOT_CONTACT_MINE.get(), context -> new BotContactMineBlockRenderer());
         }
 
         @SubscribeEvent

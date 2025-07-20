@@ -38,6 +38,8 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        basicItem(ModItems.TRAP_ROYALTY_MUSIC_DISC.get());
+
         basicItem(ModItems.EFFECT_TESTER.get());
 
         basicItem(ModArmorItems.B01_HELMET.get());
