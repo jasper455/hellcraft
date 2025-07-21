@@ -175,6 +175,15 @@ tasks.named('processResources', ProcessResources).configure {
     }
 }
 
+mixin {
+    // MixinGradle Settings
+    add sourceSets.main, 'mixins.helldivers.refmap.json'
+    config 'mixins.helldivers.json'
+
+    debug.verbose = true
+    debug.export = true
+}
+
 // Example for how to get properties into the manifest for reading at runtime.
 tasks.named('jar', Jar).configure {
     manifest {

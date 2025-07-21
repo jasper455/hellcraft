@@ -1,7 +1,4 @@
-// 1.20.1	2025-07-20T15:06:55.5981342	Datapack Entries
+// 1.20.1	2025-07-21T01:58:24.5868347	Datapack Entries
 46dd891cb033da7a452d47eef4c5a7e680ee7e3b data/helldivers/dimension/choepessa_iv.json
 e241e971aacde6f4d0236c622c99d6c9caeb981e data/helldivers/dimension_type/choepessa_dim_type.json
-abe71ac41fed3bf4ccc982aeb57eb1db1ad5dfa8 data/helldivers/forge/biome_modifier/add_gravel_patch.json
 e5bfe00ff4e7ba86c9f8d434bd215090b86b692e data/helldivers/worldgen/biome/choepessa_wastes.json
-bd87d983b63a17c06c0dce8939bea55d0ab97772 data/helldivers/worldgen/configured_feature/gravel_patch.json
-872d55ea003bff9fb1191629598c4536558f5b37 data/helldivers/worldgen/placed_feature/gravel_patch_placed.json

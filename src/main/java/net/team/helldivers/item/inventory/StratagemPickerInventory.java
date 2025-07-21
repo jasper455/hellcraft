@@ -43,6 +43,6 @@ public class StratagemPickerInventory extends ItemInventory {
 
     public int getCooldownLeft(ItemStack stack) {
         Player player = Minecraft.getInstance().player;
-        return (int) (player.getCooldowns().getCooldownPercent(stack.getItem(), 1) * 100);
+        return (int) (player.getCooldowns().getCooldownPercent(stack.getItem(), 20) * 100);
     }
 }

@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "helldivers:choepessa_wastes",
-  "features": "helldivers:gravel_patch_placed",
-  "step": "local_modifications"
-}

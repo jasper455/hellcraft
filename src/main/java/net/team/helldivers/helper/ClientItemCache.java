@@ -10,44 +10,44 @@ import java.util.Map;
 public class ClientItemCache {
     private static final Map<Integer, ItemStack> slotCache = new HashMap<>();
 
-    public static void setSlot(int slot, ItemStack stack) {
-        slotCache.put(slot, stack);
+    public static ItemStack getItem(int slot) {
+        return slotCache.get(slot);
     }
 
-    public static ItemStack getSlot(int slot) {
-        return slotCache.getOrDefault(slot, ItemStack.EMPTY);
+    public static void addToSlotCache(int slot, ItemStack itemStack) {
+        slotCache.put(slot, itemStack);
     }
 
-    public static int getSlotWithItem(ItemStack stack) {
-        for (int i = 0; i < slotCache.size(); i++) {
-            if (slotCache.get(i) == stack) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public static boolean isOnCooldown(ItemStack stack) {
-        Player player = Minecraft.getInstance().player;
-        return player.getCooldowns().isOnCooldown(getSlot(getSlotWithItem(stack)).getItem());
-    }
-
-    public static int getCooldownLeft(ItemStack stack) {
-        Player player = Minecraft.getInstance().player;
-        return (int) (player.getCooldowns().getCooldownPercent(getSlot(getSlotWithItem(stack)).getItem(), 1) * 100);
+    public static void removeFromSlotCache(int slot, ItemStack itemStack) {
+        slotCache.remove(slot, itemStack);
     }
 
     public static boolean contains(ItemStack stack) {
-        for (int i = 0; i < slotCache.size(); i++) {
-            ItemStack itemStack = getSlot(i);
-            if (itemStack.is(stack.getItem())) {
+        for (int i = 0; i < 4; i++) {
+            ItemStack cached = slotCache.get(i);
+            if (cached != null && cached.is(stack.getItem())) {
                 return true;
             }
         }
         return false;
     }
 
-    public static void clear() {
-        slotCache.clear();
+    public static int getSlotWithItem(ItemStack stack) {
+        for (int i = 0; i < 4; i++) {
+            ItemStack cached = slotCache.get(i);
+            if (cached != null && cached.is(stack.getItem())) {
+                return i;
+            }
+        }
+        return -1;
     }
+    public static boolean isOnCooldown(ItemStack stack) {
+        return !Minecraft.getInstance().player.getCooldowns().isOnCooldown(stack.getItem());
+    }
+
+    public static int getCooldownLeft(ItemStack stack) {
+        Player player = Minecraft.getInstance().player;
+        return (int) (player.getCooldowns().getCooldownPercent(stack.getItem(), 20) * 100);
+    }
+
 }

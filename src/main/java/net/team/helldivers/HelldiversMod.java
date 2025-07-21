@@ -94,7 +94,6 @@ public class HelldiversMod {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-            MenuScreens.register(ModMenuTypes.STRATAGEM_PICKER.get(), StratagemPickerScreen::new);
             MenuScreens.register(ModMenuTypes.SUPPORT_HELLPOD_MENU.get(), SupportHellpodScreen::new);
             MenuScreens.register(ModMenuTypes.HELLBOMB_INPUT_MENU.get(), HellbombInputScreen::new);
             MenuScreens.register(ModMenuTypes.HELLBOMB_ENTITY_INPUT_MENU.get(), HellbombEntityInputScreen::new);
