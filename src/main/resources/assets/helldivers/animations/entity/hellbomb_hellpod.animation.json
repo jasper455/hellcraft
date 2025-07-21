@@ -245,6 +245,11 @@
 							"vector": [0, 3, 0]
 						}
 					}
+				},
+				"fire": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
 				}
 			}
 		},
@@ -297,6 +302,11 @@
 				"upper": {
 					"position": {
 						"vector": [0, 3, 0]
+					}
+				},
+				"fire": {
+					"scale": {
+						"vector": [0, 0, 0]
 					}
 				}
 			}
