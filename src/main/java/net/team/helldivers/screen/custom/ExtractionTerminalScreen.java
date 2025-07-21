@@ -11,7 +11,7 @@ import net.team.helldivers.HelldiversMod;
 
 public class ExtractionTerminalScreen extends AbstractContainerScreen<ExtractionTerminalMenu> {
     private static final ResourceLocation GUI_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/gui/stratagem_picker/stratagem_picker.png");
+            ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/gui/extraction_terminal/extraction_terminal.png");
 
     public ExtractionTerminalScreen(ExtractionTerminalMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);

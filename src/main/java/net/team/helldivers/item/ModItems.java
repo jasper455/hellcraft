@@ -48,10 +48,6 @@ public class ModItems {
     public static final RegistryObject<Item> PLAS1 = ITEMS.register("plas1",
             () -> new Plas1Item(new Item.Properties().stacksTo(1).fireResistant()));
 
-
-    public static final RegistryObject<Item> STRATAGEM_PICKER = ITEMS.register("stratagem_picker",
-            () -> new StratagemPickerItem(new Item.Properties().stacksTo(1).fireResistant()));
-
     public static final RegistryObject<Item> EXTRACTION_TERMINAL_BLOCK_ITEM = ITEMS.register("extraction_terminal_block_item",
             () -> new ExtractionTerminalBlockItem(ModBlocks.EXTRACTION_TERMINAL.get(), new Item.Properties().stacksTo(1).fireResistant()));
 

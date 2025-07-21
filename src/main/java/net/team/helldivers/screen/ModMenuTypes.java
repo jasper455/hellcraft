@@ -19,9 +19,6 @@ public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENUS =
             DeferredRegister.create(ForgeRegistries.MENU_TYPES, HelldiversMod.MOD_ID);
 
-    public static final RegistryObject<MenuType<StratagemPickerMenu>> STRATAGEM_PICKER =
-            registerMenuType("stratagem_picker", StratagemPickerMenu::new);
-
     public static final RegistryObject<MenuType<ExtractionTerminalMenu>> EXTRACTION_TERMINAL =
             registerMenuType("extraction_terminal", ExtractionTerminalMenu::new);
 

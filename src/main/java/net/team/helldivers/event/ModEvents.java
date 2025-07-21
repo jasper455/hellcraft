@@ -1,10 +1,19 @@
 package net.team.helldivers.event;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
+import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.DimensionSpecialEffects;
+import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.material.FogType;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -16,6 +25,7 @@ import net.minecraftforge.server.command.ConfigCommand;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.command.StopUseLodestoneCommand;
 import net.team.helldivers.command.UseLodestoneCommand;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 import org.joml.Matrix4f;
 
 import static net.minecraft.client.renderer.blockentity.TheEndPortalRenderer.END_SKY_LOCATION;
@@ -68,10 +78,9 @@ public class ModEvents {
 //    }
 //
 //
-//    @SubscribeEvent
-//    public static void levelRenderEvent(RenderLevelStageEvent event) {
-//        renderEndSky(event.getPoseStack());
-//    }
+    @SubscribeEvent
+    public static void levelRenderEvent(RenderLevelStageEvent event) {}
+
 
     @SubscribeEvent
     public static void onCommandsRegister(RegisterCommandsEvent event) {

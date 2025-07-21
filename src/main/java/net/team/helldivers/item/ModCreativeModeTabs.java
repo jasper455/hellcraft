@@ -54,7 +54,6 @@ public class ModCreativeModeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.PRECISION_STRIKE.get()))
                     .title(Component.translatable("creativetab.stratagems"))
                     .displayItems((itemDisplayParameters, output) -> {
-                        output.accept(ModItems.STRATAGEM_PICKER.get());
                         output.accept(ModItems.STRATAGEM_ORB.get());
 
                         output.accept(ModBlocks.HELLBOMB.get());

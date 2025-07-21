@@ -75,12 +75,11 @@ public class PacketHandler {
                 .consumerMainThread(SHellbombActivatePacket::handle)
                 .add();
 
-        INSTANCE.messageBuilder(ItemRequestPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
-                .encoder(ItemRequestPacket::encode)
-                .decoder(ItemRequestPacket::new)
-                .consumerMainThread(ItemRequestPacket::handle)
+        INSTANCE.messageBuilder(SInitializeExtractionTerminalInventoryPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SInitializeExtractionTerminalInventoryPacket::encode)
+                .decoder(SInitializeExtractionTerminalInventoryPacket::new)
+                .consumerMainThread(SInitializeExtractionTerminalInventoryPacket::handle)
                 .add();
-
 
 
         // CLIENT
@@ -106,12 +105,6 @@ public class PacketHandler {
                 .encoder(CClusterBombExplosionParticlesPacket::encode)
                 .decoder(CClusterBombExplosionParticlesPacket::new)
                 .consumerMainThread(CClusterBombExplosionParticlesPacket::handle)
-                .add();
-
-        INSTANCE.messageBuilder(ItemResponsePacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
-                .encoder(ItemResponsePacket::encode)
-                .decoder(ItemResponsePacket::new)
-                .consumerMainThread(ItemResponsePacket::handle)
                 .add();
     }
 
