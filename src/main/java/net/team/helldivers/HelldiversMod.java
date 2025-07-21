@@ -10,6 +10,7 @@ import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.client.*;
 import net.team.helldivers.entity.custom.ClusterBombProjectileEntity;
+import net.team.helldivers.gamerule.ModGameRules;
 import net.team.helldivers.item.ModArmorItems;
 import net.team.helldivers.item.ModCreativeModeTabs;
 import net.team.helldivers.item.ModItems;
@@ -65,6 +66,7 @@ public class HelldiversMod {
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
+        ModGameRules.DO_FLYING_BLOCKS.getId();
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         context.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -74,7 +76,6 @@ public class HelldiversMod {
         EntityRenderers.register(ModEntities.MISSILE_PROJECTILE.get(), MissileProjectileRenderer::new);
         EntityRenderers.register(ModEntities.EAGLE_500KG_BOMB.get(), Eagle500KgRenderer::new);
         EntityRenderers.register(ModEntities.STRATAGEM_ORB.get(), StratagemOrbProjectileRenderer::new);
-        EntityRenderers.register(ModEntities.HELLPOD.get(), HellpodProjectileRenderer::new);
         EntityRenderers.register(ModEntities.BULLET.get(), BulletProjectileRenderer::new);
         EntityRenderers.register(ModEntities.ROCKET.get(), RocketProjectileRenderer::new);
         EntityRenderers.register(ModEntities.FRAG_GRENADE.get(), FragGrenadeProjectileRenderer::new);

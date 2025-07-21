@@ -12,15 +12,11 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.client.model.item.Ar23Model;
-import net.team.helldivers.item.custom.Ar23Item;
+import net.team.helldivers.item.custom.guns.Ar23Item;
 import net.team.helldivers.util.AnimUtils;
-import software.bernie.geckolib.GeckoLib;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.cache.object.GeoBone;
-import software.bernie.geckolib.model.DefaultedItemGeoModel;
-import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoItemRenderer;
 import software.bernie.geckolib.util.RenderUtils;
 

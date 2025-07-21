@@ -2,9 +2,7 @@ package net.team.helldivers.client.model.item;
 
 import net.minecraft.resources.ResourceLocation;
 import net.team.helldivers.HelldiversMod;
-import net.team.helldivers.item.custom.Ar23Item;
-import net.team.helldivers.item.custom.EAT17Item;
-import net.team.helldivers.util.KeyBinding;
+import net.team.helldivers.item.custom.guns.EAT17Item;
 import software.bernie.geckolib.model.GeoModel;
 
 public class EAT17Model extends GeoModel<EAT17Item> {

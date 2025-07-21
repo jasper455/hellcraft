@@ -96,6 +96,9 @@ public class StratagemOrbEntity extends AbstractArrow {
         if (this.isGrounded()) {
             groundedTicks++;
         }
+        if (this.isGrounded() && groundedTicks == 1 && !this.level().isClientSide()) {
+            this.playSound(ModSounds.STRATAGEM_ORB_LAND.get(), 3f, 1.0f);
+        }
 
         // OTHER
 
@@ -152,16 +155,18 @@ public class StratagemOrbEntity extends AbstractArrow {
 
         // Orbital Precision Strike Entity stuff
         if (getStratagemType().equals("Orbital Precision Strike") && groundedTicks == 60 && !this.level().isClientSide) {
-            float randomPosX = (Mth.randomBetween(this.level().getRandom(), 87.5f, 92.5f));
+            if (random.nextBoolean() && random.nextBoolean()) {
+                this.playSound(ModSounds.FIRE_ORBITAL_STRIKE.get(), 10000000.0f, 1.0f);
+            }
+        }
+        if (getStratagemType().equals("Orbital Precision Strike") && groundedTicks == 90 && !this.level().isClientSide()) {
+            float randomPosX = (Mth.randomBetween(this.level().getRandom(), -5.0f, 5.0f));
             float randomPosY = (Mth.randomBetween(this.level().getRandom(), -5.0f, 5.0f));
 
             MissileProjectileEntity explosive = new MissileProjectileEntity(((LivingEntity) this.getOwner()), this.level(), 17);
             explosive.setPos(this.getX() + randomPosX, 200 + randomPosY, this.getZ());
-            explosive.setDeltaMovement(-1.6f, 0f, 0f);
+            explosive.setDeltaMovement(0f, 0f, 0f);
             this.level().addFreshEntity(explosive);
-            if (random.nextBoolean() && random.nextBoolean()) {
-                this.playSound(ModSounds.FIRE_ORBITAL_STRIKE.get(), 10000000.0f, 1.0f);
-            }
         }
         if (getStratagemType().equals("Orbital Precision Strike") && groundedTicks == 100) {
             this.discard();
@@ -211,6 +216,9 @@ public class StratagemOrbEntity extends AbstractArrow {
 
         // 500Kg Bomb Entity Stuff
         if (getStratagemType().equals("Eagle 500KG Bomb") && !this.level().isClientSide) {
+            if (groundedTicks == 40) {
+                this.playSound(ModSounds.EAGLE_FLYBY.get(), 10.0f, 1.0f);
+            }
             if (groundedTicks == 80) {
                 EagleAirshipEntity eagleAirshipEntity = new EagleAirshipEntity(ModEntities.EAGLE_AIRSHIP.get(), this.level());
                 eagleAirshipEntity.setStratagemType(getStratagemType());

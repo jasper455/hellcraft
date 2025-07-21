@@ -1,4 +1,4 @@
-package net.team.helldivers.item.custom;
+package net.team.helldivers.item.custom.guns;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -15,7 +15,6 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.team.helldivers.block.custom.AmmoCrateBlock;
-import net.team.helldivers.client.renderer.item.AR23Renderer;
 import net.team.helldivers.client.renderer.item.Plas1Renderer;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SGunReloadPacket;

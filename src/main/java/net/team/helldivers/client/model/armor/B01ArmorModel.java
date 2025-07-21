@@ -1,7 +1,7 @@
 package net.team.helldivers.client.model.armor;
 
 import net.team.helldivers.HelldiversMod;
-import net.team.helldivers.item.custom.B01ArmorItem;
+import net.team.helldivers.item.custom.armor.B01ArmorItem;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 

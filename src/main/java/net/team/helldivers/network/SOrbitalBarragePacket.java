@@ -98,7 +98,7 @@ public class SOrbitalBarragePacket {
             } else {
                 explosive.setPos(position.getX() + randomPosX, 200, position.getZ() - randomPosZ);
             }
-            explosive.setDeltaMovement(-0.3f, 0f, 0f);
+            explosive.setDeltaMovement(0f, 0f, 0f);
             player.level().addFreshEntity(explosive);
         }
     }

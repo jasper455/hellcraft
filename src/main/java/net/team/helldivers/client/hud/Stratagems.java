@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.MovementInputUpdateEvent;
@@ -15,7 +14,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.helper.ClientItemCache;
 import net.team.helldivers.item.ModItems;
-import net.team.helldivers.item.custom.IHelldiverArmorItem;
+import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SGiveStratagemOrbPacket;
 import net.team.helldivers.network.SInitializeExtractionTerminalInventoryPacket;
@@ -809,7 +808,6 @@ public class Stratagems {
 
         // render the popups in the top left if the stratagem is almost done cooling down
         if (!allInputsDown &&
-                player.getMainHandItem().isEmpty() &&
                 player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IHelldiverArmorItem) {
             // OTHER
 

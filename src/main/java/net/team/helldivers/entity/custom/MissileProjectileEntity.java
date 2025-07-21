@@ -8,8 +8,6 @@ import net.team.helldivers.network.CSmallExplosionParticlesPacket;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SExplosionPacket;
 import net.team.helldivers.sound.ModSounds;
-import net.team.helldivers.sound.custom.MovingSoundInstance;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,11 +17,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec2;
 
 public class MissileProjectileEntity extends AbstractArrow {
-    public Vec2 groundedOffset;
-    private int soundTicks = 0;
     private int power = 0;
 
     public MissileProjectileEntity(EntityType<? extends AbstractArrow> pEntityType, Level pLevel) {
@@ -65,15 +60,10 @@ public class MissileProjectileEntity extends AbstractArrow {
 
     @Override
     public void tick() {
-        if (this.level().isClientSide && soundTicks == 20) {
-            Minecraft.getInstance().getSoundManager()
-                    .play(new MovingSoundInstance(this, ModSounds.FALLING_SHELL.get(), 5.0f));
-        }
+        this.setDeltaMovement(this.getDeltaMovement().normalize().scale(6f));
         if (this.level().isClientSide) {
             this.level().addParticle(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
         }
-        soundTicks++;
-        if (soundTicks == 120) soundTicks = 0;
         super.tick();
     }
 

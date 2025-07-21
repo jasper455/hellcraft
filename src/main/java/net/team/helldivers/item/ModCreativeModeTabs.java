@@ -44,6 +44,11 @@ public class ModCreativeModeTabs {
                         output.accept(ModArmorItems.DP40_LEGGINGS.get());
                         output.accept(ModArmorItems.DP40_BOOTS.get());
 
+                        output.accept(ModArmorItems.SC30_HELMET.get());
+                        output.accept(ModArmorItems.SC30_CHESTPLATE.get());
+                        output.accept(ModArmorItems.SC30_LEGGINGS.get());
+                        output.accept(ModArmorItems.SC30_BOOTS.get());
+
                         output.accept(ModItems.AR23.get());
                         output.accept(ModItems.P2_PEACEMAKER.get());
                         output.accept(ModItems.PLAS1.get());

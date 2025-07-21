@@ -2,8 +2,7 @@ package net.team.helldivers.client.model.item;
 
 import net.minecraft.resources.ResourceLocation;
 import net.team.helldivers.HelldiversMod;
-import net.team.helldivers.item.custom.P2Item;
-import net.team.helldivers.item.custom.Plas1Item;
+import net.team.helldivers.item.custom.guns.Plas1Item;
 import software.bernie.geckolib.model.GeoModel;
 
 public class Plas1Model extends GeoModel<Plas1Item> {

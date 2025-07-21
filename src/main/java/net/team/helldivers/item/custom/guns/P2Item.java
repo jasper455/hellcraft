@@ -1,4 +1,4 @@
-package net.team.helldivers.item.custom;
+package net.team.helldivers.item.custom.guns;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -14,24 +14,25 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.block.custom.AmmoCrateBlock;
-import net.team.helldivers.client.renderer.item.AR23Renderer;
-import net.team.helldivers.item.inventory.StratagemPickerInventory;
+import net.team.helldivers.client.renderer.item.P2Renderer;
 import net.team.helldivers.network.PacketHandler;
-import net.team.helldivers.network.SShootPacket;
 import net.team.helldivers.network.SGunReloadPacket;
+import net.team.helldivers.network.SShootPacket;
 import net.team.helldivers.util.KeyBinding;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 import java.util.function.Consumer;
 
-public class Ar23Item extends Item implements GeoItem, IGunItem {
+public class P2Item extends Item implements GeoItem, IGunItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public String animationprocedure = "empty";
     private boolean isShooting = false;
@@ -44,8 +45,8 @@ public class Ar23Item extends Item implements GeoItem, IGunItem {
     private static final int SHOOT_DELAY = 2; // This will give you about 600 RPM
 
 
-    public Ar23Item(Item.Properties properties) {
-        super(new Item.Properties().durability(47).rarity(Rarity.COMMON));
+    public P2Item(Properties properties) {
+        super(new Properties().durability(16).rarity(Rarity.COMMON));
     }
 
     private boolean canShoot(ItemStack stack) {
@@ -56,7 +57,7 @@ public class Ar23Item extends Item implements GeoItem, IGunItem {
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         super.initializeClient(consumer);
         consumer.accept(new IClientItemExtensions() {
-            private final BlockEntityWithoutLevelRenderer renderer = new AR23Renderer();
+            private final BlockEntityWithoutLevelRenderer renderer = new P2Renderer();
 
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
@@ -64,28 +65,27 @@ public class Ar23Item extends Item implements GeoItem, IGunItem {
             }
 
             // Changing the players arm pose when holding the item
-            private static final HumanoidModel.ArmPose AR23Pose = HumanoidModel.ArmPose.create("AR23",
-                    false, (model, entity, arm) -> {
-                        if (arm == HumanoidArm.LEFT) {
-                        } else {
-                            model.rightArm.xRot = 30F + model.head.xRot;
-                            model.rightArm.yRot = 0F + model.head.yRot;
-                            model.leftArm.xRot = 30F + model.head.xRot;
-                            model.leftArm.yRot = 0.5F + model.head.yRot;
-                        }
-                    });
+            private static final HumanoidModel.ArmPose P2PeacemakerPose = HumanoidModel.ArmPose.create("P2Peacemaker", false, (model, entity, arm) -> {
+                if (arm == HumanoidArm.LEFT) {
+                } else {
+                    model.rightArm.xRot = 30F + model.head.xRot;
+                    model.rightArm.yRot = 0F + model.head.yRot;
+                    model.leftArm.xRot = 30F + model.head.xRot;
+                    model.leftArm.yRot = 0.5F + model.head.yRot;
+                }
+            });
+
             @Override
             public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
                 if (!itemStack.isEmpty()) {
                     if (entityLiving.getUsedItemHand() == hand) {
-                        return AR23Pose;
+                        return P2PeacemakerPose;
                     }
                 }
                 return HumanoidModel.ArmPose.EMPTY;
             }
 
-            public boolean applyForgeHandTransform(PoseStack poseStack, LocalPlayer player, HumanoidArm arm,
-                                                   ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
+            public boolean applyForgeHandTransform(PoseStack poseStack, LocalPlayer player, HumanoidArm arm, ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
                 int i = arm == HumanoidArm.RIGHT ? 1 : -1;
                 poseStack.translate(i * 0.56F, -0.52F, -0.72F);
                 if (player.getUseItem() == itemInHand) {
@@ -189,7 +189,7 @@ public class Ar23Item extends Item implements GeoItem, IGunItem {
     @Override
     public void appendHoverText(ItemStack itemstack, Level level, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, level, list, flag);
-        list.add(Component.literal("§e[Assault-Rifle]"));
+        list.add(Component.literal("§e[Side-Arm]"));
         list.add(Component.literal("[Reloadable]"));
     }
 
@@ -197,7 +197,7 @@ public class Ar23Item extends Item implements GeoItem, IGunItem {
     public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
         if (world.isClientSide() && entity instanceof Player player) {
             if (selected) {
-                isShooting = KeyBinding.SHOOT.isDown();
+                isShooting = KeyBinding.SHOOT.consumeClick();
 
                 if (shootCooldown > 0) {
                     shootCooldown--;

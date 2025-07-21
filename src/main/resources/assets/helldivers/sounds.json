@@ -125,6 +125,12 @@
       "helldivers:easter_egg"
     ]
   },
+  "eagle_flyby": {
+    "subtitles": "sounds.helldivers.eagle_flyby",
+    "sounds": [
+      "helldivers:eagle_flyby"
+    ]
+  },
   "trap_royalty": {
     "sounds": [
       {

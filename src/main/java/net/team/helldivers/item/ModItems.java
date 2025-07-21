@@ -5,12 +5,15 @@ import net.minecraft.world.item.RecordItem;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.item.custom.*;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import net.team.helldivers.item.custom.guns.Ar23Item;
+import net.team.helldivers.item.custom.guns.EAT17Item;
+import net.team.helldivers.item.custom.guns.P2Item;
+import net.team.helldivers.item.custom.guns.Plas1Item;
 import net.team.helldivers.sound.ModSounds;
 
 public class ModItems {

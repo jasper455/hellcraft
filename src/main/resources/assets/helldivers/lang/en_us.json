@@ -18,10 +18,15 @@
   "item.helldivers.fs05_leggings": "§bFS-05 Marksman Leggings",
   "item.helldivers.fs05_boots": "§bFS-05 Marksman Boots",
 
-  "item.helldivers.dp40_helmet": "§bDp-40 Hero of the Federation Helmet",
-  "item.helldivers.dp40_chestplate": "§bDp-40 Hero of the Federation Chestplate",
-  "item.helldivers.dp40_leggings": "§bDp-40 Hero of the Federation Leggings",
-  "item.helldivers.dp40_boots": "§bDp-40 Hero of the Federation Boots",
+  "item.helldivers.dp40_helmet": "§bDP-40 Hero of the Federation Helmet",
+  "item.helldivers.dp40_chestplate": "§bDP-40 Hero of the Federation Chestplate",
+  "item.helldivers.dp40_leggings": "§bDP-40 Hero of the Federation Leggings",
+  "item.helldivers.dp40_boots": "§bDP-40 Hero of the Federation Boots",
+
+  "item.helldivers.sc30_helmet": "§bSC-30 Trailblazer Scout Helmet",
+  "item.helldivers.sc30_chestplate": "§bSC-30 Trailblazer Scout Chestplate",
+  "item.helldivers.sc30_leggings": "§bSC-30 Trailblazer Scout Leggings",
+  "item.helldivers.sc30_boots": "§bSC-30 Trailblazer Scout Boots",
 
   "item.helldivers.stratagem_picker": "§dStratagem Selector",
   "item.helldivers.extraction_terminal_block_item": "§dExtraction Terminal",

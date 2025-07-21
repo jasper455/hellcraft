@@ -2,8 +2,7 @@ package net.team.helldivers.client.model.armor;
 
 import net.minecraft.resources.ResourceLocation;
 import net.team.helldivers.HelldiversMod;
-import net.team.helldivers.item.custom.B01ArmorItem;
-import net.team.helldivers.item.custom.Fs05ArmorItem;
+import net.team.helldivers.item.custom.armor.Fs05ArmorItem;
 import software.bernie.geckolib.model.GeoModel;
 
 public class Fs05ArmorModel extends GeoModel<Fs05ArmorItem> {

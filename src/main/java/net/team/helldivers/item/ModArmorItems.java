@@ -7,9 +7,10 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.team.helldivers.HelldiversMod;
-import net.team.helldivers.item.custom.B01ArmorItem;
-import net.team.helldivers.item.custom.Dp40ArmorItem;
-import net.team.helldivers.item.custom.Fs05ArmorItem;
+import net.team.helldivers.item.custom.armor.B01ArmorItem;
+import net.team.helldivers.item.custom.armor.Dp40ArmorItem;
+import net.team.helldivers.item.custom.armor.Fs05ArmorItem;
+import net.team.helldivers.item.custom.armor.Sc30ArmorItem;
 
 public class ModArmorItems {
     public static final DeferredRegister<Item> ITEMS =
@@ -55,6 +56,20 @@ public class ModArmorItems {
                     new Item.Properties().stacksTo(1).fireResistant()));
     public static final RegistryObject<Item> DP40_BOOTS = ITEMS.register("dp40_boots",
             () -> new Dp40ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
+                    new Item.Properties().stacksTo(1).fireResistant()));
+
+    // DP-40 Hero of The Federation Armor
+    public static final RegistryObject<Item> SC30_HELMET = ITEMS.register("sc30_helmet",
+            () -> new Sc30ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL , ArmorItem.Type.HELMET,
+                    new Item.Properties().stacksTo(1).fireResistant()));
+    public static final RegistryObject<Item> SC30_CHESTPLATE = ITEMS.register("sc30_chestplate",
+            () -> new Sc30ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().stacksTo(1).fireResistant()));
+    public static final RegistryObject<Item> SC30_LEGGINGS = ITEMS.register("sc30_leggings",
+            () -> new Sc30ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.LEGGINGS,
+                    new Item.Properties().stacksTo(1).fireResistant()));
+    public static final RegistryObject<Item> SC30_BOOTS = ITEMS.register("sc30_boots",
+            () -> new Sc30ArmorItem(ModArmorMaterials.HELLDIVER_ARMOR_MATERIAL, ArmorItem.Type.BOOTS,
                     new Item.Properties().stacksTo(1).fireResistant()));
 
     public static void register(IEventBus eventBus) {

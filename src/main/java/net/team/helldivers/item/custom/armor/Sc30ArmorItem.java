@@ -1,6 +1,5 @@
-package net.team.helldivers.item.custom;
+package net.team.helldivers.item.custom.armor;
 
-import net.team.helldivers.client.renderer.armor.B01ArmorRenderer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -8,6 +7,8 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.team.helldivers.client.renderer.armor.B01ArmorRenderer;
+import net.team.helldivers.client.renderer.armor.Sc30ArmorRenderer;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
@@ -20,15 +21,15 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.function.Consumer;
 
-public class B01ArmorItem extends ArmorItem implements GeoItem, IHelldiverArmorItem {
+public class Sc30ArmorItem extends ArmorItem implements GeoItem, IHelldiverArmorItem {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
-    public B01ArmorItem(ArmorMaterial pMaterial, Type pType, Properties pProperties) {
+    public Sc30ArmorItem(ArmorMaterial pMaterial, Type pType, Properties pProperties) {
         super(pMaterial, pType, pProperties);
     }
 
     private PlayState predicate(AnimationState<GeoAnimatable> geoAnimatableAnimationState) {
-        return PlayState.STOP;
+        return PlayState.CONTINUE;
     }
 
     @Override
@@ -44,12 +45,12 @@ public class B01ArmorItem extends ArmorItem implements GeoItem, IHelldiverArmorI
     @Override
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(new IClientItemExtensions() {
-            private B01ArmorRenderer renderer;
+            private Sc30ArmorRenderer renderer;
 
             @Override
             public @NotNull HumanoidModel<?> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, HumanoidModel<?> original) {
                 if (this.renderer == null)
-                    this.renderer = new B01ArmorRenderer();
+                    this.renderer = new Sc30ArmorRenderer();
 
                 this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
                 return this.renderer;

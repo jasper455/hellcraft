@@ -2,7 +2,7 @@ package net.team.helldivers.client.model.item;
 
 import net.minecraft.resources.ResourceLocation;
 import net.team.helldivers.HelldiversMod;
-import net.team.helldivers.item.custom.Ar23Item;
+import net.team.helldivers.item.custom.guns.Ar23Item;
 import net.team.helldivers.util.KeyBinding;
 import software.bernie.geckolib.model.GeoModel;
 

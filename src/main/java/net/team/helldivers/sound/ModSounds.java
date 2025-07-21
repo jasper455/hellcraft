@@ -56,6 +56,8 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> EASTER_EGG = registerSoundEvent("easter_egg");
 
+    public static final RegistryObject<SoundEvent> EAGLE_FLYBY = registerSoundEvent("eagle_flyby");
+
     public static final RegistryObject<SoundEvent> TRAP_ROYALTY = registerSoundEvent("trap_royalty");
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {

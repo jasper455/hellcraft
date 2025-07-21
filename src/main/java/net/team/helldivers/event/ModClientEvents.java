@@ -2,17 +2,11 @@ package net.team.helldivers.event;
 
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.DimensionSpecialEffects;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.client.DimensionSpecialEffectsManager;
 import net.minecraftforge.client.event.*;
-import net.minecraftforge.event.TickEvent;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.client.renderer.block.BotContactMineBlockRenderer;
@@ -24,8 +18,7 @@ import net.team.helldivers.client.renderer.entity.OrbitalLaserRenderer;
 import net.team.helldivers.client.renderer.entity.SupportHellpodRenderer;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.ModEntities;
-import net.team.helldivers.item.ModItems;
-import net.team.helldivers.item.custom.IGunItem;
+import net.team.helldivers.item.custom.guns.IGunItem;
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.util.KeyBinding;
 import net.minecraft.client.Minecraft;
@@ -35,7 +28,6 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import software.bernie.geckolib.GeckoLib;
-import software.bernie.geckolib.renderer.GeoRenderer;
 import team.lodestar.lodestone.systems.postprocess.PostProcessHandler;
 
 import java.awt.*;

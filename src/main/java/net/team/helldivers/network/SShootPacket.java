@@ -9,10 +9,10 @@ import net.minecraftforge.network.NetworkEvent;
 import net.team.helldivers.entity.custom.BulletProjectileEntity;
 import net.team.helldivers.entity.custom.HeatedGasProjectileEntity;
 import net.team.helldivers.entity.custom.RocketProjectileEntity;
-import net.team.helldivers.item.custom.Ar23Item;
-import net.team.helldivers.item.custom.EAT17Item;
-import net.team.helldivers.item.custom.P2Item;
-import net.team.helldivers.item.custom.Plas1Item;
+import net.team.helldivers.item.custom.guns.Ar23Item;
+import net.team.helldivers.item.custom.guns.EAT17Item;
+import net.team.helldivers.item.custom.guns.P2Item;
+import net.team.helldivers.item.custom.guns.Plas1Item;
 import net.team.helldivers.sound.ModSounds;
 
 import java.util.HashMap;

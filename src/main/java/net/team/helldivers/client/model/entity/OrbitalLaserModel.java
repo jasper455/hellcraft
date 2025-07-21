@@ -2,9 +2,7 @@ package net.team.helldivers.client.model.entity;
 
 import net.minecraft.resources.ResourceLocation;
 import net.team.helldivers.HelldiversMod;
-import net.team.helldivers.entity.custom.EagleAirshipEntity;
 import net.team.helldivers.entity.custom.OrbitalLaserEntity;
-import net.team.helldivers.item.custom.B01ArmorItem;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 
 public class OrbitalLaserModel extends DefaultedEntityGeoModel<OrbitalLaserEntity> {
