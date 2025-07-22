@@ -18,7 +18,7 @@ import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SGiveStratagemOrbPacket;
 import net.team.helldivers.network.SInitializeExtractionTerminalInventoryPacket;
-import net.team.helldivers.network.SStratagemGiveCooldownPacket;
+import net.team.helldivers.network.SItemGiveCooldownPacket;
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.util.KeyBinding;
 
@@ -631,55 +631,55 @@ public class Stratagems {
 
         if (HellbombHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Hellbomb"));
-            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(ClientItemCache.getItem(
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
                     ClientItemCache.getSlotWithItem(ModItems.HELLBOMB_ITEM.get().getDefaultInstance())), 9999));
             resetInputValues();
         }
         if (ResupplyHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Resupply"));
-            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(ClientItemCache.getItem(
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
                     ClientItemCache.getSlotWithItem(ModItems.RESUPPLY.get().getDefaultInstance())), 3600));
             resetInputValues();
         }
         if (EAT17Hud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Expendable Anti-Tank"));
-            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(ClientItemCache.getItem(
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
                     ClientItemCache.getSlotWithItem(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())), 1400));
             resetInputValues();
         }
         if (PrecisionStrikeHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Precision Strike"));
-            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(ClientItemCache.getItem(
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
                     ClientItemCache.getSlotWithItem(ModItems.PRECISION_STRIKE.get().getDefaultInstance())), 1800));
             resetInputValues();
         }
         if (SmallBarrageHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital 120MM HE Barrage"));
-            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(ClientItemCache.getItem(
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
                     ClientItemCache.getSlotWithItem(ModItems.SMALL_BARRAGE.get().getDefaultInstance())), 3600));
             resetInputValues();
         }
         if (BigBarrageHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital 380MM HE Barrage"));
-            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(ClientItemCache.getItem(
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
                     ClientItemCache.getSlotWithItem(ModItems.BIG_BARRAGE.get().getDefaultInstance())), 4800));
             resetInputValues();
         }
         if (OrbitalLaserHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Laser"));
-            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(ClientItemCache.getItem(
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
                     ClientItemCache.getSlotWithItem(ModItems.ORBITAL_LASER.get().getDefaultInstance())), 6000));
             resetInputValues();
         }
         if (Eagle500KgBombHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Eagle 500KG Bomb"));
-            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(ClientItemCache.getItem(
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
                     ClientItemCache.getSlotWithItem(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())), 3000));
             resetInputValues();
         }
         if (ClusterBombHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Eagle Cluster Bomb"));
-            PacketHandler.sendToServer(new SStratagemGiveCooldownPacket(ClientItemCache.getItem(
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
                     ClientItemCache.getSlotWithItem(ModItems.CLUSTER_BOMB.get().getDefaultInstance())), 3000));
             resetInputValues();
         }

@@ -63,10 +63,10 @@ public class PacketHandler {
                 .consumerMainThread(SHellbombExplodePacket::handle)
                 .add();
 
-        INSTANCE.messageBuilder(SStratagemGiveCooldownPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
-                .encoder(SStratagemGiveCooldownPacket::encode)
-                .decoder(SStratagemGiveCooldownPacket::new)
-                .consumerMainThread(SStratagemGiveCooldownPacket::handle)
+        INSTANCE.messageBuilder(SItemGiveCooldownPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SItemGiveCooldownPacket::encode)
+                .decoder(SItemGiveCooldownPacket::new)
+                .consumerMainThread(SItemGiveCooldownPacket::handle)
                 .add();
 
         INSTANCE.messageBuilder(SHellbombActivatePacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
@@ -79,6 +79,12 @@ public class PacketHandler {
                 .encoder(SInitializeExtractionTerminalInventoryPacket::encode)
                 .decoder(SInitializeExtractionTerminalInventoryPacket::new)
                 .consumerMainThread(SInitializeExtractionTerminalInventoryPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(SHellpodDestroyBlocksPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SHellpodDestroyBlocksPacket::encode)
+                .decoder(SHellpodDestroyBlocksPacket::new)
+                .consumerMainThread(SHellpodDestroyBlocksPacket::handle)
                 .add();
 
 

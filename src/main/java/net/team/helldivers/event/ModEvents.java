@@ -16,6 +16,7 @@ import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
@@ -93,5 +94,13 @@ public class ModEvents {
     public static void onPlayerCloned(PlayerEvent.Clone event) {
         event.getEntity().getPersistentData().putBoolean("helldivers.useLodestone",
                 event.getOriginal().getPersistentData().getBoolean("helldivers.useLodestone"));
+
+        event.getOriginal().getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(oldCap -> {
+            event.getEntity().getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(newCap -> {
+                for (int i = 0; i < oldCap.getSlots(); i++) {
+                    newCap.insertItem(i, oldCap.getStackInSlot(i), false);
+                }
+            });
+        });
     }
 }

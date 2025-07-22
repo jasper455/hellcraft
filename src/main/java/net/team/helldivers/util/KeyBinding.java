@@ -16,6 +16,7 @@ public class KeyBinding {
     public static final String SHOOT_KEY = "key.helldivers.shoot";
     public static final String RELOAD_KEY = "key.helldivers.reload";
     public static final String AIM_KEY = "key.helldivers.aim";
+    public static final String BACKPACK_EQUIP_KEY = "key.helldivers.equip_backpack";
 
     public static final KeyMapping SHOW_STRATAGEM_KEY = new KeyMapping(KEY_SHOW_STRATAGEM_HUD, KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_CONTROL, KEY_CATEGORY_HELLDIVERS);
@@ -40,4 +41,7 @@ public class KeyBinding {
 
     public static final KeyMapping AIM = new KeyMapping(AIM_KEY, KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM, GLFW.GLFW_MOUSE_BUTTON_RIGHT, KEY_CATEGORY_HELLDIVERS);
+
+    public static final KeyMapping EQUIP_BACKPACK = new KeyMapping(BACKPACK_EQUIP_KEY, KeyConflictContext.IN_GAME,
+            InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_H, KEY_CATEGORY_HELLDIVERS);
 }

@@ -13,6 +13,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.team.helldivers.block.entity.custom.ExtractionTerminalBlockEntity;
+import net.team.helldivers.item.custom.IStratagemItem;
 import net.team.helldivers.screen.ModMenuTypes;
 
 public class ExtractionTerminalMenu extends AbstractContainerMenu {
@@ -28,7 +29,12 @@ public class ExtractionTerminalMenu extends AbstractContainerMenu {
 
         // Add the stratagem inventory slots
         for (int i = 0; i < 4; i++) {
-            this.addSlot(new Slot(inventory, i, 44 + i * 24, 35));
+            this.addSlot(new Slot(inventory, i, 44 + i * 24, 35) {
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    return !contains(stack) && stack.getItem() instanceof IStratagemItem;
+                }
+            });
         }
 
         addPlayerInventory(playerInventory);
@@ -41,7 +47,12 @@ public class ExtractionTerminalMenu extends AbstractContainerMenu {
 
         // Add the stratagem inventory slots
         for (int i = 0; i < 4; i++) {
-            this.addSlot(new Slot(inventory, i, 44 + i * 24, 35));
+            this.addSlot(new Slot(inventory, i, 44 + i * 24, 35) {
+                @Override
+                public boolean mayPlace(ItemStack stack) {
+                    return !contains(stack) && stack.getItem() instanceof IStratagemItem;
+                }
+            });
         }
 
         addPlayerInventory(playerInventory);

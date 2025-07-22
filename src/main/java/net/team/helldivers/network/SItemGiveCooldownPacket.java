@@ -3,25 +3,22 @@ package net.team.helldivers.network;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraftforge.network.NetworkEvent;
-import net.team.helldivers.client.hud.Stratagems;
 import net.team.helldivers.helper.ClientItemCache;
 import net.team.helldivers.item.ModItems;
-import net.team.helldivers.item.inventory.StratagemPickerInventory;
 
 import java.util.function.Supplier;
 
-public class SStratagemGiveCooldownPacket {
+public class SItemGiveCooldownPacket {
     private final ItemStack itemStack;
     private final int cooldownTime;
 
-    public SStratagemGiveCooldownPacket(ItemStack itemStack, int cooldownTime) {
+    public SItemGiveCooldownPacket(ItemStack itemStack, int cooldownTime) {
         this.itemStack = itemStack;
         this.cooldownTime = cooldownTime;
     }
 
-    public SStratagemGiveCooldownPacket(FriendlyByteBuf buffer) {
+    public SItemGiveCooldownPacket(FriendlyByteBuf buffer) {
         this(buffer.readItem(), buffer.readInt());
     }
 

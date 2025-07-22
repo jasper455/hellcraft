@@ -38,7 +38,7 @@ public class EAT17Item extends Item implements GeoItem, IGunItem {
     private boolean wasAiming = false; // Track previous aiming state
     private int shootCooldown = 0;
     // Adjust this value to control fire rate (in ticks, 20 ticks = 1 second)
-    private static final int SHOOT_DELAY = 0; // This will give you about 600 RPM
+    private static final int SHOOT_DELAY = 10; // This will give you about 600 RPM
 
     public EAT17Item(Properties properties) {
         super(new Properties().durability(47).rarity(Rarity.COMMON));

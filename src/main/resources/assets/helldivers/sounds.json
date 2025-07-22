@@ -131,6 +131,24 @@
       "helldivers:eagle_flyby"
     ]
   },
+  "orbital_barrage_clear_the_area": {
+    "subtitles": "sounds.helldivers.orbital_barrage_clear_the_area",
+    "sounds": [
+      "helldivers:orbital_barrage_clear_the_area"
+    ]
+  },
+  "orbital_barrage_stand_clear": {
+    "subtitles": "sounds.helldivers.orbital_barrage_stand_clear",
+    "sounds": [
+      "helldivers:orbital_barrage_stand_clear"
+    ]
+  },
+  "orbital_strike_incoming": {
+    "subtitles": "sounds.helldivers.orbital_strike_incoming",
+    "sounds": [
+      "helldivers:orbital_strike_incoming"
+    ]
+  },
   "trap_royalty": {
     "sounds": [
       {

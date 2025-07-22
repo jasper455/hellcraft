@@ -70,11 +70,12 @@ public class SExplosionPacket {
                             FallingBlockEntity fallingBlock = FallingBlockEntity.fall(level, targetPos, state);
 
                             fallingBlock.setPos(targetPos.getX() + 0.5, targetPos.getY() + 10, targetPos.getZ() + 0.5);
+                            int flyingBlocksIntensity = level.getGameRules().getInt(ModGameRules.FLYING_BLOCKS_INTENSITY);
 
                             Vec3 vec3 = new Vec3(
-                                    Mth.randomBetween(RandomSource.create(), -5, 5),
-                                    Mth.randomBetween(RandomSource.create(), 0, 2.5f),
-                                    Mth.randomBetween(RandomSource.create(), -5, 5)
+                                    Mth.randomBetween(RandomSource.create(), -flyingBlocksIntensity, flyingBlocksIntensity),
+                                    Mth.randomBetween(RandomSource.create(), 0, flyingBlocksIntensity / 2f),
+                                    Mth.randomBetween(RandomSource.create(), -flyingBlocksIntensity, flyingBlocksIntensity)
                             );
 
                             fallingBlock.setDeltaMovement(vec3);

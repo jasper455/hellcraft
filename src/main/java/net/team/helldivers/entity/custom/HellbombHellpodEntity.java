@@ -33,6 +33,8 @@ import net.minecraftforge.network.NetworkHooks;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.item.ModItems;
+import net.team.helldivers.network.PacketHandler;
+import net.team.helldivers.network.SHellpodDestroyBlocksPacket;
 import net.team.helldivers.screen.custom.HellbombEntityInputMenu;
 import net.team.helldivers.screen.custom.SupportHellpodMenu;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -152,11 +154,13 @@ public class HellbombHellpodEntity extends Entity implements GeoEntity {
             this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(1.0)).forEach(entity -> {
                 entity.hurt(level().damageSources().explosion(null), 9999.0F);
             });
+            BlockPos pos = new BlockPos((int) this.getX(), (int) (this.getY() - 5), (int) this.getZ());
+            PacketHandler.sendToServer(new SHellpodDestroyBlocksPacket(pos, 2));
         }
 
         if (this.isGrounded() && groundedTicks <= 10 && !this.level().isClientSide()) {
             ((ServerLevel) this.level()).sendParticles(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, this.getX(), this.getY(), this.getZ(),
-                    5, 0f, 0f, 0f, 2);
+                    5, 0f, 0f, 0f, 0.25f);
         }
         super.tick();
     }

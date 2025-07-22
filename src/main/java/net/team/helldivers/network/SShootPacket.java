@@ -53,30 +53,34 @@ public class SShootPacket {
 
         if (heldItem.getItem() instanceof Ar23Item ar23Item) {
             // Check if we can still shoot
-            if (heldItem.getDamageValue() < heldItem.getMaxDamage() - 5) {
-                // Play sound
-                player.level().playSound(null, player.blockPosition(),
-                        ModSounds.AR_23_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
-                PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
+            if (!player.getCooldowns().isOnCooldown(heldItem.getItem())) {
+                if (heldItem.getDamageValue() < heldItem.getMaxDamage() - 5) {
 
-            // Actually shoot the bullet
-            BulletProjectileEntity bullet = new BulletProjectileEntity(player, player.level());
-            bullet.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 5f, 0.0f);
-            bullet.setXRot(player.getXRot());
-            bullet.setYRot(player.getYRot());
-            bullet.setNoGravity(true);
-            player.level().addFreshEntity(bullet);
+                    // Play sound
+                    player.level().playSound(null, player.blockPosition(),
+                            ModSounds.AR_23_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
+                    PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
 
-            // Damage the item
-            if (!player.getAbilities().instabuild) {
-                heldItem.hurt(1, player.getRandom(), player);
+                    // Actually shoot the bullet
+                    BulletProjectileEntity bullet = new BulletProjectileEntity(player, player.level());
+                    bullet.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 5f, 0.0f);
+                    bullet.setXRot(player.getXRot());
+                    bullet.setYRot(player.getYRot());
+                    bullet.setNoGravity(true);
+                    player.level().addFreshEntity(bullet);
+                    player.getCooldowns().addCooldown(heldItem.getItem(), 2);
+
+                    // Damage the item
+                    if (!player.getAbilities().instabuild) {
+                        heldItem.hurt(1, player.getRandom(), player);
+                    }
+                } else {
+                    player.level().playSound(null, player.blockPosition(),
+                            ModSounds.GUN_EMPTY.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
+                    player.getCooldowns().addCooldown(heldItem.getItem(), 10);
+                }
             }
-            } else {
-                player.level().playSound(null, player.blockPosition(),
-                        ModSounds.GUN_EMPTY.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
-                player.getCooldowns().addCooldown(heldItem.getItem(), 10);
-            }
-    }
+        }
 
         // Expendable Anti-Tank Shooting Logic
 
@@ -94,6 +98,7 @@ public class SShootPacket {
                 rocket.setYRot(player.getYRot());
                 rocket.setNoGravity(true);
                 player.level().addFreshEntity(rocket);
+                player.getCooldowns().addCooldown(heldItem.getItem(), 2);
 
                 heldItem.hurtAndBreak(47, player, (serverPlayer) -> {
                         player.broadcastBreakEvent(EquipmentSlot.MAINHAND);
@@ -135,28 +140,31 @@ public class SShootPacket {
 
         if (heldItem.getItem() instanceof Plas1Item) {
             // Check if we can still shoot
-            if (heldItem.getDamageValue() < heldItem.getMaxDamage() - 1) {
-                // Play sound
-                player.level().playSound(null, player.blockPosition(),
-                        ModSounds.PLAS1_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
-                PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
+            if (!player.getCooldowns().isOnCooldown(heldItem.getItem())) {
+                if (heldItem.getDamageValue() < heldItem.getMaxDamage() - 1) {
+                    // Play sound
+                    player.level().playSound(null, player.blockPosition(),
+                            ModSounds.PLAS1_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
+                    PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
 
-                // Actually shoot the bullet
-                HeatedGasProjectileEntity heatedGas = new HeatedGasProjectileEntity(player, player.level());
-                heatedGas.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 5f, 0.0f);
-                heatedGas.setXRot(player.getXRot());
-                heatedGas.setYRot(player.getYRot());
-                heatedGas.setNoGravity(true);
-                player.level().addFreshEntity(heatedGas);
+                    // Actually shoot the bullet
+                    HeatedGasProjectileEntity heatedGas = new HeatedGasProjectileEntity(player, player.level());
+                    heatedGas.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 5f, 0.0f);
+                    heatedGas.setXRot(player.getXRot());
+                    heatedGas.setYRot(player.getYRot());
+                    heatedGas.setNoGravity(true);
+                    player.level().addFreshEntity(heatedGas);
+                    player.getCooldowns().addCooldown(heldItem.getItem(), 5);
 
-                // Damage the item
-                if (!player.getAbilities().instabuild) {
-                    heldItem.hurt(1, player.getRandom(), player);
+                    // Damage the item
+                    if (!player.getAbilities().instabuild) {
+                        heldItem.hurt(1, player.getRandom(), player);
+                    }
+                } else {
+                    player.level().playSound(null, player.blockPosition(),
+                            ModSounds.GUN_EMPTY.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
+                    player.getCooldowns().addCooldown(heldItem.getItem(), 10);
                 }
-            } else {
-                player.level().playSound(null, player.blockPosition(),
-                        ModSounds.GUN_EMPTY.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
-                player.getCooldowns().addCooldown(heldItem.getItem(), 10);
             }
         }
     }

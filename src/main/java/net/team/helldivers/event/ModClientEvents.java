@@ -170,6 +170,7 @@ public class ModClientEvents {
             event.register(KeyBinding.SHOOT);
             event.register(KeyBinding.RELOAD);
             event.register(KeyBinding.AIM);
+            event.register(KeyBinding.EQUIP_BACKPACK);
         }
 
         @SubscribeEvent

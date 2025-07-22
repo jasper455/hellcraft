@@ -105,7 +105,7 @@ public class StratagemOrbEntity extends AbstractArrow {
         // Hellbomb Entity stuff
         if (getStratagemType().equals("Hellbomb") && groundedTicks == 120 && !this.level().isClientSide) {
             HellbombHellpodEntity hellpod = new HellbombHellpodEntity(this.level());
-            hellpod.setPos(this.getBlockX(), 200, this.getBlockZ());
+            hellpod.setPos(this.getX(), 200, this.getZ());
 
             // Get the owner (player)
             if (this.getOwner() instanceof Player player) {
@@ -157,6 +157,8 @@ public class StratagemOrbEntity extends AbstractArrow {
         if (getStratagemType().equals("Orbital Precision Strike") && groundedTicks == 60 && !this.level().isClientSide) {
             if (random.nextBoolean() && random.nextBoolean()) {
                 this.playSound(ModSounds.FIRE_ORBITAL_STRIKE.get(), 10000000.0f, 1.0f);
+            } else if (random.nextBoolean() && !random.nextBoolean()) {
+                this.playSound(ModSounds.ORBITAL_STRIKE_INCOMING.get(), 10000000.0f, 1.0f);
             }
         }
         if (getStratagemType().equals("Orbital Precision Strike") && groundedTicks == 90 && !this.level().isClientSide()) {
@@ -176,6 +178,13 @@ public class StratagemOrbEntity extends AbstractArrow {
 
         // 120 Barrage Entity Stuff
         if (getStratagemType().equals("Orbital 120MM HE Barrage") && !this.level().isClientSide) {
+            if (groundedTicks == 60) {
+                if (random.nextBoolean() && random.nextBoolean()) {
+                    this.playSound(ModSounds.ORBITAL_BARRAGE_CLEAR_THE_AREA.get(), 10000000.0f, 1.0f);
+                } else if (random.nextBoolean() && !random.nextBoolean()) {
+                    this.playSound(ModSounds.ORBITAL_BARRAGE_CLEAR_THE_AREA.get(), 10000000.0f, 1.0f);
+                }
+            }
             if (groundedTicks > 75) {
                 MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 25, 60,
                         groundedTicks, this, false));
@@ -188,6 +197,13 @@ public class StratagemOrbEntity extends AbstractArrow {
 
         // 380 Barrage Entity Stuff
         if (getStratagemType().equals("Orbital 380MM HE Barrage") && !this.level().isClientSide) {
+            if (groundedTicks == 60) {
+                if (random.nextBoolean() && random.nextBoolean()) {
+                    this.playSound(ModSounds.ORBITAL_BARRAGE_CLEAR_THE_AREA.get(), 10000000.0f, 1.0f);
+                } else if (random.nextBoolean() && !random.nextBoolean()) {
+                    this.playSound(ModSounds.ORBITAL_BARRAGE_CLEAR_THE_AREA.get(), 10000000.0f, 1.0f);
+                }
+            }
             if (groundedTicks > 75) {
                 MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 50, 60,
                         groundedTicks, this, true));

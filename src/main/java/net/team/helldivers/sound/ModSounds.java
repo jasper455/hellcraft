@@ -58,6 +58,12 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> EAGLE_FLYBY = registerSoundEvent("eagle_flyby");
 
+    public static final RegistryObject<SoundEvent> ORBITAL_STRIKE_INCOMING = registerSoundEvent("orbital_strike_incoming");
+
+    public static final RegistryObject<SoundEvent> ORBITAL_BARRAGE_CLEAR_THE_AREA = registerSoundEvent("orbital_barrage_clear_the_area");
+
+    public static final RegistryObject<SoundEvent> ORBITAL_BARRAGE_STAND_CLEAR = registerSoundEvent("orbital_barrage_stand_clear");
+
     public static final RegistryObject<SoundEvent> TRAP_ROYALTY = registerSoundEvent("trap_royalty");
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {

@@ -9,4 +9,10 @@ public class ModGameRules {
                     GameRules.Category.MISC,
                     GameRules.BooleanValue.create(false) // default value
             );
+    public static final GameRules.Key<GameRules.IntegerValue> FLYING_BLOCKS_INTENSITY =
+            GameRules.register(
+                    "flyingBlocksIntensity",
+                    GameRules.Category.MISC,
+                    GameRules.IntegerValue.create(3) // default value
+            );
 }

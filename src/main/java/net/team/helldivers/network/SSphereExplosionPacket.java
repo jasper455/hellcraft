@@ -45,7 +45,7 @@ public class SSphereExplosionPacket {
         player.level().explode(player, position.getX(), position.getY(), position.getZ(), radius * 0.75f, true, Level.ExplosionInteraction.BLOCK);
     }
 
-    public boolean customSphereExplosion(Level level, BlockPos center, int radius) {
+    public void customSphereExplosion(Level level, BlockPos center, int radius) {
         for (int x = -radius; x <= radius; x++) {
             for (int y = -radius; y <= radius; y++) {
                 for (int z = -radius; z <= radius; z++) {
@@ -61,7 +61,6 @@ public class SSphereExplosionPacket {
                 }
             }
         }
-        return true;
     }
 
     public void flyingBlocksExplosion(Level level, BlockPos center, int radius) {
@@ -79,20 +78,21 @@ public class SSphereExplosionPacket {
                             level.setBlock(targetPos, Blocks.AIR.defaultBlockState(), 3);
                             continue;
                         }
+                        int flyingBlocksIntensity = level.getGameRules().getInt(ModGameRules.FLYING_BLOCKS_INTENSITY);
 
-                        int randomNumber = Mth.randomBetweenInclusive(RandomSource.create(), 0, 18);
+                        int randomNumber = Mth.randomBetweenInclusive(RandomSource.create(), 0, 90 / flyingBlocksIntensity);
 
                         level.removeBlock(targetPos, false);
 
                         if (randomNumber == 0) {
-                        FallingBlockEntity fallingBlock = FallingBlockEntity.fall(level, targetPos, state);
+                            FallingBlockEntity fallingBlock = FallingBlockEntity.fall(level, targetPos, state);
 
-                        fallingBlock.setPos(targetPos.getX() + 0.5, targetPos.getY() + 10, targetPos.getZ() + 0.5);
+                            fallingBlock.setPos(targetPos.getX() + 0.5, targetPos.getY() + 10, targetPos.getZ() + 0.5);
 
                         Vec3 vec3 = new Vec3(
-                                Mth.randomBetween(RandomSource.create(), -5, 5),
-                                Mth.randomBetween(RandomSource.create(), 0, 2.5f),
-                                Mth.randomBetween(RandomSource.create(), -5, 5)
+                                Mth.randomBetween(RandomSource.create(), -flyingBlocksIntensity, flyingBlocksIntensity),
+                                Mth.randomBetween(RandomSource.create(), 0, flyingBlocksIntensity / 2f),
+                                Mth.randomBetween(RandomSource.create(), -flyingBlocksIntensity, flyingBlocksIntensity)
                         );
 
                         fallingBlock.setDeltaMovement(vec3);
