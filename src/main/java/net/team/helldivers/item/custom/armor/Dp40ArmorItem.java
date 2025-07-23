@@ -20,7 +20,7 @@ import software.bernie.geckolib.core.object.PlayState;
 
 import java.util.function.Consumer;
 
-public class Dp40ArmorItem extends ArmorItem implements GeoItem, IHelldiverArmorItem {
+public class Dp40ArmorItem extends ArmorItem implements GeoItem, IHelldiverArmorItem, IDemocracyProtects {
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public Dp40ArmorItem(ArmorMaterial pMaterial, Type pType, Properties pProperties) {

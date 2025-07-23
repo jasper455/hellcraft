@@ -44,7 +44,7 @@ public class ClusterBombProjectileEntity extends AbstractArrow {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
-        PacketHandler.sendToServer(new SExplosionPacket(result.getEntity().blockPosition(), this.power));
+        PacketHandler.sendToServer(new SExplosionPacket(result.getEntity().blockPosition(), this.power, false));
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(6)).forEach(entity -> {
             entity.hurt(level().damageSources().explosion(null), this.power * 4f);
         });
@@ -58,7 +58,7 @@ public class ClusterBombProjectileEntity extends AbstractArrow {
     @Override
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
-        PacketHandler.sendToServer(new SExplosionPacket(result.getBlockPos(), this.power));
+        PacketHandler.sendToServer(new SExplosionPacket(result.getBlockPos(), this.power, false));
         PacketHandler.sendToAllClients(new CClusterBombExplosionParticlesPacket(result.getBlockPos()));
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(6)).forEach(entity -> {
             entity.hurt(level().damageSources().explosion(null), this.power * 4f);

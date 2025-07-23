@@ -59,8 +59,6 @@ public class ModCreativeModeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.PRECISION_STRIKE.get()))
                     .title(Component.translatable("creativetab.stratagems"))
                     .displayItems((itemDisplayParameters, output) -> {
-                        output.accept(ModItems.STRATAGEM_ORB.get());
-
                         output.accept(ModBlocks.HELLBOMB.get());
                         //Other
                         output.accept(ModItems.HELLBOMB_ITEM.get());
@@ -70,6 +68,8 @@ public class ModCreativeModeTabs {
                         //Orbitals
                         output.accept(ModItems.SMALL_BARRAGE.get());
                         output.accept(ModItems.BIG_BARRAGE.get());
+                        output.accept(ModItems.NAPALM_BARRAGE.get());
+                        output.accept(ModItems.WALKING_BARRAGE.get());
                         output.accept(ModItems.PRECISION_STRIKE.get());
                         output.accept(ModItems.ORBITAL_LASER.get());
                         //Eagles

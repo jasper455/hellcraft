@@ -40,7 +40,7 @@ public class RocketProjectileEntity extends AbstractArrow {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
-        PacketHandler.sendToServer(new SExplosionPacket(result.getEntity().blockPosition(), 3));
+        PacketHandler.sendToServer(new SExplosionPacket(result.getEntity().blockPosition(), 3, false));
         this.playSound(ModSounds.EXPLOSION.get(), 10.0f, 1.0f);
         this.discard();
     }
@@ -50,7 +50,7 @@ public class RocketProjectileEntity extends AbstractArrow {
         super.onHitBlock(result);
         BlockPos pos = result.getBlockPos();
         BlockState block = Minecraft.getInstance().level.getBlockState(pos);
-        PacketHandler.sendToServer(new SExplosionPacket(result.getBlockPos(), 3));
+        PacketHandler.sendToServer(new SExplosionPacket(result.getBlockPos(), 3, false));
         this.playSound(ModSounds.EXPLOSION.get(), 10.0f, 1.0f);
         if (block.getBlock() instanceof BotContactMineBlock) {
             this.level().setBlockAndUpdate(result.getBlockPos(), Blocks.AIR.defaultBlockState());

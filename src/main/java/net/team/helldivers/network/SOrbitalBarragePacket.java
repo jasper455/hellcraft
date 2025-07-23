@@ -1,5 +1,7 @@
 package net.team.helldivers.network;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.team.helldivers.entity.custom.MissileProjectileEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,29 +18,32 @@ import java.util.function.Supplier;
 public class SOrbitalBarragePacket {
     private final BlockPos position;
     private final int radius;
-    private int missileCount = 0;
-    private int tickDelay = 20; // 20 ticks = 1 second
     private boolean isWalking;
-    private Direction direction;
+    private int direction;
+    private boolean isNapalm;
+    private int groundedTicks;
 
-    public SOrbitalBarragePacket(BlockPos position, int radius) {
+    public SOrbitalBarragePacket(BlockPos position, int radius, boolean isNapalm, boolean isWalking, int direction,
+                                 int groundedTicks) {
         this.position = position;
         this.radius = radius;
-    }
-    public SOrbitalBarragePacket(BlockPos position, int radius, boolean isWalking, Direction direction) {
-        this.position = position;
-        this.radius = radius;
+        this.isNapalm = isNapalm;
         this.isWalking = isWalking;
         this.direction = direction;
+        this.groundedTicks = groundedTicks;
     }
 
     public SOrbitalBarragePacket(FriendlyByteBuf buffer) {
-        this(buffer.readBlockPos(), buffer.readInt());
+        this(buffer.readBlockPos(), buffer.readInt(), buffer.readBoolean(), buffer.readBoolean(), buffer.readInt(), buffer.readInt());
     }
 
     public void encode(FriendlyByteBuf buffer) {
         buffer.writeBlockPos(this.position);
         buffer.writeInt(this.radius);
+        buffer.writeBoolean(this.isNapalm);
+        buffer.writeBoolean(this.isWalking);
+        buffer.writeInt(this.direction);
+        buffer.writeInt(this.groundedTicks);
     }
 
     public static class BarrageSpawner {
@@ -48,14 +53,18 @@ public class SOrbitalBarragePacket {
         private int missileCount = 0;
         private int tickDelay = 20;
         private boolean isWalking;
-        private Direction walkingDirection;
+        private int walkingDirection;
+        private boolean isNapalm;
+        private int groundedTicks;
 
-        public BarrageSpawner(ServerPlayer player, BlockPos position, int radius, boolean isWalking, Direction direction) {
+        public BarrageSpawner(ServerPlayer player, BlockPos position, int radius, boolean isWalking, int direction, boolean isNapalm, int groundedTicks) {
             this.player = player;
             this.position = position;
             this.radius = radius;
             this.isWalking = isWalking;
             this.walkingDirection = direction;
+            this.isNapalm = isNapalm;
+            this.groundedTicks = groundedTicks;
             MinecraftForge.EVENT_BUS.register(this);
         }
 
@@ -78,22 +87,22 @@ public class SOrbitalBarragePacket {
         private void spawnMissile() {
             float randomPosX = (Mth.randomBetween(player.level().getRandom(), radius * -1, radius));
             float randomPosZ = (Mth.randomBetween(player.level().getRandom(), radius * -1, radius));
-            float walkingZ = (Mth.randomBetween(player.level().getRandom(), 0, 100));
-            float walkingX = (Mth.randomBetween(player.level().getRandom(), 0, 100));
+            float walkingZ = (Mth.randomBetween(player.level().getRandom(), groundedTicks / 7.5f, groundedTicks / 7.5f));
+            float walkingX = (Mth.randomBetween(player.level().getRandom(), groundedTicks / 7.5f, groundedTicks / 7.5f));
 
-            MissileProjectileEntity explosive = new MissileProjectileEntity(player, player.level(), 12);
+            MissileProjectileEntity explosive = new MissileProjectileEntity(player, player.level(),12, isNapalm);
             if (isWalking) {
-                if (walkingDirection == Direction.NORTH) {
-                    explosive.setPos(position.getX() + randomPosX, 200, position.getZ() - walkingZ * 1.5f);
+                if (walkingDirection == 0) {
+                    explosive.setPos(position.getX() + randomPosX, 200, position.getZ() - walkingZ);
                 }
-                if (walkingDirection == Direction.SOUTH) {
-                    explosive.setPos(position.getX() + randomPosX, 200, position.getZ() + walkingZ * 1.5f);
+                if (walkingDirection == 1) {
+                    explosive.setPos(position.getX() + randomPosX, 200, position.getZ() + walkingZ);
                 }
-                if (walkingDirection == Direction.EAST) {
-                    explosive.setPos(position.getX() + walkingX * 1.5f, 200, position.getZ() + randomPosZ);
+                if (walkingDirection == 2) {
+                    explosive.setPos(position.getX() + walkingX, 200, position.getZ() + randomPosZ);
                 }
-                if (walkingDirection == Direction.WEST) {
-                    explosive.setPos(position.getX() - walkingX * 1.5f, 200, position.getZ() + randomPosZ);
+                if (walkingDirection == 3) {
+                    explosive.setPos(position.getX() - walkingX, 200, position.getZ() + randomPosZ);
                 }
             } else {
                 explosive.setPos(position.getX() + randomPosX, 200, position.getZ() - randomPosZ);
@@ -106,8 +115,7 @@ public class SOrbitalBarragePacket {
     public void handle(Supplier<NetworkEvent.Context> context) {
         ServerPlayer player = context.get().getSender();
         if (player == null) return;
-        
         // Create a new BarrageSpawner instead of spawning missiles directly
-        new BarrageSpawner(player, position, radius, isWalking, direction);
+        new BarrageSpawner(player, position, radius, isWalking, direction, isNapalm, groundedTicks);
     }
 }

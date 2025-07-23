@@ -1,5 +1,7 @@
 package net.team.helldivers.entity.custom;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
@@ -20,14 +22,16 @@ import net.minecraft.world.phys.EntityHitResult;
 
 public class MissileProjectileEntity extends AbstractArrow {
     private int power = 0;
+    private boolean isNapalm;
 
     public MissileProjectileEntity(EntityType<? extends AbstractArrow> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
-    public MissileProjectileEntity(LivingEntity shooter, Level level, int power) {
+    public MissileProjectileEntity(LivingEntity shooter, Level level, int power, boolean isNapalm) {
         super(ModEntities.MISSILE_PROJECTILE.get(), shooter, level);
         this.power = power;
+        this.isNapalm = isNapalm;
     }
 
     public boolean isGrounded() {
@@ -38,7 +42,7 @@ public class MissileProjectileEntity extends AbstractArrow {
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
         PacketHandler.sendToAllClients(new CSmallExplosionParticlesPacket(result.getEntity().blockPosition()));
-        PacketHandler.sendToServer(new SExplosionPacket(result.getEntity().blockPosition(), this.power));
+        PacketHandler.sendToServer(new SExplosionPacket(result.getEntity().blockPosition(), this.power, isNapalm));
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(6.0)).forEach(entity -> {
             entity.hurt(level().damageSources().explosion(null), this.power * 2.5f);
         });
@@ -50,7 +54,7 @@ public class MissileProjectileEntity extends AbstractArrow {
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
         PacketHandler.sendToAllClients(new CSmallExplosionParticlesPacket(result.getBlockPos()));
-        PacketHandler.sendToServer(new SExplosionPacket(result.getBlockPos(), this.power));
+        PacketHandler.sendToServer(new SExplosionPacket(result.getBlockPos(), this.power, isNapalm));
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(6.0)).forEach(entity -> {
             entity.hurt(level().damageSources().explosion(null), this.power * 2.5f);
         });

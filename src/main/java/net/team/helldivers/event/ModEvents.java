@@ -11,7 +11,9 @@ import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.FogType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -19,6 +21,7 @@ import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -26,6 +29,7 @@ import net.minecraftforge.server.command.ConfigCommand;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.command.StopUseLodestoneCommand;
 import net.team.helldivers.command.UseLodestoneCommand;
+import net.team.helldivers.item.custom.armor.IDemocracyProtects;
 import net.team.helldivers.worldgen.dimension.ModDimensions;
 import org.joml.Matrix4f;
 
@@ -102,5 +106,26 @@ public class ModEvents {
                 }
             });
         });
+    }
+
+    @SubscribeEvent
+    public static void onLivingDeath(LivingDeathEvent event) {
+        if (!(event.getEntity() instanceof ServerPlayer player)) return;
+        boolean hasArmorEquipped = false;
+        ItemStack foundItem = ItemStack.EMPTY;
+
+        for (ItemStack stack : player.getArmorSlots()) {
+            if (stack.getItem() instanceof IDemocracyProtects) {
+                hasArmorEquipped = true;
+                foundItem = stack;
+                break;
+            }
+        }
+
+        if (hasArmorEquipped && player.isDeadOrDying() && player.level().getRandom().nextBoolean()) {
+            event.setCanceled(true);
+            player.setHealth(0.5f);
+        }
+
     }
 }

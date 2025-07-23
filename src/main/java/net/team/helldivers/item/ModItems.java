@@ -76,6 +76,10 @@ public class ModItems {
             () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
     public static final RegistryObject<Item> ORBITAL_LASER = ITEMS.register("orbital_laser",
             () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
+    public static final RegistryObject<Item> NAPALM_BARRAGE = ITEMS.register("napalm_barrage",
+            () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
+    public static final RegistryObject<Item> WALKING_BARRAGE = ITEMS.register("walking_barrage",
+            () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
     // EAGLE
     public static final RegistryObject<Item> EAGLE_500KG_BOMB = ITEMS.register("500kg_bomb",
             () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));

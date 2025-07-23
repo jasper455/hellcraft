@@ -49,6 +49,10 @@ public class StratagemHudOverlay {
             HelldiversMod.MOD_ID, "textures/stratagem_hud/380_barrage_gui.png");
     public static final ResourceLocation ORBITAL_LASER = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/orbital_laser.png");
+    public static final ResourceLocation NAPALM_BARRAGE = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/napalm_barrage.png");
+    public static final ResourceLocation WALKING_BARRAGE = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/walking_barrage.png");
     // Eagles
     public static final ResourceLocation EAGLE_500KG_BOMB = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/500kg_bomb.png");

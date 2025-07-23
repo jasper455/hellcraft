@@ -71,6 +71,8 @@ public class StratagemOrbProjectileRenderer extends EntityRenderer<StratagemOrbE
             case "Orbital 120MM HE Barrage" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
             case "Orbital 380MM HE Barrage" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
             case "Orbital Laser" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
+            case "Orbital Napalm Barrage" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
+            case "Orbital Walking Barrage" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
             //Eagle
             case "Eagle 500KG Bomb" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
             case "Eagle Cluster Bomb" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color

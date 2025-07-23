@@ -50,6 +50,5 @@ public class EffectTesterItem extends Item {
                 player.sendSystemMessage(Component.literal("slot is not empty"));
             }
         });
-
     }
 }

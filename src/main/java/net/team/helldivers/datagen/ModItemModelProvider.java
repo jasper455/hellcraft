@@ -72,6 +72,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.BIG_BARRAGE.get());
         basicItem(ModItems.PRECISION_STRIKE.get());
         basicItem(ModItems.ORBITAL_LASER.get());
+        basicItem(ModItems.NAPALM_BARRAGE.get());
+        basicItem(ModItems.WALKING_BARRAGE.get());
         basicItem(ModItems.EAGLE_500KG_BOMB.get());
         basicItem(ModItems.CLUSTER_BOMB.get());
     }

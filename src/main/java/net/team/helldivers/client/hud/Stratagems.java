@@ -514,6 +514,134 @@ public class Stratagems {
                 }
             }
 
+            // Napalm Barrage inputs
+
+            if (ClientItemCache.contains(ModItems.NAPALM_BARRAGE.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.NAPALM_BARRAGE.get().getDefaultInstance())) {
+                switch (NapalmBarrageHud.inputStep) {
+                    case 0 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            NapalmBarrageHud.firstInputDown = true;
+                            NapalmBarrageHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            NapalmBarrageHud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            NapalmBarrageHud.secondInputDown = true;
+                            NapalmBarrageHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            NapalmBarrageHud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            NapalmBarrageHud.thirdInputDown = true;
+                            NapalmBarrageHud.inputStep++;
+                        } else if (downNotPressed) {
+                            NapalmBarrageHud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (leftJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            NapalmBarrageHud.fourthInputDown = true;
+                            NapalmBarrageHud.inputStep++;
+                        } else if (leftNotPressed) {
+                            NapalmBarrageHud.resetInputValues();
+                        }
+                    }
+                    case 4 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            NapalmBarrageHud.fifthInputDown = true;
+                            NapalmBarrageHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            NapalmBarrageHud.resetInputValues();
+                        }
+                    }
+                    case 5 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            NapalmBarrageHud.sixthInputDown = true;
+                            NapalmBarrageHud.allInputsDown = true;
+                            NapalmBarrageHud.inputStep++;
+                        } else if (upNotPressed) {
+                            NapalmBarrageHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
+            // Napalm Barrage inputs
+
+            if (ClientItemCache.contains(ModItems.WALKING_BARRAGE.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.WALKING_BARRAGE.get().getDefaultInstance())) {
+                switch (WalkingBarrageHud.inputStep) {
+                    case 0 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            WalkingBarrageHud.firstInputDown = true;
+                            WalkingBarrageHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            WalkingBarrageHud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            WalkingBarrageHud.secondInputDown = true;
+                            WalkingBarrageHud.inputStep++;
+                        } else if (downNotPressed) {
+                            WalkingBarrageHud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            WalkingBarrageHud.thirdInputDown = true;
+                            WalkingBarrageHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            WalkingBarrageHud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            WalkingBarrageHud.fourthInputDown = true;
+                            WalkingBarrageHud.inputStep++;
+                        } else if (downNotPressed) {
+                            WalkingBarrageHud.resetInputValues();
+                        }
+                    }
+                    case 4 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            WalkingBarrageHud.fifthInputDown = true;
+                            WalkingBarrageHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            WalkingBarrageHud.resetInputValues();
+                        }
+                    }
+                    case 5 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            WalkingBarrageHud.sixthInputDown = true;
+                            WalkingBarrageHud.allInputsDown = true;
+                            WalkingBarrageHud.inputStep++;
+                        } else if (downNotPressed) {
+                            WalkingBarrageHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
             // 500KG Bomb inputs
 
             if (ClientItemCache.contains(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()) &&
@@ -671,6 +799,18 @@ public class Stratagems {
                     ClientItemCache.getSlotWithItem(ModItems.ORBITAL_LASER.get().getDefaultInstance())), 6000));
             resetInputValues();
         }
+        if (NapalmBarrageHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Napalm Barrage"));
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
+                    ClientItemCache.getSlotWithItem(ModItems.NAPALM_BARRAGE.get().getDefaultInstance())), 4800));
+            resetInputValues();
+        }
+        if (WalkingBarrageHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Walking Barrage"));
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
+                    ClientItemCache.getSlotWithItem(ModItems.WALKING_BARRAGE.get().getDefaultInstance())), 4800));
+            resetInputValues();
+        }
         if (Eagle500KgBombHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Eagle 500KG Bomb"));
             PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
@@ -783,6 +923,26 @@ public class Stratagems {
                 OrbitalLaserHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.ORBITAL_LASER.get().getDefaultInstance()));
             }
 
+            // Napalm Barrage Render HUD Code
+            if (ClientItemCache.contains(ModItems.NAPALM_BARRAGE.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.NAPALM_BARRAGE.get().getDefaultInstance())) {
+                NapalmBarrageHud.renderNapalmBarrageHud(guiGraphics, ClientItemCache.getSlotWithItem(ModItems.NAPALM_BARRAGE.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (ClientItemCache.contains(ModItems.NAPALM_BARRAGE.get().getDefaultInstance()) &&
+                    !ClientItemCache.isOnCooldown(ModItems.NAPALM_BARRAGE.get().getDefaultInstance())) {
+                NapalmBarrageHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.NAPALM_BARRAGE.get().getDefaultInstance()));
+            }
+
+            // Napalm Barrage Render HUD Code
+            if (ClientItemCache.contains(ModItems.WALKING_BARRAGE.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.WALKING_BARRAGE.get().getDefaultInstance())) {
+                WalkingBarrageHud.renderWalkingBarrageHud(guiGraphics, ClientItemCache.getSlotWithItem(ModItems.WALKING_BARRAGE.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (ClientItemCache.contains(ModItems.WALKING_BARRAGE.get().getDefaultInstance()) &&
+                    !ClientItemCache.isOnCooldown(ModItems.WALKING_BARRAGE.get().getDefaultInstance())) {
+                WalkingBarrageHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.WALKING_BARRAGE.get().getDefaultInstance()));
+            }
+
             // EAGLES
 
             // 500 KG Render HUD Code
@@ -856,6 +1016,18 @@ public class Stratagems {
                 OrbitalLaserHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.ORBITAL_LASER.get().getDefaultInstance()));
             }
 
+            // Napalm Barrage Cooldown Complete Popup Code
+            if (!ClientItemCache.isOnCooldown(ModItems.NAPALM_BARRAGE.get().getDefaultInstance()) &&
+                    ClientItemCache.getCooldownLeft(ModItems.NAPALM_BARRAGE.get().getDefaultInstance()) <= 5) {
+                NapalmBarrageHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.NAPALM_BARRAGE.get().getDefaultInstance()));
+            }
+
+            // Walking Barrage Cooldown Complete Popup Code
+            if (!ClientItemCache.isOnCooldown(ModItems.WALKING_BARRAGE.get().getDefaultInstance()) &&
+                    ClientItemCache.getCooldownLeft(ModItems.WALKING_BARRAGE.get().getDefaultInstance()) <= 5) {
+                WalkingBarrageHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.WALKING_BARRAGE.get().getDefaultInstance()));
+            }
+
             // EAGLES
 
             // 500 KG Cooldown Complete Popup Code
@@ -899,6 +1071,8 @@ public class Stratagems {
         OrbitalLaserHud.resetInputValues();
         ResupplyHud.resetInputValues();
         ClusterBombHud.resetInputValues();
+        NapalmBarrageHud.resetInputValues();
+        WalkingBarrageHud.resetInputValues();
         allInputsDown = false;
     }
 }

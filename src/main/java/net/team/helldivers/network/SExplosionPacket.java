@@ -1,7 +1,9 @@
 package net.team.helldivers.network;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -19,30 +21,37 @@ import java.util.function.Supplier;
 public class SExplosionPacket {
     private final BlockPos position;
     private final int radius;
+    private final boolean isNapalm;
 
-    public SExplosionPacket(BlockPos position, int radius) {
+    public SExplosionPacket(BlockPos position, int radius, boolean isNapalm) {
         this.position = position;
         this.radius = radius;
+        this.isNapalm = isNapalm;
     }
 
     public SExplosionPacket(FriendlyByteBuf buffer) {
-        this(buffer.readBlockPos(), buffer.readInt());
+        this(buffer.readBlockPos(), buffer.readInt(), buffer.readBoolean());
     }
 
     public void encode(FriendlyByteBuf buffer) {
         buffer.writeBlockPos(this.position);
         buffer.writeInt(this.radius);
+        buffer.writeBoolean(this.isNapalm);
     }
 
     public void handle(Supplier<NetworkEvent.Context> context) {
         ServerPlayer player = context.get().getSender();
         if (player == null) return;
         boolean doFlyingBlocks = player.level().getGameRules().getBoolean(ModGameRules.DO_FLYING_BLOCKS);
-        if (!doFlyingBlocks) {
-            player.level().explode(null, position.getX(), position.getY(), position.getZ(), radius, false, Level.ExplosionInteraction.BLOCK);
+        if (!isNapalm) {
+            if (!doFlyingBlocks) {
+                player.level().explode(null, position.getX(), position.getY(), position.getZ(), radius, false, Level.ExplosionInteraction.BLOCK);
+            } else {
+                player.level().explode(null, position.getX(), position.getY(), position.getZ(), radius, false, Level.ExplosionInteraction.BLOCK);
+                flyingBlocksExplosion(player.level(), position, radius / 2);
+            }
         } else {
-            player.level().explode(null, position.getX(), position.getY(), position.getZ(), radius, false, Level.ExplosionInteraction.BLOCK);
-            flyingBlocksExplosion(player.level(), position, radius / 2);
+            player.level().explode(null, position.getX(), position.getY(), position.getZ(), radius, true, Level.ExplosionInteraction.NONE);
         }
     }
 
@@ -66,7 +75,7 @@ public class SExplosionPacket {
 
                         level.removeBlock(targetPos, false);
 
-//                        if (randomNumber == 0) {
+                        if (randomNumber == 0) {
                             FallingBlockEntity fallingBlock = FallingBlockEntity.fall(level, targetPos, state);
 
                             fallingBlock.setPos(targetPos.getX() + 0.5, targetPos.getY() + 10, targetPos.getZ() + 0.5);
@@ -81,7 +90,7 @@ public class SExplosionPacket {
                             fallingBlock.setDeltaMovement(vec3);
 
                             level.addFreshEntity(fallingBlock);
-//                        }
+                        }
                     }
                 }
             }

@@ -53,18 +53,17 @@ public class Eagle500KgEntity extends AbstractArrow {
 
     @Override
     public void tick() {
+        this.setDeltaMovement(this.getDeltaMovement().normalize().scale(6f));
         if (this.level().isClientSide) {
             this.level().addParticle(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, true, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
         }
-
-
         if (this.isGrounded()) {
             groundedTicks++;
         }
 
         if (groundedTicks >= 20) {
             PacketHandler.sendToAllClients(new CLargeExplosionParticlesPacket(this.getOnPos()));
-            PacketHandler.sendToServer(new SExplosionPacket(this.getOnPos(), 20));
+            PacketHandler.sendToServer(new SExplosionPacket(this.getOnPos(), 20, false));
             this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(6.0)).forEach(entity -> {
                 entity.hurt(level().damageSources().explosion(null), 30.0F);
             });

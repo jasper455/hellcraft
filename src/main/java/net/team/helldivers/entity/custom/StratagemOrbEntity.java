@@ -31,6 +31,7 @@ import net.minecraftforge.common.MinecraftForge;
 public class StratagemOrbEntity extends AbstractArrow {
     private static final EntityDataAccessor<String> STRATAGEM_TYPE =
             SynchedEntityData.defineId(StratagemOrbEntity.class, EntityDataSerializers.STRING);
+    private Direction ownerDirection;
     private float rotation;
     public Vec3 groundedOffset;
     private int groundedTicks = 0;
@@ -39,8 +40,9 @@ public class StratagemOrbEntity extends AbstractArrow {
         super(pEntityType, pLevel);
     }
 
-    public StratagemOrbEntity(LivingEntity shooter, Level level, String stratagemType) {
+    public StratagemOrbEntity(LivingEntity shooter, Level level, String stratagemType, Direction ownerDirection) {
         super(ModEntities.STRATAGEM_ORB.get(), shooter, level);
+        this.ownerDirection = ownerDirection;
         setStratagemType(stratagemType);
     }
 
@@ -165,7 +167,7 @@ public class StratagemOrbEntity extends AbstractArrow {
             float randomPosX = (Mth.randomBetween(this.level().getRandom(), -5.0f, 5.0f));
             float randomPosY = (Mth.randomBetween(this.level().getRandom(), -5.0f, 5.0f));
 
-            MissileProjectileEntity explosive = new MissileProjectileEntity(((LivingEntity) this.getOwner()), this.level(), 17);
+            MissileProjectileEntity explosive = new MissileProjectileEntity(((LivingEntity) this.getOwner()), this.level(), 17, false);
             explosive.setPos(this.getX() + randomPosX, 200 + randomPosY, this.getZ());
             explosive.setDeltaMovement(0f, 0f, 0f);
             this.level().addFreshEntity(explosive);
@@ -182,12 +184,12 @@ public class StratagemOrbEntity extends AbstractArrow {
                 if (random.nextBoolean() && random.nextBoolean()) {
                     this.playSound(ModSounds.ORBITAL_BARRAGE_CLEAR_THE_AREA.get(), 10000000.0f, 1.0f);
                 } else if (random.nextBoolean() && !random.nextBoolean()) {
-                    this.playSound(ModSounds.ORBITAL_BARRAGE_CLEAR_THE_AREA.get(), 10000000.0f, 1.0f);
+                    this.playSound(ModSounds.ORBITAL_BARRAGE_STAND_CLEAR.get(), 10000000.0f, 1.0f);
                 }
             }
             if (groundedTicks > 75) {
                 MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 25, 60,
-                        groundedTicks, this, false));
+                        groundedTicks,false, false));
             }
         }
         if (getStratagemType().equals("Orbital 120MM HE Barrage") && groundedTicks > 750) {
@@ -201,15 +203,67 @@ public class StratagemOrbEntity extends AbstractArrow {
                 if (random.nextBoolean() && random.nextBoolean()) {
                     this.playSound(ModSounds.ORBITAL_BARRAGE_CLEAR_THE_AREA.get(), 10000000.0f, 1.0f);
                 } else if (random.nextBoolean() && !random.nextBoolean()) {
-                    this.playSound(ModSounds.ORBITAL_BARRAGE_CLEAR_THE_AREA.get(), 10000000.0f, 1.0f);
+                    this.playSound(ModSounds.ORBITAL_BARRAGE_STAND_CLEAR.get(), 10000000.0f, 1.0f);
                 }
             }
             if (groundedTicks > 75) {
                 MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 50, 60,
-                        groundedTicks, this, true));
+                        groundedTicks,true, false));
             }
         }
         if (getStratagemType().equals("Orbital 380MM HE Barrage") && groundedTicks > 750) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
+        // Napalm Barrage Entity Stuff
+        if (getStratagemType().equals("Orbital Napalm Barrage") && !this.level().isClientSide) {
+            if (groundedTicks == 60) {
+                if (random.nextBoolean() && random.nextBoolean()) {
+                    this.playSound(ModSounds.ORBITAL_BARRAGE_CLEAR_THE_AREA.get(), 10000000.0f, 1.0f);
+                } else if (random.nextBoolean() && !random.nextBoolean()) {
+                    this.playSound(ModSounds.ORBITAL_BARRAGE_STAND_CLEAR.get(), 10000000.0f, 1.0f);
+                }
+            }
+            if (groundedTicks > 75) {
+                MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 30, 60,
+                        groundedTicks,true, true));
+            }
+        }
+        if (getStratagemType().equals("Orbital Napalm Barrage") && groundedTicks > 750) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
+        // Walking Barrage Entity Stuff
+        if (getStratagemType().equals("Orbital Walking Barrage") && !this.level().isClientSide) {
+            if (groundedTicks == 60) {
+                if (random.nextBoolean() && random.nextBoolean()) {
+                    this.playSound(ModSounds.ORBITAL_BARRAGE_CLEAR_THE_AREA.get(), 10000000.0f, 1.0f);
+                } else if (random.nextBoolean() && !random.nextBoolean()) {
+                    this.playSound(ModSounds.ORBITAL_BARRAGE_STAND_CLEAR.get(), 10000000.0f, 1.0f);
+                }
+            }
+            if (groundedTicks > 75) {
+                if (this.ownerDirection == Direction.NORTH) {
+                    MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 15, 60,
+                            groundedTicks,true, false, true, 0));
+                }
+                if (this.ownerDirection == Direction.SOUTH) {
+                    MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 15, 60,
+                            groundedTicks,true, false, true, 1));
+                }
+                if (this.ownerDirection == Direction.EAST) {
+                    MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 15, 60,
+                            groundedTicks,true, false, true, 2));
+                }
+                if (this.ownerDirection == Direction.WEST) {
+                    MinecraftForge.EVENT_BUS.register(new OrbitalBarrage(this.level(), this.blockPosition(), 15, 60,
+                            groundedTicks,true, false, true, 3));
+                }
+            }
+        }
+        if (getStratagemType().equals("Orbital Walking Barrage") && groundedTicks > 750) {
             this.discard();
             groundedTicks = 0;
         }
