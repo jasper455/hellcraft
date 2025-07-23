@@ -28,5 +28,5 @@ You can become...A Helldiver! The galaxy awaits liberation helldiver, get to it!
   - A variety of armor sets from Helldivers 2
 
 <div align="center">
-<h3>Please don't sue us sony</h3>
+<h3>This mod is not associated with Sony or Arrowhead</h3>
 </div>
