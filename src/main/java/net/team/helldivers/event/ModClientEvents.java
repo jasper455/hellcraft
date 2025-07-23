@@ -123,7 +123,7 @@ public class ModClientEvents {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    player.sendSystemMessage(Component.literal("I'm leaving this in because it's funny, and you can't do shit about it silver"));
+                    player.sendSystemMessage(Component.literal("This in because it's funny, Deal with it..."));
                 }
             }, 2350);
             timer.schedule(new TimerTask() {
