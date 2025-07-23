@@ -1,21 +1,12 @@
 package net.team.helldivers.event;
 
-import com.mojang.blaze3d.platform.GlStateManager;
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
-import com.mojang.math.Axis;
-import net.minecraft.client.Camera;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.DimensionSpecialEffects;
-import net.minecraft.client.renderer.FogRenderer;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.ShaderInstance;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.material.FogType;
-import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -26,14 +17,15 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.server.command.ConfigCommand;
-import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.command.StopUseLodestoneCommand;
 import net.team.helldivers.command.UseLodestoneCommand;
+import net.team.helldivers.helper.ClientJammedSync;
 import net.team.helldivers.item.custom.armor.IDemocracyProtects;
-import net.team.helldivers.worldgen.dimension.ModDimensions;
-import org.joml.Matrix4f;
+import net.team.helldivers.network.PacketHandler;
+import net.team.helldivers.network.SSyncJammedPacket;
 
-import static net.minecraft.client.renderer.blockentity.TheEndPortalRenderer.END_SKY_LOCATION;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModEvents {
@@ -126,6 +118,48 @@ public class ModEvents {
             event.setCanceled(true);
             player.setHealth(0.5f);
         }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide()) return;
+
+        Player player = event.player;
+        Level level = player.level();
+
+        AtomicBoolean isJammed = new AtomicBoolean(false);
+
+        // Define radius and center search position (e.g., player's position)
+        BlockPos playerPos = player.blockPosition();
+        int radius = 50;
+
+        // Scan nearby blocks in a cube
+        BlockPos.betweenClosedStream(playerPos.offset(-radius, -radius, -radius), playerPos.offset(radius, radius, radius))
+                .forEach(pos -> {
+                    if (level.getBlockState(pos).is(ModBlocks.STRATAGEM_JAMMER.get())) {
+                        isJammed.set(true);
+                    }
+                });
+
+        CompoundTag persistentData = player.getPersistentData();
+        CompoundTag data = persistentData.getCompound(Player.PERSISTED_NBT_TAG); // "ForgeData"
+
+        if (isJammed.get()) {
+            if (!data.getBoolean("near_my_block")) {
+                data.putBoolean("near_my_block", true);
+                PacketHandler.sendToServer(new SSyncJammedPacket(true));
+                // Do something on enter
+            }
+        } else {
+            if (data.contains("near_my_block")) {
+                data.remove("near_my_block");
+                PacketHandler.sendToServer(new SSyncJammedPacket(false));
+            }
+        }
+
+        // Write back to persistent tag
+        persistentData.put(Player.PERSISTED_NBT_TAG, data);
 
     }
+
 }

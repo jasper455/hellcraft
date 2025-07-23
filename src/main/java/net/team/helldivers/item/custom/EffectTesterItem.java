@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.team.helldivers.entity.custom.BulletProjectileEntity;
 import net.team.helldivers.util.KeyBinding;
 
 public class EffectTesterItem extends Item {
@@ -19,6 +20,10 @@ public class EffectTesterItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+        BulletProjectileEntity bulletProjectile = new BulletProjectileEntity(pPlayer, pLevel);
+        bulletProjectile.setDeltaMovement(0, 0, 0);
+        bulletProjectile.setNoGravity(true);
+        pLevel.addFreshEntity(bulletProjectile);
         return super.use(pLevel, pPlayer, pUsedHand);
     }
 
@@ -27,28 +32,28 @@ public class EffectTesterItem extends Item {
         return super.onLeftClickEntity(stack, player, entity);
     }
 
-    @Override
-    public void onInventoryTick(ItemStack stack, Level level, Player player, int slotIndex, int selectedIndex) {
-        super.onInventoryTick(stack, level, player, slotIndex, selectedIndex);
-        if (level.isClientSide()) {
-            return;
-        }
-        player.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
-            ItemStack item = handler.getStackInSlot(0);
-            if (item.isEmpty() && KeyBinding.EQUIP_BACKPACK.consumeClick()) {
-                handler.insertItem(0, new ItemStack(stack.getItem(), 64), false);
-                return;
-            }
-            if (!item.isEmpty() && KeyBinding.AIM.consumeClick()) {
-                handler.extractItem(0, 64, false);
-                return;
-            }
-            if (item.isEmpty() && KeyBinding.SHOOT.consumeClick()) {
-                player.sendSystemMessage(Component.literal("slot is empty"));
-            }
-            if (!item.isEmpty() && KeyBinding.SHOOT.consumeClick()) {
-                player.sendSystemMessage(Component.literal("slot is not empty"));
-            }
-        });
-    }
+//    @Override
+//    public void onInventoryTick(ItemStack stack, Level level, Player player, int slotIndex, int selectedIndex) {
+//        super.onInventoryTick(stack, level, player, slotIndex, selectedIndex);
+//        if (level.isClientSide()) {
+//            return;
+//        }
+//        player.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(handler -> {
+//            ItemStack item = handler.getStackInSlot(0);
+//            if (item.isEmpty() && KeyBinding.EQUIP_BACKPACK.consumeClick()) {
+//                handler.insertItem(0, new ItemStack(stack.getItem(), 64), false);
+//                return;
+//            }
+//            if (!item.isEmpty() && KeyBinding.AIM.consumeClick()) {
+//                handler.extractItem(0, 64, false);
+//                return;
+//            }
+//            if (item.isEmpty() && KeyBinding.SHOOT.consumeClick()) {
+//                player.sendSystemMessage(Component.literal("slot is empty"));
+//            }
+//            if (!item.isEmpty() && KeyBinding.SHOOT.consumeClick()) {
+//                player.sendSystemMessage(Component.literal("slot is not empty"));
+//            }
+//        });
+//    }
 }

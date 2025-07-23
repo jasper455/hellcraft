@@ -68,6 +68,8 @@
   "block.helldivers.rare_sample": "Rare Sample",
   "block.helldivers.super_sample": "Super Sample",
   "block.helldivers.bot_contact_mine": "Automaton Contact Mine",
+  "block.helldivers.stratagem_jammer": "Stratagem Jammer",
+  "block.helldivers.stratagem_jammer.desc": "(Jams Stratagems for players within a 50 block radius)",
 
   "entity.helldivers.missile": "Missile",
   "entity.helldivers.eagle_500kg_bomb": "Eagle 500KG Bomb",

@@ -20,6 +20,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
     @Override
     protected void generate() {
         dropOther(ModBlocks.HELLBOMB.get(), Items.AIR);
+        dropOther(ModBlocks.STRATAGEM_JAMMER.get(), Items.AIR);
         dropSelf(ModBlocks.AMMO_CRATE.get());
         dropSelf(ModBlocks.BARBED_WIRE.get());
         dropOther(ModBlocks.EXTRACTION_TERMINAL.get(), ModItems.EXTRACTION_TERMINAL_BLOCK_ITEM.get());

@@ -1,5 +1,6 @@
 package net.team.helldivers.client.hud;
 
+import net.minecraft.client.Minecraft;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.util.KeyBinding;
 import net.minecraft.client.gui.GuiGraphics;
@@ -29,9 +30,16 @@ public class StratagemHudOverlay {
     public static boolean wasRightNotPressedLastTick = false;
     public static boolean wasRightNotPressedThisTick = false;
 
+    private static final int JAMMED_FRAME_COUNT = 10;
+    private static final int JAMMED_ANIMATION_SPEED_TICKS = 2; // Change frame every 2 ticks
+
 
     public static final ResourceLocation STRATAGEM_BACKGROUND = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/stratagem_background.png");
+
+    public static final ResourceLocation JAMMED = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/jammed_stratagem.png");
+
     //Other
     public static final ResourceLocation HELLBOMB = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/hellbomb_gui.png");
@@ -101,6 +109,11 @@ public class StratagemHudOverlay {
                 pX, pY, pWidth, pHeight, pUOffset, pVOffset, pUWidth, pVHeight,
                 pTextureWidth, pTextureHeight);
 //        Minecraft.getInstance().player.sendSystemMessage(Component.literal("test"));
+    }
+
+    public static int getCurrentFrame() {
+        long time = Minecraft.getInstance().level.getGameTime(); // game ticks
+        return (int)((time / JAMMED_ANIMATION_SPEED_TICKS) % JAMMED_FRAME_COUNT);
     }
 
     public static boolean upArrowPressed() {

@@ -24,6 +24,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.COMMON_SAMPLE.get());
                         output.accept(ModBlocks.RARE_SAMPLE.get());
                         output.accept(ModBlocks.SUPER_SAMPLE.get());
+                        output.accept(ModBlocks.STRATAGEM_JAMMER.get());
                     }).build());
     public static final RegistryObject<CreativeModeTab> SEAF_EQUIPMENT = CREATIVE_MODE_TABS.register("seaf_equipment_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.AR23.get()))

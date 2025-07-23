@@ -2,6 +2,9 @@ package net.team.helldivers.client.hud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.team.helldivers.helper.ClientJammedSync;
+
+import static net.team.helldivers.client.hud.StratagemHudOverlay.getCurrentFrame;
 
 public class ResupplyHud {
     public static boolean firstInputDown = false;
@@ -14,6 +17,7 @@ public class ResupplyHud {
     private static int translateHeight;
     private static int textHeight;
     private static int arrowHeight;
+
 
     public static void renderResupplyHud(GuiGraphics guiGraphics, int slotIndex) {
         if (slotIndex == 0) {
@@ -41,9 +45,21 @@ public class ResupplyHud {
             arrowHeight = 100;
         }
 
-        guiGraphics.blit(StratagemHudOverlay.RESUPPLY,
-                12, imgHeight, 20, 20, 0, 0, 16, 16,
-                16, 16);
+        int currentFrame = getCurrentFrame();
+        int vOffset = currentFrame * 160;
+        boolean isJammed = ClientJammedSync.getIsJammed();
+
+        if (isJammed) {
+            guiGraphics.blit(StratagemHudOverlay.JAMMED,
+                    12, imgHeight, 20, 20,
+                    0, vOffset, 16, 160,
+                    16, 160 * 10); // full texture size
+        } else {
+            guiGraphics.blit(StratagemHudOverlay.RESUPPLY,
+                    12, imgHeight, 20, 20, 0, 0, 16, 16,
+                    16, 16);
+        }
+
 
         guiGraphics.pose().pushPose();
 
@@ -51,24 +67,39 @@ public class ResupplyHud {
 
         guiGraphics.pose().translate(16, translateHeight, 1);
 
-        guiGraphics.drawString(Minecraft.getInstance().font, "RESUPPLY", 35, textHeight, 0xFFFFFF);
+        guiGraphics.drawString(Minecraft.getInstance().font, isJammed ? "§kRESUPPLY" : "RESUPPLY", 35, textHeight, 0xFFFFFF);
 
         guiGraphics.pose().popPose();
 
-        StratagemHudOverlay.renderDownArrow(guiGraphics, 35, arrowHeight, 10, 10,
-                0, 0, 16, 16, 16, 16, firstInputDown);
-        StratagemHudOverlay.renderDownArrow(guiGraphics, 45, arrowHeight, 10, 10,
-                0, 0, 16, 16, 16, 16, secondInputDown);
-        StratagemHudOverlay.renderUpArrow(guiGraphics, 55, arrowHeight, 10, 10,
-                0, 0, 16, 16, 16, 16, thirdInputDown);
-        StratagemHudOverlay.renderRightArrow(guiGraphics, 65, arrowHeight, 10, 10,
-                0, 0, 16, 16, 16, 16, fourthInputDown);
+        if (!isJammed) {
+            StratagemHudOverlay.renderDownArrow(guiGraphics, 35, arrowHeight, 10, 10,
+                    0, 0, 16, 16, 16, 16, firstInputDown);
+            StratagemHudOverlay.renderDownArrow(guiGraphics, 45, arrowHeight, 10, 10,
+                    0, 0, 16, 16, 16, 16, secondInputDown);
+            StratagemHudOverlay.renderUpArrow(guiGraphics, 55, arrowHeight, 10, 10,
+                    0, 0, 16, 16, 16, 16, thirdInputDown);
+            StratagemHudOverlay.renderRightArrow(guiGraphics, 65, arrowHeight, 10, 10,
+                    0, 0, 16, 16, 16, 16, fourthInputDown);
+        } else {
+            guiGraphics.drawString(Minecraft.getInstance().font, "JAMMED", 35, arrowHeight, 0xFFFFFF);
+        }
     }
 
     public static void renderCooldownHud(GuiGraphics guiGraphics, int cooldownLeft) {
-        guiGraphics.blit(StratagemHudOverlay.RESUPPLY,
-                12, imgHeight, 20, 20, 0, 0, 16, 16,
-                16, 16);
+        boolean isJammed = ClientJammedSync.getIsJammed();
+        int currentFrame = getCurrentFrame();
+        int vOffset = currentFrame * 160;
+
+        if (isJammed) {
+            guiGraphics.blit(StratagemHudOverlay.JAMMED,
+                    12, imgHeight, 20, 20,
+                    0, vOffset, 16, 160,
+                    16, 160 * 10); // full texture size
+        } else {
+            guiGraphics.blit(StratagemHudOverlay.RESUPPLY,
+                    12, imgHeight, 20, 20, 0, 0, 16, 16,
+                    16, 16);
+        }
 
         guiGraphics.pose().pushPose();
 
@@ -76,12 +107,15 @@ public class ResupplyHud {
 
         guiGraphics.pose().translate(16, translateHeight, 1);
 
-        guiGraphics.drawString(Minecraft.getInstance().font, "RESUPPLY", 35, textHeight, 0xFFFFFF);
+        guiGraphics.drawString(Minecraft.getInstance().font, isJammed ? "§kRESUPPLY" : "RESUPPLY", 35, textHeight, 0xFFFFFF);
 
         guiGraphics.pose().popPose();
-
-        guiGraphics.drawString(Minecraft.getInstance().font, StratagemHudOverlay.percentageToTime(cooldownLeft, 3, 0),
-                35, arrowHeight, 0xFFFFFF);
+        if (!isJammed) {
+            guiGraphics.drawString(Minecraft.getInstance().font, StratagemHudOverlay.percentageToTime(cooldownLeft, 3, 0),
+                    35, arrowHeight, 0xFFFFFF);
+        } else {
+            guiGraphics.drawString(Minecraft.getInstance().font, "JAMMED", 35, arrowHeight, 0xFFFFFF);
+        }
 
     }
 

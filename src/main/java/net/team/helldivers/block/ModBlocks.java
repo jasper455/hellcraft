@@ -1,5 +1,9 @@
 package net.team.helldivers.block;
 
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -13,7 +17,9 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.function.Supplier;
 
 public class ModBlocks {
@@ -44,6 +50,15 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> BOT_CONTACT_MINE = registerBlock("bot_contact_mine",
             () -> new BotContactMineBlock(BlockBehaviour.Properties.of().instabreak().noCollission().lightLevel((level) -> 5)));
+
+    public static final RegistryObject<Block> STRATAGEM_JAMMER = registerBlock("stratagem_jammer",
+            () -> new Block(BlockBehaviour.Properties.of().noCollission().noOcclusion() .destroyTime(-2)) {
+                @Override
+                public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
+                    super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
+                    pTooltip.add(Component.translatable("block.helldivers.stratagem_jammer.desc"));
+                }
+            });
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

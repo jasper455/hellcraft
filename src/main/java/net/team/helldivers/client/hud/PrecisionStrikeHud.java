@@ -2,6 +2,9 @@ package net.team.helldivers.client.hud;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+import net.team.helldivers.helper.ClientJammedSync;
+
+import static net.team.helldivers.client.hud.StratagemHudOverlay.getCurrentFrame;
 
 public class PrecisionStrikeHud {
     public static boolean firstInputDown = false;
@@ -40,9 +43,20 @@ public class PrecisionStrikeHud {
             arrowHeight = 100;
         }
 
-        guiGraphics.blit(StratagemHudOverlay.PRECISION_STRIKE,
-                12, imgHeight, 20, 20, 0, 0, 31, 31,
-                31, 31);
+        int currentFrame = getCurrentFrame();
+        int vOffset = currentFrame * 160;
+        boolean isJammed = ClientJammedSync.getIsJammed();
+
+        if (isJammed) {
+            guiGraphics.blit(StratagemHudOverlay.JAMMED,
+                    12, imgHeight, 20, 20,
+                    0, vOffset, 16, 160,
+                    16, 160 * 10); // full texture size
+        } else {
+            guiGraphics.blit(StratagemHudOverlay.PRECISION_STRIKE,
+                    12, imgHeight, 20, 20, 0, 0, 16, 16,
+                    16, 16);
+        }
 
         guiGraphics.pose().pushPose();
 
@@ -50,23 +64,38 @@ public class PrecisionStrikeHud {
 
         guiGraphics.pose().translate(16, translateHeight, 1);
 
-        guiGraphics.drawString(Minecraft.getInstance().font, "ORBITAL PRECISION STRIKE", 35, textHeight, 0xFFFFFF);
+        guiGraphics.drawString(Minecraft.getInstance().font, isJammed ? "§kORBITAL PRECISION STRIKE" : "ORBITAL PRECISION STRIKE", 35, textHeight, 0xFFFFFF);
 
         guiGraphics.pose().popPose();
 
 
-        StratagemHudOverlay.renderRightArrow(guiGraphics, 35, arrowHeight, 10, 10,
-                0, 0, 16, 16, 16, 16, firstInputDown);
-        StratagemHudOverlay.renderRightArrow(guiGraphics, 45, arrowHeight, 10, 10,
-                0, 0, 16, 16, 16, 16, secondInputDown);
-        StratagemHudOverlay.renderUpArrow(guiGraphics, 55, arrowHeight, 10, 10,
-                0, 0, 16, 16, 16, 16, thirdInputDown);
+        if (!isJammed) {
+            StratagemHudOverlay.renderRightArrow(guiGraphics, 35, arrowHeight, 10, 10,
+                    0, 0, 16, 16, 16, 16, firstInputDown);
+            StratagemHudOverlay.renderRightArrow(guiGraphics, 45, arrowHeight, 10, 10,
+                    0, 0, 16, 16, 16, 16, secondInputDown);
+            StratagemHudOverlay.renderUpArrow(guiGraphics, 55, arrowHeight, 10, 10,
+                    0, 0, 16, 16, 16, 16, thirdInputDown);
+        } else {
+            guiGraphics.drawString(Minecraft.getInstance().font, "JAMMED", 35, arrowHeight, 0xFFFFFF);
+        }
     }
 
     public static void renderCooldownHud(GuiGraphics guiGraphics, int cooldownLeft) {
-        guiGraphics.blit(StratagemHudOverlay.PRECISION_STRIKE,
-                12, imgHeight, 20, 20, 0, 0, 16, 16,
-                16, 16);
+        int currentFrame = getCurrentFrame();
+        int vOffset = currentFrame * 160;
+        boolean isJammed = ClientJammedSync.getIsJammed();
+
+        if (isJammed) {
+            guiGraphics.blit(StratagemHudOverlay.JAMMED,
+                    12, imgHeight, 20, 20,
+                    0, vOffset, 16, 160,
+                    16, 160 * 10); // full texture size
+        } else {
+            guiGraphics.blit(StratagemHudOverlay.PRECISION_STRIKE,
+                    12, imgHeight, 20, 20, 0, 0, 16, 16,
+                    16, 16);
+        }
 
         guiGraphics.pose().pushPose();
 
@@ -74,12 +103,16 @@ public class PrecisionStrikeHud {
 
         guiGraphics.pose().translate(16, translateHeight, 1);
 
-        guiGraphics.drawString(Minecraft.getInstance().font, "ORBITAL PRECISION STRIKE", 35, textHeight, 0xFFFFFF);
+        guiGraphics.drawString(Minecraft.getInstance().font, isJammed ? "§kORBITAL PRECISION STRIKE" : "ORBITAL PRECISION STRIKE", 35, textHeight, 0xFFFFFF);
 
         guiGraphics.pose().popPose();
 
-        guiGraphics.drawString(Minecraft.getInstance().font, StratagemHudOverlay.percentageToTime(cooldownLeft, 1, 30),
-                35, arrowHeight, 0xFFFFFF);
+        if (!isJammed) {
+            guiGraphics.drawString(Minecraft.getInstance().font, StratagemHudOverlay.percentageToTime(cooldownLeft, 1, 30),
+                    35, arrowHeight, 0xFFFFFF);
+        } else {
+            guiGraphics.drawString(Minecraft.getInstance().font, "JAMMED", 35, arrowHeight, 0xFFFFFF);
+        }
     }
 
     public static void resetInputValues() {

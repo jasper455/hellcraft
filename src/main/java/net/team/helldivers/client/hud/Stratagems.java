@@ -13,6 +13,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.helper.ClientItemCache;
+import net.team.helldivers.helper.ClientJammedSync;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
 import net.team.helldivers.network.PacketHandler;
@@ -35,6 +36,7 @@ public class Stratagems {
     public static void clientTickEvent(TickEvent.ClientTickEvent event) {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
+        boolean isJammed = ClientJammedSync.getIsJammed();
 
         if (player == null || event.phase != TickEvent.Phase.END) return;
 
@@ -105,7 +107,7 @@ public class Stratagems {
             // Hellbomb inputs
 
             if (ClientItemCache.contains(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()) &&
-                    ClientItemCache.isOnCooldown(ModItems.HELLBOMB_ITEM.get().getDefaultInstance())) {
+                    ClientItemCache.isOnCooldown(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()) && !isJammed) {
                 switch (HellbombHud.inputStep) {
                     case 0 -> {
                         if (downJustPressed) {
@@ -187,7 +189,7 @@ public class Stratagems {
             // Resupply inputs
 
             if (ClientItemCache.contains(ModItems.RESUPPLY.get().getDefaultInstance()) &&
-                    ClientItemCache.isOnCooldown(ModItems.RESUPPLY.get().getDefaultInstance())) {
+                    ClientItemCache.isOnCooldown(ModItems.RESUPPLY.get().getDefaultInstance()) && !isJammed) {
                 switch (ResupplyHud.inputStep) {
                     case 0 -> {
                         if (downJustPressed) {
@@ -233,7 +235,7 @@ public class Stratagems {
             // Expendable Anti-Tank inputs
 
             if (ClientItemCache.contains(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()) &&
-                    ClientItemCache.isOnCooldown(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
+                    ClientItemCache.isOnCooldown(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()) && !isJammed) {
                 switch (EAT17Hud.inputStep) {
                     case 0 -> {
                         if (downJustPressed) {
@@ -288,7 +290,7 @@ public class Stratagems {
             // Precision Strike inputs
 
             if (ClientItemCache.contains(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) &&
-                    ClientItemCache.isOnCooldown(ModItems.PRECISION_STRIKE.get().getDefaultInstance())) {
+                    ClientItemCache.isOnCooldown(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) && !isJammed) {
                 switch (PrecisionStrikeHud.inputStep) {
                     case 0 -> {
                         if (rightJustPressed) {
@@ -325,7 +327,7 @@ public class Stratagems {
             // 120MM Barrage inputs
 
             if (ClientItemCache.contains(ModItems.SMALL_BARRAGE.get().getDefaultInstance()) &&
-                    ClientItemCache.isOnCooldown(ModItems.SMALL_BARRAGE.get().getDefaultInstance())) {
+                    ClientItemCache.isOnCooldown(ModItems.SMALL_BARRAGE.get().getDefaultInstance()) && !isJammed) {
                 switch (SmallBarrageHud.inputStep) {
                     case 0 -> {
                         if (rightJustPressed) {
@@ -389,7 +391,7 @@ public class Stratagems {
             // 380MM Barrage inputs
 
             if (ClientItemCache.contains(ModItems.BIG_BARRAGE.get().getDefaultInstance()) &&
-                    ClientItemCache.isOnCooldown(ModItems.BIG_BARRAGE.get().getDefaultInstance())) {
+                    ClientItemCache.isOnCooldown(ModItems.BIG_BARRAGE.get().getDefaultInstance()) && !isJammed) {
                 switch (BigBarrageHud.inputStep) {
                     case 0 -> {
                         if (rightJustPressed) {
@@ -462,7 +464,7 @@ public class Stratagems {
             // Orbital Laser inputs
 
             if (ClientItemCache.contains(ModItems.ORBITAL_LASER.get().getDefaultInstance()) &&
-                    ClientItemCache.isOnCooldown(ModItems.ORBITAL_LASER.get().getDefaultInstance())) {
+                    ClientItemCache.isOnCooldown(ModItems.ORBITAL_LASER.get().getDefaultInstance()) && !isJammed) {
                 switch (OrbitalLaserHud.inputStep) {
                     case 0 -> {
                         if (rightJustPressed) {
@@ -517,7 +519,7 @@ public class Stratagems {
             // Napalm Barrage inputs
 
             if (ClientItemCache.contains(ModItems.NAPALM_BARRAGE.get().getDefaultInstance()) &&
-                    ClientItemCache.isOnCooldown(ModItems.NAPALM_BARRAGE.get().getDefaultInstance())) {
+                    ClientItemCache.isOnCooldown(ModItems.NAPALM_BARRAGE.get().getDefaultInstance()) && !isJammed) {
                 switch (NapalmBarrageHud.inputStep) {
                     case 0 -> {
                         if (rightJustPressed) {
@@ -581,7 +583,7 @@ public class Stratagems {
             // Napalm Barrage inputs
 
             if (ClientItemCache.contains(ModItems.WALKING_BARRAGE.get().getDefaultInstance()) &&
-                    ClientItemCache.isOnCooldown(ModItems.WALKING_BARRAGE.get().getDefaultInstance())) {
+                    ClientItemCache.isOnCooldown(ModItems.WALKING_BARRAGE.get().getDefaultInstance()) && !isJammed) {
                 switch (WalkingBarrageHud.inputStep) {
                     case 0 -> {
                         if (rightJustPressed) {
@@ -645,7 +647,7 @@ public class Stratagems {
             // 500KG Bomb inputs
 
             if (ClientItemCache.contains(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()) &&
-                    ClientItemCache.isOnCooldown(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())) {
+                    ClientItemCache.isOnCooldown(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()) && !isJammed) {
                 switch (Eagle500KgBombHud.inputStep) {
                     case 0 -> {
                         if (upJustPressed) {
@@ -700,7 +702,7 @@ public class Stratagems {
             // Cluster Bomb inputs
 
             if (ClientItemCache.contains(ModItems.CLUSTER_BOMB.get().getDefaultInstance()) &&
-                    ClientItemCache.isOnCooldown(ModItems.CLUSTER_BOMB.get().getDefaultInstance())) {
+                    ClientItemCache.isOnCooldown(ModItems.CLUSTER_BOMB.get().getDefaultInstance()) && !isJammed) {
                 switch (ClusterBombHud.inputStep) {
                     case 0 -> {
                         if (upJustPressed) {
@@ -973,7 +975,8 @@ public class Stratagems {
 
             // Hellbomb Cooldown Complete Popup Code
             if (!ClientItemCache.isOnCooldown(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()) &&
-                    ClientItemCache.getCooldownLeft(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()) <= 5) {
+                    ClientItemCache.getCooldownLeft(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.HELLBOMB_ITEM.get().getDefaultInstance())) {
                 HellbombHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.HELLBOMB_ITEM.get().getDefaultInstance()));
             }
 
@@ -981,50 +984,58 @@ public class Stratagems {
 
             // Resupply Cooldown Complete Popup Code
             if (!ClientItemCache.isOnCooldown(ModItems.RESUPPLY.get().getDefaultInstance()) &&
-                    ClientItemCache.getCooldownLeft(ModItems.RESUPPLY.get().getDefaultInstance()) <= 5) {
+                    ClientItemCache.getCooldownLeft(ModItems.RESUPPLY.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.RESUPPLY.get().getDefaultInstance())) {
                 ResupplyHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.RESUPPLY.get().getDefaultInstance()));
             }
 
             // EAT Cooldown Complete Popup Code
             if (!ClientItemCache.isOnCooldown(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()) &&
-                    ClientItemCache.getCooldownLeft(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()) <= 5) {
+                    ClientItemCache.getCooldownLeft(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
                 EAT17Hud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()));
             }
 
             // ORBITAL
 
             if (!ClientItemCache.isOnCooldown(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) &&
-                    ClientItemCache.getCooldownLeft(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) <= 5) {
+                    ClientItemCache.getCooldownLeft(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.PRECISION_STRIKE.get().getDefaultInstance())) {
                 PrecisionStrikeHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.PRECISION_STRIKE.get().getDefaultInstance()));
             }
 
             // 120 Barrage Cooldown Complete Popup Code
             if (!ClientItemCache.isOnCooldown(ModItems.SMALL_BARRAGE.get().getDefaultInstance()) &&
-                    ClientItemCache.getCooldownLeft(ModItems.SMALL_BARRAGE.get().getDefaultInstance()) <= 5) {
+                    ClientItemCache.getCooldownLeft(ModItems.SMALL_BARRAGE.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.SMALL_BARRAGE.get().getDefaultInstance())) {
                 SmallBarrageHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.SMALL_BARRAGE.get().getDefaultInstance()));
             }
 
             // 380 Barrage Cooldown Complete Popup Code
             if (!ClientItemCache.isOnCooldown(ModItems.BIG_BARRAGE.get().getDefaultInstance()) &&
-                    ClientItemCache.getCooldownLeft(ModItems.BIG_BARRAGE.get().getDefaultInstance()) <= 5) {
+                    ClientItemCache.getCooldownLeft(ModItems.BIG_BARRAGE.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.BIG_BARRAGE.get().getDefaultInstance())) {
                 BigBarrageHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.BIG_BARRAGE.get().getDefaultInstance()));
             }
 
             // Orbital Laser Cooldown Complete Popup Code
             if (!ClientItemCache.isOnCooldown(ModItems.ORBITAL_LASER.get().getDefaultInstance()) &&
-                    ClientItemCache.getCooldownLeft(ModItems.ORBITAL_LASER.get().getDefaultInstance()) <= 5) {
+                    ClientItemCache.getCooldownLeft(ModItems.ORBITAL_LASER.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.ORBITAL_LASER.get().getDefaultInstance())) {
                 OrbitalLaserHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.ORBITAL_LASER.get().getDefaultInstance()));
             }
 
             // Napalm Barrage Cooldown Complete Popup Code
             if (!ClientItemCache.isOnCooldown(ModItems.NAPALM_BARRAGE.get().getDefaultInstance()) &&
-                    ClientItemCache.getCooldownLeft(ModItems.NAPALM_BARRAGE.get().getDefaultInstance()) <= 5) {
+                    ClientItemCache.getCooldownLeft(ModItems.NAPALM_BARRAGE.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.NAPALM_BARRAGE.get().getDefaultInstance())) {
                 NapalmBarrageHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.NAPALM_BARRAGE.get().getDefaultInstance()));
             }
 
             // Walking Barrage Cooldown Complete Popup Code
             if (!ClientItemCache.isOnCooldown(ModItems.WALKING_BARRAGE.get().getDefaultInstance()) &&
-                    ClientItemCache.getCooldownLeft(ModItems.WALKING_BARRAGE.get().getDefaultInstance()) <= 5) {
+                    ClientItemCache.getCooldownLeft(ModItems.WALKING_BARRAGE.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.WALKING_BARRAGE.get().getDefaultInstance())) {
                 WalkingBarrageHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.WALKING_BARRAGE.get().getDefaultInstance()));
             }
 
@@ -1032,13 +1043,15 @@ public class Stratagems {
 
             // 500 KG Cooldown Complete Popup Code
             if (!ClientItemCache.isOnCooldown(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()) &&
-                    ClientItemCache.getCooldownLeft(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()) <= 5) {
+                    ClientItemCache.getCooldownLeft(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance())) {
                 Eagle500KgBombHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.EAGLE_500KG_BOMB.get().getDefaultInstance()));
             }
 
             // Cluster Bomb Cooldown Complete Popup Code
             if (!ClientItemCache.isOnCooldown(ModItems.CLUSTER_BOMB.get().getDefaultInstance()) &&
-                    ClientItemCache.getCooldownLeft(ModItems.CLUSTER_BOMB.get().getDefaultInstance()) <= 5) {
+                    ClientItemCache.getCooldownLeft(ModItems.CLUSTER_BOMB.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.CLUSTER_BOMB.get().getDefaultInstance())) {
                 ClusterBombHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.CLUSTER_BOMB.get().getDefaultInstance()));
             }
         }

@@ -9,6 +9,7 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import net.team.helldivers.block.ModBlocks;
 
 
 public class ModBlockStateProvider extends BlockStateProvider  {
@@ -17,7 +18,9 @@ public class ModBlockStateProvider extends BlockStateProvider  {
     }
 
     @Override
-    protected void registerStatesAndModels() {}
+    protected void registerStatesAndModels() {
+        blockWithItem(ModBlocks.STRATAGEM_JAMMER);
+    }
 
     private void leavesBlock(RegistryObject<Block> blockRegistryObject) {
         simpleBlockWithItem(blockRegistryObject.get(),
