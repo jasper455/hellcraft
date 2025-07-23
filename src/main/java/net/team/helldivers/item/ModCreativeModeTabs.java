@@ -76,6 +76,8 @@ public class ModCreativeModeTabs {
                         //Eagles
                         output.accept(ModItems.EAGLE_500KG_BOMB.get());
                         output.accept(ModItems.CLUSTER_BOMB.get());
+                        output.accept(ModItems.EAGLE_AIRSTRIKE.get());
+                        output.accept(ModItems.NAPALM_AIRSTRIKE.get());
                     }).build());
 
     public static void register(IEventBus eventBus) {

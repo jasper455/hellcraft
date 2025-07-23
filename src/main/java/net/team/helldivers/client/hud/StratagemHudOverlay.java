@@ -66,6 +66,10 @@ public class StratagemHudOverlay {
             HelldiversMod.MOD_ID, "textures/stratagem_hud/500kg_bomb.png");
     public static final ResourceLocation CLUSTER_BOMB = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/cluster_bomb.png");
+    public static final ResourceLocation EAGLE_AIRSTRIKE = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/eagle_airstrike.png");
+    public static final ResourceLocation NAPALM_AIRSTRIKE = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/napalm_airstrike.png");
 
     public static void renderUpArrow(GuiGraphics guiGraphics, int pX, int pY, int pWidth,
                                         int pHeight, int pUOffset, int pVOffset, int pUWidth, int pVHeight,

@@ -1,5 +1,6 @@
 package net.team.helldivers.event;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -18,65 +19,31 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.server.command.ConfigCommand;
 import net.team.helldivers.block.ModBlocks;
+import net.team.helldivers.client.skybox.SkyboxRenderer;
 import net.team.helldivers.command.StopUseLodestoneCommand;
 import net.team.helldivers.command.UseLodestoneCommand;
 import net.team.helldivers.helper.ClientJammedSync;
 import net.team.helldivers.item.custom.armor.IDemocracyProtects;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SSyncJammedPacket;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModEvents {
-//    private static void renderEndSky(PoseStack pPoseStack) {
-//        ResourceLocation SKY_LOCATION = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/sky_two.png");
-////        RenderSystem.enableBlend();
-//        RenderSystem.depthMask(false);
-//        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
-////        RenderSystem.setShaderTexture(0, SKY_LOCATION);
-//        Tesselator tesselator = Tesselator.getInstance();
-//        BufferBuilder bufferbuilder = tesselator.getBuilder();
-//
-//        for(int i = 0; i < 6; ++i) {
-//            pPoseStack.pushPose();
-//            if (i == 1) {
-//                pPoseStack.mulPose(Axis.XP.rotationDegrees(90.0F));
-//            }
-//
-//            if (i == 2) {
-//                pPoseStack.mulPose(Axis.XP.rotationDegrees(-90.0F));
-//            }
-//
-//            if (i == 3) {
-//                pPoseStack.mulPose(Axis.XP.rotationDegrees(180.0F));
-//            }
-//
-//            if (i == 4) {
-//                pPoseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
-//            }
-//
-//            if (i == 5) {
-//                pPoseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F));
-//            }
-//
-//            Matrix4f matrix4f = pPoseStack.last().pose();
-//            bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
-//            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, -1.0F).uv(0.0F, 0.0F).color(255, 255, 255, 255).endVertex();
-//            bufferbuilder.vertex(matrix4f, -1.0F, -1.0F, 1.0F).uv(0.0F, 1.0F).color(255, 255, 255, 255).endVertex();
-//            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, 1.0F).uv(1.0F, 1.0F).color(255, 255, 255, 255).endVertex();
-//            bufferbuilder.vertex(matrix4f, 1.0F, -1.0F, -1.0F).uv(1.0F, 0.0F).color(255, 255, 255, 255).endVertex();
-//            tesselator.end();
-//            pPoseStack.popPose();
-//        }
-//
-//        RenderSystem.depthMask(true);
-////        RenderSystem.disableBlend();
-//    }
-//
-//
+
+    private static final SkyboxRenderer SKYBOX_RENDERER = new SkyboxRenderer();
+
     @SubscribeEvent
-    public static void levelRenderEvent(RenderLevelStageEvent event) {}
+    public static void levelRenderEvent(RenderLevelStageEvent event) {
+        Minecraft minecraft = Minecraft.getInstance();
+
+        Level level = minecraft.level;
+
+//        SKYBOX_RENDERER.render(event.getPoseStack());
+
+    }
 
 
     @SubscribeEvent

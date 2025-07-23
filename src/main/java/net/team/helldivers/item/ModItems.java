@@ -85,6 +85,10 @@ public class ModItems {
             () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
     public static final RegistryObject<Item> CLUSTER_BOMB = ITEMS.register("cluster_bomb",
             () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
+    public static final RegistryObject<Item> EAGLE_AIRSTRIKE = ITEMS.register("eagle_airstrike",
+            () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
+    public static final RegistryObject<Item> NAPALM_AIRSTRIKE = ITEMS.register("napalm_airstrike",
+            () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

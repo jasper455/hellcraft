@@ -1,5 +1,6 @@
 package net.team.helldivers.datagen.loot;
 
+import net.minecraftforge.fml.common.Mod;
 import net.team.helldivers.block.ModBlocks;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
@@ -28,7 +29,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         dropSelf(ModBlocks.COMMON_SAMPLE.get());
         dropSelf(ModBlocks.RARE_SAMPLE.get());
         dropSelf(ModBlocks.SUPER_SAMPLE.get());
-    }
+        }
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
