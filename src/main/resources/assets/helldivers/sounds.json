@@ -149,6 +149,12 @@
       "helldivers:orbital_strike_incoming"
     ]
   },
+  "planet_select": {
+    "subtitles": "sounds.helldivers.planet_select",
+    "sounds": [
+      "helldivers:planet_select"
+    ]
+  },
   "trap_royalty": {
     "sounds": [
       {

@@ -54,6 +54,9 @@ public class ModMenuTypes {
                         throw new IllegalStateException("Invalid entity type for menu!");
                     }));
 
+    public static final RegistryObject<MenuType<GalaxyMapMenu>> GALAXY_MAP_MENU =
+            registerMenuType("galaxy_map", GalaxyMapMenu::new);
+
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(String name, IContainerFactory<T> factory) {
         return MENUS.register(name, () -> IForgeMenuType.create(factory));
     }

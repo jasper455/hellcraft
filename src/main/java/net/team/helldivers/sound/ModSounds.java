@@ -64,6 +64,8 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> ORBITAL_BARRAGE_STAND_CLEAR = registerSoundEvent("orbital_barrage_stand_clear");
 
+    public static final RegistryObject<SoundEvent> PLANET_SELECT = registerSoundEvent("planet_select");
+
     public static final RegistryObject<SoundEvent> TRAP_ROYALTY = registerSoundEvent("trap_royalty");
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {

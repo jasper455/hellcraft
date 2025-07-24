@@ -12,10 +12,7 @@ import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.client.renderer.block.BotContactMineBlockRenderer;
 import net.team.helldivers.client.renderer.block.ExtractionTerminalBlockRenderer;
 import net.team.helldivers.client.renderer.block.HellbombBlockRenderer;
-import net.team.helldivers.client.renderer.entity.EagleAirshipRenderer;
-import net.team.helldivers.client.renderer.entity.HellbombHellpodRenderer;
-import net.team.helldivers.client.renderer.entity.OrbitalLaserRenderer;
-import net.team.helldivers.client.renderer.entity.SupportHellpodRenderer;
+import net.team.helldivers.client.renderer.entity.*;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.item.custom.guns.IGunItem;
@@ -179,6 +176,7 @@ public class ModClientEvents {
             event.registerEntityRenderer(ModEntities.SUPPORT_HELLPOD.get(), SupportHellpodRenderer::new);
             event.registerEntityRenderer(ModEntities.ORBITAL_LASER.get(), OrbitalLaserRenderer::new);
             event.registerEntityRenderer(ModEntities.HELLBOMB_HELLPOD.get(), HellbombHellpodRenderer::new);
+            event.registerEntityRenderer(ModEntities.HELLPOD.get(), HellpodRenderer::new);
 
             event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
             event.registerBlockEntityRenderer(ModBlockEntities.EXTRACTION_TERMINAL.get(), context -> new ExtractionTerminalBlockRenderer());

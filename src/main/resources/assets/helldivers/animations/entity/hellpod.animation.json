@@ -1,0 +1,64 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"fall": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"hull": {
+					"position": {
+						"vector": [0, 32, 0]
+					}
+				},
+				"fire": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [0, -180, 0],
+							"easing": "easeInOutBounce"
+						},
+						"1.0": {
+							"vector": [0, -360, 0],
+							"easing": "easeInOutBounce"
+						}
+					},
+					"scale": {
+						"0.0": {
+							"vector": [1, 1.9, 1]
+						},
+						"0.1667": {
+							"vector": [1, 1, 1],
+							"easing": "easeInOutBounce"
+						},
+						"0.4583": {
+							"vector": [1, 2.9, 1],
+							"easing": "easeInOutBounce"
+						},
+						"0.75": {
+							"vector": [1, 1.5, 1],
+							"easing": "easeInOutBounce"
+						},
+						"1.0": {
+							"vector": [1, 1.9, 1],
+							"easing": "easeInOutBounce"
+						}
+					}
+				}
+			}
+		},
+		"land": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"fire": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}

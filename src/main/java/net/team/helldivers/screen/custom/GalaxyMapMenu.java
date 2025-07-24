@@ -6,18 +6,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.team.helldivers.block.entity.custom.HellbombBlockEntity;
+import net.team.helldivers.block.entity.custom.ExtractionTerminalBlockEntity;
 import net.team.helldivers.screen.ModMenuTypes;
 
-public class HellbombHellpodInputMenu extends AbstractContainerMenu {
-    public final HellbombBlockEntity hellbombBlockEntity;
-    public HellbombHellpodInputMenu(int pContainerId, Inventory inventory, FriendlyByteBuf extraData) {
+public class GalaxyMapMenu extends AbstractContainerMenu {
+    public final ExtractionTerminalBlockEntity extractionTerminalBlockEntity;
+    public GalaxyMapMenu(int pContainerId, Inventory inventory, FriendlyByteBuf extraData) {
         this(pContainerId, inventory, inventory.player.level().getBlockEntity(extraData.readBlockPos()));
     }
 
-    public HellbombHellpodInputMenu(int pContainerId, Inventory inv, BlockEntity blockEntity) {
-        super(ModMenuTypes.HELLBOMB_INPUT_MENU.get(), pContainerId);
-        hellbombBlockEntity = ((HellbombBlockEntity) blockEntity);
+    public GalaxyMapMenu(int pContainerId, Inventory inv, BlockEntity blockEntity) {
+        super(ModMenuTypes.GALAXY_MAP_MENU.get(), pContainerId);
+        extractionTerminalBlockEntity = ((ExtractionTerminalBlockEntity) blockEntity);
     }
 
     @Override

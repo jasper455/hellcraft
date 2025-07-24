@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.*;
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes;
 import net.minecraft.world.level.dimension.DimensionType;
@@ -22,6 +23,8 @@ import java.util.OptionalLong;
 
 public class ModDimensions {
     public static final ResourceKey<LevelStem> CHOEPESSA_KEY = ResourceKey.create(Registries.LEVEL_STEM,
+            ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "choepessa_iv"));
+    public static final ResourceKey<Level> CHOEPESSA_DIM = ResourceKey.create(Registries.DIMENSION,
             ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "choepessa_iv"));
     public static final ResourceKey<DimensionType> CHOEPESSA_DIM_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
             ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "choepessa_dim_type"));

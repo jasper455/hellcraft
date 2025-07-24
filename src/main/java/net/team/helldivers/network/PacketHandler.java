@@ -87,11 +87,16 @@ public class PacketHandler {
                 .consumerMainThread(SHellpodDestroyBlocksPacket::handle)
                 .add();
 
-
         INSTANCE.messageBuilder(SSyncJammedPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(SSyncJammedPacket::encode)
                 .decoder(SSyncJammedPacket::new)
                 .consumerMainThread(SSyncJammedPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(STeleportToDimensionPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(STeleportToDimensionPacket::encode)
+                .decoder(STeleportToDimensionPacket::new)
+                .consumerMainThread(STeleportToDimensionPacket::handle)
                 .add();
 
 

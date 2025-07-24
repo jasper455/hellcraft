@@ -61,6 +61,10 @@ public class ModEntities {
             ENTITY_TYPES.register("cluster_bomb", () -> EntityType.Builder.<ClusterBombProjectileEntity>of(ClusterBombProjectileEntity::new, MobCategory.MISC)
                     .sized(1f, 2f).build("cluster_bomb"));
 
+    public static final RegistryObject<EntityType<HellpodEntity>> HELLPOD =
+            ENTITY_TYPES.register("hellpod", () -> EntityType.Builder.<HellpodEntity>of(HellpodEntity::new, MobCategory.MISC)
+                    .sized(1f, 2.5f).build("hellpod"));
+
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
     }

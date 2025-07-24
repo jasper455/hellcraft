@@ -1,0 +1,58 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.unknown",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 7,
+				"visible_bounds_offset": [0, 0.5, 0]
+			},
+			"bones": [
+				{
+					"name": "hull",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{
+							"origin": [-8, -34, -8],
+							"size": [16, 36, 16],
+							"uv": {
+								"north": {"uv": [112, 36], "uv_size": [16, 36]},
+								"east": {"uv": [112, 92], "uv_size": [16, 36]},
+								"south": {"uv": [112, 0], "uv_size": [16, 36]},
+								"west": {"uv": [96, 0], "uv_size": [16, 36]},
+								"up": {"uv": [16, 0], "uv_size": [16, 16]},
+								"down": {"uv": [32, 16], "uv_size": [16, -16]}
+							}
+						},
+						{"origin": [-6, -42, -6], "size": [12, 8, 12], "uv": [0, 108]},
+						{"origin": [-4, -0.1, -16], "size": [8, 1, 8], "uv": [24, 18]},
+						{"origin": [4, -0.1, 4], "size": [8, 1, 8], "pivot": [8, -0.1, 8], "rotation": [0, -45, 0], "uv": [24, 27]},
+						{"origin": [-12, -0.1, 4], "size": [8, 1, 8], "pivot": [-8, -0.1, 8], "rotation": [0, -45, 0], "uv": [24, 36]}
+					]
+				},
+				{
+					"name": "fire",
+					"parent": "hull",
+					"pivot": [0, -44, 0],
+					"cubes": [
+						{
+							"origin": [-10, -44, -10],
+							"size": [20, 16, 20],
+							"uv": {
+								"north": {"uv": [19, 63], "uv_size": [18, 16]},
+								"east": {"uv": [1, 63], "uv_size": [18, 16]},
+								"south": {"uv": [55, 63], "uv_size": [18, 16]},
+								"west": {"uv": [37, 63], "uv_size": [18, 16]},
+								"up": {"uv": [19, 45], "uv_size": [18, 18]},
+								"down": {"uv": [37, 63], "uv_size": [18, -18]}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
