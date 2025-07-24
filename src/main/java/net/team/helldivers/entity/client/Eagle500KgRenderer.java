@@ -31,7 +31,7 @@ public class Eagle500KgRenderer extends EntityRenderer<Eagle500KgEntity> {
     public void render(Eagle500KgEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
 
-        poseStack.mulPose(Axis.XP.rotationDegrees(-45f));
+//        poseStack.mulPose(Axis.XP.rotationDegrees(-45f));
 
         VertexConsumer vertexConsumer = ItemRenderer.getFoilBufferDirect(
                 buffer, this.model.renderType(this.getTextureLocation(entity)), false, false);

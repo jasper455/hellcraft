@@ -6,13 +6,11 @@ import net.team.helldivers.helper.ClientJammedSync;
 
 import static net.team.helldivers.client.hud.StratagemHudOverlay.getCurrentFrame;
 
-public class WalkingBarrageHud {
+public class NapalmAirstrikeHud {
     public static boolean firstInputDown = false;
     public static boolean secondInputDown = false;
     public static boolean thirdInputDown = false;
     public static boolean fourthInputDown = false;
-    public static boolean fifthInputDown = false;
-    public static boolean sixthInputDown = false;
     public static boolean allInputsDown = false;
     public static int inputStep = 0;
     private static int imgHeight;
@@ -21,7 +19,7 @@ public class WalkingBarrageHud {
     private static int arrowHeight;
 
 
-    public static void renderWalkingBarrageHud(GuiGraphics guiGraphics, int slotIndex) {
+    public static void renderNapalmAirstrikeHud(GuiGraphics guiGraphics, int slotIndex) {
         if (slotIndex == 0) {
             imgHeight = 12;
             translateHeight = 10;
@@ -47,9 +45,9 @@ public class WalkingBarrageHud {
             arrowHeight = 100;
         }
 
-        boolean isJammed = ClientJammedSync.getIsJammed();
         int currentFrame = getCurrentFrame();
         int vOffset = currentFrame * 160;
+        boolean isJammed = ClientJammedSync.getIsJammed();
 
         if (isJammed) {
             guiGraphics.blit(StratagemHudOverlay.JAMMED,
@@ -57,10 +55,11 @@ public class WalkingBarrageHud {
                     0, vOffset, 16, 160,
                     16, 160 * 10); // full texture size
         } else {
-            guiGraphics.blit(StratagemHudOverlay.WALKING_BARRAGE,
+            guiGraphics.blit(StratagemHudOverlay.NAPALM_AIRSTRIKE,
                     12, imgHeight, 20, 20, 0, 0, 16, 16,
                     16, 16);
         }
+
 
         guiGraphics.pose().pushPose();
 
@@ -68,23 +67,19 @@ public class WalkingBarrageHud {
 
         guiGraphics.pose().translate(16, translateHeight, 1);
 
-        guiGraphics.drawString(Minecraft.getInstance().font, isJammed ? "§kORBITAL WALKING BARRAGE" : "ORBITAL WALKING BARRAGE", 35, textHeight, 0xFFFFFF);
+        guiGraphics.drawString(Minecraft.getInstance().font, isJammed ? "§kEAGLE NAPALM AIRSTRIKE" : "EAGLE NAPALM AIRSTRIKE", 35, textHeight, 0xFFFFFF);
+
         guiGraphics.pose().popPose();
 
-
         if (!isJammed) {
-            StratagemHudOverlay.renderRightArrow(guiGraphics, 35, arrowHeight, 10, 10,
+            StratagemHudOverlay.renderUpArrow(guiGraphics, 35, arrowHeight, 10, 10,
                     0, 0, 16, 16, 16, 16, firstInputDown);
-            StratagemHudOverlay.renderDownArrow(guiGraphics, 45, arrowHeight, 10, 10,
+            StratagemHudOverlay.renderRightArrow(guiGraphics, 45, arrowHeight, 10, 10,
                     0, 0, 16, 16, 16, 16, secondInputDown);
-            StratagemHudOverlay.renderRightArrow(guiGraphics, 55, arrowHeight, 10, 10,
+            StratagemHudOverlay.renderDownArrow(guiGraphics, 55, arrowHeight, 10, 10,
                     0, 0, 16, 16, 16, 16, thirdInputDown);
-            StratagemHudOverlay.renderDownArrow(guiGraphics, 65, arrowHeight, 10, 10,
+            StratagemHudOverlay.renderUpArrow(guiGraphics, 65, arrowHeight, 10, 10,
                     0, 0, 16, 16, 16, 16, fourthInputDown);
-            StratagemHudOverlay.renderRightArrow(guiGraphics, 75, arrowHeight, 10, 10,
-                    0, 0, 16, 16, 16, 16, fifthInputDown);
-            StratagemHudOverlay.renderDownArrow(guiGraphics, 85, arrowHeight, 10, 10,
-                    0, 0, 16, 16, 16, 16, sixthInputDown);
         } else {
             guiGraphics.drawString(Minecraft.getInstance().font, "JAMMED", 35, arrowHeight, 0xFFFFFF);
         }
@@ -101,7 +96,7 @@ public class WalkingBarrageHud {
                     0, vOffset, 16, 160,
                     16, 160 * 10); // full texture size
         } else {
-            guiGraphics.blit(StratagemHudOverlay.WALKING_BARRAGE,
+            guiGraphics.blit(StratagemHudOverlay.NAPALM_AIRSTRIKE,
                     12, imgHeight, 20, 20, 0, 0, 16, 16,
                     16, 16);
         }
@@ -112,12 +107,11 @@ public class WalkingBarrageHud {
 
         guiGraphics.pose().translate(16, translateHeight, 1);
 
-        guiGraphics.drawString(Minecraft.getInstance().font, isJammed ? "§kORBITAL WALKING BARRAGE" : "ORBITAL WALKING BARRAGE", 35, textHeight, 0xFFFFFF);
+        guiGraphics.drawString(Minecraft.getInstance().font, isJammed ? "§kEAGLE NAPALM AIRSTRIKE" : "EAGLE NAPALM AIRSTRIKE", 35, textHeight, 0xFFFFFF);
 
         guiGraphics.pose().popPose();
-
         if (!isJammed) {
-            guiGraphics.drawString(Minecraft.getInstance().font, StratagemHudOverlay.percentageToTime(cooldownLeft, 4, 0),
+            guiGraphics.drawString(Minecraft.getInstance().font, StratagemHudOverlay.percentageToTime(cooldownLeft, 2, 30),
                     35, arrowHeight, 0xFFFFFF);
         } else {
             guiGraphics.drawString(Minecraft.getInstance().font, "JAMMED", 35, arrowHeight, 0xFFFFFF);
@@ -130,10 +124,8 @@ public class WalkingBarrageHud {
         secondInputDown = false;
         thirdInputDown = false;
         fourthInputDown = false;
-        fifthInputDown = false;
-        sixthInputDown = false;
         allInputsDown = false;
-        WalkingBarrageHud.inputStep = 0;
+        inputStep = 0;
     }
 
 }

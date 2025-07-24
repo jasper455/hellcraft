@@ -9,6 +9,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.common.Mod;
 import net.team.helldivers.entity.ModEntities;
@@ -293,6 +294,9 @@ public class StratagemOrbEntity extends AbstractArrow {
                 EagleAirshipEntity eagleAirshipEntity = new EagleAirshipEntity(ModEntities.EAGLE_AIRSHIP.get(), this.level());
                 eagleAirshipEntity.setStratagemType(getStratagemType());
                 eagleAirshipEntity.setPos(this.getX(), this.getY() + 5, this.getZ());
+                if (ownerDirection == Direction.NORTH || ownerDirection == Direction.SOUTH) {
+                    eagleAirshipEntity.setYHeadRot(90);
+                }
                 this.level().addFreshEntity(eagleAirshipEntity);
             }
         }
@@ -330,6 +334,47 @@ public class StratagemOrbEntity extends AbstractArrow {
             }
         }
         if (getStratagemType().equals("Eagle Cluster Bomb") && groundedTicks > 102) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
+        // Eagle Airstrike Entity Stuff
+
+        if (getStratagemType().equals("Eagle Airstrike") && !this.level().isClientSide) {
+            if (groundedTicks == 40) {
+                this.playSound(ModSounds.EAGLE_FLYBY.get(), 10.0f, 1.0f);
+            }
+            if (groundedTicks == 80) {
+                EagleAirshipEntity eagleAirshipEntity = new EagleAirshipEntity(ModEntities.EAGLE_AIRSHIP.get(), this.level());
+                eagleAirshipEntity.setStratagemType(getStratagemType());
+                eagleAirshipEntity.setPos(this.getX(), this.getY() + 5, this.getZ());
+                if (ownerDirection == Direction.NORTH || ownerDirection == Direction.SOUTH) {
+                    eagleAirshipEntity.setYHeadRot(90);
+                }
+                this.level().addFreshEntity(eagleAirshipEntity);
+            }
+        }
+        if (getStratagemType().equals("Eagle Airstrike") && groundedTicks > 90) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
+        // Napalm Airstrike Entity Stuff
+        if (getStratagemType().equals("Eagle Napalm Airstrike") && !this.level().isClientSide) {
+            if (groundedTicks == 40) {
+                this.playSound(ModSounds.EAGLE_FLYBY.get(), 10.0f, 1.0f);
+            }
+            if (groundedTicks == 80) {
+                EagleAirshipEntity eagleAirshipEntity = new EagleAirshipEntity(ModEntities.EAGLE_AIRSHIP.get(), this.level());
+                eagleAirshipEntity.setStratagemType(getStratagemType());
+                eagleAirshipEntity.setPos(this.getX(), this.getY() + 5, this.getZ());
+                if (ownerDirection == Direction.NORTH || ownerDirection == Direction.SOUTH) {
+                    eagleAirshipEntity.setYHeadRot(90);
+                }
+                this.level().addFreshEntity(eagleAirshipEntity);
+            }
+        }
+        if (getStratagemType().equals("Eagle Napalm Airstrike") && groundedTicks > 90) {
             this.discard();
             groundedTicks = 0;
         }

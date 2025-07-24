@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -24,8 +25,10 @@ import net.team.helldivers.command.StopUseLodestoneCommand;
 import net.team.helldivers.command.UseLodestoneCommand;
 import net.team.helldivers.helper.ClientJammedSync;
 import net.team.helldivers.item.custom.armor.IDemocracyProtects;
+import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SSyncJammedPacket;
+import net.team.helldivers.util.KeyBinding;
 import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -90,43 +93,45 @@ public class ModEvents {
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide()) return;
-
         Player player = event.player;
-        Level level = player.level();
 
-        AtomicBoolean isJammed = new AtomicBoolean(false);
+        if (KeyBinding.SHOW_STRATAGEM_KEY.isDown() && player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0 &&
+                player.getMainHandItem().isEmpty() &&
+                player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IHelldiverArmorItem) {
+            Level level = player.level();
 
-        // Define radius and center search position (e.g., player's position)
-        BlockPos playerPos = player.blockPosition();
-        int radius = 50;
+            AtomicBoolean isJammed = new AtomicBoolean(false);
 
-        // Scan nearby blocks in a cube
-        BlockPos.betweenClosedStream(playerPos.offset(-radius, -radius, -radius), playerPos.offset(radius, radius, radius))
-                .forEach(pos -> {
-                    if (level.getBlockState(pos).is(ModBlocks.STRATAGEM_JAMMER.get())) {
-                        isJammed.set(true);
-                    }
-                });
+            // Define radius and center search position (e.g., player's position)
+            BlockPos playerPos = player.blockPosition();
+            int radius = 50;
 
-        CompoundTag persistentData = player.getPersistentData();
-        CompoundTag data = persistentData.getCompound(Player.PERSISTED_NBT_TAG); // "ForgeData"
+            // Scan nearby blocks in a cube
+            BlockPos.betweenClosedStream(playerPos.offset(-radius, -radius, -radius), playerPos.offset(radius, radius, radius))
+                    .forEach(pos -> {
+                        if (level.getBlockState(pos).is(ModBlocks.STRATAGEM_JAMMER.get())) {
+                            isJammed.set(true);
+                        }
+                    });
 
-        if (isJammed.get()) {
-            if (!data.getBoolean("near_my_block")) {
-                data.putBoolean("near_my_block", true);
-                PacketHandler.sendToServer(new SSyncJammedPacket(true));
-                // Do something on enter
+            CompoundTag persistentData = player.getPersistentData();
+            CompoundTag data = persistentData.getCompound(Player.PERSISTED_NBT_TAG); // "ForgeData"
+
+            if (isJammed.get()) {
+                if (!data.getBoolean("near_my_block")) {
+                    data.putBoolean("near_my_block", true);
+                    PacketHandler.sendToServer(new SSyncJammedPacket(true));
+                }
+            } else {
+                if (data.contains("near_my_block")) {
+                    data.remove("near_my_block");
+                    PacketHandler.sendToServer(new SSyncJammedPacket(false));
+                }
             }
-        } else {
-            if (data.contains("near_my_block")) {
-                data.remove("near_my_block");
-                PacketHandler.sendToServer(new SSyncJammedPacket(false));
-            }
+
+            // Write back to persistent tag
+            persistentData.put(Player.PERSISTED_NBT_TAG, data);
         }
-
-        // Write back to persistent tag
-        persistentData.put(Player.PERSISTED_NBT_TAG, data);
-
     }
 
 }

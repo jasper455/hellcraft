@@ -1,22 +1,14 @@
 package net.team.helldivers.entity.custom;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.FlyingMob;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.team.helldivers.entity.ModEntities;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.constant.DefaultAnimations;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
@@ -79,6 +71,70 @@ public class EagleAirshipEntity extends FlyingMob implements GeoEntity {
             if (ticksLeft <= 0) {
                 this.discard();
             }
+        }
+
+        if (this.stratagemType.equals("Eagle Napalm Airstrike")) {
+            if (ticksLeft == 13) {
+                spawnAirstrikeMissile(9, true);
+            }
+            if (ticksLeft == 12) {
+                spawnAirstrikeMissile(6, true);
+            }
+            if (ticksLeft == 11) {
+                spawnAirstrikeMissile(3, true);
+            }
+            if (ticksLeft == 10) {
+                spawnAirstrikeMissile(0, true);
+            }
+            if (ticksLeft == 9) {
+                spawnAirstrikeMissile(-3, true);
+            }
+            if (ticksLeft == 8) {
+                spawnAirstrikeMissile(-6, true);
+            }
+            if (ticksLeft <= 0) {
+                this.discard();
+            }
+        }
+
+        if (this.stratagemType.equals("Eagle Airstrike")) {
+            if (ticksLeft == 13) {
+                spawnAirstrikeMissile(9, false);
+            }
+            if (ticksLeft == 12) {
+                spawnAirstrikeMissile(6, false);
+            }
+            if (ticksLeft == 11) {
+                spawnAirstrikeMissile(3, false);
+            }
+            if (ticksLeft == 10) {
+                spawnAirstrikeMissile(0, false);
+            }
+            if (ticksLeft == 9) {
+                spawnAirstrikeMissile(-3, false);
+            }
+            if (ticksLeft == 8) {
+                spawnAirstrikeMissile(-6, false);
+            }
+            if (ticksLeft <= 0) {
+                this.discard();
+            }
+        }
+    }
+
+    private void spawnAirstrikeMissile(int offset, boolean isNapalm) {
+        float randomPosX = (Mth.randomBetween(this.level().getRandom(), -2.5f, 2.5f));
+        float randomPosZ = (Mth.randomBetween(this.level().getRandom(), -2.5f, 2.5f));
+        if (this.getYHeadRot() == 90) {
+            MissileProjectileEntity explosive = new MissileProjectileEntity(this, this.level(), 10, isNapalm);
+            explosive.setPos(this.getX() + offset, this.getY() + 44, this.getZ() + randomPosZ);
+            explosive.setDeltaMovement(0f, 0f, 0f);
+            this.level().addFreshEntity(explosive);
+        } else {
+            MissileProjectileEntity explosive = new MissileProjectileEntity(this, this.level(), 10, isNapalm);
+            explosive.setPos(this.getX() + randomPosX, this.getY() + 44, this.getZ() - offset);
+            explosive.setDeltaMovement(0f, 0f, 0f);
+            this.level().addFreshEntity(explosive);
         }
     }
 

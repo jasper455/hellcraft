@@ -800,6 +800,52 @@ public class Stratagems {
                 }
             }
 
+            // Napalm Airstrike inputs
+
+            if (ClientItemCache.contains(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance()) && !isJammed) {
+                switch (NapalmAirstrikeHud.inputStep) {
+                    case 0 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            NapalmAirstrikeHud.firstInputDown = true;
+                            NapalmAirstrikeHud.inputStep++;
+                        } else if (upNotPressed) {
+                            NapalmAirstrikeHud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            NapalmAirstrikeHud.secondInputDown = true;
+                            NapalmAirstrikeHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            NapalmAirstrikeHud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            NapalmAirstrikeHud.thirdInputDown = true;
+                            NapalmAirstrikeHud.inputStep++;
+                        } else if (downNotPressed) {
+                            NapalmAirstrikeHud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            NapalmAirstrikeHud.fourthInputDown = true;
+                            NapalmAirstrikeHud.allInputsDown = true;
+                            NapalmAirstrikeHud.inputStep++;
+                        } else if (upNotPressed) {
+                            NapalmAirstrikeHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
 
         } else {
             resetInputValues();
@@ -877,6 +923,12 @@ public class Stratagems {
                     ClientItemCache.getSlotWithItem(ModItems.EAGLE_AIRSTRIKE.get().getDefaultInstance())), 3000));
             resetInputValues();
         }
+        if (NapalmAirstrikeHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Eagle Napalm Airstrike"));
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
+                    ClientItemCache.getSlotWithItem(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance())), 3000));
+            resetInputValues();
+        }
     }
 
 
@@ -890,8 +942,7 @@ public class Stratagems {
         int screenWidth = minecraft.getWindow().getGuiScaledWidth();
         int screenHeight = minecraft.getWindow().getGuiScaledHeight();
 
-        // only render the menu if your not moving, all inputs aren't down, your hand is empty, you have a helldiver chestplate on,
-        // and the stratagem picker inventory exists
+        // only render the menu if your not moving, all inputs aren't down, your hand is empty, you have a helldiver chestplate on
         if (KeyBinding.SHOW_STRATAGEM_KEY.isDown() && player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0 && !allInputsDown &&
                 player.getMainHandItem().isEmpty() &&
                 player.getItemBySlot(EquipmentSlot.CHEST).getItem() instanceof IHelldiverArmorItem) {
@@ -1028,6 +1079,16 @@ public class Stratagems {
                     !ClientItemCache.isOnCooldown(ModItems.EAGLE_AIRSTRIKE.get().getDefaultInstance())) {
                 EagleAirstrikeHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.EAGLE_AIRSTRIKE.get().getDefaultInstance()));
             }
+
+            // Eagle Airstrike Render HUD Code
+            if (ClientItemCache.contains(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance())) {
+                NapalmAirstrikeHud.renderNapalmAirstrikeHud(guiGraphics, ClientItemCache.getSlotWithItem(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (ClientItemCache.contains(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance()) &&
+                    !ClientItemCache.isOnCooldown(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance())) {
+                NapalmAirstrikeHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance()));
+            }
         }
 
         // render the popups in the top left if the stratagem is almost done cooling down
@@ -1117,11 +1178,18 @@ public class Stratagems {
                 ClusterBombHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.CLUSTER_BOMB.get().getDefaultInstance()));
             }
 
-            // Cluster Bomb Cooldown Complete Popup Code
+            // Eagle Airstrike Cooldown Complete Popup Code
             if (!ClientItemCache.isOnCooldown(ModItems.EAGLE_AIRSTRIKE.get().getDefaultInstance()) &&
                     ClientItemCache.getCooldownLeft(ModItems.EAGLE_AIRSTRIKE.get().getDefaultInstance()) <= 5 &&
                     ClientItemCache.contains(ModItems.EAGLE_AIRSTRIKE.get().getDefaultInstance())) {
                 EagleAirstrikeHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.EAGLE_AIRSTRIKE.get().getDefaultInstance()));
+            }
+
+            // Napalm Airstrike Cooldown Complete Popup Code
+            if (!ClientItemCache.isOnCooldown(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance()) &&
+                    ClientItemCache.getCooldownLeft(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance())) {
+                NapalmAirstrikeHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance()));
             }
         }
     }
@@ -1156,6 +1224,7 @@ public class Stratagems {
         NapalmBarrageHud.resetInputValues();
         WalkingBarrageHud.resetInputValues();
         EagleAirstrikeHud.resetInputValues();
+        NapalmAirstrikeHud.resetInputValues();
         allInputsDown = false;
     }
 }

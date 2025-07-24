@@ -6,6 +6,9 @@
   <a href="https://www.youtube.com/@Infinite1274-v1y"><img src="https://cdn.pixabay.com/photo/2020/07/15/21/04/subscribe-5408999_640.png" width="160" height="80"></a>
 <br>
   <a href="https://modrinth.com/mod/helldivers-crafted-democracy"><img src="https://cdn2.steamgriddb.com/logo_thumb/7246274686efd0f0309184fed45ee310.png" width="160" height="30"></a>
+<br>
+<br>
+  <a href="https://www.curseforge.com/minecraft/mc-mods/helldivers-crafted-democracy"><img src="https://cappack.page/assets/DlOnCurseforge-BnEPKQSD.png" width="175" height="55"></a>
 <h3>Our Take on a Helldivers Mod for Minecraft </h3>
 </div>
 
