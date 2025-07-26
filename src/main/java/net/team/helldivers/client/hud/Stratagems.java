@@ -287,6 +287,125 @@ public class Stratagems {
                 }
             }
 
+            // Stalwart inputs
+
+            if (ClientItemCache.contains(ModItems.STALWART_STRATAGEM.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.STALWART_STRATAGEM.get().getDefaultInstance()) && !isJammed) {
+                switch (StalwartHud.inputStep) {
+                    case 0 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            StalwartHud.firstInputDown = true;
+                            StalwartHud.inputStep++;
+                        } else if (downNotPressed) {
+                            StalwartHud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (leftJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            StalwartHud.secondInputDown = true;
+                            StalwartHud.inputStep++;
+                        } else if (leftNotPressed) {
+                            StalwartHud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            StalwartHud.thirdInputDown = true;
+                            StalwartHud.inputStep++;
+                        } else if (downNotPressed) {
+                            StalwartHud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            StalwartHud.fourthInputDown = true;
+                            StalwartHud.inputStep++;
+                        } else if (upNotPressed) {
+                            StalwartHud.resetInputValues();
+                        }
+                    }
+                    case 4 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            StalwartHud.fifthInputDown = true;
+                            StalwartHud.inputStep++;
+                        } else if (upNotPressed) {
+                            StalwartHud.resetInputValues();
+                        }
+                    }
+                    case 5 -> {
+                        if (leftJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            StalwartHud.fifthInputDown = true;
+                            StalwartHud.allInputsDown = true;
+                            StalwartHud.inputStep++;
+                        } else if (leftNotPressed) {
+                            StalwartHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
+            // Anti-Materiel Rifle inputs
+
+            if (ClientItemCache.contains(ModItems.AMR_STRATAGEM.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.AMR_STRATAGEM.get().getDefaultInstance()) && !isJammed) {
+                switch (AmrHud.inputStep) {
+                    case 0 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            AmrHud.firstInputDown = true;
+                            AmrHud.inputStep++;
+                        } else if (downNotPressed) {
+                            AmrHud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (leftJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            AmrHud.secondInputDown = true;
+                            AmrHud.inputStep++;
+                        } else if (leftNotPressed) {
+                            AmrHud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            AmrHud.thirdInputDown = true;
+                            AmrHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            AmrHud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            AmrHud.fourthInputDown = true;
+                            AmrHud.inputStep++;
+                        } else if (upNotPressed) {
+                            AmrHud.resetInputValues();
+                        }
+                    }
+                    case 4 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            AmrHud.fifthInputDown = true;
+                            AmrHud.allInputsDown = true;
+                            AmrHud.inputStep++;
+                        } else if (downNotPressed) {
+                            AmrHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
             // Precision Strike inputs
 
             if (ClientItemCache.contains(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) &&
@@ -869,6 +988,18 @@ public class Stratagems {
                     ClientItemCache.getSlotWithItem(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())), 1400));
             resetInputValues();
         }
+        if (StalwartHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Stalwart"));
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
+                    ClientItemCache.getSlotWithItem(ModItems.STALWART_STRATAGEM.get().getDefaultInstance())), 9600));
+            resetInputValues();
+        }
+        if (AmrHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Anti-Materiel Rifle"));
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
+                    ClientItemCache.getSlotWithItem(ModItems.AMR.get().getDefaultInstance())), 9600));
+            resetInputValues();
+        }
         if (PrecisionStrikeHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Precision Strike"));
             PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
@@ -984,6 +1115,26 @@ public class Stratagems {
             else if (ClientItemCache.contains(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()) &&
                     !ClientItemCache.isOnCooldown(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance())) {
                 EAT17Hud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()));
+            }
+
+            // Stalwart Render HUD Code
+            if (ClientItemCache.contains(ModItems.STALWART_STRATAGEM.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.STALWART_STRATAGEM.get().getDefaultInstance())) {
+                StalwartHud.renderStalwartHud(guiGraphics, ClientItemCache.getSlotWithItem(ModItems.STALWART_STRATAGEM.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (ClientItemCache.contains(ModItems.STALWART_STRATAGEM.get().getDefaultInstance()) &&
+                    !ClientItemCache.isOnCooldown(ModItems.STALWART_STRATAGEM.get().getDefaultInstance())) {
+                StalwartHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.STALWART_STRATAGEM.get().getDefaultInstance()));
+            }
+
+            // Stalwart Render HUD Code
+            if (ClientItemCache.contains(ModItems.AMR_STRATAGEM.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.AMR_STRATAGEM.get().getDefaultInstance())) {
+                AmrHud.renderAmrHud(guiGraphics, ClientItemCache.getSlotWithItem(ModItems.AMR_STRATAGEM.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (ClientItemCache.contains(ModItems.AMR_STRATAGEM.get().getDefaultInstance()) &&
+                    !ClientItemCache.isOnCooldown(ModItems.AMR_STRATAGEM.get().getDefaultInstance())) {
+                AmrHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.AMR_STRATAGEM.get().getDefaultInstance()));
             }
 
             // ORBITAL
@@ -1119,6 +1270,20 @@ public class Stratagems {
                 EAT17Hud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.ANTI_TANK_STRATAGEM.get().getDefaultInstance()));
             }
 
+            // EAT Cooldown Complete Popup Code
+            if (!ClientItemCache.isOnCooldown(ModItems.STALWART_STRATAGEM.get().getDefaultInstance()) &&
+                    ClientItemCache.getCooldownLeft(ModItems.STALWART_STRATAGEM.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.STALWART_STRATAGEM.get().getDefaultInstance())) {
+                StalwartHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.STALWART_STRATAGEM.get().getDefaultInstance()));
+            }
+
+            // EAT Cooldown Complete Popup Code
+            if (!ClientItemCache.isOnCooldown(ModItems.AMR_STRATAGEM.get().getDefaultInstance()) &&
+                    ClientItemCache.getCooldownLeft(ModItems.AMR_STRATAGEM.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.AMR_STRATAGEM.get().getDefaultInstance())) {
+                AmrHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.AMR_STRATAGEM.get().getDefaultInstance()));
+            }
+
             // ORBITAL
 
             if (!ClientItemCache.isOnCooldown(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) &&
@@ -1225,6 +1390,8 @@ public class Stratagems {
         WalkingBarrageHud.resetInputValues();
         EagleAirstrikeHud.resetInputValues();
         NapalmAirstrikeHud.resetInputValues();
+        StalwartHud.resetInputValues();
+        AmrHud.resetInputValues();
         allInputsDown = false;
     }
 }

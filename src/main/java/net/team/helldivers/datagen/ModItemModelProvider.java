@@ -67,6 +67,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.HELLBOMB_ITEM.get());
         basicItem(ModItems.RESUPPLY.get());
         basicItem(ModItems.ANTI_TANK_STRATAGEM.get());
+        basicItem(ModItems.STALWART_STRATAGEM.get());
         basicItem(ModItems.RESUPPLY.get());
         basicItem(ModItems.SMALL_BARRAGE.get());
         basicItem(ModItems.BIG_BARRAGE.get());

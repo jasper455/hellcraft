@@ -33,19 +33,16 @@ public class StratagemOrbItem extends Item {
     public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity, int pTimeCharged) {
         if (pLivingEntity instanceof Player player) {
             int i = this.getUseDuration(pStack) - pTimeCharged;
-            if (i >= 10) { // Minimum charge time of 0.5 seconds (10 ticks)
-                if (!pLevel.isClientSide()) {
-                    StratagemOrbEntity stratagemOrb = new StratagemOrbEntity(player, pLevel,
-                            player.getMainHandItem().getTag().getString("stratagemType"), player.getDirection());
-                    float power = Math.min(i / 20F, 1.5F); // Max power after 1 second charge
-                    stratagemOrb.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, power * 1.5F, 0F);
-                    pLevel.addFreshEntity(stratagemOrb);
-                }
-
-                player.awardStat(Stats.ITEM_USED.get(this));
-                if (!player.getAbilities().instabuild) {
-                    pStack.shrink(1);
-                }
+            if (!pLevel.isClientSide()) {
+                StratagemOrbEntity stratagemOrb = new StratagemOrbEntity(player, pLevel,
+                        player.getMainHandItem().getTag().getString("stratagemType"), player.getDirection());
+                float power = Math.min(i / 20F, 1.5F); // Max power after 1 second charge
+                stratagemOrb.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, power * 1.5F, 0F);
+                pLevel.addFreshEntity(stratagemOrb);
+            }
+            player.awardStat(Stats.ITEM_USED.get(this));
+            if (!player.getAbilities().instabuild) {
+                pStack.shrink(1);
             }
         }
     }

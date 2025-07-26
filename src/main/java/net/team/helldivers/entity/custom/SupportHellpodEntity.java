@@ -299,6 +299,14 @@ public class SupportHellpodEntity extends Entity implements GeoEntity {
             this.inventory.setItem(0, new ItemStack(ModBlocks.AMMO_CRATE.get(), 2));
             this.inventory.setItem(1, new ItemStack(ModBlocks.AMMO_CRATE.get(), 2));
         }
+        if (stratagemType.equals("Stalwart")) {
+            this.inventory.setItem(0, new ItemStack(ModItems.STALWART.get(), 1));
+            this.inventory.setItem(1, new ItemStack(Items.AIR));
+        }
+        if (stratagemType.equals("Anti-Materiel Rifle")) {
+            this.inventory.setItem(0, new ItemStack(ModItems.AMR.get(), 1));
+            this.inventory.setItem(1, new ItemStack(Items.AIR));
+        }
     }
 
     public void onInventoryClosed() {

@@ -51,7 +51,7 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
         super.onHitEntity(result);
         Entity entity = result.getEntity();
         BlockPos pos = entity.blockPosition();
-        entity.hurt(this.damageSources().thrown(this, this.getOwner()), 30);
+        entity.hurt(this.damageSources().arrow(this, this.getOwner()), 30);
         if (!this.level().isClientSide) {
             this.level().broadcastEntityEvent(this, (byte)3);
         }
@@ -87,7 +87,7 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
 
     @Override
     public void tick() {
-        this.setDeltaMovement(this.getDeltaMovement().normalize().scale(6f));
+        this.setDeltaMovement(this.getDeltaMovement().normalize().scale(20f));
 
         this.previousPos = new Vec3(this.getX(), this.getY(), this.getZ());
         super.tick();

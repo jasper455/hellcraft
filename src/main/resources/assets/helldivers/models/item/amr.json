@@ -1,0 +1,6 @@
+{
+  "parent": "helldivers:displaysettings/amr_display",
+  "textures": {
+    "layer0": "helldivers:item/stalwart"
+  }
+}

@@ -11,6 +11,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.behavior.LookAtTargetSink;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
@@ -50,7 +51,6 @@ public class OrbitalLaserEntity extends Monster implements GeoEntity {
     @Override
     public void tick() {
         super.tick();
-
         if (onGround()) {
             this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER,
                     this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);

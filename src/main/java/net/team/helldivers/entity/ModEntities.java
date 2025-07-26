@@ -49,6 +49,10 @@ public class ModEntities {
             ENTITY_TYPES.register("frag_grenade", () -> EntityType.Builder.<FragGrenadeEntity>of(FragGrenadeEntity::new, MobCategory.MISC)
                     .sized(0.15f, 0.15f).build("frag_grenade"));
 
+    public static final RegistryObject<EntityType<FireGrenadeEntity>> FIRE_GRENADE =
+            ENTITY_TYPES.register("fire_grenade", () -> EntityType.Builder.<FireGrenadeEntity>of(FireGrenadeEntity::new, MobCategory.MISC)
+                    .sized(0.15f, 0.15f).build("fire_grenade"));
+
     public static final RegistryObject<EntityType<EagleAirshipEntity>> EAGLE_AIRSHIP =
             ENTITY_TYPES.register("eagle_airship", () -> EntityType.Builder.of(EagleAirshipEntity::new, MobCategory.MISC)
                     .sized(0.00001f, 0.00001f).build("eagle_airship"));
@@ -64,6 +68,7 @@ public class ModEntities {
     public static final RegistryObject<EntityType<HellpodEntity>> HELLPOD =
             ENTITY_TYPES.register("hellpod", () -> EntityType.Builder.<HellpodEntity>of(HellpodEntity::new, MobCategory.MISC)
                     .sized(1f, 2.5f).build("hellpod"));
+
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

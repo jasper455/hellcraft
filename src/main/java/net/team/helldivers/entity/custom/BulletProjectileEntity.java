@@ -32,14 +32,18 @@ public class BulletProjectileEntity extends AbstractArrow {
     public Vec2 groundedOffset;
     private Vec3 previousPos;
     private int lifetime = 0;
+    private boolean isShotgun;
+    private boolean isAmr;
 
     public BulletProjectileEntity(EntityType<? extends AbstractArrow> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
-    public BulletProjectileEntity(LivingEntity shooter, Level level) {
+    public BulletProjectileEntity(LivingEntity shooter, Level level, boolean isShotgun, boolean isAmr) {
         super(ModEntities.BULLET.get(), shooter, level);
         this.previousPos = new Vec3(this.getX(), this.getY(), this.getZ());
+        this.isShotgun = isShotgun;
+        this.isAmr = isAmr;
     }
 
 
@@ -56,7 +60,7 @@ public class BulletProjectileEntity extends AbstractArrow {
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
         Entity entity = result.getEntity();
-        entity.hurt(this.damageSources().thrown(this, this.getOwner()), 3);
+        entity.hurt(this.damageSources().arrow(this, this.getOwner()), 3);
         if (!this.level().isClientSide) {
             this.level().broadcastEntityEvent(this, (byte)3);
         }
@@ -86,7 +90,7 @@ public class BulletProjectileEntity extends AbstractArrow {
 
         super.tick();
         lifetime++;
-        this.setDeltaMovement(this.getDeltaMovement().normalize().scale(3f));
+        this.setDeltaMovement(this.getDeltaMovement().normalize().scale(this.isAmr ? 10 : 5));
         if (this.level().isClientSide) {
             Entity owner = this.getOwner();
             if (owner instanceof Player player) {
@@ -110,7 +114,8 @@ public class BulletProjectileEntity extends AbstractArrow {
         }
         if (lifetime >= 40) {
             this.discard();
-            return;
+        } else if (this.isShotgun && lifetime == 10) {
+            this.discard();
         }
     }
 

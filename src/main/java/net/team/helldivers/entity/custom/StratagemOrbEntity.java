@@ -134,6 +134,15 @@ public class StratagemOrbEntity extends AbstractArrow {
                 SupportHellpodEntity supportHellpodEntity = new SupportHellpodEntity(this.level(), getStratagemType());
                 supportHellpodEntity.setPos(this.getX(), 200, this.getZ());
                 this.level().addFreshEntity(supportHellpodEntity);
+
+                // Get the owner (player)
+                if (this.getOwner() instanceof Player player) {
+                    // Set the entity's rotation to face the player
+                    double deltaX = player.getX() - this.getBlockX();
+                    double deltaZ = player.getZ() - this.getBlockZ();
+                    float yRot = (float) (Math.atan2(deltaZ, deltaX) * (180.0D / Math.PI)) - 90.0F;
+                    supportHellpodEntity.setYRot(yRot);
+                }
             }
         }
         if (getStratagemType().equals("Resupply") && groundedTicks > 320) {
@@ -147,9 +156,64 @@ public class StratagemOrbEntity extends AbstractArrow {
                 SupportHellpodEntity supportHellpodEntity = new SupportHellpodEntity(this.level(), getStratagemType());
                 supportHellpodEntity.setPos(this.getX(), 200, this.getZ());
                 this.level().addFreshEntity(supportHellpodEntity);
+
+                // Get the owner (player)
+                if (this.getOwner() instanceof Player player) {
+                    // Set the entity's rotation to face the player
+                    double deltaX = player.getX() - this.getBlockX();
+                    double deltaZ = player.getZ() - this.getBlockZ();
+                    float yRot = (float) (Math.atan2(deltaZ, deltaX) * (180.0D / Math.PI)) - 90.0F;
+                    supportHellpodEntity.setYRot(yRot);
+                }
             }
         }
         if (getStratagemType().equals("Expendable Anti-Tank") && groundedTicks > 140) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
+        // Stalwart Entity Stuff
+        if (getStratagemType().equals("Stalwart") && !this.level().isClientSide) {
+            if (groundedTicks == 100) {
+                SupportHellpodEntity supportHellpodEntity = new SupportHellpodEntity(this.level(), getStratagemType());
+                supportHellpodEntity.setPos(this.getX(), 200, this.getZ());
+                this.level().addFreshEntity(supportHellpodEntity);
+
+                // Get the owner (player)
+                if (this.getOwner() instanceof Player player) {
+                    // Set the entity's rotation to face the player
+                    double deltaX = player.getX() - this.getBlockX();
+                    double deltaZ = player.getZ() - this.getBlockZ();
+                    float yRot = (float) (Math.atan2(deltaZ, deltaX) * (180.0D / Math.PI)) - 90.0F;
+                    supportHellpodEntity.setYRot(yRot);
+                }
+
+            }
+        }
+        if (getStratagemType().equals("Stalwart") && groundedTicks > 140) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
+        // Stalwart Entity Stuff
+        if (getStratagemType().equals("Anti-Materiel Rifle") && !this.level().isClientSide) {
+            if (groundedTicks == 100) {
+                SupportHellpodEntity supportHellpodEntity = new SupportHellpodEntity(this.level(), getStratagemType());
+                supportHellpodEntity.setPos(this.getX(), 200, this.getZ());
+                this.level().addFreshEntity(supportHellpodEntity);
+
+                // Get the owner (player)
+                if (this.getOwner() instanceof Player player) {
+                    // Set the entity's rotation to face the player
+                    double deltaX = player.getX() - this.getBlockX();
+                    double deltaZ = player.getZ() - this.getBlockZ();
+                    float yRot = (float) (Math.atan2(deltaZ, deltaX) * (180.0D / Math.PI)) - 90.0F;
+                    supportHellpodEntity.setYRot(yRot);
+                }
+
+            }
+        }
+        if (getStratagemType().equals("Stalwart") && groundedTicks > 140) {
             this.discard();
             groundedTicks = 0;
         }

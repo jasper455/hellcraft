@@ -48,6 +48,10 @@ public class StratagemHudOverlay {
             HelldiversMod.MOD_ID, "textures/stratagem_hud/resupply_gui.png");
     public static final ResourceLocation EAT_17 = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/eat.png");
+    public static final ResourceLocation STALWART = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/stalwart.png");
+    public static final ResourceLocation AMR = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/amr.png");
     //Orbitals
     public static final ResourceLocation PRECISION_STRIKE = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/precision_strike_gui.png");

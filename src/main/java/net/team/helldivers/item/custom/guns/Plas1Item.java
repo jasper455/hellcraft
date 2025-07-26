@@ -50,7 +50,7 @@ public class Plas1Item extends Item implements GeoItem, IGunItem {
     }
 
     private boolean canShoot(ItemStack stack) {
-        return stack.getDamageValue() < stack.getMaxDamage() - 5;
+        return stack.getDamageValue() < stack.getMaxDamage() - 1;
     }
 
     @Override

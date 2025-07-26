@@ -18,6 +18,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import team.lodestar.lodestone.helpers.RenderHelper;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -341,8 +342,8 @@ public class VFXBuilders {
             Matrix4f last = stack.last().pose();
             float startU = 0.0F;
             float startV = 0.0F;
-            float endU = ((float)Math.PI * 2F);
-            float endV = (float)Math.PI;
+            float endU = Mth.TWO_PI;
+            float endV = Mth.PI;
             float stepU = (endU - startU) / (float)longs;
             float stepV = (endV - startV) / (float)lats;
 
@@ -350,22 +351,33 @@ public class VFXBuilders {
                 for(int j = 0; j < lats; ++j) {
                     float u = (float)i * stepU + startU;
                     float v = (float)j * stepV + startV;
-                    float un = i + 1 == longs ? endU : (float)(i + 1) * stepU + startU;
-                    float vn = j + 1 == lats ? endV : (float)(j + 1) * stepV + startV;
-                    Vector3f p0 = parametricSphere(u, v, radius);
-                    Vector3f p1 = parametricSphere(u, vn, radius);
-                    Vector3f p2 = parametricSphere(un, v, radius);
-                    Vector3f p3 = parametricSphere(un, vn, radius);
-                    float textureU = u / endU;
-                    float textureV = v / endV;
-                    float textureUN = un / endU;
-                    float textureVN = vn / endV;
-                    vertexPosColortextureLight(vertexConsumer, last, p0.x(), p0.y(), p0.z(), this.r, this.g, this.b, this.a, textureU, textureV, this.light);
-                    vertexPosColortextureLight(vertexConsumer, last, p2.x(), p2.y(), p2.z(), this.r, this.g, this.b, this.a, textureUN, textureV, this.light);
-                    vertexPosColortextureLight(vertexConsumer, last, p1.x(), p1.y(), p1.z(), this.r, this.g, this.b, this.a, textureU, textureVN, this.light);
-                    vertexPosColortextureLight(vertexConsumer, last, p3.x(), p3.y(), p3.z(), this.r, this.g, this.b, this.a, textureUN, textureVN, this.light);
-                    vertexPosColortextureLight(vertexConsumer, last, p1.x(), p1.y(), p1.z(), this.r, this.g, this.b, this.a, textureU, textureVN, this.light);
-                    vertexPosColortextureLight(vertexConsumer, last, p2.x(), p2.y(), p2.z(), this.r, this.g, this.b, this.a, textureUN, textureV, this.light);
+                    float un = i + 1 == longs ? endU : (float)(i + 4) * stepU + startU;
+                    float vn = j + 1 == lats ? endV : (float)(j + 4) * stepV + startV;
+                    Vector3f p0 = RenderHelper.parametricSphere(u, v, radius);
+                    Vector3f p1 = RenderHelper.parametricSphere(u, vn, radius);
+                    Vector3f p2 = RenderHelper.parametricSphere(un, v, radius);
+                    Vector3f p3 = RenderHelper.parametricSphere(un, vn, radius);
+                    float textureU = u * endU;
+                    float textureV = v * endV;
+                    float textureUN = un * endU;
+                    float textureVN = vn * endV;
+                    // Triangle 1
+                    addVertex(vertexConsumer, last, p0.x(), p0.y(), p0.z(), 1f, 1f, 1f, 0.3f, textureU, textureVN, light);
+                    addVertex(vertexConsumer, last, p2.x(), p2.y(), p2.z(), 1f, 1f, 1f, 0.3f, textureUN, textureV, light);
+                    addVertex(vertexConsumer, last, p3.x(), p3.y(), p3.z(), 1f, 1f, 1f, 0.3f, textureUN, textureVN, light);
+                    // Triangle 2
+                    addVertex(vertexConsumer, last, p1.x(), p1.y(), p1.z(), 1f, 1f, 1f, 0.3f, textureU, textureVN, light);
+                    addVertex(vertexConsumer, last, p2.x(), p2.y(), p2.z(), 1f, 1f, 1f, 0.3f, textureUN, textureV, light);
+                    addVertex(vertexConsumer, last, p3.x(), p3.y(), p3.z(), 1f, 1f, 1f, 0.3f, textureUN, textureVN, light);
+
+                    // Triangle 1
+                    addVertex(vertexConsumer, last, p3.x(), p3.y(), p3.z(), 1f, 1f, 1f, 0.3f, textureUN, textureVN, light);
+                    addVertex(vertexConsumer, last, p2.x(), p2.y(), p2.z(), 1f, 1f, 1f, 0.3f, textureUN, textureV, light);
+                    addVertex(vertexConsumer, last, p0.x(), p0.y(), p0.z(), 1f, 1f, 1f, 0.3f, textureU, textureVN, light);
+                    // Triangle 2
+                    addVertex(vertexConsumer, last, p3.x(), p3.y(), p3.z(), 1f, 1f, 1f, 0.3f, textureUN, textureVN, light);
+                    addVertex(vertexConsumer, last, p2.x(), p2.y(), p2.z(), 1f, 1f, 1f, 0.3f, textureUN, textureV, light);
+                    addVertex(vertexConsumer, last, p1.x(), p1.y(), p1.z(), 1f, 1f, 1f, 0.3f, textureU, textureVN, light);
                 }
             }
 

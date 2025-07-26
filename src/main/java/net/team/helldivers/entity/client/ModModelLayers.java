@@ -11,9 +11,6 @@ public class ModModelLayers {
     public static final ModelLayerLocation STRATAGEM_ORB = new ModelLayerLocation(
             ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "stratagem_orb"), "main");
 
-    public static final ModelLayerLocation HELLPOD = new ModelLayerLocation(
-            ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "hellpod"), "main");
-
     public static final ModelLayerLocation BULLET = new ModelLayerLocation(
             ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "bullet"), "main");
 
@@ -22,6 +19,9 @@ public class ModModelLayers {
 
     public static final ModelLayerLocation FRAG_GRENADE = new ModelLayerLocation(
             ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "frag_grenade"), "main");
+
+    public static final ModelLayerLocation FIRE_GRENADE = new ModelLayerLocation(
+            ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "fire_grenade"), "main");
 
     public static final ModelLayerLocation CLUSTER_BOMB = new ModelLayerLocation(
             ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "cluster_bomb"), "main");

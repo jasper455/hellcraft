@@ -15,6 +15,7 @@ import net.team.helldivers.client.renderer.block.HellbombBlockRenderer;
 import net.team.helldivers.client.renderer.entity.*;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.item.custom.guns.AmrItem;
 import net.team.helldivers.item.custom.guns.IGunItem;
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.util.KeyBinding;
@@ -62,6 +63,15 @@ public class ModClientEvents {
                 && (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem)) {
             float fovModifier = 1f;
             float deltaTicks = ((float) 25) / 20f;
+            deltaTicks *= deltaTicks;
+            fovModifier *=1f - deltaTicks * 0.5f;
+            event.setNewFovModifier(fovModifier);
+        }
+
+        if (KeyBinding.AIM.isDown()
+                && (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof AmrItem)) {
+            float fovModifier = 1f;
+            float deltaTicks = ((float) 35) / 20f;
             deltaTicks *= deltaTicks;
             fovModifier *=1f - deltaTicks * 0.5f;
             event.setNewFovModifier(fovModifier);

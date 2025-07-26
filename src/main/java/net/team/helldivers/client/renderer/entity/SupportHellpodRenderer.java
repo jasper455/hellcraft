@@ -1,6 +1,7 @@
 package net.team.helldivers.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.culling.Frustum;
@@ -25,6 +26,17 @@ public class SupportHellpodRenderer extends GeoEntityRenderer<SupportHellpodEnti
     @Override
     public ResourceLocation getTextureLocation(SupportHellpodEntity animatable) {
         return ResourceLocation.fromNamespaceAndPath("helldivers", "textures/entity/support_hellpod/support_hellpod.png");
+    }
+
+    @Override
+    public void render(SupportHellpodEntity entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+        poseStack.pushPose();
+        // Rotate the model 180 degrees around the Y axis
+        poseStack.mulPose(Axis.YP.rotationDegrees(-entityYaw));
+
+        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+
+        poseStack.popPose();
     }
 
     @Override

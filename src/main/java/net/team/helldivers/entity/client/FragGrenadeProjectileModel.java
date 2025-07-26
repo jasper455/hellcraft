@@ -6,9 +6,10 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.team.helldivers.entity.custom.FragGrenadeEntity;
 import net.team.helldivers.entity.custom.StratagemOrbEntity;
 
-public class FragGrenadeProjectileModel extends EntityModel<StratagemOrbEntity> {
+public class FragGrenadeProjectileModel extends EntityModel<FragGrenadeEntity> {
     private final ModelPart frag_grenade;
     private final ModelPart bone;
 
@@ -32,7 +33,7 @@ public class FragGrenadeProjectileModel extends EntityModel<StratagemOrbEntity> 
 
 
     @Override
-    public void setupAnim(StratagemOrbEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
+    public void setupAnim(FragGrenadeEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {}
 
 
     @Override

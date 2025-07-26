@@ -10,10 +10,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import net.team.helldivers.item.custom.guns.Ar23Item;
-import net.team.helldivers.item.custom.guns.EAT17Item;
-import net.team.helldivers.item.custom.guns.P2Item;
-import net.team.helldivers.item.custom.guns.Plas1Item;
+import net.team.helldivers.item.custom.guns.*;
 import net.team.helldivers.sound.ModSounds;
 
 public class ModItems {
@@ -51,6 +48,18 @@ public class ModItems {
     public static final RegistryObject<Item> PLAS1 = ITEMS.register("plas1",
             () -> new Plas1Item(new Item.Properties().stacksTo(1).fireResistant()));
 
+    public static final RegistryObject<Item> SG225 = ITEMS.register("sg225",
+            () -> new Sg225Item(new Item.Properties().stacksTo(1).fireResistant()));
+
+    public static final RegistryObject<Item> STALWART = ITEMS.register("stalwart",
+            () -> new StalwartItem(new Item.Properties().stacksTo(1).fireResistant()));
+
+    public static final RegistryObject<Item> AMR = ITEMS.register("amr",
+            () -> new AmrItem(new Item.Properties().stacksTo(1).fireResistant()));
+
+    public static final RegistryObject<Item> FIRE_GRENADE = ITEMS.register("fire_grenade",
+            () -> new FireGrenadeItem(new Item.Properties().stacksTo(1).fireResistant()));
+
     public static final RegistryObject<Item> EXTRACTION_TERMINAL_BLOCK_ITEM = ITEMS.register("extraction_terminal_block_item",
             () -> new ExtractionTerminalBlockItem(ModBlocks.EXTRACTION_TERMINAL.get(), new Item.Properties().stacksTo(1).fireResistant()));
 
@@ -66,6 +75,10 @@ public class ModItems {
     public static final RegistryObject<Item> RESUPPLY = ITEMS.register("resupply",
             () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
     public static final RegistryObject<Item> ANTI_TANK_STRATAGEM = ITEMS.register("eat_stratagem",
+            () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
+    public static final RegistryObject<Item> STALWART_STRATAGEM = ITEMS.register("stalwart_stratagem",
+            () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
+    public static final RegistryObject<Item> AMR_STRATAGEM = ITEMS.register("amr_stratagem",
             () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
     // ORBITAL
     public static final RegistryObject<Item> SMALL_BARRAGE = ITEMS.register("small_barrage",

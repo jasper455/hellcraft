@@ -34,7 +34,7 @@ public class FragGrenadeEntity extends AbstractArrow {
     }
 
     public FragGrenadeEntity(LivingEntity shooter, Level level) {
-        super(ModEntities.FRAG_GRENADE.get(), shooter, level);
+        super(ModEntities.FIRE_GRENADE.get(), shooter, level);
     }
 
     public float getRenderingRotation() {

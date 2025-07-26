@@ -53,8 +53,12 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.AR23.get());
                         output.accept(ModItems.P2_PEACEMAKER.get());
                         output.accept(ModItems.PLAS1.get());
+                        output.accept(ModItems.SG225.get());
                         output.accept(ModItems.EAT_17.get());
+                        output.accept(ModItems.STALWART.get());
+                        output.accept(ModItems.AMR.get());
                         output.accept(ModItems.FRAG_GRENADE.get());
+                        output.accept(ModItems.FIRE_GRENADE.get());
                     }).build());
     public static final RegistryObject<CreativeModeTab> STRATAGEMS_TAB = CREATIVE_MODE_TABS.register("stratagems_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.PRECISION_STRIKE.get()))
@@ -66,6 +70,7 @@ public class ModCreativeModeTabs {
                         //Supports
                         output.accept(ModItems.RESUPPLY.get());
                         output.accept(ModItems.ANTI_TANK_STRATAGEM.get());
+                        output.accept(ModItems.STALWART_STRATAGEM.get());
                         //Orbitals
                         output.accept(ModItems.SMALL_BARRAGE.get());
                         output.accept(ModItems.BIG_BARRAGE.get());

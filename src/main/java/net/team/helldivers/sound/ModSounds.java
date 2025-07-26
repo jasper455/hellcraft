@@ -66,6 +66,14 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> PLANET_SELECT = registerSoundEvent("planet_select");
 
+    public static final RegistryObject<SoundEvent> SG225_SHOOT = registerSoundEvent("sg225_shoot");
+
+    public static final RegistryObject<SoundEvent> STALWART_SHOOT = registerSoundEvent("stalwart_shoot");
+
+    public static final RegistryObject<SoundEvent> AMR_SHOOT = registerSoundEvent("amr_shoot");
+
+    public static final RegistryObject<SoundEvent> AMR_RELOAD = registerSoundEvent("amr_reload");
+
     public static final RegistryObject<SoundEvent> TRAP_ROYALTY = registerSoundEvent("trap_royalty");
 
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {

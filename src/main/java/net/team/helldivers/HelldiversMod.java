@@ -84,6 +84,7 @@ public class HelldiversMod {
         EntityRenderers.register(ModEntities.BULLET.get(), BulletProjectileRenderer::new);
         EntityRenderers.register(ModEntities.ROCKET.get(), RocketProjectileRenderer::new);
         EntityRenderers.register(ModEntities.FRAG_GRENADE.get(), FragGrenadeProjectileRenderer::new);
+        EntityRenderers.register(ModEntities.FIRE_GRENADE.get(), FireGrenadeProjectileRenderer::new);
         EntityRenderers.register(ModEntities.HEATED_GAS.get(), HeatedGasProjectileRenderer::new);
         EntityRenderers.register(ModEntities.CLUSTER_BOMB.get(), ClusterBombProjectileRenderer::new);
     }

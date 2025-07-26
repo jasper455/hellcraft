@@ -24,10 +24,10 @@ public class HellpodLayer extends GeoRenderLayer<HellpodEntity> {
 
     @Override
     public void render(PoseStack poseStack, HellpodEntity hellpodEntity, BakedGeoModel bakedModel, RenderType renderType, MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay) {
-        RenderType glowRenderType = RenderType.eyes(EMMISSIVE);
+        RenderType glowRenderType = RenderType.energySwirl(EMMISSIVE, 0, 0);
         poseStack.pushPose();
         getRenderer().reRender(getDefaultBakedModel(hellpodEntity), poseStack, bufferSource, hellpodEntity,
-                LodestoneRenderTypeRegistry.TRANSPARENT_SOLID, bufferSource.getBuffer(glowRenderType), partialTick, packedLight,
+                RenderType.energySwirl(EMMISSIVE, 0, 0), bufferSource.getBuffer(glowRenderType), partialTick, packedLight,
                 OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
         poseStack.popPose();
     }

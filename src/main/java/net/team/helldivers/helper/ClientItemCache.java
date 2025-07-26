@@ -3,6 +3,7 @@ package net.team.helldivers.helper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,7 +20,7 @@ public class ClientItemCache {
     }
 
     public static void removeFromSlotCache(int slot, ItemStack itemStack) {
-        slotCache.remove(slot, itemStack);
+        slotCache.replace(slot, itemStack, new ItemStack(Items.AIR));
     }
 
     public static boolean contains(ItemStack stack) {

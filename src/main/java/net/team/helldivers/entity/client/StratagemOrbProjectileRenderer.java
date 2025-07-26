@@ -66,6 +66,8 @@ public class StratagemOrbProjectileRenderer extends EntityRenderer<StratagemOrbE
             // Support
             case "Resupply" -> new float[]{0.51f, 0.996f, 1.0f, 1.0f}; // Support blue color
             case "Expendable Anti-Tank" -> new float[]{0.51f, 0.996f, 1.0f, 1.0f}; // Support blue color
+            case "Stalwart" -> new float[]{0.51f, 0.996f, 1.0f, 1.0f}; // Support blue color
+            case "Anti-Materiel Rifle" -> new float[]{0.51f, 0.996f, 1.0f, 1.0f}; // Support blue color
             // Orbital
             case "Orbital Precision Strike" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
             case "Orbital 120MM HE Barrage" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color

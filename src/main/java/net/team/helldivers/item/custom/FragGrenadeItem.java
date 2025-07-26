@@ -34,18 +34,15 @@ public class FragGrenadeItem extends Item {
     public void releaseUsing(ItemStack pStack, Level pLevel, LivingEntity pLivingEntity, int pTimeCharged) {
         if (pLivingEntity instanceof Player player) {
             int i = this.getUseDuration(pStack) - pTimeCharged;
-            if (i >= 10) { // Minimum charge time of 0.5 seconds (10 ticks)
-                if (!pLevel.isClientSide()) {
-                    FragGrenadeEntity grenade = new FragGrenadeEntity(player, pLevel);
-                    float power = Math.min(i / 20F, 1.5F); // Max power after 1 second charge
-                    grenade.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, power * 1.5F, 0F);
-                    pLevel.addFreshEntity(grenade);
-                }
-
-                player.awardStat(Stats.ITEM_USED.get(this));
-                if (!player.getAbilities().instabuild) {
-                    pStack.shrink(1);
-                }
+            if (!pLevel.isClientSide()) {
+                FragGrenadeEntity grenade = new FragGrenadeEntity(player, pLevel);
+                float power = Math.min(i / 20F, 1.5F); // Max power after 1 second charge
+                grenade.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0F, power * 1.5F, 0F);
+                pLevel.addFreshEntity(grenade);
+            }
+            player.awardStat(Stats.ITEM_USED.get(this));
+            if (!player.getAbilities().instabuild) {
+                pStack.shrink(1);
             }
         }
     }

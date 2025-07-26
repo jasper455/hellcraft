@@ -155,6 +155,30 @@
       "helldivers:planet_select"
     ]
   },
+  "sg225_shoot": {
+    "subtitles": "sounds.helldivers.sg225_shoot",
+    "sounds": [
+      "helldivers:sg225_shoot"
+    ]
+  },
+  "stalwart_shoot": {
+    "subtitles": "sounds.helldivers.stalwart_shoot",
+    "sounds": [
+      "helldivers:stalwart_shoot"
+    ]
+  },
+  "amr_shoot": {
+    "subtitles": "sounds.helldivers.amr_shoot",
+    "sounds": [
+      "helldivers:amr_shoot"
+    ]
+  },
+  "amr_reload": {
+    "subtitles": "sounds.helldivers.amr_reload",
+    "sounds": [
+      "helldivers:amr_reload"
+    ]
+  },
   "trap_royalty": {
     "sounds": [
       {

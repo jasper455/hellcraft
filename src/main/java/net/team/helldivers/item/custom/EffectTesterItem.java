@@ -5,9 +5,12 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.ShulkerBoxBlock;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.team.helldivers.entity.custom.BulletProjectileEntity;
 import net.team.helldivers.util.KeyBinding;
@@ -20,10 +23,26 @@ public class EffectTesterItem extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
-        BulletProjectileEntity bulletProjectile = new BulletProjectileEntity(pPlayer, pLevel);
-        bulletProjectile.setDeltaMovement(0, 0, 0);
-        bulletProjectile.setNoGravity(true);
-        pLevel.addFreshEntity(bulletProjectile);
+//        BulletProjectileEntity bulletProjectile = new BulletProjectileEntity(pPlayer, pLevel, false, false);
+//        bulletProjectile.setDeltaMovement(0, 0, 0);
+//        bulletProjectile.setNoGravity(true);
+//        pLevel.addFreshEntity(bulletProjectile);
+
+        if (!pLevel.isClientSide) {
+            ItemStack original = getFirstShulkerBoxWithTag(pPlayer);
+            if (!original.isEmpty()) {
+                // Copy the original Shulker Box
+                ItemStack copy = original.copy();
+                copy.setCount(1); // Only give one
+
+                // Try to add to inventory
+                boolean added = pPlayer.getInventory().add(copy);
+                if (!added) {
+                    // Drop if inventory full
+                    pPlayer.drop(copy, false);
+                }
+            }
+        }
         return super.use(pLevel, pPlayer, pUsedHand);
     }
 
@@ -56,4 +75,16 @@ public class EffectTesterItem extends Item {
 //            }
 //        });
 //    }
+
+    private ItemStack getFirstShulkerBoxWithTag(Player player) {
+        for (ItemStack stack : player.getInventory().items) {
+            if (stack.getItem() instanceof BlockItem blockItem &&
+                    blockItem.getBlock() instanceof ShulkerBoxBlock &&
+                    stack.hasTag() &&
+                    stack.getTag().contains("BlockEntityTag")) {
+                return stack;
+            }
+        }
+        return new ItemStack(Items.DIAMOND);
+    }
 }
