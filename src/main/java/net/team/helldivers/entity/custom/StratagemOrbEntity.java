@@ -37,6 +37,7 @@ public class StratagemOrbEntity extends AbstractArrow {
     public Vec3 groundedOffset;
     private int groundedTicks = 0;
 
+
     public StratagemOrbEntity(EntityType<? extends AbstractArrow> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }

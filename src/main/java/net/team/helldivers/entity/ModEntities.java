@@ -69,6 +69,10 @@ public class ModEntities {
             ENTITY_TYPES.register("hellpod", () -> EntityType.Builder.<HellpodEntity>of(HellpodEntity::new, MobCategory.MISC)
                     .sized(1f, 2.5f).build("hellpod"));
 
+    public static final RegistryObject<EntityType<GatlingSentryHellpodEntity>> GATLING_SENTRY =
+            ENTITY_TYPES.register("gatling_sentry", () -> EntityType.Builder.<GatlingSentryHellpodEntity>of(GatlingSentryHellpodEntity::new, MobCategory.MISC)
+                    .sized(1f, 2f).build("gatling_sentry"));
+
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

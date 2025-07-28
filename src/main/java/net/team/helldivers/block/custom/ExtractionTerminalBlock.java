@@ -39,7 +39,7 @@ public class ExtractionTerminalBlock extends BaseEntityBlock implements EntityBl
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
 
     public ExtractionTerminalBlock(Properties properties) {
-        super(properties);
+        super(properties.noOcclusion());
         this.registerDefaultState(this.getStateDefinition().any().setValue(FACING, Direction.NORTH));
     }
 

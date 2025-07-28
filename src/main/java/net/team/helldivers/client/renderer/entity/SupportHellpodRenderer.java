@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.client.model.entity.SupportHellpodModel;
 import net.team.helldivers.client.renderer.entity.layer.SupportHellpodLayer;
 import net.team.helldivers.entity.custom.SupportHellpodEntity;
@@ -25,7 +26,7 @@ public class SupportHellpodRenderer extends GeoEntityRenderer<SupportHellpodEnti
 
     @Override
     public ResourceLocation getTextureLocation(SupportHellpodEntity animatable) {
-        return ResourceLocation.fromNamespaceAndPath("helldivers", "textures/entity/support_hellpod/support_hellpod.png");
+        return ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/entity/support_hellpod/support_hellpod.png");
     }
 
     @Override

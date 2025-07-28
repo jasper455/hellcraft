@@ -1,5 +1,6 @@
 package net.team.helldivers.block.entity;
 
+import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.block.entity.custom.BotContactMineBlockEntity;
 import net.team.helldivers.block.entity.custom.ExtractionTerminalBlockEntity;
@@ -13,7 +14,7 @@ import software.bernie.geckolib.GeckoLib;
 
 public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister
-            .create(ForgeRegistries.BLOCK_ENTITY_TYPES, GeckoLib.MOD_ID);
+            .create(ForgeRegistries.BLOCK_ENTITY_TYPES, HelldiversMod.MOD_ID);
 
     public static final RegistryObject<BlockEntityType<HellbombBlockEntity>> HELLBOMB = BLOCK_ENTITIES
             .register("hellbomb", () -> BlockEntityType.Builder

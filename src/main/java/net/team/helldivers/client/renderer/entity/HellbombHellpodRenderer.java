@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.client.model.entity.HellbombHellpodModel;
 import net.team.helldivers.client.renderer.entity.layer.HellbombHellpodLayer;
 import net.team.helldivers.client.renderer.entity.layer.SupportHellpodLayer;
@@ -35,7 +36,7 @@ public class HellbombHellpodRenderer extends GeoEntityRenderer<HellbombHellpodEn
 
     @Override
     public ResourceLocation getTextureLocation(HellbombHellpodEntity animatable) {
-        return ResourceLocation.fromNamespaceAndPath("helldivers", "textures/entity/hellbomb_hellpod/hellbomb_hellpod.png");
+        return ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/entity/hellbomb_hellpod/hellbomb_hellpod.png");
     }
 
     @Override

@@ -1,0 +1,235 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"fall": {
+			"loop": true,
+			"animation_length": 0.75,
+			"bones": {
+				"hull": {
+					"position": {
+						"vector": [0, 32, 0]
+					}
+				},
+				"fire": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.375": {
+							"vector": [0, -90, 0]
+						},
+						"0.75": {
+							"vector": [0, -180, 0]
+						}
+					},
+					"scale": {
+						"0.0": {
+							"vector": [1, 1.9, 1]
+						},
+						"0.1667": {
+							"vector": [1, 1, 1]
+						},
+						"0.375": {
+							"vector": [1, 2.9, 1],
+							"easing": "easeInOutBounce"
+						},
+						"0.5417": {
+							"vector": [1, 1.5, 1],
+							"easing": "easeInOutBounce"
+						},
+						"0.75": {
+							"vector": [1, 1.9, 1],
+							"easing": "easeInOutBounce"
+						}
+					}
+				},
+				"sentry": {
+					"scale": {
+						"vector": [0.9, 1, 0.2]
+					}
+				}
+			}
+		},
+		"land": {
+			"loop": true,
+			"animation_length": 0.25,
+			"bones": {
+				"fire": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"sentry": {
+					"position": {
+						"vector": [0, -29, 0]
+					},
+					"scale": {
+						"vector": [0.9, 1, 0.2]
+					}
+				}
+			}
+		},
+		"deploy": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.5,
+			"bones": {
+				"fire": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"sentry": {
+					"position": {
+						"0.0": {
+							"vector": [0, -33, 0]
+						},
+						"0.25": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"scale": {
+						"vector": [0.975, 1, 0.975]
+					}
+				},
+				"gun": {
+					"rotation": {
+						"0.0": {
+							"vector": [-90, 0, 0]
+						},
+						"0.3333": {
+							"vector": [-90, 0, 0]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"flare": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 18]
+						},
+						"0.25": {
+							"vector": [0, 0, 0]
+						}
+					},
+					"scale": {
+						"vector": [0, 0, 1]
+					}
+				},
+				"barrels": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 18]
+						},
+						"0.25": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"idle": {
+			"loop": true,
+			"animation_length": 0.25,
+			"bones": {
+				"fire": {
+					"scale": 0
+				},
+				"sentry": {
+					"scale": [0.975, 1, 0.975]
+				},
+				"flare": {
+					"scale": [0, 0, 1]
+				}
+			}
+		},
+		"empty": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.5,
+			"bones": {
+				"fire": {
+					"scale": 0
+				},
+				"sentry": {
+					"position": {
+						"0.1667": [0, 0, 0],
+						"0.25": [0, 0, 0],
+						"0.5": [0, -33, 0]
+					},
+					"scale": [0.975, 1, 0.975]
+				},
+				"gun": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.1667": [-90, 0, 0]
+					}
+				},
+				"flare": {
+					"position": {
+						"0.0": [0, 0, 18],
+						"0.25": [0, 0, 0]
+					},
+					"scale": [0, 0, 1]
+				},
+				"barrels": {
+					"position": {
+						"0.25": [0, 0, 0],
+						"0.5": [0, 0, 19]
+					}
+				}
+			}
+		},
+		"shoot": {
+			"loop": true,
+			"animation_length": 0.25,
+			"bones": {
+				"barrels": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.25": [0, 0, -360]
+					},
+					"position": [0, 0, 0]
+				},
+				"flare": {
+					"rotation": [0, 0, 0.01],
+					"scale": {
+						"0.0": [0.1, 0.1, 1],
+						"0.0833": [2, 2, 1],
+						"0.125": [0.1, 0.1, 1],
+						"0.2083": [2, 2, 1],
+						"0.25": [0.1, 0.1, 1]
+					}
+				},
+				"barrel1": {
+					"position": {
+						"0.0": [0, 0, 0],
+						"0.0833": [0, 0, 1],
+						"0.125": [0, 0, 0]
+					}
+				},
+				"barrel2": {
+					"position": {
+						"0.0833": [0, 0, 0],
+						"0.125": [0, 0, 1],
+						"0.1667": [0, 0, 0]
+					}
+				},
+				"barrel3": {
+					"position": {
+						"0.125": [0, 0, 0],
+						"0.1667": [0, 0, 1],
+						"0.2083": [0, 0, 0]
+					}
+				},
+				"sentry": {
+					"scale": [0.975, 1, 0.975]
+				},
+				"fire": {
+					"scale": 0
+				}
+			}
+		}
+	},
+	"geckolib_format_version": 2
+}
