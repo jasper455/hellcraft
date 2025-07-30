@@ -4,11 +4,13 @@ package net.team.helldivers.event;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import net.minecraft.client.renderer.ShaderInstance;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.client.event.*;
 import net.minecraftforge.event.TickEvent;
 import net.team.helldivers.HelldiversMod;
@@ -103,7 +105,6 @@ public class ModClientEvents {
         RenderSystem.defaultBlendFunc();
         RenderSystem.disableDepthTest();
 
-        // Optional: Bind a texture (like smoke), or use a plain color
         guiGraphics.fill(0, 0, screenWidth, screenHeight, new Color(255, 251, 216, (int)(alpha * 255)).getRGB());
 
         RenderSystem.enableDepthTest();

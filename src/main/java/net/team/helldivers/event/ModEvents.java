@@ -115,8 +115,8 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide()) return;
         Player player = event.player;
+        if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide()) return;
 
         if (KeyBinding.SHOW_STRATAGEM_KEY.isDown() && player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0 &&
                 player.getMainHandItem().isEmpty() &&
