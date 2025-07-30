@@ -1,5 +1,6 @@
-// 1.20.1	2025-07-24T00:14:22.1778445	Item Models: helldivers
+// 1.20.1	2025-07-28T16:16:38.8969578	Item Models: helldivers
 975afeeffe669bd7a27ffebc2f385a50bc6897c4 assets/helldivers/models/item/500kg_bomb.json
+f2dc75440c892fff7ccfc27da727b8f1ddf053ad assets/helldivers/models/item/amr_stratagem.json
 1e70d3b46a91d0a9f10f4a23e869ed2a037b2476 assets/helldivers/models/item/b01_boots.json
 fd49abbcbe58c4c800f408349a84e554eba0fb4d assets/helldivers/models/item/b01_chestplate.json
 2df6e370b1c574f0fd86723daededa7268eae587 assets/helldivers/models/item/b01_helmet.json
@@ -28,5 +29,6 @@ c199abcb7d1739634dda6747a116a868175c2907 assets/helldivers/models/item/sc30_ches
 3705694980c14254ec849f4effebcdcd65727610 assets/helldivers/models/item/sc30_helmet.json
 d784d0b3e39c3a32a5347b6534531ea7f89720b4 assets/helldivers/models/item/sc30_leggings.json
 949f5bf329a9b2d7a33127cdf36f53713614dbaa assets/helldivers/models/item/small_barrage.json
+4a25b64853a31db4a51ffc0deaf4c2f56fc4c556 assets/helldivers/models/item/stalwart_stratagem.json
 ea6307b87155f47489ef83f16c020d48565f41a9 assets/helldivers/models/item/trap_royalty_music_disc.json
 9381b222bc74313b8cd6cc005e93c26f50e43423 assets/helldivers/models/item/walking_barrage.json

@@ -92,31 +92,25 @@ public class BulletProjectileEntity extends AbstractArrow {
         lifetime++;
         this.setDeltaMovement(this.getDeltaMovement().normalize().scale(this.isAmr ? 10 : 5));
         if (this.level().isClientSide) {
-            Entity owner = this.getOwner();
-            if (owner instanceof Player player) {
-                // Create particles along the path
-                Vec3 current = new Vec3(this.getX(), this.getY(), this.getZ());
-                Vec3 direction = current.subtract(previousPos);
-                int particleCount = 5; // Adjust based on speed
-
-                for (int i = 0; i < particleCount; i++) {
-                    double factor = i / (double) particleCount;
-                    Vec3 pos = previousPos.add(direction.scale(factor));
-
-                    DustParticleOptions dustParticle = new DustParticleOptions(
-                            Vec3.fromRGB24(0x000000).toVector3f(), 0.5F);
-
-                    this.level().addParticle(dustParticle,
-                            pos.x, pos.y, pos.z,
-                            0.0D, 0.0D, 0.0D);
-                }
+            // Create particles along the path
+            Vec3 current = new Vec3(this.getX(), this.getY(), this.getZ());
+            Vec3 direction = current.subtract(previousPos);
+            int particleCount = 5; // Adjust based on speed
+            for (int i = 0; i < particleCount; i++) {
+                double factor = i / (double) particleCount;
+                Vec3 pos = previousPos.add(direction.scale(factor));
+                DustParticleOptions dustParticle = new DustParticleOptions(
+                        Vec3.fromRGB24(0x000000).toVector3f(), 0.5F);
+                this.level().addParticle(dustParticle,
+                        pos.x, pos.y, pos.z,
+                        0.0D, 0.0D, 0.0D);
             }
         }
-        if (lifetime >= 40) {
-            this.discard();
-        } else if (this.isShotgun && lifetime == 10) {
-            this.discard();
-        }
+//        if (lifetime >= 40) {
+//            this.discard();
+//        } else if (this.isShotgun && lifetime == 10) {
+//            this.discard();
+//        }
     }
 
     @Override

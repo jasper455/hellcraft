@@ -36,6 +36,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.team.helldivers.worldgen.chunk.ModChunkGenerators;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
@@ -65,6 +66,7 @@ public class HelldiversMod {
         ModSounds.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+        ModChunkGenerators.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
 

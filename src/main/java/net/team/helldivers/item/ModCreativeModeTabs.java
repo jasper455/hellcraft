@@ -71,6 +71,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.RESUPPLY.get());
                         output.accept(ModItems.ANTI_TANK_STRATAGEM.get());
                         output.accept(ModItems.STALWART_STRATAGEM.get());
+                        output.accept(ModItems.AMR_STRATAGEM.get());
                         //Orbitals
                         output.accept(ModItems.SMALL_BARRAGE.get());
                         output.accept(ModItems.BIG_BARRAGE.get());

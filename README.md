@@ -17,18 +17,18 @@ That is unless you make the most important decision of your life.
 Prove to yourself that you have the strength and the courage, to be, free
 Join... the Helldivers!
 
-<h2>About</h2>
-Helldivers: Crafted Democracy is a mod for Minecraft that adds a new depth of Gameplay to Minecraft by adding various features and Ideas from Helldivers II into Minecraft!
+<div>
+Helldivers: Crafted Democracy is a mod for Minecraft that adds a new depth of Gameplay to Minecraft by adding various features and Ideas from Helldivers II to the game!
 Explore a host of worlds in need of liberation across the Galaxy, and crush the foes of freedom with the selection of weapons,
 armor and stratagems provided to you by S.E.A.F High Command!
-You can become a hero.
-You can become a legend.
-You can become...A Helldiver! The galaxy awaits liberation helldiver, get to it!
+Become a hero.<br>Become a legend.<br>Become...A Helldiver!<br>The galaxy awaits liberation!
+</div>
+<h2>About</h2>
 
 <h2>Features</h2>
-  - Accurate Stratagem System with Multiple Functioning Stratagems
-  - Mutiple guns / firearms from Helldivers 2
-  - A variety of armor sets from Helldivers 2
+- Accurate Stratagem System with a Variety of Functioning Stratagems<br>
+- Multiple guns / firearms from Helldivers 2<br>
+- A variety of armor sets from Helldivers 2<br>
 
 <div align="center">
 <h3>This mod is not associated with Sony or Arrowhead</h3>

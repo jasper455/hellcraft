@@ -2,11 +2,15 @@ package net.team.helldivers.event;
 
 
 import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.client.event.*;
+import net.minecraftforge.event.TickEvent;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.client.renderer.block.BotContactMineBlockRenderer;
@@ -17,6 +21,8 @@ import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.item.custom.guns.AmrItem;
 import net.team.helldivers.item.custom.guns.IGunItem;
+import net.team.helldivers.item.custom.guns.Plas1Item;
+import net.team.helldivers.item.custom.guns.StalwartItem;
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.util.KeyBinding;
 import net.minecraft.client.Minecraft;
@@ -29,6 +35,7 @@ import software.bernie.geckolib.GeckoLib;
 import team.lodestar.lodestone.systems.postprocess.PostProcessHandler;
 
 import java.awt.*;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -197,6 +204,17 @@ public class ModClientEvents {
         @SubscribeEvent
         public static void registerReloadListener(RegisterClientReloadListenersEvent event) {
             GeckoLib.initialize();
+        }
+
+        @SubscribeEvent
+        public static void onRegisterShaders(RegisterShadersEvent event) throws IOException {
+            event.registerShader(new ShaderInstance(
+                    event.getResourceProvider(),
+                    ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "rendertype_custom_sky"),
+                    DefaultVertexFormat.POSITION
+            ), shader -> {
+                // You can store the shader here for later use if you want to use it manually
+            });
         }
     }
 

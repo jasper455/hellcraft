@@ -1,6 +1,7 @@
 package net.team.helldivers.worldgen.dimension;
 
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
@@ -17,8 +18,11 @@ import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator;
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.worldgen.biome.ModBiomes;
+import net.team.helldivers.worldgen.chunk.PrebuiltChunkGenerator;
+import net.team.helldivers.worldgen.chunk.PrebuiltChunkGeneratorSettings;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.OptionalLong;
 
 public class ModDimensions {
@@ -28,6 +32,12 @@ public class ModDimensions {
             ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "choepessa_iv"));
     public static final ResourceKey<DimensionType> CHOEPESSA_DIM_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
             ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "choepessa_dim_type"));
+    public static final ResourceKey<LevelStem> SUPER_DESTROYER_KEY = ResourceKey.create(Registries.LEVEL_STEM,
+            ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "super_destroyer"));
+    public static final ResourceKey<Level> SUPER_DESTROYER_DIM = ResourceKey.create(Registries.DIMENSION,
+            ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "super_destroyer"));
+    public static final ResourceKey<DimensionType> SUPER_DESTROYER_DIM_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
+            ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "super_destroyer_dim_type"));
 
     public static void bootstrapType(BootstapContext<DimensionType> context) {
         context.register(CHOEPESSA_DIM_TYPE, new DimensionType(
@@ -44,6 +54,23 @@ public class ModDimensions {
                 256,
                 BlockTags.INFINIBURN_OVERWORLD,
                 BuiltinDimensionTypes.OVERWORLD_EFFECTS,
+                1.0f,
+                new DimensionType.MonsterSettings(false, false, ConstantInt.of(0), 0)
+        ));
+        context.register(SUPER_DESTROYER_DIM_TYPE, new DimensionType(
+                OptionalLong.of(18000),
+                false,
+                false,
+                false,
+                false,
+                1.0,
+                true,
+                false,
+                0,
+                256,
+                256,
+                BlockTags.INFINIBURN_OVERWORLD,
+                BuiltinDimensionTypes.END_EFFECTS,
                 1.0f,
                 new DimensionType.MonsterSettings(false, false, ConstantInt.of(0), 0)
         ));
@@ -76,9 +103,8 @@ public class ModDimensions {
                         ))),
                 noiseGenSettings.getOrThrow(NoiseGeneratorSettings.AMPLIFIED));
 
-        LevelStem stem = new LevelStem(dimTypes.getOrThrow(ModDimensions.CHOEPESSA_DIM_TYPE), wrappedChunkGenerator);
-
-        context.register(CHOEPESSA_KEY, stem);
+        LevelStem choepessaStem = new LevelStem(dimTypes.getOrThrow(ModDimensions.CHOEPESSA_DIM_TYPE), wrappedChunkGenerator);
+        context.register(CHOEPESSA_KEY, choepessaStem);
     }
 
 }
