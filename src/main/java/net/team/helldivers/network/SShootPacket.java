@@ -208,7 +208,7 @@ public class SShootPacket {
                     // Play sound
                     player.level().playSound(null, player.blockPosition(),
                             ModSounds.STALWART_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
-                    PacketHandler.sendToPlayer(new CApplyRecoilPacket(5.0f), player);
+                    PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.5f), player);
 
                     // Actually shoot the bullets
                     BulletProjectileEntity bulletProjectile = new BulletProjectileEntity(player, player.level(), false, false);
@@ -240,7 +240,7 @@ public class SShootPacket {
                     // Play sound
                     player.level().playSound(null, player.blockPosition(),
                             ModSounds.AMR_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
-                    PacketHandler.sendToPlayer(new CApplyRecoilPacket(5.0f), player);
+                    PacketHandler.sendToPlayer(new CApplyRecoilPacket(10.0f), player);
 
                     // Actually shoot the bullets
                     BulletProjectileEntity bulletProjectile = new BulletProjectileEntity(player, player.level(), false, true);
