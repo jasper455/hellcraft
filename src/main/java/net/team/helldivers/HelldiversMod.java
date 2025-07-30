@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.registries.RegisterEvent;
 import net.team.helldivers.block.ModBlocks;
+import net.team.helldivers.block.custom.samples.ModSampleBlocks;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.client.*;
@@ -60,6 +61,7 @@ public class HelldiversMod {
         ModItems.register(modEventBus);
         ModArmorItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModSampleBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModEntities.register(modEventBus);
         ModParticles.register(modEventBus);

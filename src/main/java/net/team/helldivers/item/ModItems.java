@@ -66,6 +66,13 @@ public class ModItems {
     public static final RegistryObject<Item> BOT_CONTACT_MINE_BLOCK_ITEM = ITEMS.register("bot_contact_mine_block_item",
             () -> new BotContactMineBlockItem(ModBlocks.BOT_CONTACT_MINE.get(), new Item.Properties().fireResistant()));
 
+    public static final RegistryObject<Item> COMMON_SAMPLE = ITEMS.register("common_sample",
+            () -> new Item(new Item.Properties().fireResistant()));
+    public static final RegistryObject<Item> RARE_SAMPLE = ITEMS.register("rare_sample",
+            () -> new Item(new Item.Properties().fireResistant()));
+    public static final RegistryObject<Item> SUPER_SAMPLE = ITEMS.register("super_sample",
+            () -> new Item(new Item.Properties().fireResistant()));
+
     // STRATAGEMS
 
     // OTHER

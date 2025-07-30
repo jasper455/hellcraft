@@ -2,8 +2,8 @@
 	"format_version": "1.21.6",
 	"credit": "Made with Blockbench",
 	"textures": {
-		"0": "helldivers:block/super_sample",
-		"particle": "helldivers:block/super_sample"
+		"0": "helldivers:block/super_sample_crystal",
+		"particle": "helldivers:block/super_sample_crystal"
 	},
 	"elements": [
 		{

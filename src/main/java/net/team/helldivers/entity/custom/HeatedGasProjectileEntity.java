@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.team.helldivers.block.custom.BotContactMineBlock;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 public class HeatedGasProjectileEntity extends AbstractArrow {
     public Vec2 groundedOffset;
@@ -90,6 +91,11 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
         this.setDeltaMovement(this.getDeltaMovement().normalize().scale(20f));
 
         this.previousPos = new Vec3(this.getX(), this.getY(), this.getZ());
+
+        if (this.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) {
+            this.discard();
+        }
+
         super.tick();
         lifetime++;
         if (this.level().isClientSide) {

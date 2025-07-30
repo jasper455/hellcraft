@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "helldivers:common_sample"
+          "name": "helldivers:super_sample"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "helldivers:blocks/common_sample"
+  "random_sequence": "helldivers:blocks/super_sample_crystal"
 }

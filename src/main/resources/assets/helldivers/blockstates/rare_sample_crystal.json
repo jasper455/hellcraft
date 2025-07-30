@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "helldivers:block/rare_sample_crystal", "y": 180 },
+    "facing=south": { "model": "helldivers:block/rare_sample_crystal", "y": 0 },
+    "facing=west":  { "model": "helldivers:block/rare_sample_crystal", "y": 90 },
+    "facing=east":  { "model": "helldivers:block/rare_sample_crystal", "y": 270 }
+  }
+}

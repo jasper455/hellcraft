@@ -1,14 +1,16 @@
 package net.team.helldivers.datagen.loot;
 
-import net.minecraftforge.fml.common.Mod;
 import net.team.helldivers.block.ModBlocks;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.registries.RegistryObject;
+import net.team.helldivers.block.custom.samples.ModSampleBlocks;
 import net.team.helldivers.item.ModItems;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class ModBlockLootTables extends BlockLootSubProvider {
@@ -26,13 +28,19 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         dropSelf(ModBlocks.BARBED_WIRE.get());
         dropOther(ModBlocks.EXTRACTION_TERMINAL.get(), ModItems.EXTRACTION_TERMINAL_BLOCK_ITEM.get());
         dropOther(ModBlocks.BOT_CONTACT_MINE.get(), ModItems.BOT_CONTACT_MINE_BLOCK_ITEM.get());
-        dropSelf(ModBlocks.COMMON_SAMPLE.get());
-        dropSelf(ModBlocks.RARE_SAMPLE.get());
-        dropSelf(ModBlocks.SUPER_SAMPLE.get());
-        }
+        dropOther(ModSampleBlocks.COMMON_SAMPLE_CONTAINER.get(), ModItems.COMMON_SAMPLE.get());
+        dropOther(ModSampleBlocks.BOT_COMMON_SAMPLE.get(), ModItems.COMMON_SAMPLE.get());
+        dropOther(ModSampleBlocks.RARE_SAMPLE_CRYSTAL.get(), ModItems.RARE_SAMPLE.get());
+        dropOther(ModSampleBlocks.SUPER_SAMPLE_CRYSTAL.get(), ModItems.SUPER_SAMPLE.get());
+    }
 
     @Override
     protected Iterable<Block> getKnownBlocks() {
-        return ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get)::iterator;
+        List<Block> allBlocks = new ArrayList<>();
+
+        ModBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(allBlocks::add);
+        ModSampleBlocks.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach(allBlocks::add);
+
+        return allBlocks;
     }
 }

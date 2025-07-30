@@ -28,6 +28,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 public class StratagemOrbEntity extends AbstractArrow {
     private static final EntityDataAccessor<String> STRATAGEM_TYPE =
@@ -96,7 +97,12 @@ public class StratagemOrbEntity extends AbstractArrow {
 
     @Override
     public void tick() {
-            super.tick();
+        super.tick();
+
+        if (this.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) {
+            this.discard();
+        }
+
         if (this.isGrounded()) {
             groundedTicks++;
         }

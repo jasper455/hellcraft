@@ -228,8 +228,6 @@ public class ModEvents {
         if (camera.getEntity().level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) {
             SkyboxRenderer.renderEndSky(poseStack);
         }
-
-//        poseStack.popPose();
     }
 
 }

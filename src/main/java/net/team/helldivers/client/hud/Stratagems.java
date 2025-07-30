@@ -997,7 +997,7 @@ public class Stratagems {
         if (AmrHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Anti-Materiel Rifle"));
             PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
-                    ClientItemCache.getSlotWithItem(ModItems.AMR.get().getDefaultInstance())), 9600));
+                    ClientItemCache.getSlotWithItem(ModItems.AMR_STRATAGEM.get().getDefaultInstance())), 9600));
             resetInputValues();
         }
         if (PrecisionStrikeHud.allInputsDown) {

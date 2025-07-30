@@ -40,9 +40,9 @@ public class BulletProjectileRenderer extends EntityRenderer<BulletProjectileEnt
                 .setUV(0f, 0f, 1f, 1f) // important!
                 .setLight(0xF000F0)
                 .replaceBufferSource(buffer)
-                .setRenderType(ModRenderTypes.CUSTOM_SKY)
+                .setRenderType(ModRenderTypes.CUSTOM_SKY);
 //                .renderCylinder(vertexconsumer, poseStack, -10, 50, 1)
-                .renderSphere(vertexconsumer, poseStack, -50, 50, 50);
+//                .renderSphere(vertexconsumer, poseStack, -50, 50, 50);
         poseStack.popPose();
         super.render(pEntity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }

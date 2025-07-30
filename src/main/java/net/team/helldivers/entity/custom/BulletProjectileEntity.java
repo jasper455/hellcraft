@@ -26,6 +26,7 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.team.helldivers.block.custom.BotContactMineBlock;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 public class BulletProjectileEntity extends AbstractArrow {
     public Vec2 groundedOffset;
@@ -99,6 +100,10 @@ public class BulletProjectileEntity extends AbstractArrow {
     @Override
     public void tick() {
         this.previousPos = new Vec3(this.getX(), this.getY(), this.getZ());
+
+        if (this.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) {
+            this.discard();
+        }
 
         super.tick();
         lifetime++;

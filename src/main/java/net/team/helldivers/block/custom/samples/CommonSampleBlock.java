@@ -1,4 +1,4 @@
-package net.team.helldivers.block.custom;
+package net.team.helldivers.block.custom.samples;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,10 +15,11 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.team.helldivers.item.ModItems;
 
-public class RareSampleBlock extends HorizontalDirectionalBlock {
+public class CommonSampleBlock extends HorizontalDirectionalBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-    public RareSampleBlock(Properties properties) {
+    public CommonSampleBlock(Properties properties) {
         super(Properties.of().sound(SoundType.AMETHYST_CLUSTER).strength(1f, 100f)
                 .hasPostProcess((bs, br, bp) -> true)
                 .emissiveRendering((bs, br, bp) -> true)
@@ -39,24 +40,9 @@ public class RareSampleBlock extends HorizontalDirectionalBlock {
 
     @Override
     public InteractionResult use(BlockState pState, Level pLevel, BlockPos pPos, Player pPlayer, InteractionHand pHand, BlockHitResult pHit) {
-        if (pPlayer.getMainHandItem().is(this.asItem())) {
-            pPlayer.getMainHandItem().grow(1);
-            pLevel.destroyBlock(pPos, false);
-        } else if (pPlayer.getMainHandItem().isEmpty()) {
-            pPlayer.getInventory().add(this.asItem().getDefaultInstance());
-            pLevel.destroyBlock(pPos, false);
-        }
+        pPlayer.getInventory().add(ModItems.COMMON_SAMPLE.get().getDefaultInstance());
+        pLevel.destroyBlock(pPos, false);
         return InteractionResult.SUCCESS;
-    }
-
-    @Override
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return switch (state.getValue(FACING)) {
-            case NORTH -> box(5, 0, 6, 10, 7, 11);
-            case EAST -> box(5, 0, 5.5, 10, 7, 10.5);
-            case WEST -> box(6, 0, 5.5, 11, 7, 10.5);
-            default -> box(5, 0, 5.5, 10, 7, 10.5);
-        };
     }
 
     public BlockState rotate(BlockState state, Rotation rot) {
