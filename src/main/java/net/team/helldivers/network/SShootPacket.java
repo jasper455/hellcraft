@@ -11,7 +11,6 @@ import net.team.helldivers.entity.custom.HeatedGasProjectileEntity;
 import net.team.helldivers.entity.custom.RocketProjectileEntity;
 import net.team.helldivers.item.custom.guns.*;
 import net.team.helldivers.sound.ModSounds;
-import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,8 +44,6 @@ public class SShootPacket {
         lastShootTime.put(player.getUUID(), currentTime);
 
         ItemStack heldItem = player.getMainHandItem();
-
-        if (player.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) return;
 
 
         // Ar-23 Liberator Shooting Logic
