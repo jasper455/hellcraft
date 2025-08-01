@@ -24,8 +24,8 @@ public class GatlingSentryHellpodRenderer extends GeoEntityRenderer<GatlingSentr
     public void render(GatlingSentryHellpodEntity entity, float entityYaw, float partialTick, PoseStack poseStack,
                        MultiBufferSource bufferSource, int packedLight) {
         poseStack.pushPose();
-        // Rotate the model 180 degrees around the Y axis
-        poseStack.mulPose(Axis.YP.rotationDegrees(-entityYaw));
+
+        poseStack.mulPose(Axis.YP.rotationDegrees(entityYaw));
 
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
 

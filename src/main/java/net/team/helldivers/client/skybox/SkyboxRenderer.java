@@ -1,104 +1,67 @@
 package net.team.helldivers.client.skybox;
 
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.Vec3;
 import net.team.helldivers.HelldiversMod;
-import net.team.lodestone.systems.rendering.VFXBuilders;
 import org.joml.Matrix4f;
-import team.lodestar.lodestone.handlers.RenderHandler;
-import team.lodestar.lodestone.registry.client.LodestoneRenderTypeRegistry;
-import team.lodestar.lodestone.systems.rendering.rendeertype.RenderTypeToken;
-
-import java.awt.*;
 
 public class SkyboxRenderer {
+    public static void renderEndSky(PoseStack pPoseStack) {
+        RenderSystem.enableBlend();
+        RenderSystem.depthMask(false);
+        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
 
-    private static final Minecraft mc = Minecraft.getInstance();
+        Tesselator tesselator = Tesselator.getInstance();
+        BufferBuilder bufferbuilder = tesselator.getBuilder();
 
-    private final RenderType[] SKYBOX_LAYERS;
-    private final RenderType FOG_LAYER;
-
-    public SkyboxRenderer() {
-        SKYBOX_LAYERS = new RenderType[]{
-                LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE_TRIANGLE.apply(RenderTypeToken.createToken(
-                        ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox/stars.png"))),
-                LodestoneRenderTypeRegistry.ADDITIVE_TEXTURE_TRIANGLE.apply(RenderTypeToken.createToken(
-                        ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox/stars_far.png")))
+        ResourceLocation[] skyboxFaces = new ResourceLocation[] {
+                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox/skybox_front.png"),   // North
+                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox/skybox_right.png"),   // East
+                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox/skybox_back.png"),    // South
+                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox/skybox_left.png"),    // West
+                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox/skybox_top.png"),     // Up
+                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox/skybox_bottom.png")   // Down
         };
-        FOG_LAYER = LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE_TRIANGLE.apply(RenderTypeToken.createToken(
-                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/fog/fog0.png"))); // Fallback default
-    }
 
-    public void render(PoseStack poseStack) {
-        renderSkybox(poseStack);
-        renderFog(poseStack);
-    }
+        for (int i = 0; i < 6; ++i) {
+            pPoseStack.pushPose();
 
-    private void renderSkybox(PoseStack poseStack) {
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.depthMask(false);
-        RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
+            switch (i) {
+                case 0 -> pPoseStack.mulPose(Axis.XP.rotationDegrees(90.0F)); // North
+                case 1 -> {
+                    pPoseStack.mulPose(Axis.XP.rotationDegrees(90.0F)); // East
+                    pPoseStack.mulPose(Axis.ZP.rotationDegrees(90.0F)); // East
+                }
+                case 2 -> {
+                    pPoseStack.mulPose(Axis.XP.rotationDegrees(90.0F)); // South
+                    pPoseStack.mulPose(Axis.ZP.rotationDegrees(180.0F)); // South
+                }
+                case 3 -> {
+                    pPoseStack.mulPose(Axis.XP.rotationDegrees(90.0F)); // West
+                    pPoseStack.mulPose(Axis.ZP.rotationDegrees(-90.0F)); // West
+                }
+                case 4 -> {
+                    pPoseStack.mulPose(Axis.ZP.rotationDegrees(180.0F)); // Up
+                    pPoseStack.mulPose(Axis.YP.rotationDegrees(180.0F)); // Up
+                    }
+                case 5 -> pPoseStack.mulPose(Axis.XP.rotationDegrees(0.0F));  // Down
+            }
 
-        MultiBufferSource.BufferSource buffer = mc.renderBuffers().bufferSource();
-        VFXBuilders.WorldVFXBuilder builder = VFXBuilders.WorldVFXBuilder.createWorld().setPosColorTexLightmapDefaultFormat();
+            RenderSystem.setShaderTexture(0, skyboxFaces[i]);
 
-        for (int i = 0; i < SKYBOX_LAYERS.length; i++) {
-            poseStack.pushPose();
-            poseStack.mulPose(Axis.YP.rotationDegrees(((mc.level.getGameTime() % 24000L) + mc.getFrameTime()) / (500.0F * (i + 1))));
-            builder.setColor(Color.WHITE)
-                    .setAlpha(0.75f)
-                    .renderSphere(buffer.getBuffer(SKYBOX_LAYERS[i]), poseStack, -1000.0f - i, 32, 32);
-            poseStack.popPose();
+            Matrix4f matrix4f = pPoseStack.last().pose();
+            bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+            bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, -100.0F).uv(0.0F, 0.0F).color(255, 255, 255, 255).endVertex();
+            bufferbuilder.vertex(matrix4f, -100.0F, -100.0F, 100.0F).uv(0.0F, 1.0F).color(255, 255, 255, 255).endVertex();
+            bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, 100.0F).uv(1.0F, 1.0F).color(255, 255, 255, 255).endVertex();
+            bufferbuilder.vertex(matrix4f, 100.0F, -100.0F, -100.0F).uv(1.0F, 0.0F).color(255, 255, 255, 255).endVertex();
+            tesselator.end();
+
+            pPoseStack.popPose();
         }
-
-        RenderSystem.depthMask(true);
-        RenderSystem.disableBlend();
-    }
-
-    private void renderFog(PoseStack poseStack) {
-        RenderSystem.enableBlend();
-        RenderSystem.defaultBlendFunc();
-        RenderSystem.depthMask(false);
-        RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
-
-        MultiBufferSource.BufferSource buffer = mc.renderBuffers().bufferSource();
-        VFXBuilders.WorldVFXBuilder builder = VFXBuilders.WorldVFXBuilder.createWorld().setPosColorTexLightmapDefaultFormat();
-
-        Player player = mc.player;
-        if (player == null) return;
-
-        Vec3 playerPos = player.position();
-
-        poseStack.pushPose();
-        poseStack.translate(playerPos.x - 1200, playerPos.y - 35, playerPos.z);
-
-        for (int i = 0; i < 20; i++) {
-            poseStack.translate(0, 5, 0);
-
-            ResourceLocation texture = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/fog/fog" + (i % 10) + ".png");
-            RenderType dynamicFog = LodestoneRenderTypeRegistry.TRANSPARENT_TEXTURE_TRIANGLE.applyAndCache(RenderTypeToken.createToken(texture));
-
-            builder.setColor(new Color(3598)) // Soft bluish fog color
-                    .setAlpha(0.18f)
-                    .renderQuadFacing(RenderHandler.DELAYED_RENDER.getTarget().getBuffer(dynamicFog),
-                            poseStack,
-                            Vec3.ZERO,
-                            new Vec3(1500, 0, 0),
-                            1500,
-                            new Vec3(0, 1, 0));
-        }
-
-        poseStack.popPose();
 
         RenderSystem.depthMask(true);
         RenderSystem.disableBlend();

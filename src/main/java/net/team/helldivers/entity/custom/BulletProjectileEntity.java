@@ -36,6 +36,7 @@ import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
 import java.util.Map;
 
 import com.ibm.icu.text.MessagePattern.Part;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 public class BulletProjectileEntity extends AbstractArrow {
     public Vec2 groundedOffset;
@@ -117,6 +118,10 @@ public class BulletProjectileEntity extends AbstractArrow {
     @Override
     public void tick() {
         this.previousPos = new Vec3(this.getX(), this.getY(), this.getZ());
+
+        if (this.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) {
+            this.discard();
+        }
 
         super.tick();
         lifetime++;

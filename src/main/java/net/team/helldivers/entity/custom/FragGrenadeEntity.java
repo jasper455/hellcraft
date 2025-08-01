@@ -24,6 +24,7 @@ import net.team.helldivers.helper.OrbitalBarrage;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SExplosionPacket;
 import net.team.helldivers.sound.ModSounds;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 public class FragGrenadeEntity extends AbstractArrow {
     private float rotation;
@@ -86,6 +87,9 @@ public class FragGrenadeEntity extends AbstractArrow {
             super.tick();
         if (this.isGrounded()) {
             groundedTicks++;
+        }
+        if (this.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) {
+            this.discard();
         }
 
         if (groundedTicks == 15 && !this.level().isClientSide) {

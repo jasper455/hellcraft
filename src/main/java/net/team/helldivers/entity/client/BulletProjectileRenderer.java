@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.client.renderer.ModRenderTypes;
 import net.team.helldivers.entity.custom.BulletProjectileEntity;
 import net.team.lodestone.systems.rendering.VFXBuilders;
 
@@ -34,16 +35,14 @@ public class BulletProjectileRenderer extends EntityRenderer<BulletProjectileEnt
         poseStack.mulPose(Axis.YP.rotationDegrees(pEntity.tickCount * 10));
 
         VFXBuilders.WorldVFXBuilder builder = VFXBuilders.WorldVFXBuilder.createWorld();
-        builder
-                .setColor(1.0f, 1.0f, 1.0f)
+        builder.setColor(1.0f, 1.0f, 1.0f)
                 .setAlpha(1f)
                 .setUV(0f, 0f, 1f, 1f) // important!
                 .setLight(0xF000F0)
                 .replaceBufferSource(buffer)
-                .setRenderType(RenderType.entityCutout(ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID,
-                        "textures/environment/sky_one.png")));
+                .setRenderType(ModRenderTypes.CUSTOM_SKY);
 //                .renderCylinder(vertexconsumer, poseStack, -10, 50, 1)
-//                .renderSphere(vertexconsumer, poseStack, -5, 50, 50);
+//                .renderSphere(vertexconsumer, poseStack, -50, 50, 50);
         poseStack.popPose();
         super.render(pEntity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }

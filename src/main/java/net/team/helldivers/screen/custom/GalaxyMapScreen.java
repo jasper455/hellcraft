@@ -37,13 +37,9 @@ public class GalaxyMapScreen extends AbstractContainerScreen<GalaxyMapMenu> {
         this.titleLabelX = 1000;
         this.titleLabelY = 1000;
         this.addRenderableWidget(new TexturedButton(300, 140, 40, 40, OVERWORLD_NORMAL, OVERWORLD_HOVER,
-                pButton -> {
-                    PacketHandler.sendToServer(new STeleportToDimensionPacket(Level.OVERWORLD.location()));
-                }, "The Overworld"));
+                pButton -> PacketHandler.sendToServer(new STeleportToDimensionPacket(Level.OVERWORLD.location())), "The Overworld"));
         this.addRenderableWidget(new TexturedButton(190, 90, 40, 40, CHOEPESSA_NORMAL, CHOEPESSA_HOVER,
-                pButton -> {
-                    PacketHandler.sendToServer(new STeleportToDimensionPacket(ModDimensions.CHOEPESSA_DIM.location()));
-                }, "Choepessa IV"));
+                pButton -> PacketHandler.sendToServer(new STeleportToDimensionPacket(ModDimensions.CHOEPESSA_DIM.location())), "Choepessa IV"));
     }
 
     @Override

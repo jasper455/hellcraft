@@ -20,6 +20,7 @@ import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SExplosionPacket;
 import net.team.helldivers.sound.ModSounds;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 public class RocketProjectileEntity extends AbstractArrow {
     private int lifetime = 0;
@@ -63,6 +64,11 @@ public class RocketProjectileEntity extends AbstractArrow {
 
     @Override
     public void tick() {
+
+        if (this.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) {
+            this.discard();
+        }
+
         if (lifetime == 0 && this.getOwner() != null) {
             this.setXRot(this.getOwner().getXRot());
             this.setYRot(this.getOwner().getYRot());

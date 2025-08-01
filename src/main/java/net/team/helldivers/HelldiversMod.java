@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.registries.RegisterEvent;
 import net.team.helldivers.block.ModBlocks;
+import net.team.helldivers.block.custom.samples.ModSampleBlocks;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.client.*;
@@ -38,6 +39,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.team.helldivers.worldgen.chunk.ModChunkGenerators;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
@@ -61,6 +63,7 @@ public class HelldiversMod {
         ModItems.register(modEventBus);
         ModArmorItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+        ModSampleBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModEntities.register(modEventBus);
         ModParticles.register(modEventBus);
@@ -68,6 +71,7 @@ public class HelldiversMod {
         ModCreativeModeTabs.register(modEventBus);
         ModMenuTypes.register(modEventBus);
         HeadHitboxRegistry.Register(); //pulls the bounding boxes that determine where a mob can be headshotted from json
+        ModChunkGenerators.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(HeadHitboxRegistry.class);

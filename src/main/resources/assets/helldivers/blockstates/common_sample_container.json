@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "helldivers:block/common_sample_container", "y": 180 },
+    "facing=south": { "model": "helldivers:block/common_sample_container", "y": 0 },
+    "facing=west":  { "model": "helldivers:block/common_sample_container", "y": 90 },
+    "facing=east":  { "model": "helldivers:block/common_sample_container", "y": 270 }
+  }
+}

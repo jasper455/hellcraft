@@ -9,6 +9,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
+import net.team.helldivers.block.custom.samples.ModSampleBlocks;
 
 public class ModCreativeModeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
@@ -21,9 +22,13 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.BARBED_WIRE.get());
                         output.accept(ModItems.EXTRACTION_TERMINAL_BLOCK_ITEM.get());
                         output.accept(ModItems.BOT_CONTACT_MINE_BLOCK_ITEM.get());
-                        output.accept(ModBlocks.COMMON_SAMPLE.get());
-                        output.accept(ModBlocks.RARE_SAMPLE.get());
-                        output.accept(ModBlocks.SUPER_SAMPLE.get());
+                        output.accept(ModSampleBlocks.COMMON_SAMPLE_CONTAINER.get());
+                        output.accept(ModSampleBlocks.BOT_COMMON_SAMPLE.get());
+                        output.accept(ModSampleBlocks.RARE_SAMPLE_CRYSTAL.get());
+                        output.accept(ModSampleBlocks.SUPER_SAMPLE_CRYSTAL.get());
+                        output.accept(ModItems.COMMON_SAMPLE.get());
+                        output.accept(ModItems.RARE_SAMPLE.get());
+                        output.accept(ModItems.SUPER_SAMPLE.get());
                         output.accept(ModBlocks.STRATAGEM_JAMMER.get());
                     }).build());
     public static final RegistryObject<CreativeModeTab> SEAF_EQUIPMENT = CREATIVE_MODE_TABS.register("seaf_equipment_tab",
@@ -71,6 +76,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.RESUPPLY.get());
                         output.accept(ModItems.ANTI_TANK_STRATAGEM.get());
                         output.accept(ModItems.STALWART_STRATAGEM.get());
+                        output.accept(ModItems.AMR_STRATAGEM.get());
                         //Orbitals
                         output.accept(ModItems.SMALL_BARRAGE.get());
                         output.accept(ModItems.BIG_BARRAGE.get());

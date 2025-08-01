@@ -13,11 +13,15 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -51,12 +55,10 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
     public static final RawAnimation EMPTY = RawAnimation.begin().thenPlayAndHold("empty");
     public static final RawAnimation FALL = RawAnimation.begin().thenLoop("fall");
     public static final RawAnimation LAND = RawAnimation.begin().thenLoop("land");
-    public static final RawAnimation SHOOT = RawAnimation.begin().thenPlayAndHold("shoot");
-    public static final RawAnimation IDLE = RawAnimation.begin().thenPlayAndHold("idle");
+    public static final RawAnimation SHOOT = RawAnimation.begin().thenLoop("shoot");
+    public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
 
     private int groundedTicks = 0;
-    private int groundedTicksSinceEmpty = 0;
-    private boolean hasBeenClicked = false;
     private boolean hasLanded = false;
 
     public GatlingSentryHellpodEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
@@ -73,8 +75,9 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 10, false,
-                false, entity -> !(entity instanceof GatlingSentryHellpodEntity) && entity.isAlive()));
+        this.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 0, false,
+                false, entity -> (entity instanceof Monster) && entity.isAlive() && !(entity instanceof GatlingSentryHellpodEntity)));
+//        this.goalSelector.addGoal(0, new LookAtPlayerGoal(this, Monster.class, 25, 100f));
     }
 
     @Override
@@ -82,6 +85,15 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
         // Check if we've landed by looking for solid blocks below
         BlockPos belowPos = this.blockPosition().below();
         boolean onSolidBlock = this.level().getBlockState(belowPos).isSolid();
+
+//        Minecraft.getInstance().player.sendSystemMessage(Component.literal(String.valueOf(this.isShooting())));
+
+        if (this.getTarget() != null) {
+            this.lookControl.setLookAt(this.getTarget());
+            setShooting(true);
+        } else {
+            setShooting(false);
+        }
 
         if (onSolidBlock && this.getDeltaMovement().y <= 0) {
             if (!hasLanded) {
@@ -115,24 +127,17 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
 
 
         }
-//        if (this.getTarget() != null) {
-//            BulletProjectileEntity bulletProjectile = new BulletProjectileEntity(this, this.level(), false, false);
-//            bulletProjectile.shootFromRotation(this, this.getXRot(), this.getYRot(), 0.0f, 5f, 0f);
-//            bulletProjectile.setYRot(this.getYRot());
-//            bulletProjectile.setXRot(this.getXRot());
-//            bulletProjectile.setNoGravity(true);
-//            this.level().addFreshEntity(bulletProjectile);
-//        }
+        if (this.getTarget() != null) {
+            BulletProjectileEntity bulletProjectile = new BulletProjectileEntity(this, this.level(), false, false);
+            bulletProjectile.shootFromRotation(this, this.getViewXRot(1), this.getViewYRot(1), 0.0f, 5f, 0f);
+            bulletProjectile.setYRot(this.getViewXRot(1));
+            bulletProjectile.setXRot(this.getViewYRot(1));
+            bulletProjectile.setNoGravity(true);
+            this.level().addFreshEntity(bulletProjectile);
+        }
 
         if (this.isGrounded()) {
             groundedTicks++;
-        }
-        if (this.isGrounded() && isShooting()) {
-            groundedTicksSinceEmpty++;
-        }
-
-        if (this.isGrounded() && isShooting() && groundedTicksSinceEmpty >= 60) {
-            this.discard();
         }
 
         if (!this.isGrounded()) {
@@ -155,12 +160,16 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
 //            event.getController().setAnimation(EMPTY);
 //            return PlayState.CONTINUE;
 //        }
-//        if (isGrounded() && isShooting()) {
-//            event.getController().setAnimation(SHOOT);
-//            return PlayState.CONTINUE;
-//        }
+        Minecraft.getInstance().player.sendSystemMessage(Component.literal(String.valueOf(this.isShooting())));
+        if (this.getTarget() != null) {
+            event.getController().setAnimation(SHOOT);
+            return PlayState.CONTINUE;
+        }
         if (isGrounded() && groundedTicks >= 20) {
             event.getController().setAnimation(DEPLOY);
+            return PlayState.CONTINUE;
+        } else if (isGrounded() && groundedTicks >= 21) {
+            event.getController().setAnimation(IDLE);
             return PlayState.CONTINUE;
         }
         if (!isGrounded()) {
@@ -199,14 +208,17 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
     }
 
     @Override
-    public boolean hurt(DamageSource pSource, float pAmount) {
-        return false;
-    }
-
-    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(IS_SHOOTING, false);
+    }
+
+    @Override
+    public void knockback(double pStrength, double pX, double pZ) {}
+
+    @Override
+    public boolean causeFallDamage(float pFallDistance, float pMultiplier, DamageSource pSource) {
+        return false;
     }
 
     public boolean isShooting() {
@@ -220,9 +232,9 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
     // Keep existing attribute methods but modify movement speed and follow range
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, Float.MAX_VALUE)
+                .add(Attributes.MAX_HEALTH, 50f)
                 .add(Attributes.MOVEMENT_SPEED, 0D)
                 .add(Attributes.ATTACK_DAMAGE, 10.0D)
-                .add(Attributes.FOLLOW_RANGE, 128.0D); // Increased range
+                .add(Attributes.FOLLOW_RANGE, 25); // Increased range
     }
 }

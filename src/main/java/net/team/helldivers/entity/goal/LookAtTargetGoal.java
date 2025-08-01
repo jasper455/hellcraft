@@ -23,7 +23,7 @@ public class LookAtTargetGoal extends Goal {
     public void tick() {
         LivingEntity target = mob.getTarget();
         if (target != null) {
-            mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
+            mob.getLookControl().setLookAt(target.getX(), target.getY(), target.getZ());
         }
     }
 }

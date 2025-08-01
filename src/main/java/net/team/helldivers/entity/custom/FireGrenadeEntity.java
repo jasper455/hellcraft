@@ -16,6 +16,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 public class FireGrenadeEntity extends AbstractArrow {
     private float rotation;
@@ -77,6 +78,10 @@ public class FireGrenadeEntity extends AbstractArrow {
     @Override
     public void tick() {
             super.tick();
+
+        if (this.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) {
+            this.discard();
+        }
         if (this.isGrounded()) {
             groundedTicks++;
         }
