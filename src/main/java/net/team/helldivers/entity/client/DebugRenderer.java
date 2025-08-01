@@ -70,10 +70,10 @@ public class DebugRenderer {
     @SubscribeEvent
     public static void onChat(ClientChatReceivedEvent event) {
         String message = event.getMessage().getString();
-        if (message.contains("show headshot debug overlay")) {
+        if (message.contains("show headshot debug overlay")) {//put this in chat to show the overlay
             shouldRender = true;
         }
-        if (message.contains("hide headshot debug overlay")) {
+        if (message.contains("hide headshot debug overlay")) {//put this in chat to hide it
             shouldRender = false;
         }
     }

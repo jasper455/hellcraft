@@ -72,13 +72,7 @@ public class BulletProjectileEntity extends AbstractArrow {
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
         Entity entity = result.getEntity();
-        if(checkHeadShot(entity, result.getLocation())){
-            entity.hurt(this.damageSources().arrow(this, this.getOwner()), 4);
-            System.out.println("HEADSHOT");
-        }
-        else{
-            entity.hurt(this.damageSources().arrow(this, this.getOwner()), 3);
-        }
+        entity.hurt(this.damageSources().arrow(this, this.getOwner()), 3);
         this.discard();
     }
 
@@ -166,28 +160,5 @@ public class BulletProjectileEntity extends AbstractArrow {
         else{
             return 1;
         }
-    }
-    //TODO: fix collision check for head hitboxes
-    //TODO: add rotation for head hitboxes based on entity look dir
-    //TODO: add the rest of the entities to the HeadLocations json
-    private static boolean checkHeadShot(Entity entity, Vec3 pos) {
-        Map<String, HeadHitbox> hitboxes = HeadHitboxRegistry.getAll();
-        if (entity instanceof EnderDragonPart part) {
-            EnderDragon dragon = part.getParent();
-            System.out.println("dragon");
-            if(dragon.head.getBoundingBox().contains(pos)) return true;
-        }
-        else if (hitboxes != null) {
-            ResourceLocation id = EntityType.getKey(entity.getType());
-            HeadHitbox headHitbox = hitboxes.get(id.toString());
-            if (headHitbox != null) {
-                AABB box = headHitbox.getBox(entity.getBoundingBox());
-                System.out.println("Checking box: " + box);
-                if(box.contains(pos)) return true;
-                return false;
-            }
-            System.out.println("entity not found");
-        }
-        return false;
     }
 }

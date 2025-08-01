@@ -11,6 +11,7 @@ import net.team.helldivers.entity.custom.HeatedGasProjectileEntity;
 import net.team.helldivers.entity.custom.RocketProjectileEntity;
 import net.team.helldivers.item.custom.guns.*;
 import net.team.helldivers.sound.ModSounds;
+import net.team.helldivers.util.ShootHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -57,7 +58,8 @@ public class SShootPacket {
                     player.level().playSound(null, player.blockPosition(),
                             ModSounds.AR_23_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                     PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
-
+                    ShootHelper.shoot(player, player.level(), false, false);
+                    /*
                     // Actually shoot the bullet
                     BulletProjectileEntity bullet = new BulletProjectileEntity(player, player.level(), false, false);
                     bullet.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 5f, 0.0f);
@@ -65,6 +67,7 @@ public class SShootPacket {
                     bullet.setYRot(player.getYRot());
                     bullet.setNoGravity(true);
                     player.level().addFreshEntity(bullet);
+                    */
                     player.getCooldowns().addCooldown(heldItem.getItem(), 2);
 
                     // Damage the item
@@ -113,7 +116,7 @@ public class SShootPacket {
                 player.level().playSound(null, player.blockPosition(),
                         ModSounds.P2_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                 PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
-
+                //ShootHelper.shoot(player, player.level(), false, false);
                 // Actually shoot the bullet
                 BulletProjectileEntity bullet = new BulletProjectileEntity(player, player.level(), false, false);
                 bullet.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 5f, 0.0f);
@@ -121,7 +124,6 @@ public class SShootPacket {
                 bullet.setYRot(player.getYRot());
                 bullet.setNoGravity(true);
                 player.level().addFreshEntity(bullet);
-
                 // Damage the item
                 if (!player.getAbilities().instabuild) {
                     heldItem.hurt(1, player.getRandom(), player);
@@ -175,7 +177,10 @@ public class SShootPacket {
                     player.level().playSound(null, player.blockPosition(),
                             ModSounds.SG225_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                     PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
-
+                    for(int i=0; i<22;i++){
+                        ShootHelper.shoot(player, player.level(), true, false);
+                    }
+                    /* 
                     // Actually shoot the bullets
                     for (int i = 0; i < 4; i++) {
                         BulletProjectileEntity bulletProjectile = new BulletProjectileEntity(player, player.level(), true, false);
@@ -185,6 +190,7 @@ public class SShootPacket {
                         bulletProjectile.setNoGravity(true);
                         player.level().addFreshEntity(bulletProjectile);
                     }
+                    */
                     player.getCooldowns().addCooldown(heldItem.getItem(), 5);
 
                     // Damage the item
@@ -209,7 +215,8 @@ public class SShootPacket {
                     player.level().playSound(null, player.blockPosition(),
                             ModSounds.STALWART_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                     PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.5f), player);
-
+                    ShootHelper.shoot(player, player.level(), false, false);
+                    /* 
                     // Actually shoot the bullets
                     BulletProjectileEntity bulletProjectile = new BulletProjectileEntity(player, player.level(), false, false);
                     bulletProjectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 5f, 0f);
@@ -217,6 +224,7 @@ public class SShootPacket {
                     bulletProjectile.setYRot(player.getYRot());
                     bulletProjectile.setNoGravity(true);
                     player.level().addFreshEntity(bulletProjectile);
+                    */
                     player.getCooldowns().addCooldown(heldItem.getItem(), 1);
 
                     // Damage the item
@@ -242,6 +250,8 @@ public class SShootPacket {
                             ModSounds.AMR_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                     PacketHandler.sendToPlayer(new CApplyRecoilPacket(10.0f), player);
 
+                    ShootHelper.shoot(player, player.level(), false, true);
+                    /* 
                     // Actually shoot the bullets
                     BulletProjectileEntity bulletProjectile = new BulletProjectileEntity(player, player.level(), false, true);
                     bulletProjectile.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 5f, 0f);
@@ -249,8 +259,8 @@ public class SShootPacket {
                     bulletProjectile.setYRot(player.getYRot());
                     bulletProjectile.setNoGravity(true);
                     player.level().addFreshEntity(bulletProjectile);
+                    */
                     player.getCooldowns().addCooldown(heldItem.getItem(), 25);
-
                     // Damage the item
                     if (!player.getAbilities().instabuild) {
                         heldItem.hurt(1, player.getRandom(), player);
