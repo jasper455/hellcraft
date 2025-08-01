@@ -34,13 +34,13 @@ public class KeyBinding {
             InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_D, KEY_CATEGORY_HELLDIVERS);
 
     public static final KeyMapping SHOOT = new KeyMapping(SHOOT_KEY, KeyConflictContext.IN_GAME,
-            InputConstants.Type.MOUSE, GLFW.GLFW_MOUSE_BUTTON_LEFT, KEY_CATEGORY_HELLDIVERS);
+            InputConstants.Type.KEYSYM, GLFW.GLFW_MOUSE_BUTTON_LEFT, KEY_CATEGORY_HELLDIVERS);
 
     public static final KeyMapping RELOAD = new KeyMapping(RELOAD_KEY, KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_R, KEY_CATEGORY_HELLDIVERS);
 
     public static final KeyMapping AIM = new KeyMapping(AIM_KEY, KeyConflictContext.IN_GAME,
-            InputConstants.Type.MOUSE, GLFW.GLFW_MOUSE_BUTTON_RIGHT, KEY_CATEGORY_HELLDIVERS);
+            InputConstants.Type.KEYSYM, GLFW.GLFW_MOUSE_BUTTON_RIGHT, KEY_CATEGORY_HELLDIVERS);
 
     public static final KeyMapping EQUIP_BACKPACK = new KeyMapping(BACKPACK_EQUIP_KEY, KeyConflictContext.IN_GAME,
             InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_H, KEY_CATEGORY_HELLDIVERS);

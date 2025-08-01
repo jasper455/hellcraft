@@ -18,7 +18,6 @@ import net.team.helldivers.client.renderer.item.EAT17Renderer;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SShootPacket;
 import net.team.helldivers.util.KeyBinding;
-import net.team.helldivers.worldgen.dimension.ModDimensions;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -185,7 +184,6 @@ public class EAT17Item extends Item implements GeoItem, IGunItem {
     @Override
     public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
         if (world.isClientSide() && entity instanceof Player player) {
-            if (world.dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) return;
             if (selected) {
                 isShooting = KeyBinding.SHOOT.isDown();
                 if (shootCooldown > 0) {

@@ -1,23 +1,33 @@
 package net.team.helldivers.event;
 import java.util.concurrent.atomic.AtomicBoolean;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.FogRenderer;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.StructureManager;
+import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
+import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -31,18 +41,21 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.server.command.ConfigCommand;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.ModBlocks;
+import net.team.helldivers.client.renderer.ModRenderTypes;
 import net.team.helldivers.client.skybox.SkyboxRenderer;
 import net.team.helldivers.command.StopUseLodestoneCommand;
 import net.team.helldivers.command.UseLodestoneCommand;
 import net.team.helldivers.data.StructureGenerationData;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.custom.BulletProjectileEntity;
+import net.team.helldivers.helper.ClientJammedSync;
 import net.team.helldivers.item.custom.armor.IDemocracyProtects;
 import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SSyncJammedPacket;
 import net.team.helldivers.util.KeyBinding;
 import net.team.helldivers.worldgen.dimension.ModDimensions;
+import org.joml.Matrix4f;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModEvents {
@@ -224,7 +237,7 @@ public class ModEvents {
         Camera camera = event.getCamera();
 
         if (camera.getEntity().level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) {
-            SkyboxRenderer.renderSkybox(poseStack);
+            SkyboxRenderer.renderEndSky(poseStack);
         }
     }
 }
