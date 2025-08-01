@@ -15,6 +15,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -24,44 +25,56 @@ import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
 //this will render a red outline over the area where an entity can be headshotted 
 @Mod.EventBusSubscriber(value = Dist.CLIENT)
 public class DebugRenderer {
-
+    private static boolean shouldRender = false;
     @SubscribeEvent
     public static void onRenderWorld(RenderLevelStageEvent event) {
-        if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_ENTITIES) return;
+        if(shouldRender){
+                if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_ENTITIES) return;
 
-        Minecraft mc = Minecraft.getInstance();
-        LocalPlayer player = mc.player;
-        if (player == null) return;
+            Minecraft mc = Minecraft.getInstance();
+            LocalPlayer player = mc.player;
+            if (player == null) return;
 
-        PoseStack poseStack = event.getPoseStack();
-        Camera camera = mc.gameRenderer.getMainCamera();
-        Vec3 camPos = camera.getPosition();
+            PoseStack poseStack = event.getPoseStack();
+            Camera camera = mc.gameRenderer.getMainCamera();
+            Vec3 camPos = camera.getPosition();
 
-        MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
-        VertexConsumer lines = bufferSource.getBuffer(RenderType.lines());
+            MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
+            VertexConsumer lines = bufferSource.getBuffer(RenderType.lines());
 
-        ClientLevel level = mc.level;
-        if (level == null) return;
+            ClientLevel level = mc.level;
+            if (level == null) return;
 
-        for (Entity entity : level.entitiesForRendering()) {
+            for (Entity entity : level.entitiesForRendering()) {
 
-            ResourceLocation id = ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
-            if (id == null) continue;
+                ResourceLocation id = ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
+                if (id == null) continue;
 
-            HeadHitbox hitbox = HeadHitboxRegistry.get(id.toString());
-            if (hitbox == null) continue;
+                HeadHitbox hitbox = HeadHitboxRegistry.get(id.toString());
+                if (hitbox == null) continue;
 
-            AABB box = hitbox.getBox(entity.getBoundingBox()).move(-camPos.x, -camPos.y, -camPos.z);
+                AABB box = hitbox.getBox(entity.getBoundingBox()).move(-camPos.x, -camPos.y, -camPos.z);
 
-            LevelRenderer.renderLineBox(
-                poseStack,
-                lines,
-                box,
-                1.0F, 0.0F, 0.0F, // red
-                1.0F              // full alpha
-            );
+                LevelRenderer.renderLineBox(
+                    poseStack,
+                    lines,
+                    box,
+                    1.0F, 0.0F, 0.0F, // red
+                    1.0F              // full alpha
+                );
+            }
+
+            bufferSource.endBatch(RenderType.lines());
         }
-
-        bufferSource.endBatch(RenderType.lines());
+    }
+    @SubscribeEvent
+    public static void onChat(ClientChatReceivedEvent event) {
+        String message = event.getMessage().getString();
+        if (message.contains("show headshot debug overlay")) {
+            shouldRender = true;
+        }
+        if (message.contains("hide headshot debug overlay")) {
+            shouldRender = false;
+        }
     }
 }
