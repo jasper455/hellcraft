@@ -202,7 +202,7 @@ public class StratagemOrbEntity extends AbstractArrow {
             groundedTicks = 0;
         }
 
-        // Stalwart Entity Stuff
+        // Amr Entity Stuff
         if (getStratagemType().equals("Anti-Materiel Rifle") && !this.level().isClientSide) {
             if (groundedTicks == 100) {
                 SupportHellpodEntity supportHellpodEntity = new SupportHellpodEntity(this.level(), getStratagemType());
@@ -220,7 +220,7 @@ public class StratagemOrbEntity extends AbstractArrow {
 
             }
         }
-        if (getStratagemType().equals("Stalwart") && groundedTicks > 140) {
+        if (getStratagemType().equals("Anti-Materiel Rifle") && groundedTicks > 140) {
             this.discard();
             groundedTicks = 0;
         }

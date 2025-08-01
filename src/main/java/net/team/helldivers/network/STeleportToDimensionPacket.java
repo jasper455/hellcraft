@@ -47,7 +47,8 @@ public class STeleportToDimensionPacket {
 
         ServerLevel destination = player.server.getLevel(targetDimension);
         if (destination != null && player.level().dimension() != targetDimension) {
-            player.teleportTo(destination, randomX, 200, randomZ, 0, 0);
+            player.teleportTo(destination, player.level().getSharedSpawnPos().getX() + randomX,
+                    200, player.level().getSharedSpawnPos().getZ() + randomZ, 0, 0);
             Entity hellpod = ModEntities.HELLPOD.get().create(destination);
             if (hellpod != null) {
                 hellpod.setPos(randomX, 200, randomZ);

@@ -118,7 +118,7 @@ public class HelldiversMod {
             MenuScreens.register(ModMenuTypes.SUPPORT_HELLPOD_MENU.get(), SupportHellpodScreen::new);
             MenuScreens.register(ModMenuTypes.HELLBOMB_INPUT_MENU.get(), HellbombInputScreen::new);
             MenuScreens.register(ModMenuTypes.HELLBOMB_ENTITY_INPUT_MENU.get(), HellbombEntityInputScreen::new);
-            MenuScreens.register(ModMenuTypes.EXTRACTION_TERMINAL.get(), ExtractionTerminalScreen::new);
+            MenuScreens.register(ModMenuTypes.EXTRACTION_TERMINAL.get(), StratagemSelectScreen::new);
             MenuScreens.register(ModMenuTypes.GALAXY_MAP_MENU.get(), GalaxyMapScreen::new);
         }
 

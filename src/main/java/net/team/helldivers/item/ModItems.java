@@ -30,8 +30,8 @@ public class ModItems {
     public static final RegistryObject<Item> TITANIUM = ITEMS.register("titanium",
             () -> new Item(new Item.Properties().fireResistant()));
 
-    public static final RegistryObject<Item> SUPPLIES = ITEMS.register("supplies",
-            () -> new Item(new Item.Properties().fireResistant()));
+    public static final RegistryObject<Item> SUPPLY_CRATE = ITEMS.register("supply_crate",
+            () -> new SupplyCrateItem(new Item.Properties().fireResistant()));
 
     public static final RegistryObject<Item> AR23 = ITEMS.register("ar23",
             () -> new Ar23Item(new Item.Properties().stacksTo(1).fireResistant()));
