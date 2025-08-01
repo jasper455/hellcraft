@@ -1,36 +1,48 @@
 package net.team.helldivers.event;
 
 
+import java.awt.Color;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.mojang.blaze3d.systems.RenderSystem;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.client.event.*;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ClientChatReceivedEvent;
+import net.minecraftforge.client.event.ComputeFovModifierEvent;
+import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
+import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.client.renderer.block.BotContactMineBlockRenderer;
 import net.team.helldivers.client.renderer.block.ExtractionTerminalBlockRenderer;
 import net.team.helldivers.client.renderer.block.HellbombBlockRenderer;
-import net.team.helldivers.client.renderer.entity.*;
+import net.team.helldivers.client.renderer.entity.EagleAirshipRenderer;
+import net.team.helldivers.client.renderer.entity.GatlingSentryHellpodRenderer;
+import net.team.helldivers.client.renderer.entity.HellbombHellpodRenderer;
+import net.team.helldivers.client.renderer.entity.HellpodRenderer;
+import net.team.helldivers.client.renderer.entity.OrbitalLaserRenderer;
+import net.team.helldivers.client.renderer.entity.SupportHellpodRenderer;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.item.custom.guns.AmrItem;
 import net.team.helldivers.item.custom.guns.IGunItem;
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.util.KeyBinding;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import software.bernie.geckolib.GeckoLib;
 import team.lodestar.lodestone.systems.postprocess.PostProcessHandler;
-
-import java.awt.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 @Mod.EventBusSubscriber(modid = HelldiversMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ModClientEvents {
@@ -38,6 +50,7 @@ public class ModClientEvents {
     private static float alpha = 0.0f;
     private static float outFadeSpeed;
     private static boolean hasFadedIn = false;
+    private static double sensitivity = Minecraft.getInstance().options.sensitivity().get();
 
     @SubscribeEvent
     public static void onComputerFovModifierEvent(ComputeFovModifierEvent event) {
@@ -49,7 +62,6 @@ public class ModClientEvents {
             fovModifier *=1f - deltaTicks * 0.5f;
             event.setNewFovModifier(fovModifier);
         }
-
         if (Minecraft.getInstance().options.keyLoadHotbarActivator.isDown()
                 && !(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem)) {
             float fovModifier = 1f;
@@ -58,23 +70,30 @@ public class ModClientEvents {
             fovModifier *=1f - deltaTicks * 0.5f;
             event.setNewFovModifier(fovModifier);
         }
-
         if (KeyBinding.AIM.isDown()
                 && (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem)) {
+            double sensitivity = Minecraft.getInstance().options.sensitivity().get();
+            Minecraft.getInstance().options.sensitivity().set(sensitivity/2);
             float fovModifier = 1f;
             float deltaTicks = ((float) 25) / 20f;
             deltaTicks *= deltaTicks;
             fovModifier *=1f - deltaTicks * 0.5f;
             event.setNewFovModifier(fovModifier);
+            Minecraft.getInstance().options.sensitivity().set(sensitivity/2);
         }
-
-        if (KeyBinding.AIM.isDown()
+         if (KeyBinding.AIM.isDown()
                 && (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof AmrItem)) {
+            double sensitivity = Minecraft.getInstance().options.sensitivity().get();
+            Minecraft.getInstance().options.sensitivity().set(sensitivity/3);
             float fovModifier = 1f;
             float deltaTicks = ((float) 35) / 20f;
             deltaTicks *= deltaTicks;
             fovModifier *=1f - deltaTicks * 0.5f;
             event.setNewFovModifier(fovModifier);
+            Minecraft.getInstance().options.sensitivity().set(sensitivity/3);
+        }
+        if(!(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem) || !KeyBinding.AIM.isDown()){
+            Minecraft.getInstance().options.sensitivity().set(sensitivity);
         }
     }
 

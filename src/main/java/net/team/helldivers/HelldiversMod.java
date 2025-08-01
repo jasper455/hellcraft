@@ -22,6 +22,8 @@ import net.team.helldivers.particle.ModParticles;
 import net.team.helldivers.screen.ModMenuTypes;
 import net.team.helldivers.screen.custom.*;
 import net.team.helldivers.sound.ModSounds;
+import net.team.helldivers.util.Headshots.HeadHitboxLoader;
+import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraftforge.api.distmarker.Dist;
@@ -65,9 +67,10 @@ public class HelldiversMod {
         ModSounds.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+        HeadHitboxRegistry.Register(); //pulls the bounding boxes that determine where a mob can be headshotted from json
 
         MinecraftForge.EVENT_BUS.register(this);
-
+        MinecraftForge.EVENT_BUS.register(HeadHitboxRegistry.class);
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
         ModGameRules.DO_FLYING_BLOCKS.getId();

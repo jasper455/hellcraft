@@ -5,12 +5,16 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.PreparableReloadListener;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.boss.EnderDragonPart;
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
@@ -26,6 +30,12 @@ import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.team.helldivers.block.custom.BotContactMineBlock;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.util.Headshots.HeadHitbox;
+import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
+
+import java.util.Map;
+
+import com.ibm.icu.text.MessagePattern.Part;
 
 public class BulletProjectileEntity extends AbstractArrow {
     public Vec2 groundedOffset;
@@ -61,9 +71,12 @@ public class BulletProjectileEntity extends AbstractArrow {
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
         Entity entity = result.getEntity();
-        entity.hurt(this.damageSources().arrow(this, this.getOwner()), 3);
-        if (!this.level().isClientSide) {
-            this.level().broadcastEntityEvent(this, (byte)3);
+        if(checkHeadShot(entity, result.getLocation())){
+            entity.hurt(this.damageSources().arrow(this, this.getOwner()), 4);
+            System.out.println("HEADSHOT");
+        }
+        else{
+            entity.hurt(this.damageSources().arrow(this, this.getOwner()), 3);
         }
         this.discard();
     }
@@ -85,15 +98,20 @@ public class BulletProjectileEntity extends AbstractArrow {
         if(this.level().isClientSide){
             //add particles on hit
             BlockParticleOption blockParticle = new BlockParticleOption(ParticleTypes.BLOCK, block);
-            for(int i=0;i<25;i++){
-                System.out.println("hi");
+            for(int i=0;i<20;i++){
                 double rand1 = Math.random()*plusmin();
                 double rand2 = Math.random()*plusmin();          
                 double rand3 = Math.random()*plusmin();            
                 this.level().addParticle(blockParticle,this.getX(), this.getY(), this.getZ(),rand1, rand2, rand3);
             }
         }
-       this.lifetime = maxLife-2;//yes this is odd. yes I spent hours trying to figure out why this wasnt working. yes, giving an extra 2 ticks of life allows particles to spawn. Id
+        //yes this is odd. yes I spent hours trying to figure out why this wasnt working. yes, giving an extra few ticks of life allows particles to spawn. Idk
+        if(this.isShotgun){
+            this.lifetime = maxShotgunLife-3;
+        }
+        else{
+            this.lifetime = maxLife-3;
+        }
     }
 
     @Override
@@ -143,5 +161,28 @@ public class BulletProjectileEntity extends AbstractArrow {
         else{
             return 1;
         }
+    }
+    //TODO: fix collision check for head hitboxes
+    //TODO: add rotation for head hitboxes based on entity look dir
+    //TODO: add the rest of the entities to the HeadLocations json
+    private static boolean checkHeadShot(Entity entity, Vec3 pos) {
+        Map<String, HeadHitbox> hitboxes = HeadHitboxRegistry.getAll();
+        if (entity instanceof EnderDragonPart part) {
+            EnderDragon dragon = part.getParent();
+            System.out.println("dragon");
+            if(dragon.head.getBoundingBox().contains(pos)) return true;
+        }
+        else if (hitboxes != null) {
+            ResourceLocation id = EntityType.getKey(entity.getType());
+            HeadHitbox headHitbox = hitboxes.get(id.toString());
+            if (headHitbox != null) {
+                AABB box = headHitbox.getBox(entity.getBoundingBox());
+                System.out.println("Checking box: " + box);
+                if(box.contains(pos)) return true;
+                return false;
+            }
+            System.out.println("entity not found");
+        }
+        return false;
     }
 }

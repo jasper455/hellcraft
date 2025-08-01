@@ -1,9 +1,8 @@
 package net.team.helldivers.event;
-
+import java.util.concurrent.atomic.AtomicBoolean;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -26,21 +25,16 @@ import net.team.helldivers.client.skybox.SkyboxRenderer;
 import net.team.helldivers.command.StopUseLodestoneCommand;
 import net.team.helldivers.command.UseLodestoneCommand;
 import net.team.helldivers.entity.ModEntities;
-import net.team.helldivers.helper.ClientJammedSync;
 import net.team.helldivers.item.custom.armor.IDemocracyProtects;
 import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SSyncJammedPacket;
 import net.team.helldivers.util.KeyBinding;
-import net.team.helldivers.worldgen.dimension.ModDimensions;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModEvents {
 
     private static final SkyboxRenderer SKYBOX_RENDERER = new SkyboxRenderer();
-
     @SubscribeEvent
     public static void levelRenderEvent(RenderLevelStageEvent event) {
         Minecraft minecraft = Minecraft.getInstance();
@@ -146,5 +140,4 @@ public class ModEvents {
             persistentData.put(Player.PERSISTED_NBT_TAG, data);
         }
     }
-
 }

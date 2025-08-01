@@ -202,7 +202,6 @@ public class AmrItem extends Item implements GeoItem, IGunItem {
                 if (shootCooldown > 0) {
                     shootCooldown--;
                 }
-
                 // Handle reload
                 if (KeyBinding.RELOAD.consumeClick()) {
                     for (ItemStack stack : player.getInventory().items) {

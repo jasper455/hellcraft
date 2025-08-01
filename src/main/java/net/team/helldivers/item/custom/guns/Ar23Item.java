@@ -196,7 +196,6 @@ public class Ar23Item extends Item implements GeoItem, IGunItem {
         if (world.isClientSide() && entity instanceof Player player) {
             if (selected) {
                 isShooting = KeyBinding.SHOOT.isDown();
-
                 if (shootCooldown > 0) {
                     shootCooldown--;
                 }
@@ -214,7 +213,6 @@ public class Ar23Item extends Item implements GeoItem, IGunItem {
                         }
                     }
                 }
-
                 // Reset reload state when animation is done
                 if (isReloading && hasStartedReload) {
                     isReloading = false;
