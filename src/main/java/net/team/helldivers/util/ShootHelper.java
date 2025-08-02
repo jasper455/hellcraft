@@ -34,24 +34,7 @@ import net.team.helldivers.util.Headshots.HeadHitbox;
 import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
 
 public class ShootHelper {
-      public static void shoot(LivingEntity shooter, Level level, boolean isShotgun, boolean isAmr){
-        int dist = 128;
-        double drift = 0.03;
-        float dam = 5;
-        double knockback = 0.3f;
-        if(isShotgun) {
-          dist = 28;
-          drift = 0.3;
-          dam = 1;
-          knockback = 0.5f;
-
-        }
-        else  if(isAmr){
-           dist = 256;
-           drift = 0;
-           dam = 10;
-           knockback = 0.5f;
-        }
+      public static void shoot(LivingEntity shooter, Level level, int dist, double drift, float dam, double knockback, boolean ignoreIframes){
         Pair<HitResult, Vec3> pair = raycast(level, shooter, dist, drift);
         HitResult result = pair.getFirst();
         Vec3 hitPos = pair.getSecond();
@@ -62,7 +45,7 @@ public class ShootHelper {
                 entity.hurt(entity.damageSources().generic(), dam*0.6f);
                 System.out.println("HEADSHOT");
                 if(entity instanceof LivingEntity alive){
-                    if(isShotgun) alive.invulnerableTime = 0;
+                    if(ignoreIframes) alive.invulnerableTime = 0;
                     Vec3 look = shooter.getLookAngle().normalize();
                     alive.knockback(knockback, -look.x, -look.z);
                }
@@ -70,7 +53,7 @@ public class ShootHelper {
             else{
                 entity.hurt(entity.damageSources().generic(), dam);
                if(entity instanceof LivingEntity alive){
-                    if(isShotgun) alive.invulnerableTime = 0;
+                    if(ignoreIframes) alive.invulnerableTime = 0;
                     Vec3 look = shooter.getLookAngle().normalize();
                     alive.knockback(knockback, -look.x, -look.z);
                }
