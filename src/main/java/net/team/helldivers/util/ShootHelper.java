@@ -1,6 +1,11 @@
 package net.team.helldivers.util;
 
 import java.util.Map;
+import java.util.Optional;
+
+import org.checkerframework.checker.units.qual.h;
+
+import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -36,7 +41,7 @@ public class ShootHelper {
         double knockback = 0.3f;
         if(isShotgun) {
           dist = 28;
-          drift = 0.2;
+          drift = 0.3;
           dam = 1;
           knockback = 0.5f;
 
@@ -47,13 +52,15 @@ public class ShootHelper {
            dam = 10;
            knockback = 0.5f;
         }
-        HitResult result = raycast(level, shooter, dist, drift);
-        System.out.print(result);
+        Pair<HitResult, Vec3> pair = raycast(level, shooter, dist, drift);
+        HitResult result = pair.getFirst();
+        Vec3 hitPos = pair.getSecond();
         if(result.getType() == HitResult.Type.ENTITY){
             EntityHitResult resultE = ((EntityHitResult)result);
             Entity entity = resultE.getEntity();
-            if(checkHeadShot(resultE)){
+            if(checkHeadShot(resultE, hitPos)){
                 entity.hurt(entity.damageSources().generic(), dam*0.6f);
+                System.out.println("HEADSHOT");
                 if(entity instanceof LivingEntity alive){
                     if(isShotgun) alive.invulnerableTime = 0;
                     Vec3 look = shooter.getLookAngle().normalize();
@@ -85,17 +92,18 @@ public class ShootHelper {
             //add particles on hit
             if(!level.isClientSide){
                 BlockParticleOption blockParticle = new BlockParticleOption(ParticleTypes.BLOCK, block);
+                ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE, pos.getX(), pos.getY(), pos.getZ(), 10, 0, 0, 0, 0);
                 for(int i=0;i<20;i++){
                     double rand1 = Math.random()*plusmin();
                     double rand2 = Math.random()*plusmin();          
                     double rand3 = Math.random()*plusmin();  
                     double rand4 = Math.random()*plusmin();  
-                    ((ServerLevel)level).sendParticles(blockParticle,pos.getX(), pos.getY(), pos.getZ(), 2,rand1, rand2, rand3, rand4);  
+                    ((ServerLevel)level).sendParticles(blockParticle, pos.getX(), pos.getY(), pos.getZ(), 2,rand1, rand2, rand3, rand4); 
                 }
             }
         }
     }
-    public static HitResult raycast(Level level, Entity shooter, double maxDistance, double drift) {
+    public static Pair<HitResult, Vec3> raycast(Level level, Entity shooter, double maxDistance, double drift) {
         double r1 = Math.random()*plusmin()*drift;
         double r2 = Math.random()*plusmin()*drift;          
         double r3 = Math.random()*plusmin()*drift; 
@@ -103,22 +111,24 @@ public class ShootHelper {
         Vec3 look = shooter.getLookAngle().add(r1, r2, r3);
         Vec3 end = start.add(look.scale(maxDistance));
         BlockHitResult blockHit = level.clip(new ClipContext(start, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, shooter));
-        Vec3 blockHitPos = blockHit != null ? blockHit.getLocation() : end;
         double blockDist = blockHit != null ? blockHit.getLocation().distanceTo(start) : maxDistance;
         AABB box = shooter.getBoundingBox().expandTowards(look.scale(maxDistance)).inflate(1.0);
         EntityHitResult entityHit = ProjectileUtil.getEntityHitResult(level, shooter, start, end, box, e -> !e.isSpectator() && e.isPickable());
-
         if (entityHit != null) {
             double entityDist = entityHit.getLocation().distanceTo(start);
             if (entityDist < blockDist) {
-                return entityHit;
+                Optional<Vec3> clipped = entityHit.getEntity().getBoundingBox().clip(start, end);//returning the correct coords
+                Vec3 hitPos = clipped.orElse(end);
+                if (!level.isClientSide) {
+                 ((ServerLevel) level).sendParticles(ParticleTypes.CRIT, hitPos.x, hitPos.y, hitPos.z, 10, 0, 0, 0, 0);
+                }
+                return new Pair<>(entityHit, hitPos);
             }
         }
+        return new Pair<HitResult,Vec3>(blockHit, blockHit.getLocation());
+    }
 
-        return blockHit;
-}
-
-    private static boolean checkHeadShot(EntityHitResult result) {
+    private static boolean checkHeadShot(EntityHitResult result, Vec3 pos) {
         Map<String, HeadHitbox> hitboxes = HeadHitboxRegistry.getAll();
         if (result.getEntity() instanceof EnderDragonPart part) {
             if("head".equals(part.getName().getString())){
@@ -128,20 +138,17 @@ public class ShootHelper {
         else if (hitboxes != null) {
             Entity entity = result.getEntity();
             ResourceLocation id = EntityType.getKey(entity.getType());
-            HeadHitbox headHitbox = hitboxes.get(id.toString());//TODO: add the rest of the entities to the HeadLocations json
+            HeadHitbox headHitbox = hitboxes.get(id.toString());//TODO: add the rest of the entities to the HeadLocations json and add logic for baby mobs
             if (headHitbox != null) {
                 AABB box = headHitbox.getBox(entity.getBoundingBox());
                 box =rotateHeadBox(entity, box);
-                System.out.println("Checking box: " + box);
-                if(box.contains(result.getLocation())) return true;
-                System.out.println("entity hit but not headshot");
+                if(box.contains(pos)) return true;
             }
-            System.out.println("entity not found");
         }
         return false;
     }
-    private static AABB rotateHeadBox(Entity entity, AABB box){//TODO add head rotation logic here
-        return box;
+    private static AABB rotateHeadBox(Entity entity, AABB box){//TODO add head rotation logic here this is why the headshots where not working
+        return box.inflate(0.3);
     }
     private static int plusmin(){
         if(Math.random()>0.5){

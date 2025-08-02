@@ -177,7 +177,7 @@ public class SShootPacket {
                     player.level().playSound(null, player.blockPosition(),
                     ModSounds.SG225_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                     PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
-                    for(int i=0; i<22;i++){
+                    for(int i=0; i<21;i++){
                         ShootHelper.shoot(player, player.level(), true, false);
                     }
                     /* 
