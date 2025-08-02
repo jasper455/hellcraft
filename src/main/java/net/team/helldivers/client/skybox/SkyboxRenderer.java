@@ -18,12 +18,12 @@ public class SkyboxRenderer {
         BufferBuilder bufferbuilder = tesselator.getBuilder();
 
         ResourceLocation[] skyboxFaces = new ResourceLocation[] {
-                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox/skybox_front.png"),   // North
-                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox/skybox_right.png"),   // East
-                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox/skybox_back.png"),    // South
-                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox/skybox_left.png"),    // West
-                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox/skybox_top.png"),     // Up
-                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox/skybox_bottom.png")   // Down
+                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox2/skybox_front.png"),   // North
+                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox2/skybox_right.png"),   // East
+                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox2/skybox_back.png"),    // South
+                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox2/skybox_left.png"),    // West
+                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox2/skybox_top.png"),     // Up
+                ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/environment/skybox2/skybox_bottom.png")   // Down
         };
 
         for (int i = 0; i < 6; ++i) {
