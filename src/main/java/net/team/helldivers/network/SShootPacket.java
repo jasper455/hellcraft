@@ -175,7 +175,7 @@ public class SShootPacket {
                 if (heldItem.getDamageValue() < heldItem.getMaxDamage() - 1) {
                     // Play sound
                     player.level().playSound(null, player.blockPosition(),
-                            ModSounds.SG225_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
+                    ModSounds.SG225_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                     PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
                     for(int i=0; i<22;i++){
                         ShootHelper.shoot(player, player.level(), true, false);
