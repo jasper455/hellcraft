@@ -12,6 +12,7 @@ import net.team.helldivers.entity.custom.RocketProjectileEntity;
 import net.team.helldivers.item.custom.guns.*;
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.util.ShootHelper;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +36,7 @@ public class SShootPacket {
     public void handle(Supplier<NetworkEvent.Context> context) {
         ServerPlayer player = context.get().getSender();
         if (player == null) return;
+        if (player.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) return;
 
         // Add cooldown check to prevent multiple shots
         long currentTime = System.currentTimeMillis();

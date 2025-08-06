@@ -118,6 +118,15 @@
   "sounds.helldivers.plas1_reload": "PLAS-1 Scorcher Reloads",
   "sounds.helldivers.orbital_laser_idle": "Orbital Laser Idle",
   "sounds.helldivers.easter_egg": "BUUUUUUM, BUM BUM BUM, BUM BUM BUUUUUUUM",
+  "sounds.helldivers.eagle_flyby": "Eagle Airship Flies BY",
+  "sounds.helldivers.orbital_barrage_clear_the_area.ogg": "Firing Orbital Barrage, Clear The Area!",
+  "sounds.helldivers.orbital_barrage_stand_clear": "Orbital Barrage incoming, stand clear!",
+  "sounds.helldivers.orbital_strike_incoming": "Orbital Strike, Incoming",
+  "sounds.helldivers.planet_select": "Planet Selected",
+  "sounds.helldivers.sg225_shoot": "SG-225 Breaker Shoots",
+  "sounds.helldivers.stalwart_shoot": "M-105 Stalwart Shoots",
+  "sounds.helldivers.amr_shoot": "APW-1 Anti-Materiel Rifle Shoots",
+  "sounds.helldivers.amr_reload": "APW-1 Anti-Materiel Rifle Reloads",
 
   "container.helldivers.stratagem_picker": "§oStratagem Picker",
 

@@ -53,7 +53,7 @@ public class ModDimensions {
                 256,
                 256,
                 BlockTags.INFINIBURN_OVERWORLD,
-                BuiltinDimensionTypes.OVERWORLD_EFFECTS,
+                BuiltinDimensionTypes.END_EFFECTS,
                 1.0f,
                 new DimensionType.MonsterSettings(false, false, ConstantInt.of(0), 0)
         ));

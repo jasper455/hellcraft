@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import net.minecraft.client.renderer.ShaderInstance;
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
@@ -27,10 +26,7 @@ import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.phys.AABB;
 import net.minecraftforge.client.event.*;
-import net.minecraftforge.event.TickEvent;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.client.renderer.block.BotContactMineBlockRenderer;
@@ -46,25 +42,19 @@ import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.item.custom.guns.AmrItem;
 import net.team.helldivers.item.custom.guns.IGunItem;
-import net.team.helldivers.item.custom.guns.Plas1Item;
-import net.team.helldivers.item.custom.guns.StalwartItem;
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.util.KeyBinding;
 import software.bernie.geckolib.GeckoLib;
 import team.lodestar.lodestone.systems.postprocess.PostProcessHandler;
 
-import java.awt.*;
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 
 @Mod.EventBusSubscriber(modid = HelldiversMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ModClientEvents {
     private static boolean SHOW_INVINCIBLE_HUD = false;
     private static float alpha = 0.0f;
-    private static float outFadeSpeed;
+    private static float fadeOutSpeed;
     private static boolean hasFadedIn = false;
-    private static double sensitivity = Minecraft.getInstance().options.sensitivity().get();
 
     @SubscribeEvent
     public static void onComputerFovModifierEvent(ComputeFovModifierEvent event) {
@@ -106,14 +96,15 @@ public class ModClientEvents {
             event.setNewFovModifier(fovModifier);
             Minecraft.getInstance().options.sensitivity().set(sensitivity/3);
         }
-        if(!(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem) || !KeyBinding.AIM.isDown()){
-            Minecraft.getInstance().options.sensitivity().set(sensitivity);
+        if(!(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem) || !KeyBinding.AIM.isDown()) {
+            double sensitivity = Minecraft.getInstance().options.sensitivity().get();
+            Minecraft.getInstance().options.sensitivity().set(100d);
         }
     }
 
     public static void triggerFlashEffect(float fadeOutSpeed) {
         alpha = 0.001f;
-        outFadeSpeed = fadeOutSpeed;
+        ModClientEvents.fadeOutSpeed = fadeOutSpeed;
         hasFadedIn = false;
     }
 
@@ -144,7 +135,7 @@ public class ModClientEvents {
         }
         // Fade out the alpha
         if (hasFadedIn) {
-            alpha -= outFadeSpeed; // Tweak as needed
+            alpha -= fadeOutSpeed; // Tweak as needed
         }
     }
 

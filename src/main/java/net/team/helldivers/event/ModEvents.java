@@ -257,6 +257,8 @@ public class ModEvents {
             SkyboxRenderer.renderSkybox(poseStack, 100, 255, starsLayer, Axis.XN, Axis.YN, 30);
             SkyboxRenderer.renderSkybox(poseStack, 110, 125, spaceLayer, Axis.XP, Axis.YP, 20);
             SkyboxRenderer.renderSkybox(poseStack, 120, 75, fogLayer, Axis.YP, Axis.ZP, 20);
+        } else if (camera.getEntity().level().dimension().equals(ModDimensions.CHOEPESSA_DIM)) {
+            SkyboxRenderer.renderSkybox(poseStack, 100, 125, starsLayer, Axis.XN, Axis.YN, 30);
         }
     }
 }
