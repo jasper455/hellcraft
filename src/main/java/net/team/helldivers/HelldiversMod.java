@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.registries.RegisterEvent;
 import net.team.helldivers.block.ModBlocks;
@@ -13,8 +14,6 @@ import net.team.helldivers.block.custom.samples.ModSampleBlocks;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.client.*;
-import net.team.helldivers.entity.custom.ClusterBombProjectileEntity;
-import net.team.helldivers.extraslot.ExtraSlotProvider;
 import net.team.helldivers.gamerule.ModGameRules;
 import net.team.helldivers.item.ModArmorItems;
 import net.team.helldivers.item.ModCreativeModeTabs;
@@ -23,7 +22,6 @@ import net.team.helldivers.particle.ModParticles;
 import net.team.helldivers.screen.ModMenuTypes;
 import net.team.helldivers.screen.custom.*;
 import net.team.helldivers.sound.ModSounds;
-import net.team.helldivers.util.Headshots.HeadHitboxLoader;
 import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -102,13 +100,6 @@ public class HelldiversMod {
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {}
-
-    @SubscribeEvent
-    public static void attachCapabilities(AttachCapabilitiesEvent<Entity> event) {
-        if (event.getObject() instanceof Player) {
-            event.addCapability(ResourceLocation.fromNamespaceAndPath(MOD_ID, "extra_slot"), new ExtraSlotProvider());
-        }
-    }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
