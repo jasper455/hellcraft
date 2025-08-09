@@ -60,7 +60,7 @@ public class SShootPacket {
                     player.level().playSound(null, player.blockPosition(),
                             ModSounds.AR_23_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                     PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
-                    ShootHelper.shoot(player, player.level(), false, false);
+                    ShootHelper.shoot(player, player.level(), 128, 0.02, 3, 0.3f, true);
                     /*
                     // Actually shoot the bullet
                     BulletProjectileEntity bullet = new BulletProjectileEntity(player, player.level(), false, false);
@@ -118,14 +118,15 @@ public class SShootPacket {
                 player.level().playSound(null, player.blockPosition(),
                         ModSounds.P2_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                 PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
-                //ShootHelper.shoot(player, player.level(), false, false);
                 // Actually shoot the bullet
-                BulletProjectileEntity bullet = new BulletProjectileEntity(player, player.level(), false, false);
+                ShootHelper.shoot(player, player.level(), 64, 0.04, 4, 0.25f, false);
+                /*
                 bullet.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 5f, 0.0f);
                 bullet.setXRot(player.getXRot());
                 bullet.setYRot(player.getYRot());
                 bullet.setNoGravity(true);
                 player.level().addFreshEntity(bullet);
+                */
                 // Damage the item
                 if (!player.getAbilities().instabuild) {
                     heldItem.hurt(1, player.getRandom(), player);
@@ -177,10 +178,10 @@ public class SShootPacket {
                 if (heldItem.getDamageValue() < heldItem.getMaxDamage() - 1) {
                     // Play sound
                     player.level().playSound(null, player.blockPosition(),
-                            ModSounds.SG225_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
+                    ModSounds.SG225_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                     PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
-                    for(int i=0; i<22;i++){
-                        ShootHelper.shoot(player, player.level(), true, false);
+                    for(int i=0; i<21;i++){
+                                          ShootHelper.shoot(player, player.level(), 20, 0.3, 1, 0.3, true);
                     }
                     /* 
                     // Actually shoot the bullets
@@ -217,7 +218,7 @@ public class SShootPacket {
                     player.level().playSound(null, player.blockPosition(),
                             ModSounds.STALWART_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                     PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.5f), player);
-                    ShootHelper.shoot(player, player.level(), false, false);
+                    ShootHelper.shoot(player, player.level(), 64, 0.05, 2, 0.2f, true);
                     /* 
                     // Actually shoot the bullets
                     BulletProjectileEntity bulletProjectile = new BulletProjectileEntity(player, player.level(), false, false);
@@ -252,7 +253,7 @@ public class SShootPacket {
                             ModSounds.AMR_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                     PacketHandler.sendToPlayer(new CApplyRecoilPacket(10.0f), player);
 
-                    ShootHelper.shoot(player, player.level(), false, true);
+                    ShootHelper.shoot(player, player.level(), 256, 0, 10, 0.4f, false);
                     /* 
                     // Actually shoot the bullets
                     BulletProjectileEntity bulletProjectile = new BulletProjectileEntity(player, player.level(), false, true);

@@ -31,7 +31,15 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class EAT17Item extends Item implements GeoItem, IGunItem {
+public class EAT17Item extends AbstractGunItem {
+
+    public EAT17Item(Properties properties) {
+        super(properties.durability(47).rarity(Rarity.COMMON), false, "§e[Expendable-Anti-Tank]", 10,new EAT17Renderer());
+    }
+   
+}
+
+/*public class EAT17Item extends AbstractGunItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public String animationprocedure = "empty";
     private boolean isShooting = false;
@@ -217,4 +225,4 @@ public class EAT17Item extends Item implements GeoItem, IGunItem {
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         return true;
     }
-}
+}*/

@@ -21,7 +21,6 @@ import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SGunReloadPacket;
 import net.team.helldivers.network.SShootPacket;
 import net.team.helldivers.util.KeyBinding;
-import net.team.helldivers.worldgen.dimension.ModDimensions;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -34,50 +33,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class Sg225Item extends AbstractGunItem {
-
-    public Sg225Item(Properties properties) {
-        super(properties.durability(8).rarity(Rarity.COMMON), true, "§e[Sniper-Rifle]", 5, new Sg225Renderer());
-    }
-   
-}
-/*
-package net.team.helldivers.item.custom.guns;
-
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
-import net.minecraft.world.level.Level;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.team.helldivers.block.custom.AmmoCrateBlock;
-import net.team.helldivers.client.renderer.item.P2Renderer;
-import net.team.helldivers.client.renderer.item.Sg225Renderer;
-import net.team.helldivers.network.PacketHandler;
-import net.team.helldivers.network.SGunReloadPacket;
-import net.team.helldivers.network.SShootPacket;
-import net.team.helldivers.util.KeyBinding;
-import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
-import software.bernie.geckolib.core.animation.AnimationController;
-import software.bernie.geckolib.core.animation.AnimationState;
-import software.bernie.geckolib.core.animation.RawAnimation;
-import software.bernie.geckolib.core.object.PlayState;
-import software.bernie.geckolib.util.GeckoLibUtil;
-
-import java.util.List;
-import java.util.function.Consumer;
-
-public class Sg225Item extends Item implements GeoItem, IGunItem {
+public abstract class AbstractGunItem extends Item implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public String animationprocedure = "empty";
     private boolean isShooting = false;
@@ -86,12 +42,19 @@ public class Sg225Item extends Item implements GeoItem, IGunItem {
     private boolean isAiming = false;
     private boolean wasAiming = false; // Track previous aiming state
     private int shootCooldown = 0;
-    // Adjust this value to control fire rate (in ticks, 20 ticks = 1 second)
-    private static final int SHOOT_DELAY = 5; // This will give you about 600 RPM
+    public int durability;
+    public boolean reloadable;
+    public String type;
+    public int fireDelay;
+    public BlockEntityWithoutLevelRenderer renderer;
 
 
-    public Sg225Item(Properties properties) {
-        super(new Properties().durability(18).rarity(Rarity.COMMON));
+    public AbstractGunItem(Properties properties, boolean reloadable, String type, int fireDelay, BlockEntityWithoutLevelRenderer renderer) {
+        super(properties);
+        this.type = type;
+        this.reloadable = reloadable;
+        this.renderer = renderer;
+        this.fireDelay = fireDelay;
     }
 
     private boolean canShoot(ItemStack stack) {
@@ -102,8 +65,6 @@ public class Sg225Item extends Item implements GeoItem, IGunItem {
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         super.initializeClient(consumer);
         consumer.accept(new IClientItemExtensions() {
-            private final BlockEntityWithoutLevelRenderer renderer = new Sg225Renderer();
-
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 return renderer;
@@ -160,14 +121,14 @@ public class Sg225Item extends Item implements GeoItem, IGunItem {
                     event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot"));
                 }
                 PacketHandler.sendToServer(new SShootPacket());
-                shootCooldown = SHOOT_DELAY;
+                shootCooldown = fireDelay;
                 return PlayState.CONTINUE;
             }
             if (isShooting && shootCooldown == 0 &&
                     !canShoot(Minecraft.getInstance().player.getMainHandItem()) && !isReloading &&
                     !Minecraft.getInstance().player.getCooldowns().isOnCooldown(this)) {
                 PacketHandler.sendToServer(new SShootPacket());
-                shootCooldown = SHOOT_DELAY;
+                shootCooldown = fireDelay;
                 return PlayState.CONTINUE;
             }
 
@@ -234,13 +195,17 @@ public class Sg225Item extends Item implements GeoItem, IGunItem {
     @Override
     public void appendHoverText(ItemStack itemstack, Level level, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, level, list, flag);
-        list.add(Component.literal("§e[Shotgun]"));
-        list.add(Component.literal("[Reloadable]"));
+        if(reloadable) {
+            list.add(Component.literal("[Reloadable]"));
+        }
+        else{
+            list.add(Component.literal("[Not Reloadable]"));
+        }
+        list.add(Component.literal(type));
     }
 
     @Override
     public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
-        if (world.dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) return;
         if (world.isClientSide() && entity instanceof Player player) {
             if (selected) {
                 isShooting = KeyBinding.SHOOT.isDown();
@@ -300,4 +265,3 @@ public class Sg225Item extends Item implements GeoItem, IGunItem {
         return true;
     }
 }
-    */
