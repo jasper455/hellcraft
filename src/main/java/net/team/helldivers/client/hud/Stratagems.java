@@ -22,6 +22,7 @@ import net.team.helldivers.network.SInitializeExtractionTerminalInventoryPacket;
 import net.team.helldivers.network.SItemGiveCooldownPacket;
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.util.KeyBinding;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 @Mod.EventBusSubscriber(modid = HelldiversMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class Stratagems {
@@ -37,8 +38,9 @@ public class Stratagems {
         Minecraft minecraft = Minecraft.getInstance();
         Player player = minecraft.player;
         boolean isJammed = ClientJammedSync.getIsJammed();
-
         if (player == null || event.phase != TickEvent.Phase.END) return;
+
+        if (Minecraft.getInstance().level.dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) return;
 
         //Checking if inputs were pressed
 
@@ -1072,6 +1074,7 @@ public class Stratagems {
 
         int screenWidth = minecraft.getWindow().getGuiScaledWidth();
         int screenHeight = minecraft.getWindow().getGuiScaledHeight();
+        if (Minecraft.getInstance().level == null || Minecraft.getInstance().level.dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) return;
 
         // only render the menu if your not moving, all inputs aren't down, your hand is empty, you have a helldiver chestplate on
         if (KeyBinding.SHOW_STRATAGEM_KEY.isDown() && player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0 && !allInputsDown &&
@@ -1361,6 +1364,7 @@ public class Stratagems {
 
     @SubscribeEvent
     public static void onInputUpdate(MovementInputUpdateEvent event) {
+        if (Minecraft.getInstance().level.dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) return;
         // Stop the player from moving when the stratagem menu is open
         Player player = Minecraft.getInstance().player;
         if (KeyBinding.SHOW_STRATAGEM_KEY.isDown() && player.getDeltaMovement().x == 0

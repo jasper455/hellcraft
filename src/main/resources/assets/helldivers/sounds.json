@@ -1,180 +1,180 @@
 {
   "stratagem_input": {
-    "subtitles": "sounds.helldivers.stratagem_input",
+    "subtitle": "sounds.helldivers.stratagem_input",
     "sounds": [
       "helldivers:stratagem_input"
     ]
   },
   "falling_shell": {
-    "subtitles": "sounds.helldivers.falling_shell",
+    "subtitle": "sounds.helldivers.falling_shell",
     "sounds": [
       "helldivers:falling_shell"
     ]
   },
   "explosion": {
-    "subtitles": "sounds.helldivers.explosion",
+    "subtitle": "sounds.helldivers.explosion",
     "sounds": [
       "helldivers:explosion"
     ]
   },
   "stratagem_activate": {
-    "subtitles": "sounds.helldivers.stratagem_activate",
+    "subtitle": "sounds.helldivers.stratagem_activate",
     "sounds": [
       "helldivers:stratagem_activate"
     ]
   },
   "firing_orbital_strike": {
-    "subtitles": "sounds.helldivers.firing_orbital_strike",
+    "subtitle": "sounds.helldivers.firing_orbital_strike",
     "sounds": [
       "helldivers:firing_orbital_strike"
     ]
   },
   "hellbomb_armed": {
-    "subtitles": "sounds.helldivers.hellbomb_armed",
+    "subtitle": "sounds.helldivers.hellbomb_armed",
     "sounds": [
       "helldivers:hellbomb_armed"
     ]
   },
   "hellbomb_explosion": {
-    "subtitles": "sounds.helldivers.hellbomb_explosion",
+    "subtitle": "sounds.helldivers.hellbomb_explosion",
     "sounds": [
       "helldivers:hellbomb_explosion"
     ]
   },
   "clear_the_area": {
-    "subtitles": "sounds.helldivers.clear_the_area",
+    "subtitle": "sounds.helldivers.clear_the_area",
     "sounds": [
       "helldivers:clear_the_area"
     ]
   },
   "stratagem_fail_input": {
-    "subtitles": "sounds.helldivers.stratagem_fail_input",
+    "subtitle": "sounds.helldivers.stratagem_fail_input",
     "sounds": [
       "helldivers:stratagem_fail_input"
     ]
   },
   "stratagem_menu_open": {
-    "subtitles": "sounds.helldivers.stratagem_menu_open",
+    "subtitle": "sounds.helldivers.stratagem_menu_open",
     "sounds": [
       "helldivers:stratagem_menu_open"
     ]
   },
   "stratagem_menu_close": {
-    "subtitles": "sounds.helldivers.stratagem_menu_close",
+    "subtitle": "sounds.helldivers.stratagem_menu_close",
     "sounds": [
       "helldivers:stratagem_menu_close"
     ]
   },
   "stratagem_orb_land": {
-    "subtitles": "sounds.helldivers.stratagem_orb_land",
+    "subtitle": "sounds.helldivers.stratagem_orb_land",
     "sounds": [
       "helldivers:stratagem_orb_land"
     ]
   },
   "ar23_reload": {
-    "subtitles": "sounds.helldivers.ar23_reload",
+    "subtitle": "sounds.helldivers.ar23_reload",
     "sounds": [
       "helldivers:ar23_reload"
     ]
   },
   "ar23_shoot": {
-    "subtitles": "sounds.helldivers.ar23_shoot",
+    "subtitle": "sounds.helldivers.ar23_shoot",
     "sounds": [
       "helldivers:ar23_shoot"
     ]
   },
   "eat_fire": {
-    "subtitles": "sounds.helldivers.eat_fire",
+    "subtitle": "sounds.helldivers.eat_fire",
     "sounds": [
       "helldivers:eat_fire"
     ]
   },
   "gun_empty": {
-    "subtitles": "sounds.helldivers.gun_empty",
+    "subtitle": "sounds.helldivers.gun_empty",
     "sounds": [
       "helldivers:gun_empty"
     ]
   },
   "p2_shoot": {
-    "subtitles": "sounds.helldivers.p2_shoot",
+    "subtitle": "sounds.helldivers.p2_shoot",
     "sounds": [
       "helldivers:p2_shoot"
     ]
   },
   "plas1_shoot": {
-    "subtitles": "sounds.helldivers.plas1_shoot",
+    "subtitle": "sounds.helldivers.plas1_shoot",
     "sounds": [
       "helldivers:plas1_shoot"
     ]
   },
   "plas1_reload": {
-    "subtitles": "sounds.helldivers.plas1_reload",
+    "subtitle": "sounds.helldivers.plas1_reload",
     "sounds": [
       "helldivers:plas1_reload"
     ]
   },
   "orbital_laser_idle": {
-    "subtitles": "sounds.helldivers.orbital_laser_idle",
+    "subtitle": "sounds.helldivers.orbital_laser_idle",
     "sounds": [
       "helldivers:orbital_laser_idle"
     ]
   },
   "easter_egg": {
-    "subtitles": "sounds.helldivers.easter_egg",
+    "subtitle": "sounds.helldivers.easter_egg",
     "sounds": [
       "helldivers:easter_egg"
     ]
   },
   "eagle_flyby": {
-    "subtitles": "sounds.helldivers.eagle_flyby",
+    "subtitle": "sounds.helldivers.eagle_flyby",
     "sounds": [
       "helldivers:eagle_flyby"
     ]
   },
   "orbital_barrage_clear_the_area": {
-    "subtitles": "sounds.helldivers.orbital_barrage_clear_the_area",
+    "subtitle": "sounds.helldivers.orbital_barrage_clear_the_area",
     "sounds": [
       "helldivers:orbital_barrage_clear_the_area"
     ]
   },
   "orbital_barrage_stand_clear": {
-    "subtitles": "sounds.helldivers.orbital_barrage_stand_clear",
+    "subtitle": "sounds.helldivers.orbital_barrage_stand_clear",
     "sounds": [
       "helldivers:orbital_barrage_stand_clear"
     ]
   },
   "orbital_strike_incoming": {
-    "subtitles": "sounds.helldivers.orbital_strike_incoming",
+    "subtitle": "sounds.helldivers.orbital_strike_incoming",
     "sounds": [
       "helldivers:orbital_strike_incoming"
     ]
   },
   "planet_select": {
-    "subtitles": "sounds.helldivers.planet_select",
+    "subtitle": "sounds.helldivers.planet_select",
     "sounds": [
       "helldivers:planet_select"
     ]
   },
   "sg225_shoot": {
-    "subtitles": "sounds.helldivers.sg225_shoot",
+    "subtitle": "sounds.helldivers.sg225_shoot",
     "sounds": [
       "helldivers:sg225_shoot"
     ]
   },
   "stalwart_shoot": {
-    "subtitles": "sounds.helldivers.stalwart_shoot",
+    "subtitle": "sounds.helldivers.stalwart_shoot",
     "sounds": [
       "helldivers:stalwart_shoot"
     ]
   },
   "amr_shoot": {
-    "subtitles": "sounds.helldivers.amr_shoot",
+    "subtitle": "sounds.helldivers.amr_shoot",
     "sounds": [
       "helldivers:amr_shoot"
     ]
   },
   "amr_reload": {
-    "subtitles": "sounds.helldivers.amr_reload",
+    "subtitle": "sounds.helldivers.amr_reload",
     "sounds": [
       "helldivers:amr_reload"
     ]

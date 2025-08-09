@@ -21,6 +21,7 @@ import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SGunReloadPacket;
 import net.team.helldivers.network.SShootPacket;
 import net.team.helldivers.util.KeyBinding;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -239,6 +240,7 @@ public class Sg225Item extends Item implements GeoItem, IGunItem {
 
     @Override
     public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+        if (world.dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) return;
         if (world.isClientSide() && entity instanceof Player player) {
             if (selected) {
                 isShooting = KeyBinding.SHOOT.isDown();
