@@ -15,7 +15,8 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.team.helldivers.block.custom.AmmoCrateBlock;
-import net.team.helldivers.client.renderer.item.Plas1Renderer;
+import net.team.helldivers.client.renderer.item.P2Renderer;
+import net.team.helldivers.client.renderer.item.Sg225Renderer;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SGunReloadPacket;
 import net.team.helldivers.network.SShootPacket;
@@ -32,15 +33,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class  Plas1Item extends AbstractGunItem {
-
-    public Plas1Item(Properties properties) {
-        super(properties.durability(6).rarity(Rarity.COMMON), true, "§e[Plasma-Based]", 5,new Plas1Renderer());
-    }
-   
-}
-
-/*public class Plas1Item extends Item implements GeoItem, AbstractGunItem {
+public abstract class AbstractGunItem extends Item implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public String animationprocedure = "empty";
     private boolean isShooting = false;
@@ -49,12 +42,19 @@ public class  Plas1Item extends AbstractGunItem {
     private boolean isAiming = false;
     private boolean wasAiming = false; // Track previous aiming state
     private int shootCooldown = 0;
-    // Adjust this value to control fire rate (in ticks, 20 ticks = 1 second)
-    private static final int SHOOT_DELAY = 5; // This will give you about 600 RPM
+    public int durability;
+    public boolean reloadable;
+    public String type;
+    public int fireDelay;
+    public BlockEntityWithoutLevelRenderer renderer;
 
 
-    public Plas1Item(Properties properties) {
-        super(new Properties().durability(6).rarity(Rarity.COMMON));
+    public AbstractGunItem(Properties properties, boolean reloadable, String type, int fireDelay, BlockEntityWithoutLevelRenderer renderer) {
+        super(properties);
+        this.type = type;
+        this.reloadable = reloadable;
+        this.renderer = renderer;
+        this.fireDelay = fireDelay;
     }
 
     private boolean canShoot(ItemStack stack) {
@@ -65,36 +65,33 @@ public class  Plas1Item extends AbstractGunItem {
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         super.initializeClient(consumer);
         consumer.accept(new IClientItemExtensions() {
-            private final BlockEntityWithoutLevelRenderer renderer = new Plas1Renderer();
-
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 return renderer;
             }
 
             // Changing the players arm pose when holding the item
-            private static final HumanoidModel.ArmPose Plas1Pose = HumanoidModel.ArmPose.create("Plas1",
-                    false, (model, entity, arm) -> {
-                        if (arm == HumanoidArm.LEFT) {
-                        } else {
-                            model.rightArm.xRot = 30F + model.head.xRot;
-                            model.rightArm.yRot = 0F + model.head.yRot;
-                            model.leftArm.xRot = 30F + model.head.xRot;
-                            model.leftArm.yRot = 0.5F + model.head.yRot;
-                        }
-                    });
+            private static final HumanoidModel.ArmPose P2PeacemakerPose = HumanoidModel.ArmPose.create("P2Peacemaker", false, (model, entity, arm) -> {
+                if (arm == HumanoidArm.LEFT) {
+                } else {
+                    model.rightArm.xRot = 30F + model.head.xRot;
+                    model.rightArm.yRot = 0F + model.head.yRot;
+                    model.leftArm.xRot = 30F + model.head.xRot;
+                    model.leftArm.yRot = 0.5F + model.head.yRot;
+                }
+            });
+
             @Override
             public HumanoidModel.ArmPose getArmPose(LivingEntity entityLiving, InteractionHand hand, ItemStack itemStack) {
                 if (!itemStack.isEmpty()) {
                     if (entityLiving.getUsedItemHand() == hand) {
-                        return Plas1Pose;
+                        return P2PeacemakerPose;
                     }
                 }
                 return HumanoidModel.ArmPose.EMPTY;
             }
 
-            public boolean applyForgeHandTransform(PoseStack poseStack, LocalPlayer player, HumanoidArm arm,
-                                                   ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
+            public boolean applyForgeHandTransform(PoseStack poseStack, LocalPlayer player, HumanoidArm arm, ItemStack itemInHand, float partialTick, float equipProcess, float swingProcess) {
                 int i = arm == HumanoidArm.RIGHT ? 1 : -1;
                 poseStack.translate(i * 0.56F, -0.52F, -0.72F);
                 if (player.getUseItem() == itemInHand) {
@@ -124,14 +121,14 @@ public class  Plas1Item extends AbstractGunItem {
                     event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot"));
                 }
                 PacketHandler.sendToServer(new SShootPacket());
-                shootCooldown = SHOOT_DELAY;
+                shootCooldown = fireDelay;
                 return PlayState.CONTINUE;
             }
             if (isShooting && shootCooldown == 0 &&
                     !canShoot(Minecraft.getInstance().player.getMainHandItem()) && !isReloading &&
                     !Minecraft.getInstance().player.getCooldowns().isOnCooldown(this)) {
                 PacketHandler.sendToServer(new SShootPacket());
-                shootCooldown = SHOOT_DELAY;
+                shootCooldown = fireDelay;
                 return PlayState.CONTINUE;
             }
 
@@ -198,8 +195,13 @@ public class  Plas1Item extends AbstractGunItem {
     @Override
     public void appendHoverText(ItemStack itemstack, Level level, List<Component> list, TooltipFlag flag) {
         super.appendHoverText(itemstack, level, list, flag);
-        list.add(Component.literal("§e[Plasma-Based]"));
-        list.add(Component.literal("[Reloadable]"));
+        if(reloadable) {
+            list.add(Component.literal("[Reloadable]"));
+        }
+        else{
+            list.add(Component.literal("[Not Reloadable]"));
+        }
+        list.add(Component.literal(type));
     }
 
     @Override
@@ -262,4 +264,4 @@ public class  Plas1Item extends AbstractGunItem {
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         return true;
     }
-}*/
+}

@@ -45,7 +45,7 @@ import net.team.helldivers.client.renderer.entity.SupportHellpodRenderer;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.item.custom.guns.AmrItem;
-import net.team.helldivers.item.custom.guns.IGunItem;
+import net.team.helldivers.item.custom.guns.AbstractGunItem;
 import net.team.helldivers.item.custom.guns.Plas1Item;
 import net.team.helldivers.item.custom.guns.StalwartItem;
 import net.team.helldivers.sound.ModSounds;
@@ -69,7 +69,7 @@ public class ModClientEvents {
     @SubscribeEvent
     public static void onComputerFovModifierEvent(ComputeFovModifierEvent event) {
         if (Minecraft.getInstance().options.keySaveHotbarActivator.isDown()
-                && !(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem)) {
+                && !(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof AbstractGunItem)) {
             float fovModifier = 1f;
             float deltaTicks = ((float) 20) / 20f;
             deltaTicks *= deltaTicks;
@@ -77,7 +77,7 @@ public class ModClientEvents {
             event.setNewFovModifier(fovModifier);
         }
         if (Minecraft.getInstance().options.keyLoadHotbarActivator.isDown()
-                && !(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem)) {
+                && !(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof AbstractGunItem)) {
             float fovModifier = 1f;
             float deltaTicks = ((float) 30) / 20f;
             deltaTicks *= deltaTicks;
@@ -85,7 +85,7 @@ public class ModClientEvents {
             event.setNewFovModifier(fovModifier);
         }
         if (KeyBinding.AIM.isDown()
-                && (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem)) {
+                && (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof AbstractGunItem)) {
             double sensitivity = Minecraft.getInstance().options.sensitivity().get();
             Minecraft.getInstance().options.sensitivity().set(sensitivity/2);
             float fovModifier = 1f;
@@ -106,7 +106,7 @@ public class ModClientEvents {
             event.setNewFovModifier(fovModifier);
             Minecraft.getInstance().options.sensitivity().set(sensitivity/3);
         }
-        if(!(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem) || !KeyBinding.AIM.isDown()){
+        if(!(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof AbstractGunItem) || !KeyBinding.AIM.isDown()){
             Minecraft.getInstance().options.sensitivity().set(sensitivity);
         }
     }

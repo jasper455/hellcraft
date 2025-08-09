@@ -68,7 +68,7 @@ public class SShootPacket {
                     bullet.setNoGravity(true);
                     player.level().addFreshEntity(bullet);
                     */
-                    player.getCooldowns().addCooldown(heldItem.getItem(), 3);
+                    player.getCooldowns().addCooldown(heldItem.getItem(), 2);
 
                     // Damage the item
                     if (!player.getAbilities().instabuild) {
