@@ -14,6 +14,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -42,7 +43,7 @@ public class ShootHelper {
             EntityHitResult resultE = ((EntityHitResult)result);
             Entity entity = resultE.getEntity();
             if(checkHeadShot(resultE, hitPos)){
-                entity.hurt(entity.damageSources().generic(), dam*0.6f);
+                entity.hurt(entity.damageSources().generic(), dam*2);
                 System.out.println("HEADSHOT");
                 if(entity instanceof LivingEntity alive){
                     if(ignoreIframes) alive.invulnerableTime = 0;
@@ -121,7 +122,7 @@ public class ShootHelper {
         else if (hitboxes != null) {
             Entity entity = result.getEntity();
             ResourceLocation id = EntityType.getKey(entity.getType());
-            HeadHitbox headHitbox = hitboxes.get(id.toString());//TODO: add the rest of the entities to the HeadLocations json and add logic for baby mobs
+            HeadHitbox headHitbox = hitboxes.get(id.toString());//TODO: add the rest of the entities to the HeadLocations json
             if (headHitbox != null) {
                 AABB box = headHitbox.getBox(entity.getBoundingBox());
                 box =rotateHeadBox(entity, box);
@@ -130,8 +131,60 @@ public class ShootHelper {
         }
         return false;
     }
-    private static AABB rotateHeadBox(Entity entity, AABB box){//TODO add head rotation logic here this is why the headshots where not working
-        return box.inflate(0.3);
+    public static AABB rotateHeadBox(Entity entity, AABB box){
+        float headYaw = entity.getYHeadRot();
+        double angle = Math.toRadians(-headYaw);
+        Vec3 pivot = new Vec3(
+            (box.minX + box.maxX) / 2.0,
+            (box.minY + box.maxY) / 2.0,
+            (box.minZ + box.maxZ) / 2.0
+        );
+        Vec3[] corners = new Vec3[] {
+            new Vec3(box.minX, box.minY, box.minZ),
+            new Vec3(box.minX, box.minY, box.maxZ),
+            new Vec3(box.minX, box.maxY, box.minZ),
+            new Vec3(box.minX, box.maxY, box.maxZ),
+            new Vec3(box.maxX, box.minY, box.minZ),
+            new Vec3(box.maxX, box.minY, box.maxZ),
+            new Vec3(box.maxX, box.maxY, box.minZ),
+            new Vec3(box.maxX, box.maxY, box.maxZ)
+        };
+
+        double cos = Math.cos(angle);
+        double sin = Math.sin(angle);
+
+        double minX = Double.POSITIVE_INFINITY;
+        double minY = Double.POSITIVE_INFINITY;
+        double minZ = Double.POSITIVE_INFINITY;
+        double maxX = Double.NEGATIVE_INFINITY;
+        double maxY = Double.NEGATIVE_INFINITY;
+        double maxZ = Double.NEGATIVE_INFINITY;
+
+        for (Vec3 corner : corners) {
+            double dx = corner.x - pivot.x;
+            double dz = corner.z - pivot.z;
+
+            double rx = dx * cos - dz * sin;
+            double rz = dx * sin + dz * cos;
+
+            double x = pivot.x + rx;
+            double y = corner.y;
+            double z = pivot.z + rz;
+            minX = Math.min(minX, x);
+            minY = Math.min(minY, y);
+            minZ = Math.min(minZ, z);
+            maxX = Math.max(maxX, x);
+            maxY = Math.max(maxY, y);
+            maxZ = Math.max(maxZ, z);
+        }
+        if(entity instanceof AgeableMob mob){
+            if(mob.isBaby()){
+                minY = minY - 2;//TODO edit these
+                maxY = maxY - 2;
+            }
+        }
+        AABB end = new AABB(minX, minY, minZ, maxX, maxY, maxZ);
+        return end.inflate(0.03, 0, 0.03);
     }
     private static int plusmin(){
         if(Math.random()>0.5){

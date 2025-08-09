@@ -20,6 +20,7 @@ import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.team.helldivers.util.ShootHelper;
 import net.team.helldivers.util.Headshots.HeadHitbox;
 import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
 //this will render a red outline over the area where an entity can be headshotted 
@@ -54,11 +55,12 @@ public class DebugRenderer {
                 if (hitbox == null) continue;
 
                 AABB box = hitbox.getBox(entity.getBoundingBox()).move(-camPos.x, -camPos.y, -camPos.z);
+                AABB rotated = ShootHelper.rotateHeadBox(entity, box);
 
                 LevelRenderer.renderLineBox(
                     poseStack,
                     lines,
-                    box,
+                    rotated,
                     1.0F, 0.0F, 0.0F, // red
                     1.0F              // full alpha
                 );
