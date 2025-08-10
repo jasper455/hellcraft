@@ -153,6 +153,10 @@
 					}
 				}
 			}
+		},
+		"hellbomb.idle": {
+			"loop": true,
+			"animation_length": 0.25
 		}
 	},
 	"geckolib_format_version": 2
