@@ -46,6 +46,8 @@ import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.item.custom.guns.AmrItem;
 import net.team.helldivers.item.custom.guns.AbstractGunItem;
+import net.team.helldivers.item.custom.guns.Plas1Item;
+import net.team.helldivers.item.custom.guns.StalwartItem;
 
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.util.KeyBinding;
