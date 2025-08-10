@@ -19,6 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.network.NetworkEvent;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 import java.util.function.Supplier;
 
@@ -48,14 +49,18 @@ public class STeleportToDimensionPacket {
 
         ServerLevel destination = player.server.getLevel(targetDimension);
         if (destination != null && player.level().dimension() != targetDimension) {
-            player.teleportTo(destination, worldSpawn.getX() + randomX, 200, worldSpawn.getZ() + randomZ, 0, 0);
-            Entity hellpod = ModEntities.HELLPOD.get().create(destination);
-            if (hellpod != null) {
-                hellpod.setPos(worldSpawn.getX() + randomX, 200, worldSpawn.getZ() + randomZ);
-                destination.addFreshEntity(hellpod);
-                player.startRiding(hellpod, true);
+            if (targetDimension.equals(ModDimensions.SUPER_DESTROYER_DIM)) {
+                player.teleportTo(destination, 52.5, 10, -5.5, 0, 0);
+            } else {
+                player.teleportTo(destination, worldSpawn.getX() + randomX, 200, worldSpawn.getZ() + randomZ, 0, 0);
+                Entity hellpod = ModEntities.HELLPOD.get().create(destination);
+                if (hellpod != null) {
+                    hellpod.setPos(worldSpawn.getX() + randomX, 200, worldSpawn.getZ() + randomZ);
+                    destination.addFreshEntity(hellpod);
+                    player.startRiding(hellpod, true);
+                }
+                player.closeContainer();
             }
-            player.closeContainer();
         } else if (player.level().dimension() == targetDimension && destination != null) {
             player.displayClientMessage(Component.literal("Already on this world!"), true);
             player.closeContainer();

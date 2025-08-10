@@ -6,8 +6,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
+import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -29,11 +32,17 @@ import net.minecraftforge.network.NetworkHooks;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.block.entity.custom.ExtractionTerminalBlockEntity;
 import net.team.helldivers.entity.custom.SupportHellpodEntity;
+import net.team.helldivers.event.ModClientEvents;
 import net.team.helldivers.item.ModItems;
+import net.team.helldivers.network.PacketHandler;
+import net.team.helldivers.network.STeleportToDimensionPacket;
 import net.team.helldivers.screen.custom.ExtractionTerminalMenu;
 import net.team.helldivers.screen.custom.GalaxyMapMenu;
 import net.team.helldivers.screen.custom.SupportHellpodMenu;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 import org.jetbrains.annotations.Nullable;
+
+import java.awt.*;
 
 public class ExtractionTerminalBlock extends BaseEntityBlock implements EntityBlock {
     public static final DirectionProperty FACING = BlockStateProperties.FACING;
@@ -59,12 +68,16 @@ public class ExtractionTerminalBlock extends BaseEntityBlock implements EntityBl
         if (blockEntity instanceof ExtractionTerminalBlockEntity extractionTerminal) {
             if (player instanceof ServerPlayer serverPlayer) {
                 Container inventory = extractionTerminal.getPlayerInventory(player);
-
-                NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider(
-                        (containerId, playerInventory, playerEntity) -> new ExtractionTerminalMenu(
-                                containerId, playerInventory, inventory, pos),
-                        Component.literal("Extraction Terminal")
-                ), pos);
+                if (!player.isShiftKeyDown()) {
+                    NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider(
+                            (containerId, playerInventory, playerEntity) -> new ExtractionTerminalMenu(
+                                    containerId, playerInventory, inventory, pos),
+                            Component.literal("Extraction Terminal")
+                    ), pos);
+                } else {
+                    ModClientEvents.triggerFlashEffect(0.0005f, new Color(0, 0, 0));
+                    PacketHandler.sendToServer(new STeleportToDimensionPacket(ModDimensions.SUPER_DESTROYER_DIM.location()));
+                }
             }
         }
 
