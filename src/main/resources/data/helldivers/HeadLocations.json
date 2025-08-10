@@ -1,6 +1,6 @@
 {
   "minecraft:husk": {
-    "offset": [0.0, 0, 0.0],
+    "offset": [0.0, 0.875 , 0.0],
     "size": [0.5, 0.5, 0.5]
   },
   "minecraft:zombie_villager": {

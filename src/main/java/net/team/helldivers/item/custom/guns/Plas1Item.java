@@ -33,7 +33,15 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class Plas1Item extends Item implements GeoItem, IGunItem {
+public class  Plas1Item extends AbstractGunItem {
+
+    public Plas1Item(Properties properties) {
+        super(properties.durability(6).rarity(Rarity.COMMON), true, "§e[Plasma-Based]", 5,new Plas1Renderer());
+    }
+   
+}
+
+/*public class Plas1Item extends Item implements GeoItem, AbstractGunItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public String animationprocedure = "empty";
     private boolean isShooting = false;
@@ -256,4 +264,4 @@ public class Plas1Item extends Item implements GeoItem, IGunItem {
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         return true;
     }
-}
+}*/

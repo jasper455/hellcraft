@@ -33,7 +33,16 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class P2Item extends Item implements GeoItem, IGunItem {
+public class P2Item extends AbstractGunItem {
+
+    public P2Item(Properties properties) {
+        super(properties.durability(16).rarity(Rarity.COMMON), true, "§e[Side-Arm]", 2, new P2Renderer());
+    }
+   
+}
+
+
+/*public class P2Item extends Item implements GeoItem, AbstractGunItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public String animationprocedure = "empty";
     private boolean isShooting = false;
@@ -255,4 +264,4 @@ public class P2Item extends Item implements GeoItem, IGunItem {
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         return true;
     }
-}
+}*/

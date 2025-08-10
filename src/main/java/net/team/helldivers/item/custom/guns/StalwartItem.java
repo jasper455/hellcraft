@@ -33,7 +33,16 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class StalwartItem extends Item implements GeoItem, IGunItem {
+public class StalwartItem extends AbstractGunItem {
+
+    public StalwartItem(Properties properties) {
+        super(properties.durability(202).rarity(Rarity.COMMON), true, "§e[Machine-Gun]", 1, new StalwartRenderer());
+    }
+   
+}
+
+
+/*public class StalwartItem extends Item implements GeoItem, AbstractGunItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public String animationprocedure = "empty";
     private boolean isShooting = false;
@@ -256,4 +265,4 @@ public class StalwartItem extends Item implements GeoItem, IGunItem {
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         return true;
     }
-}
+}*/

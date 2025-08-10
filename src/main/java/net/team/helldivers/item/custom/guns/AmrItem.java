@@ -33,7 +33,14 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class AmrItem extends Item implements GeoItem, IGunItem {
+public class AmrItem extends AbstractGunItem {
+    public AmrItem(Properties properties) {
+        super(properties.durability(8).rarity(Rarity.COMMON), true, "§e[Sniper-Rifle]", 25, new AmrRenderer());
+    }
+   
+}
+
+/*public class AmrItem extends Item implements GeoItem, IGunItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public String animationprocedure = "empty";
     private boolean isShooting = false;
@@ -254,4 +261,4 @@ public class AmrItem extends Item implements GeoItem, IGunItem {
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         return true;
     }
-}
+}*/
