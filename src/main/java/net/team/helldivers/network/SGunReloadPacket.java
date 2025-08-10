@@ -29,13 +29,16 @@ public class SGunReloadPacket {
         ItemStack heldItem = player.getMainHandItem();
         if (heldItem.is(ModItems.PLAS1.get())) {
             player.level().playSound(null, player.blockPosition(), ModSounds.PLAS1_RELOAD.get(), SoundSource.PLAYERS, 10.0f, 1.0f);
-        } else {
+        }/* else if (heldItem.is(ModItems.AMR.get())) {
+            player.level().playSound(null, player.blockPosition(), ModSounds.AMR_RELOAD.get(), SoundSource.PLAYERS, 10.0f, 1.0f);
+        }*/ else {
             player.level().playSound(null, player.blockPosition(), ModSounds.AR_23_RELOAD.get(), SoundSource.PLAYERS, 10.0f, 1.0f);
         }
         heldItem.setDamageValue(0);
         for (ItemStack stack : player.getInventory().items) {
             if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof AmmoCrateBlock) {
                 stack.shrink(1);
+                return;
             }
         }
     }

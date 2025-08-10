@@ -32,7 +32,7 @@ import java.util.function.Consumer;
 public class Ar23Item extends AbstractGunItem {
 
     public Ar23Item(Properties properties) {
-        super(properties.durability(47).rarity(Rarity.COMMON), true, "§e[Assault-Rifle]", 2,new AR23Renderer());
+        super(properties.durability(47).rarity(Rarity.COMMON), true, "§e[Assault-Rifle]", 2, new AR23Renderer());
     }
    
 }

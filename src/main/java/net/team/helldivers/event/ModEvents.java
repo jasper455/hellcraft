@@ -44,24 +44,14 @@ import net.team.helldivers.item.custom.armor.IDemocracyProtects;
 import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SSyncJammedPacket;
+import net.team.helldivers.sound.ModSounds;
+import net.team.helldivers.sound.custom.MovingSoundInstance;
 import net.team.helldivers.util.KeyBinding;
 import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModEvents {
-
-    private static final SkyboxRenderer SKYBOX_RENDERER = new SkyboxRenderer();
-    @SubscribeEvent
-    public static void levelRenderEvent(RenderLevelStageEvent event) {
-        Minecraft minecraft = Minecraft.getInstance();
-
-        Level level = minecraft.level;
-
-//        SKYBOX_RENDERER.render(event.getPoseStack());
-
-    }
-
-
+    private static int superDestroyerDimTicks = 0;
 
     @SubscribeEvent
     public static void onCommandsRegister(RegisterCommandsEvent event) {
@@ -155,6 +145,15 @@ public class ModEvents {
 
             // Write back to persistent tag
             persistentData.put(Player.PERSISTED_NBT_TAG, data);
+        }
+        if (player.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) {
+            if (superDestroyerDimTicks % 7280 == 0 || superDestroyerDimTicks == 0) {
+                Minecraft.getInstance().getSoundManager()
+                        .play(new MovingSoundInstance(player, ModSounds.SUPER_DESTROYER_AMBIENT.get(), 1f));
+            }
+            superDestroyerDimTicks++;
+        } else {
+            superDestroyerDimTicks = 0;
         }
     }
 

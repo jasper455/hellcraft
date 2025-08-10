@@ -36,7 +36,7 @@ import java.util.function.Consumer;
 public class P2Item extends AbstractGunItem {
 
     public P2Item(Properties properties) {
-        super(properties.durability(16).rarity(Rarity.COMMON), true, "§e[Side-Arm]", 2, new P2Renderer());
+        super(properties.durability(16).rarity(Rarity.COMMON), true, "§e[Side-Arm]", 10, new P2Renderer());
     }
    
 }

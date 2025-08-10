@@ -50,7 +50,9 @@ import net.team.helldivers.item.custom.guns.Plas1Item;
 import net.team.helldivers.item.custom.guns.StalwartItem;
 
 import net.team.helldivers.sound.ModSounds;
+import net.team.helldivers.sound.custom.MovingSoundInstance;
 import net.team.helldivers.util.KeyBinding;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 import software.bernie.geckolib.GeckoLib;
 import team.lodestar.lodestone.systems.postprocess.PostProcessHandler;
 

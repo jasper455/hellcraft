@@ -13,6 +13,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.StructureManager;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.team.helldivers.block.custom.AmmoCrateBlock;
 import net.team.helldivers.client.renderer.item.P2Renderer;
@@ -104,58 +105,55 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 
     // Animations
     private PlayState idlePredicate(AnimationState event) {
-        if (this.animationprocedure.equals("empty")) {
-            // Handle reloading
-            if (isReloading && !hasStartedReload) {
+        if (!animationprocedure.equals("empty")) return PlayState.STOP;
+
+        // 1. Reload always overrides everything else
+        if (isReloading) {
+            if (!hasStartedReload) {
                 event.getController().setAnimation(RawAnimation.begin().thenPlay("reload"));
                 hasStartedReload = true;
-                return PlayState.CONTINUE;
             }
+            return PlayState.CONTINUE;
+        }
 
-            // Handle shooting with proper aim state
-            if (isShooting && shootCooldown == 0 &&
-                    canShoot(Minecraft.getInstance().player.getMainHandItem()) && !isReloading) {
+        // 2. Shooting always overrides aim transitions
+        if (isShooting && shootCooldown == 0) {
+            if (canShoot(Minecraft.getInstance().player.getMainHandItem())) {
                 if (isAiming) {
                     event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot_aim").thenPlay("aim"));
                 } else {
                     event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot"));
                 }
-                PacketHandler.sendToServer(new SShootPacket());
-                shootCooldown = fireDelay;
-                return PlayState.CONTINUE;
             }
-            if (isShooting && shootCooldown == 0 &&
-                    !canShoot(Minecraft.getInstance().player.getMainHandItem()) && !isReloading &&
-                    !Minecraft.getInstance().player.getCooldowns().isOnCooldown(this)) {
-                PacketHandler.sendToServer(new SShootPacket());
-                shootCooldown = fireDelay;
-                return PlayState.CONTINUE;
-            }
-
-            // Handle aiming states only if not reloading or shooting
-            if (!isReloading && !isShooting) {
-                if (isAiming && !wasAiming) {
-                    event.getController().setAnimation(RawAnimation.begin().thenPlay("aim"));
-                    wasAiming = true;
-                    return PlayState.CONTINUE;
-                }
-
-                if (wasAiming && !isAiming) {
-                    event.getController().setAnimation(RawAnimation.begin().thenPlay("stop_aim"));
-                    wasAiming = false;
-                    return PlayState.CONTINUE;
-                }
-            }
-
-            // Default idle animation only if not aiming
-            if (event.getController().getAnimationState() == AnimationController.State.STOPPED && !isAiming) {
-                event.getController().setAnimation(RawAnimation.begin().thenLoop("idle"));
-            }
-
+            PacketHandler.sendToServer(new SShootPacket());
+            shootCooldown = fireDelay;
             return PlayState.CONTINUE;
         }
-        return PlayState.STOP;
+
+        // 3. Aim transitions (only when not shooting)
+        if (!isShooting) {
+            if (isAiming && !wasAiming) {
+                event.getController().setAnimation(RawAnimation.begin().thenPlay("aim"));
+                wasAiming = true;
+                return PlayState.CONTINUE;
+            }
+
+            if (!isAiming && wasAiming) {
+                event.getController().setAnimation(RawAnimation.begin().thenPlay("stop_aim"));
+                wasAiming = false;
+                return PlayState.CONTINUE;
+            }
+        }
+
+        // 4. Idle fallback
+        if (!isAiming && event.getController().getAnimationState() == AnimationController.State.STOPPED) {
+            event.getController().setAnimation(RawAnimation.begin().thenLoop("idle"));
+        }
+
+        return PlayState.CONTINUE;
     }
+
+
 
 
     String prevAnim = "empty";
@@ -224,6 +222,7 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
                             isAiming = false;
                             wasAiming = false;
                             PacketHandler.sendToServer(new SGunReloadPacket()); // Send packet only once
+                            break;
                         }
                     }
                 }
