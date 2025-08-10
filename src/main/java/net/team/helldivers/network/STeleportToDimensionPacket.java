@@ -42,15 +42,16 @@ public class STeleportToDimensionPacket {
         if (player == null) return;
         int randomX = Mth.randomBetweenInclusive(player.level().getRandom(), -5, 5);
         int randomZ = Mth.randomBetweenInclusive(player.level().getRandom(), -5, 5);
+        BlockPos worldSpawn = player.level().getSharedSpawnPos();
 
         ResourceKey<Level> targetDimension = ResourceKey.create(Registries.DIMENSION, dimension);
 
         ServerLevel destination = player.server.getLevel(targetDimension);
         if (destination != null && player.level().dimension() != targetDimension) {
-            player.teleportTo(destination, randomX, 200, randomZ, 0, 0);
+            player.teleportTo(destination, worldSpawn.getX() + randomX, 200, worldSpawn.getZ() + randomZ, 0, 0);
             Entity hellpod = ModEntities.HELLPOD.get().create(destination);
             if (hellpod != null) {
-                hellpod.setPos(randomX, 200, randomZ);
+                hellpod.setPos(worldSpawn.getX() + randomX, 200, worldSpawn.getZ() + randomZ);
                 destination.addFreshEntity(hellpod);
                 player.startRiding(hellpod, true);
             }

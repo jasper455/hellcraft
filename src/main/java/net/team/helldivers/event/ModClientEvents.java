@@ -1,6 +1,5 @@
 package net.team.helldivers.event;
 
-
 import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,6 +30,7 @@ import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.entity.ModBlockEntities;
 import net.team.helldivers.client.renderer.block.BotContactMineBlockRenderer;
 import net.team.helldivers.client.renderer.block.ExtractionTerminalBlockRenderer;
+import net.team.helldivers.client.renderer.block.GalacticTerminalBlockRenderer;
 import net.team.helldivers.client.renderer.block.HellbombBlockRenderer;
 import net.team.helldivers.client.renderer.entity.EagleAirshipRenderer;
 import net.team.helldivers.client.renderer.entity.GatlingSentryHellpodRenderer;
@@ -42,9 +42,6 @@ import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.item.custom.guns.AmrItem;
 import net.team.helldivers.item.custom.guns.AbstractGunItem;
-import net.team.helldivers.item.custom.guns.Plas1Item;
-import net.team.helldivers.item.custom.guns.StalwartItem;
-import net.team.helldivers.item.custom.guns.IGunItem;
 
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.util.KeyBinding;
@@ -102,7 +99,7 @@ public class ModClientEvents {
         }
         if(!(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof AbstractGunItem) || !KeyBinding.AIM.isDown()) {
             double sensitivity = Minecraft.getInstance().options.sensitivity().get();
-            Minecraft.getInstance().options.sensitivity().set(100d);
+            Minecraft.getInstance().options.sensitivity().set(0.5d);
         }
     }
 
@@ -218,6 +215,7 @@ public class ModClientEvents {
 
             event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
             event.registerBlockEntityRenderer(ModBlockEntities.EXTRACTION_TERMINAL.get(), context -> new ExtractionTerminalBlockRenderer());
+            event.registerBlockEntityRenderer(ModBlockEntities.GALACTIC_TERMINAL.get(), context -> new GalacticTerminalBlockRenderer());
             event.registerBlockEntityRenderer(ModBlockEntities.BOT_CONTACT_MINE.get(), context -> new BotContactMineBlockRenderer());
         }
 

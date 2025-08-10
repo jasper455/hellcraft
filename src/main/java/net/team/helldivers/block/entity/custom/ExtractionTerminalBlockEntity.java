@@ -27,7 +27,7 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class ExtractionTerminalBlockEntity extends BlockEntity implements GeoBlockEntity, MenuProvider, Container {
+public class ExtractionTerminalBlockEntity extends BlockEntity implements GeoBlockEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private static final String EXTRACTION_INVENTORY_KEY = "ExtractionInventory";
     private static final int INVENTORY_SIZE = 4;
@@ -98,51 +98,4 @@ public class ExtractionTerminalBlockEntity extends BlockEntity implements GeoBlo
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.cache;
     }
-
-    @Override
-    public int getContainerSize() {
-        return 0;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return true;
-    }
-
-    @Override
-    public ItemStack getItem(int pSlot) {
-        return null;
-    }
-
-    @Override
-    public ItemStack removeItem(int pSlot, int pAmount) {
-        return null;
-    }
-
-    @Override
-    public ItemStack removeItemNoUpdate(int pSlot) {
-        return null;
-    }
-
-    @Override
-    public void setItem(int pSlot, ItemStack pStack) {}
-
-    @Override
-    public boolean stillValid(Player player) {
-        return Container.stillValidBlockEntity(this, player);
-    }
-
-    @Override
-    public void clearContent() {}
-
-    @Override
-    public Component getDisplayName() {
-        return Component.literal("Galaxy Map");
-    }
-
-    @Override
-    public @Nullable AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
-        return new GalaxyMapMenu(pContainerId, pPlayerInventory, this);
-    }
 }
-
