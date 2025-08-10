@@ -4,7 +4,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
@@ -14,14 +18,19 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
+import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -31,6 +40,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.server.command.ConfigCommand;
 import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.backslot.PlayerBackSlot;
+import net.team.helldivers.backslot.PlayerBackSlotProvider;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.client.skybox.SkyboxRenderer;
 import net.team.helldivers.command.StopUseLodestoneCommand;
@@ -48,18 +59,19 @@ import net.team.helldivers.worldgen.dimension.ModDimensions;
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModEvents {
 
-    private static final SkyboxRenderer SKYBOX_RENDERER = new SkyboxRenderer();
     @SubscribeEvent
-    public static void levelRenderEvent(RenderLevelStageEvent event) {
-        Minecraft minecraft = Minecraft.getInstance();
-
-        Level level = minecraft.level;
-
-//        SKYBOX_RENDERER.render(event.getPoseStack());
-
+    public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
+        if(event.getObject() instanceof Player) {
+            if(!event.getObject().getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).isPresent()) {
+                event.addCapability(ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "properties"), new PlayerBackSlotProvider());
+            }
+        }
     }
 
-
+    @SubscribeEvent
+    public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
+        event.register(PlayerBackSlot.class);
+    }
 
     @SubscribeEvent
     public static void onCommandsRegister(RegisterCommandsEvent event) {
@@ -70,16 +82,17 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void onPlayerCloned(PlayerEvent.Clone event) {
-        event.getEntity().getPersistentData().putBoolean("helldivers.useLodestone",
-                event.getOriginal().getPersistentData().getBoolean("helldivers.useLodestone"));
+        if(event.isWasDeath()) {
+            event.getEntity().getPersistentData().putBoolean("helldivers.useLodestone",
+                    event.getOriginal().getPersistentData().getBoolean("helldivers.useLodestone"));
 
-        event.getOriginal().getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(oldCap -> {
-            event.getEntity().getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(newCap -> {
-                for (int i = 0; i < oldCap.getSlots(); i++) {
-                    newCap.insertItem(i, oldCap.getStackInSlot(i), false);
-                }
+            event.getOriginal().getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(oldStore -> {
+                event.getOriginal().getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(newStore -> {
+                    newStore.copyFrom(oldStore);
+                });
             });
-        });
+        }
+
     }
 
     @SubscribeEvent
