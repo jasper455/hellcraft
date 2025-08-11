@@ -30,6 +30,7 @@
 
   "item.helldivers.stratagem_picker": "§dStratagem Selector",
   "item.helldivers.extraction_terminal_block_item": "§dExtraction Terminal",
+  "item.helldivers.galactic_terminal_block_item": "§dGalactic Terminal",
 
   "item.helldivers.common_sample": "Common Sample",
   "item.helldivers.rare_sample": "Rare Sample",
@@ -76,6 +77,7 @@
   "block.helldivers.ammo_crate": "Ammo Crate",
   "block.helldivers.barbed_wire": "Barbed Wire",
   "block.helldivers.extraction_terminal": "§dExtraction Terminal",
+  "block.helldivers.galactic_terminal": "§dGalactic Terminal",
   "block.helldivers.common_sample_container": "Common Sample Container",
   "block.helldivers.bot_common_sample": "Automaton Common Sample",
   "block.helldivers.rare_sample_crystal": "Rare Sample Crystal",

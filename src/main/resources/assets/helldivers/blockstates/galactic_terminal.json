@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "helldivers:block/galactic_terminal"
+    },
+    "facing=east": {
+      "model": "helldivers:block/galactic_terminal",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "helldivers:block/galactic_terminal",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "helldivers:block/galactic_terminal",
+      "y": 270
+    }
+  }
+}

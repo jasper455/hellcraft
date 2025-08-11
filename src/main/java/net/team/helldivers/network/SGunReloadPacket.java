@@ -28,6 +28,7 @@ public class SGunReloadPacket {
         for (ItemStack stack : player.getInventory().items) {
             if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof AmmoCrateBlock) {
                 stack.shrink(1);
+                return;
             }
         }
     }

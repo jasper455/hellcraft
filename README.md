@@ -20,7 +20,7 @@ Join... the Helldivers!
 <div>
 Helldivers: Crafted Democracy is a mod for Minecraft that adds a new depth of Gameplay to Minecraft by adding various features and Ideas from Helldivers II to the game!
 Explore a host of worlds in need of liberation across the Galaxy, and crush the foes of freedom with the selection of weapons,
-armor and stratagems provided to you by S.E.A.F High Command!
+armor and stratagems provided to you by S.E.A.F High Command!<br>
 Become a hero.<br>Become a legend.<br>Become...A Helldiver!<br>The galaxy awaits liberation!
 </div>
 <h2>About</h2>

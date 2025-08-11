@@ -153,9 +153,7 @@ public class HellpodEntity extends Entity implements GeoEntity {
                 player.stopRiding();
             } else {
                 // Force them to stay on
-                if (!player.isPassengerOfSameVehicle(this)) {
-                    player.startRiding(this, true);
-                }
+                player.startRiding(this, true);
             }
         }
         super.tick();

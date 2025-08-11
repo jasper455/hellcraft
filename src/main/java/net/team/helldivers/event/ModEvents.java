@@ -17,6 +17,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraftforge.api.distmarker.Dist;
@@ -42,24 +44,14 @@ import net.team.helldivers.item.custom.armor.IDemocracyProtects;
 import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SSyncJammedPacket;
+import net.team.helldivers.sound.ModSounds;
+import net.team.helldivers.sound.custom.MovingSoundInstance;
 import net.team.helldivers.util.KeyBinding;
 import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModEvents {
-
-    private static final SkyboxRenderer SKYBOX_RENDERER = new SkyboxRenderer();
-    @SubscribeEvent
-    public static void levelRenderEvent(RenderLevelStageEvent event) {
-        Minecraft minecraft = Minecraft.getInstance();
-
-        Level level = minecraft.level;
-
-//        SKYBOX_RENDERER.render(event.getPoseStack());
-
-    }
-
-
+    private static int superDestroyerDimTicks = 0;
 
     @SubscribeEvent
     public static void onCommandsRegister(RegisterCommandsEvent event) {
@@ -154,6 +146,15 @@ public class ModEvents {
             // Write back to persistent tag
             persistentData.put(Player.PERSISTED_NBT_TAG, data);
         }
+        if (player.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) {
+            if (superDestroyerDimTicks % 7280 == 0 || superDestroyerDimTicks == 0) {
+                Minecraft.getInstance().getSoundManager()
+                        .play(new MovingSoundInstance(player, ModSounds.SUPER_DESTROYER_AMBIENT.get(), 1f));
+            }
+            superDestroyerDimTicks++;
+        } else {
+            superDestroyerDimTicks = 0;
+        }
     }
 
     @SubscribeEvent
@@ -161,8 +162,14 @@ public class ModEvents {
         if (!(event.getEntity() instanceof ServerPlayer player)) return;
 
         ServerLevel level = player.getServer().getLevel(event.getTo());
-        ResourceLocation iglooTop = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "fossils/fossil1");
-        StructureTemplate template = level.getStructureManager().get(iglooTop).orElse(null);
+        ResourceLocation super_destroyer_sec1 = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "super_destroyer/super_destroyer_sec1");
+        StructureTemplate template1 = level.getStructureManager().get(super_destroyer_sec1).orElse(null);
+
+        ResourceLocation super_destroyer_sec2 = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "super_destroyer/super_destroyer_sec2");
+        StructureTemplate template2 = level.getStructureManager().get(super_destroyer_sec2).orElse(null);
+
+        ResourceLocation super_destroyer_sec3 = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "super_destroyer/super_destroyer_sec3");
+        StructureTemplate template3 = level.getStructureManager().get(super_destroyer_sec3).orElse(null);
 
         ResourceKey<Level> fromDim = event.getFrom();
         ResourceKey<Level> toDim = event.getTo();
@@ -171,22 +178,43 @@ public class ModEvents {
             StructureGenerationData data = StructureGenerationData.get(level);
 
             if (!data.hasGenerated()) {
-                BlockPos pos = new BlockPos(0, 64, 0);
+                BlockPos pos1 = new BlockPos(-30, 4, -12);
+                BlockPos pos2 = new BlockPos(18, 4, -12);
+                BlockPos pos3 = new BlockPos(66, 4, -12);
+                for (int x = 0; x < 33; x++) {
+                    for (int z = 0; z < 33; z++) {
+                        BlockPos targetPos = new BlockPos(x - 8, 3, z - 8);
 
-                if (template != null) {
-                    template.placeInWorld(level,
-                            pos,
-                            pos,
+                        level.setBlock(targetPos, Blocks.AIR.defaultBlockState(), 3);
+                    }
+                }
+
+                if (template1 != null) {
+                    template1.placeInWorld(level,
+                            pos1,
+                            pos1,
                             new StructurePlaceSettings(),
                             level.getRandom(),
                             2);
                 }
-                BulletProjectileEntity bullet = new BulletProjectileEntity(player, level, false, false);
-                bullet.setPos(2, 8, 2);
-                bullet.setDeltaMovement(0, 0, 0);
-                bullet.setNoGravity(true);
-                level.addFreshEntity(bullet);
 
+                if (template2 != null) {
+                    template2.placeInWorld(level,
+                            pos2,
+                            pos2,
+                            new StructurePlaceSettings(),
+                            level.getRandom(),
+                            2);
+                }
+
+                if (template3 != null) {
+                    template3.placeInWorld(level,
+                            pos3,
+                            pos3,
+                            new StructurePlaceSettings(),
+                            level.getRandom(),
+                            2);
+                }
                 data.markGenerated();
                 data.setDirty();
             }

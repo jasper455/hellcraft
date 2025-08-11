@@ -65,6 +65,9 @@ public class ModItems {
     public static final RegistryObject<Item> EXTRACTION_TERMINAL_BLOCK_ITEM = ITEMS.register("extraction_terminal_block_item",
             () -> new ExtractionTerminalBlockItem(ModBlocks.EXTRACTION_TERMINAL.get(), new Item.Properties().stacksTo(1).fireResistant()));
 
+    public static final RegistryObject<Item> GALACTIC_TERMINAL_BLOCK_ITEM = ITEMS.register("galactic_terminal_block_item",
+            () -> new GalacticTerminalBlockItem(ModBlocks.GALACTIC_TERMINAL.get(), new Item.Properties().stacksTo(1).fireResistant()));
+
     public static final RegistryObject<Item> BOT_CONTACT_MINE_BLOCK_ITEM = ITEMS.register("bot_contact_mine_block_item",
             () -> new BotContactMineBlockItem(ModBlocks.BOT_CONTACT_MINE.get(), new Item.Properties().fireResistant()));
 

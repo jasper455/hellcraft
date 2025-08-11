@@ -21,6 +21,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.AMMO_CRATE.get());
                         output.accept(ModBlocks.BARBED_WIRE.get());
                         output.accept(ModItems.EXTRACTION_TERMINAL_BLOCK_ITEM.get());
+                        output.accept(ModItems.GALACTIC_TERMINAL_BLOCK_ITEM.get());
                         output.accept(ModItems.BOT_CONTACT_MINE_BLOCK_ITEM.get());
                         output.accept(ModSampleBlocks.COMMON_SAMPLE_CONTAINER.get());
                         output.accept(ModSampleBlocks.BOT_COMMON_SAMPLE.get());

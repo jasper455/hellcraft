@@ -186,5 +186,13 @@
         "stream": true
       }
     ]
+  },
+  "super_destroyer_ambient": {
+    "sounds": [
+      {
+      "name": "helldivers:super_destroyer_ambient",
+        "stream": true
+      }
+    ]
   }
 }

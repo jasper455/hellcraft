@@ -48,6 +48,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> BOT_CONTACT_MINE = registerBlock("bot_contact_mine",
             () -> new BotContactMineBlock(BlockBehaviour.Properties.of().instabreak().noCollission().lightLevel((level) -> 5)));
 
+    public static final RegistryObject<Block> GALACTIC_TERMINAL = registerBlock("galactic_terminal",
+            () -> new GalacticTerminalBlock(BlockBehaviour.Properties.of().noOcclusion()));
+
     public static final RegistryObject<Block> STRATAGEM_JAMMER = registerBlock("stratagem_jammer",
             () -> new Block(BlockBehaviour.Properties.of().noCollission().noOcclusion() .destroyTime(-2)) {
                 @Override
@@ -56,6 +59,7 @@ public class ModBlocks {
                     pTooltip.add(Component.translatable("block.helldivers.stratagem_jammer.desc"));
                 }
             });
+
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
