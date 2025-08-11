@@ -35,8 +35,8 @@ import net.team.helldivers.util.Headshots.HeadHitbox;
 import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
 
 public class ShootHelper {
-      public static void shoot(LivingEntity shooter, Level level, int dist, double drift, float dam, double knockback, boolean ignoreIframes){
-        Pair<HitResult, Vec3> pair = raycast(level, shooter, dist, drift);
+      public static void shoot(LivingEntity shooter, Level level, double drift, float dam, double knockback, boolean ignoreIframes){
+        Pair<HitResult, Vec3> pair = raycast(level, shooter, drift);
         HitResult result = pair.getFirst();
         Vec3 hitPos = pair.getSecond();
         if(result.getType() == HitResult.Type.ENTITY){
@@ -87,16 +87,16 @@ public class ShootHelper {
             }
         }
     }
-    public static Pair<HitResult, Vec3> raycast(Level level, Entity shooter, double maxDistance, double drift) {
+    public static Pair<HitResult, Vec3> raycast(Level level, Entity shooter, double drift) {
         double r1 = Math.random()*plusmin()*drift;
         double r2 = Math.random()*plusmin()*drift;          
         double r3 = Math.random()*plusmin()*drift; 
         Vec3 start = shooter.getEyePosition(1.0F);
         Vec3 look = shooter.getLookAngle().add(r1, r2, r3);
-        Vec3 end = start.add(look.scale(maxDistance));
+        Vec3 end = start.add(look.scale(128));
         BlockHitResult blockHit = level.clip(new ClipContext(start, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, shooter));
-        double blockDist = blockHit != null ? blockHit.getLocation().distanceTo(start) : maxDistance;
-        AABB box = shooter.getBoundingBox().expandTowards(look.scale(maxDistance)).inflate(1.0);
+        double blockDist = blockHit != null ? blockHit.getLocation().distanceTo(start) : 128;
+        AABB box = shooter.getBoundingBox().expandTowards(look.scale(128)).inflate(1.0);
         EntityHitResult entityHit = ProjectileUtil.getEntityHitResult(level, shooter, start, end, box, e -> !e.isSpectator() && e.isPickable());
         if (entityHit != null) {
             double entityDist = entityHit.getLocation().distanceTo(start);
