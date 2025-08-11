@@ -41,7 +41,7 @@ import net.team.helldivers.worldgen.chunk.ModChunkGenerators;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
-
+//TODO: hit indicators
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(HelldiversMod.MOD_ID)
 public class HelldiversMod {
