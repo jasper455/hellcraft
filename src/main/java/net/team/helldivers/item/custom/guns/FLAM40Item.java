@@ -6,6 +6,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.Level;
 import net.team.helldivers.client.renderer.item.AmrRenderer;
+import net.team.helldivers.network.CFlamesParticlePacket;
+import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.sound.ModSounds;
 
 public class FLAM40Item extends AbstractGunItem {
@@ -18,26 +20,11 @@ public class FLAM40Item extends AbstractGunItem {
     @Override
     public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
         super.inventoryTick(itemstack, world, entity, slot, selected);
-        if(selected) System.out.println(pilotLightLit);
-        if(litTicks > 260){
-            pilotLightLit = false;
-        }
-        if(pilotLightLit){
-            litTicks++;
-        }
     }
     @Override
     public void onShoot(ItemStack itemStack, ServerPlayer player) {
         if(itemStack.getDamageValue() < itemStack.getMaxDamage() - 1 && !player.getCooldowns().isOnCooldown(itemStack.getItem())){
-            if(pilotLightLit){
-                //Flames.spawnFlames(player);
-                System.out.println("lit");
-            }
-                else{
-                pilotLightLit = true;
-                player.getCooldowns().addCooldown(itemStack.getItem(), 5);
-                System.out.println("lighting");
-            }
+             PacketHandler.sendToPlayer(new CFlamesParticlePacket(), player);
         }
     }
    

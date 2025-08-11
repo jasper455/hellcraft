@@ -27,7 +27,7 @@ public class Sg225Item extends AbstractGunItem {
                 for(int i=0; i<21;i++){
                     ShootHelper.shoot(player, player.level(), 0.3, 1, 0.3, true);
                 }
-                player.getCooldowns().addCooldown(itemStack.getItem(), fireDelay);
+                player.getCooldowns().addCooldown(itemStack.getItem(), 20);
 
                 // Damage the item
                 if (!player.getAbilities().instabuild) {
