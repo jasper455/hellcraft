@@ -9,7 +9,7 @@ import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.item.ModItems;
 
 public class Flames {
-   // private static final ParticleEmitterInfo FIRE = new ParticleEmitterInfo(new ResourceLocation("helldivers", "flameline"));
+   // private static final ParticleEmitterInfo FIRE = new ParticleEmitterInfo(new ResourceLocation("helldivers", "flame_line"));
     public static void spawnFlames(Player player){
         if(player.level().isClientSide && Minecraft.getInstance().player == player && player.getMainHandItem().is(ModItems.FLAM40.get())){
             //AAALevel.addParticle(player.level(), FIRE.clone().position(player.getEyePosition()));  
