@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 11653410,
+    "separation": 60,
+    "spacing": 80
+  },
+  "structures": [
+    {
+    "structure": "helldivers:super_sample_poi_snowy",
+    "weight": 1
+    }
+  ]
+}
