@@ -12,6 +12,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.common.MinecraftForge;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 import java.util.function.Supplier;
 
@@ -115,6 +116,7 @@ public class SOrbitalBarragePacket {
     public void handle(Supplier<NetworkEvent.Context> context) {
         ServerPlayer player = context.get().getSender();
         if (player == null) return;
+        if (player.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) return;
         // Create a new BarrageSpawner instead of spawning missiles directly
         new BarrageSpawner(player, position, radius, isWalking, direction, isNapalm, groundedTicks);
     }

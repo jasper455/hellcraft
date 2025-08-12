@@ -83,8 +83,7 @@ public class ModDimensions {
 
         NoiseBasedChunkGenerator wrappedChunkGenerator = new NoiseBasedChunkGenerator(
                 new FixedBiomeSource(biomeRegistry.getOrThrow(ModBiomes.CHOEPESSA_WASTES)),
-                noiseGenSettings.getOrThrow(ResourceKey.create(Registries.NOISE_SETTINGS,
-                        ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "choepessa_noise"))));
+                noiseGenSettings.getOrThrow(NoiseGeneratorSettings.OVERWORLD));
 
         NoiseBasedChunkGenerator noiseBasedChunkGenerator = new NoiseBasedChunkGenerator(
                 MultiNoiseBiomeSource.createFromList(

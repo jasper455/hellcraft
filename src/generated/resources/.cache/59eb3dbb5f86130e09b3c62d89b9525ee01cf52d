@@ -1,11 +1,13 @@
-// 1.20.1	2025-07-30T15:22:54.9246122	Loot Tables
+// 1.20.1	2025-08-12T12:51:22.3266192	Loot Tables
 2781dc527c86d991ff95271bad7f0d27ab810942 data/helldivers/loot_tables/blocks/ammo_crate.json
 8deb12268b199f353932113da132eb14a17e7fa4 data/helldivers/loot_tables/blocks/barbed_wire.json
 9763c4ba28417c8766453383ec54af57719bce39 data/helldivers/loot_tables/blocks/bot_common_sample.json
 3c770297a2831dc8a6706e0bed778d434163b135 data/helldivers/loot_tables/blocks/bot_contact_mine.json
 d26ef2ab3572fc447cbd98c0389ad6c1864bdc67 data/helldivers/loot_tables/blocks/common_sample_container.json
 33a23be1709331f387b058c27820124bbcf4d81f data/helldivers/loot_tables/blocks/extraction_terminal.json
+7fc75c3a89dac28666c4ebca372ca2652a90e93e data/helldivers/loot_tables/blocks/galactic_terminal.json
 3e4189777d2baefe68d0af040e2b7b8db95554e0 data/helldivers/loot_tables/blocks/hellbomb.json
 3234b7ccd8d0fcc337db960e8ba4e2047a2c76b3 data/helldivers/loot_tables/blocks/rare_sample_crystal.json
 4acb1f6ef677ab75c003478cd33c9add06369cea data/helldivers/loot_tables/blocks/stratagem_jammer.json
+c74ed8a33523ff880bdc1f0eb009bd2aa9fa971d data/helldivers/loot_tables/blocks/super_destroyer_glass.json
 d2e13e25b9e955d9abf7f00211bf5c90733e337c data/helldivers/loot_tables/blocks/super_sample_crystal.json

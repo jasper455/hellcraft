@@ -178,7 +178,7 @@ public class ModEvents {
             StructureGenerationData data = StructureGenerationData.get(level);
 
             if (!data.hasGenerated()) {
-                BlockPos pos1 = new BlockPos(-30, 4, -12);
+                BlockPos pos1 = new BlockPos(-29, 4, -12);
                 BlockPos pos2 = new BlockPos(18, 4, -12);
                 BlockPos pos3 = new BlockPos(66, 4, -12);
                 for (int x = 0; x < 33; x++) {

@@ -1,5 +1,6 @@
 package net.team.helldivers.item.custom.guns;
 
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -14,7 +15,7 @@ import net.team.helldivers.sound.ModSounds;
 public class EAT17Item extends AbstractGunItem {
 
     public EAT17Item(Properties properties) {
-        super(properties.durability(2).rarity(Rarity.COMMON), true,false, "§e[Expendable-Anti-Tank]",new EAT17Renderer(), ModSounds.AR_23_RELOAD);
+        super(properties.durability(2).rarity(Rarity.COMMON), true,false, "§e[Expendable-Anti-Tank]", ModSounds.AR_23_RELOAD);
     }  
     @Override
     public void onShoot(ItemStack itemStack, ServerPlayer player) {
@@ -38,5 +39,10 @@ public class EAT17Item extends AbstractGunItem {
                     });
 
             }
+    }
+
+    @Override
+    public BlockEntityWithoutLevelRenderer createRenderer() {
+        return new EAT17Renderer();
     }
 }
