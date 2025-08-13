@@ -1,5 +1,8 @@
 package net.team.helldivers.entity.client;
 
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 
@@ -21,13 +24,14 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.team.helldivers.util.OBB;
 import net.team.helldivers.util.ShootHelper;
 import net.team.helldivers.util.Headshots.HeadHitbox;
 import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
 //this will render a red outline over the area where an entity can be headshotted 
 @Mod.EventBusSubscriber(value = Dist.CLIENT)
 public class DebugRenderer {
-    private static boolean shouldRender = false;
+    private static boolean shouldRender = true;
     @SubscribeEvent
     public static void onRenderWorld(RenderLevelStageEvent event) {
         if(shouldRender){
@@ -49,23 +53,36 @@ public class DebugRenderer {
             if (level == null) return;
 
             for (Entity entity : level.entitiesForRendering()) {
-
                 ResourceLocation id = ForgeRegistries.ENTITY_TYPES.getKey(entity.getType());
                 if (id == null) continue;
 
                 HeadHitbox hitbox = HeadHitboxRegistry.get(id.toString());
                 if (hitbox == null) continue;
+                AABB box = hitbox.getBox(entity.getBoundingBox());
+                if(!hitbox.isVert()){
+                    OBB rotated = ShootHelper.rotateHeadOBB(entity, box);
+                    Vec3[] corners = rotated.getCorners();
+                    for (Vec3 corner : corners) {
+                        double size = 0.01; 
+                        AABB dotBox = new AABB(
+                            corner.x - size, corner.y - size, corner.z - size,
+                            corner.x + size, corner.y + size, corner.z + size
+                        );
 
-                AABB box = hitbox.getBox(entity.getBoundingBox()).move(-camPos.x, -camPos.y, -camPos.z);
-                AABB rotated = ShootHelper.rotateHeadBox(entity, box);
+                        LevelRenderer.renderLineBox(
+                            poseStack, mc.renderBuffers().bufferSource().getBuffer(RenderType.lines()),
+                            dotBox.minX - camPos.x, dotBox.minY - camPos.y, dotBox.minZ - camPos.z,
+                            dotBox.maxX - camPos.x, dotBox.maxY - camPos.y, dotBox.maxZ - camPos.z,
+                            1f, 0f, 0f, 1f
+                        );
+                    }
+                }
+                else{
+                    AABB rotated = ShootHelper.rotateAABB(box, entity);
+                    AABB shifted = rotated.move(-camPos.x, -camPos.y, -camPos.z);
+                    LevelRenderer.renderLineBox(poseStack, lines, shifted, 1f, 0f, 0f, 1f);
+                }
 
-                LevelRenderer.renderLineBox(
-                    poseStack,
-                    lines,
-                    rotated,
-                    1.0F, 0.0F, 0.0F, // red
-                    1.0F              // full alpha
-                );
             }
 
             bufferSource.endBatch(RenderType.lines());

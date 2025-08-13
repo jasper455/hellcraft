@@ -24,6 +24,7 @@ public class FLAM40Item extends AbstractGunItem {
     @Override
     public void onShoot(ItemStack itemStack, ServerPlayer player) {
         if(itemStack.getDamageValue() < itemStack.getMaxDamage() - 1 && !player.getCooldowns().isOnCooldown(itemStack.getItem())){
+            player.getCooldowns().addCooldown(itemStack.getItem(), 2);
              PacketHandler.sendToPlayer(new CFlamesParticlePacket(), player);
         }
     }
