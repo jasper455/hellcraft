@@ -1,0 +1,16 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 60647767,
+    "separation": 30,
+    "spacing": 40,
+    "frequency_reduction_method": "legacy_type_3",
+    "frequency": 0.4
+  },
+  "structures": [
+    {
+      "structure": "helldivers:advanced_poi_snowy",
+      "weight": 1
+    }
+  ]
+}

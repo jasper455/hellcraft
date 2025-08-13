@@ -1,5 +1,6 @@
 package net.team.helldivers.item.custom.guns;
 
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +14,7 @@ public class FLAM40Item extends AbstractGunItem {
     public int litTicks;
 
     public FLAM40Item(Properties properties) {
-        super(properties.durability(47).rarity(Rarity.COMMON), true, true, "§e[Flamethrower]",new AmrRenderer(), ModSounds.AMR_RELOAD);//TODO temp renderer and sounds
+        super(properties.durability(47).rarity(Rarity.COMMON), true, true, "§e[Flamethrower]", ModSounds.AMR_RELOAD);//TODO temp renderer and sounds
     }
     @Override
     public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
@@ -40,5 +41,10 @@ public class FLAM40Item extends AbstractGunItem {
             }
         }
     }
-   
+
+    @Override
+    public BlockEntityWithoutLevelRenderer createRenderer() {
+        return new AmrRenderer();
+    }
+
 }

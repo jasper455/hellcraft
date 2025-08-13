@@ -1,5 +1,6 @@
 package net.team.helldivers.item.custom.guns;
 
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +14,7 @@ import net.team.helldivers.util.ShootHelper;
 public class Sg225Item extends AbstractGunItem {
 
     public Sg225Item(Properties properties) {
-        super(properties.durability(8).rarity(Rarity.COMMON), true,true, "§e[Shotgun]", new Sg225Renderer(), ModSounds.AR_23_RELOAD);
+        super(properties.durability(8).rarity(Rarity.COMMON), true,true, "§e[Shotgun]", ModSounds.AR_23_RELOAD);
     }
     @Override
     public void onShoot(ItemStack itemStack, ServerPlayer player) {
@@ -39,5 +40,10 @@ public class Sg225Item extends AbstractGunItem {
                 player.getCooldowns().addCooldown(itemStack.getItem(), 10);
             }
         }
-    }  
+    }
+
+    @Override
+    public BlockEntityWithoutLevelRenderer createRenderer() {
+        return new Sg225Renderer();
+    }
 }

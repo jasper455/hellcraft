@@ -1,0 +1,15 @@
+{
+  "name": "helldivers:extraction_terminal_grassy",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "helldivers:extraction_terminal/extraction_terminal_grassy",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

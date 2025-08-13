@@ -5,6 +5,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -52,7 +53,7 @@ public class ModBlocks {
             () -> new GalacticTerminalBlock(BlockBehaviour.Properties.of().noOcclusion()));
 
     public static final RegistryObject<Block> STRATAGEM_JAMMER = registerBlock("stratagem_jammer",
-            () -> new Block(BlockBehaviour.Properties.of().noCollission().noOcclusion() .destroyTime(-2)) {
+            () -> new Block(BlockBehaviour.Properties.of().noCollission().noOcclusion().destroyTime(-2)) {
                 @Override
                 public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
                     super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
@@ -60,6 +61,8 @@ public class ModBlocks {
                 }
             });
 
+    public static final RegistryObject<Block> SUPER_DESTROYER_GLASS = registerBlock("super_destroyer_glass",
+            () -> new GlassBlock(BlockBehaviour.Properties.of().noOcclusion().destroyTime(-2)));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

@@ -1,5 +1,6 @@
 package net.team.helldivers.item.custom.guns;
 
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.ItemStack;
@@ -13,7 +14,7 @@ import net.team.helldivers.sound.ModSounds;
 public class  Plas1Item extends AbstractGunItem {
 
     public Plas1Item(Properties properties) {
-        super(properties.durability(6).rarity(Rarity.COMMON),true,  true, "§e[Plasma-Based]",new Plas1Renderer(), ModSounds.PLAS1_RELOAD);
+        super(properties.durability(6).rarity(Rarity.COMMON),true,  true, "§e[Plasma-Based]", ModSounds.PLAS1_RELOAD);
     }
     @Override
     public void onShoot(ItemStack itemStack, ServerPlayer player) {
@@ -43,5 +44,10 @@ public class  Plas1Item extends AbstractGunItem {
                 player.getCooldowns().addCooldown(itemStack.getItem(), 10);
             }
         }
+    }
+
+    @Override
+    public BlockEntityWithoutLevelRenderer createRenderer() {
+        return new Plas1Renderer();
     }
 }

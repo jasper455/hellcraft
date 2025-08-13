@@ -1,6 +1,8 @@
 package net.team.helldivers;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
@@ -111,6 +113,8 @@ public class HelldiversMod {
             MenuScreens.register(ModMenuTypes.HELLBOMB_ENTITY_INPUT_MENU.get(), HellbombEntityInputScreen::new);
             MenuScreens.register(ModMenuTypes.EXTRACTION_TERMINAL.get(), ExtractionTerminalScreen::new);
             MenuScreens.register(ModMenuTypes.GALAXY_MAP_MENU.get(), GalaxyMapScreen::new);
+
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.SUPER_DESTROYER_GLASS.get(), RenderType.translucent());
         }
 
         @SubscribeEvent

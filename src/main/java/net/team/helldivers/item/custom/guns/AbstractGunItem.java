@@ -25,6 +25,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.StructureManager;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.registries.RegistryObject;
 import net.team.helldivers.block.custom.AmmoCrateBlock;
@@ -42,6 +44,7 @@ import software.bernie.geckolib.core.animation.AnimationController;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.renderer.GeoItemRenderer;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public abstract class AbstractGunItem extends Item implements GeoItem {
@@ -64,14 +67,12 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
     public float recoil;
     private RegistryObject<SoundEvent> reloadSound;
     private  RegistryObject<SoundEvent> shootSound;
-    public BlockEntityWithoutLevelRenderer renderer;
 
 
-    public AbstractGunItem(Properties properties, float recoil, boolean isAuto, boolean reloadable, String type, int fireDelay, float dam, double drift, BlockEntityWithoutLevelRenderer renderer, RegistryObject<SoundEvent> shootSound, RegistryObject<SoundEvent> reloadSound) {
+    public AbstractGunItem(Properties properties, float recoil, boolean isAuto, boolean reloadable, String type, int fireDelay, float dam, double drift, RegistryObject<SoundEvent> shootSound, RegistryObject<SoundEvent> reloadSound) {
         super(properties);
         this.type = type;
         this.reloadable = reloadable;
-        this.renderer = renderer;
         this.fireDelay = fireDelay;
         this.isAuto = isAuto;
         this.dam = dam;
@@ -80,11 +81,10 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
         this.reloadSound = reloadSound;
         this.recoil = recoil;
     }
-    public AbstractGunItem(Properties properties, boolean isAuto, boolean reloadable, String type, BlockEntityWithoutLevelRenderer renderer, RegistryObject<SoundEvent> reloadSound) {
+    public AbstractGunItem(Properties properties, boolean isAuto, boolean reloadable, String type, RegistryObject<SoundEvent> reloadSound) {
         super(properties);
         this.type = type;
         this.reloadable = reloadable;
-        this.renderer = renderer;
         this.isAuto = isAuto;
                 this.reloadSound = reloadSound;
         drift = -1;
@@ -99,7 +99,7 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
         consumer.accept(new IClientItemExtensions() {
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
-                return renderer;
+                return createRenderer();
             }
 
             // Changing the players arm pose when holding the item
@@ -306,6 +306,7 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         return true;
     }
+
     public void onShoot(ItemStack itemStack, ServerPlayer player){
         if (!player.getCooldowns().isOnCooldown(itemStack.getItem()) && drift != -1) {
             if (itemStack.getDamageValue() < itemStack.getMaxDamage() - 5) {
@@ -328,4 +329,11 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
             }
         }
     }
+
+    /**
+     * Client-only: Creates the renderer for this item.
+     * This should never be called on the server or during datagen.
+     */
+    @OnlyIn(Dist.CLIENT)
+    public abstract BlockEntityWithoutLevelRenderer createRenderer();
 }
