@@ -75,9 +75,10 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 0, false,
+        this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 0, false,
                 false, entity -> (entity instanceof Monster) && entity.isAlive() && !(entity instanceof GatlingSentryHellpodEntity)));
-//        this.goalSelector.addGoal(0, new LookAtPlayerGoal(this, Monster.class, 25, 100f));
+
+        this.goalSelector.addGoal(0, new LookAtPlayerGoal(this, Monster.class, 25, 100f));
     }
 
     @Override
@@ -142,6 +143,7 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
 
         if (!this.isGrounded()) {
             this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(1.0)).forEach(entity -> {
+                if (!(entity instanceof GatlingSentryHellpodEntity))
                 entity.hurt(level().damageSources().explosion(null), 9999.0F);
             });
             BlockPos pos = new BlockPos((int) this.getX(), (int) (this.getY() - 5), (int) this.getZ());
@@ -160,7 +162,7 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
 //            event.getController().setAnimation(EMPTY);
 //            return PlayState.CONTINUE;
 //        }
-        Minecraft.getInstance().player.sendSystemMessage(Component.literal(String.valueOf(this.isShooting())));
+//        Minecraft.getInstance().player.sendSystemMessage(Component.literal(String.valueOf(this.isShooting())));
         if (this.getTarget() != null) {
             event.getController().setAnimation(SHOOT);
             return PlayState.CONTINUE;
@@ -222,7 +224,7 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
     }
 
     public boolean isShooting() {
-        return this.entityData.get(IS_SHOOTING);
+        return this.getTarget() != null;
     }
 
     public void setShooting(boolean shooting) {

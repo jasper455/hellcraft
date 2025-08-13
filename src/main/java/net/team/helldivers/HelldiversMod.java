@@ -14,6 +14,7 @@ import net.minecraftforge.registries.RegisterEvent;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.block.custom.samples.ModSampleBlocks;
 import net.team.helldivers.block.entity.ModBlockEntities;
+import net.team.helldivers.entity.ModBotEntities;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.client.*;
 import net.team.helldivers.gamerule.ModGameRules;
@@ -72,6 +73,8 @@ public class HelldiversMod {
         ModMenuTypes.register(modEventBus);
         HeadHitboxRegistry.Register(); //pulls the bounding boxes that determine where a mob can be headshotted from json
         ModChunkGenerators.register(modEventBus);
+
+        ModBotEntities.register(modEventBus);
 
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(HeadHitboxRegistry.class);
