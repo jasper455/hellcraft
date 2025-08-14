@@ -3,6 +3,8 @@ package net.team.helldivers.item.custom.guns;
 import java.util.List;
 import java.util.function.Consumer;
 
+import org.lwjgl.glfw.GLFW;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 
 import net.minecraft.client.Minecraft;
@@ -25,8 +27,13 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.StructureManager;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.RegistryObject;
+import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.custom.AmmoCrateBlock;
 import net.team.helldivers.network.CApplyRecoilPacket;
 import net.team.helldivers.network.PacketHandler;
@@ -44,6 +51,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+@Mod.EventBusSubscriber(modid = HelldiversMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public abstract class AbstractGunItem extends Item implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     public String animationprocedure = "empty";
@@ -57,6 +65,7 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
     public boolean reloadable;
     public String type;
     public int fireDelay;
+    public boolean firstShot;
     public boolean isAuto;
     private boolean wasShooting;
     public float dam;
@@ -155,10 +164,8 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
                 } else {
                     event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot"));
                 }
+                return PlayState.CONTINUE;
             }
-            PacketHandler.sendToServer(new SShootPacket());
-            shootCooldown = fireDelay;
-            return PlayState.CONTINUE;
         }
 
         // 3. Aim transitions (only when not shooting)
@@ -235,26 +242,25 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 
     @Override
     public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
-        if (world.isClientSide() && entity instanceof Player player) {
+        if (entity instanceof Player player) {
             if (selected) {
-                boolean currentlyShooting = KeyBinding.SHOOT.isDown();
-                // Shoot only on key press, not hold
-                if(!isAuto){
-                    if (currentlyShooting && !wasShooting) {
-                        PacketHandler.sendToServer(new SShootPacket());
-                    } else {
-                        isShooting = false; 
-                    }
-                    wasShooting = currentlyShooting;
-                } 
-                else if(currentlyShooting){
+                isShooting = KeyBinding.SHOOT.isDown();
+                
+                 if(isAuto && isShooting && shootCooldown == 0){
                     PacketHandler.sendToServer(new SShootPacket());
+                    shootCooldown = fireDelay;
+                }
+                
+                // Semi-auto
+                if(!isAuto && KeyBinding.SHOOT.consumeClick()){
+                    PacketHandler.sendToServer(new SShootPacket());
+                    shootCooldown = fireDelay;
                 }
                 if (shootCooldown > 0) {
                         shootCooldown--;
                     }
                 // Handle reload
-                if (KeyBinding.RELOAD.consumeClick()) {
+                if (KeyBinding.RELOAD.consumeClick() && world.isClientSide) {
                     for (ItemStack stack : player.getInventory().items) {
                         if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof AmmoCrateBlock) {
                             isReloading = true;
@@ -306,6 +312,8 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         return true;
     }
+    public void onStartShoot(ItemStack itemStack, ServerPlayer player){};
+    public void onEndShoot(ItemStack itemStack, ServerPlayer player){};
     public void onShoot(ItemStack itemStack, ServerPlayer player){
         if (!player.getCooldowns().isOnCooldown(itemStack.getItem()) && drift != -1) {
             if (itemStack.getDamageValue() < itemStack.getMaxDamage() - 5) {

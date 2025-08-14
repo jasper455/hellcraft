@@ -111,6 +111,11 @@ public class PacketHandler {
                 .decoder(CFlamesParticlePacket::new)
                 .consumerMainThread(CFlamesParticlePacket::handle)
                 .add();
+        INSTANCE.messageBuilder(CFlamesEndParticlePacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(CFlamesEndParticlePacket::encode)
+                .decoder(CFlamesEndParticlePacket::new)
+                .consumerMainThread(CFlamesEndParticlePacket::handle)
+                .add();
 
         INSTANCE.messageBuilder(CLargeExplosionParticlesPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(CLargeExplosionParticlesPacket::encode)

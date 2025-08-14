@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.lwjgl.glfw.GLFW;
+
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
@@ -49,7 +51,8 @@ import net.team.helldivers.item.custom.guns.AmrItem;
 import net.team.helldivers.item.custom.guns.AbstractGunItem;
 import net.team.helldivers.item.custom.guns.Plas1Item;
 import net.team.helldivers.item.custom.guns.StalwartItem;
-
+import net.team.helldivers.network.PacketHandler;
+import net.team.helldivers.network.SShootPacket;
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.sound.custom.MovingSoundInstance;
 import net.team.helldivers.util.KeyBinding;
@@ -153,7 +156,6 @@ public class ModClientEvents {
             alpha -= fadeOutSpeed; // Tweak as needed
         }
     }
-
     @SubscribeEvent
     public static void onChat(ClientChatReceivedEvent event) {
         String message = event.getMessage().getString();
