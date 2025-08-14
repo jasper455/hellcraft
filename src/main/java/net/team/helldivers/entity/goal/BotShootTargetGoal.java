@@ -26,8 +26,7 @@ public class BotShootTargetGoal extends Goal {
         if (target != null) {
             botEntity.getLookControl().setLookAt(target.getX(), target.getY(), target.getZ());
             //if(botEntity.tickCount % 5==0){
-                ShootHelper.shoot(botEntity, botEntity.level(), 0.2, 5, 0.3, false);
-            }
+            ShootHelper.shoot(botEntity, botEntity.level(), 0.2, 5, 0.3, false);
         }
     }
 
