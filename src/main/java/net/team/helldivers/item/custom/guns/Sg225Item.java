@@ -13,7 +13,7 @@ import net.team.helldivers.util.ShootHelper;
 public class Sg225Item extends AbstractGunItem {
 
     public Sg225Item(Properties properties) {
-        super(properties.durability(8).rarity(Rarity.COMMON), true,true, "§e[Shotgun]", new Sg225Renderer(), ModSounds.AR_23_RELOAD);
+        super(properties.durability(8).rarity(Rarity.COMMON), true,true, "§e[Shotgun]", 20, new Sg225Renderer(), ModSounds.AR_23_RELOAD);
     }
     @Override
     public void onShoot(ItemStack itemStack, ServerPlayer player) {

@@ -12,6 +12,7 @@ import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -39,10 +40,13 @@ import net.team.helldivers.network.CApplyRecoilPacket;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SGunReloadPacket;
 import net.team.helldivers.network.SShootPacket;
+import net.team.helldivers.network.SStartShootPacket;
+import net.team.helldivers.network.SStopShootPacket;
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.util.KeyBinding;
 import net.team.helldivers.util.ShootHelper;
 import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
@@ -67,7 +71,6 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
     public int fireDelay;
     public boolean firstShot;
     public boolean isAuto;
-    private boolean wasShooting;
     public float dam;
     public double drift;
     public float recoil;
@@ -89,13 +92,14 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
         this.reloadSound = reloadSound;
         this.recoil = recoil;
     }
-    public AbstractGunItem(Properties properties, boolean isAuto, boolean reloadable, String type, BlockEntityWithoutLevelRenderer renderer, RegistryObject<SoundEvent> reloadSound) {
+    public AbstractGunItem(Properties properties, boolean isAuto, boolean reloadable, String type, int fireDelay, BlockEntityWithoutLevelRenderer renderer, RegistryObject<SoundEvent> reloadSound) {
         super(properties);
         this.type = type;
         this.reloadable = reloadable;
+        this.fireDelay = fireDelay;
         this.renderer = renderer;
         this.isAuto = isAuto;
-                this.reloadSound = reloadSound;
+        this.reloadSound = reloadSound;
         drift = -1;
     }
     private boolean canShoot(ItemStack stack) {
@@ -143,56 +147,52 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
         });
     }
 
-    // Animations
-    private PlayState idlePredicate(AnimationState event) {
-        if (!animationprocedure.equals("empty")) return PlayState.STOP;
-
-        // 1. Reload always overrides everything else
-        if (isReloading) {
-            if (!hasStartedReload) {
+   private PlayState idlePredicate(AnimationState event) {
+        if (this.animationprocedure.equals("empty")) {
+            // Handle reloading
+            if (isReloading && !hasStartedReload) {
                 event.getController().setAnimation(RawAnimation.begin().thenPlay("reload"));
                 hasStartedReload = true;
+                return PlayState.CONTINUE;
             }
+
+            // Handle shooting with proper aim state
+            if (isShooting && shootCooldown == 0 && canShoot(Minecraft.getInstance().player.getMainHandItem()) && !isReloading) {
+                if(!(!isAuto && !firstShot)){
+                    if (isAiming) {
+                    event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot_aim").thenPlay("aim"));
+                    } else {
+                        event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot"));
+                    }
+                    PacketHandler.sendToServer(new SShootPacket());
+                    shootCooldown = fireDelay;
+                    return PlayState.CONTINUE;
+                }
+            }
+            // Handle aiming states only if not reloading or shooting
+            if (!isReloading && !isShooting) {
+                if (isAiming && !wasAiming) {
+                    event.getController().setAnimation(RawAnimation.begin().thenPlay("aim"));
+                    wasAiming = true;
+                    return PlayState.CONTINUE;
+                }
+
+                if (wasAiming && !isAiming) {
+                    event.getController().setAnimation(RawAnimation.begin().thenPlay("stop_aim"));
+                    wasAiming = false;
+                    return PlayState.CONTINUE;
+                }
+            }
+
+            // Default idle animation only if not aiming
+            if (event.getController().getAnimationState() == AnimationController.State.STOPPED && !isAiming) {
+                event.getController().setAnimation(RawAnimation.begin().thenLoop("idle"));
+            }
+
             return PlayState.CONTINUE;
         }
-
-        // 2. Shooting always overrides aim transitions
-        if (isShooting && shootCooldown == 0) {
-            if (canShoot(Minecraft.getInstance().player.getMainHandItem())) {
-                if (isAiming) {
-                    event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot_aim").thenPlay("aim"));
-                } else {
-                    event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot"));
-                }
-                return PlayState.CONTINUE;
-            }
-        }
-
-        // 3. Aim transitions (only when not shooting)
-        if (!isShooting) {
-            if (isAiming && !wasAiming) {
-                event.getController().setAnimation(RawAnimation.begin().thenPlay("aim"));
-                wasAiming = true;
-                return PlayState.CONTINUE;
-            }
-
-            if (!isAiming && wasAiming) {
-                event.getController().setAnimation(RawAnimation.begin().thenPlay("stop_aim"));
-                wasAiming = false;
-                return PlayState.CONTINUE;
-            }
-        }
-
-        // 4. Idle fallback
-        if (!isAiming && event.getController().getAnimationState() == AnimationController.State.STOPPED) {
-            event.getController().setAnimation(RawAnimation.begin().thenLoop("idle"));
-        }
-
-        return PlayState.CONTINUE;
+        return PlayState.STOP;
     }
-
-
-
 
     String prevAnim = "empty";
 
@@ -242,25 +242,15 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 
     @Override
     public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
-        if (entity instanceof Player player) {
+        if (world.isClientSide() && entity instanceof Player player) {
             if (selected) {
                 isShooting = KeyBinding.SHOOT.isDown();
-                
-                 if(isAuto && isShooting && shootCooldown == 0){
-                    PacketHandler.sendToServer(new SShootPacket());
-                    shootCooldown = fireDelay;
-                }
-                
-                // Semi-auto
-                if(!isAuto && KeyBinding.SHOOT.consumeClick()){
-                    PacketHandler.sendToServer(new SShootPacket());
-                    shootCooldown = fireDelay;
-                }
+                 firstShot = KeyBinding.SHOOT.consumeClick();
                 if (shootCooldown > 0) {
                         shootCooldown--;
                     }
                 // Handle reload
-                if (KeyBinding.RELOAD.consumeClick() && world.isClientSide) {
+                if (KeyBinding.RELOAD.consumeClick()) {
                     for (ItemStack stack : player.getInventory().items) {
                         if (stack.getItem() instanceof BlockItem blockItem && blockItem.getBlock() instanceof AmmoCrateBlock) {
                             isReloading = true;
@@ -270,7 +260,6 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
                             wasAiming = false;
                             player.level().playSound(null, player.blockPosition(), reloadSound.get(), SoundSource.PLAYERS, 10.0f, 1.0f);
                             PacketHandler.sendToServer(new SGunReloadPacket()); // Send packet only once
-                            break;
                         }
                     }
                 }
@@ -290,7 +279,6 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
                     }
                 }
             } else {
-                wasShooting = false;
                 isShooting = false;
                 isReloading = false;
                 hasStartedReload = false;
@@ -301,8 +289,6 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
         }
         super.inventoryTick(itemstack, world, entity, slot, selected);
     }
-
-
     // Get Rid of the vanilla punch animation
     @Override
     public UseAnim getUseAnimation(ItemStack pStack) {
@@ -315,12 +301,15 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
     public void onStartShoot(ItemStack itemStack, ServerPlayer player){};
     public void onEndShoot(ItemStack itemStack, ServerPlayer player){};
     public void onShoot(ItemStack itemStack, ServerPlayer player){
-        if (!player.getCooldowns().isOnCooldown(itemStack.getItem()) && drift != -1) {
+       shoot(itemStack, player);
+    }
+    public void shoot(ItemStack itemStack, ServerPlayer player){
+         if (!player.getCooldowns().isOnCooldown(itemStack.getItem()) && drift != -1) {
             if (itemStack.getDamageValue() < itemStack.getMaxDamage() - 5) {
 
                 // Play sound
                 player.level().playSound(null, player.blockPosition(),
-                        shootSound.get(), SoundSource.PLAYERS, 5.0f, 1.0f);//TODO add shoot and reload sounds
+                        shootSound.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                 PacketHandler.sendToPlayer(new CApplyRecoilPacket(recoil), player);
                 ShootHelper.shoot(player, player.level(), drift, dam, 0.3f, true);
                 player.getCooldowns().addCooldown(itemStack.getItem(), fireDelay);
@@ -329,6 +318,7 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
                 if (!player.getAbilities().instabuild) {
                     itemStack.hurt(1, player.getRandom(), player);
                 }
+                player.getCooldowns().addCooldown(itemStack.getItem(), fireDelay);
             } else {
                 player.level().playSound(null, player.blockPosition(),
                         ModSounds.GUN_EMPTY.get(), SoundSource.PLAYERS, 5.0f, 1.0f);

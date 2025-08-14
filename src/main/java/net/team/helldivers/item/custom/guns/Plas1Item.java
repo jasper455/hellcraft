@@ -13,7 +13,7 @@ import net.team.helldivers.sound.ModSounds;
 public class  Plas1Item extends AbstractGunItem {
 
     public Plas1Item(Properties properties) {
-        super(properties.durability(6).rarity(Rarity.COMMON),true,  true, "§e[Plasma-Based]",new Plas1Renderer(), ModSounds.PLAS1_RELOAD);
+        super(properties.durability(6).rarity(Rarity.COMMON),true,  true, "§e[Plasma-Based]", 5,new Plas1Renderer(), ModSounds.PLAS1_RELOAD);
     }
     @Override
     public void onShoot(ItemStack itemStack, ServerPlayer player) {

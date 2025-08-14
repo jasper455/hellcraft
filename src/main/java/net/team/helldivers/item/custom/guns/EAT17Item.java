@@ -14,7 +14,7 @@ import net.team.helldivers.sound.ModSounds;
 public class EAT17Item extends AbstractGunItem {
 
     public EAT17Item(Properties properties) {
-        super(properties.durability(2).rarity(Rarity.COMMON), true,false, "§e[Expendable-Anti-Tank]",new EAT17Renderer(), ModSounds.AR_23_RELOAD);
+        super(properties.durability(2).rarity(Rarity.COMMON), true,false, "§e[Expendable-Anti-Tank]", 10,new EAT17Renderer(), ModSounds.AR_23_RELOAD);
     }  
     @Override
     public void onShoot(ItemStack itemStack, ServerPlayer player) {

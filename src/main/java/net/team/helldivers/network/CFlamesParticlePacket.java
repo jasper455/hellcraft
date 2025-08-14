@@ -29,10 +29,10 @@ public class CFlamesParticlePacket {
     public void handle(Supplier<NetworkEvent.Context> context) {
         LocalPlayer player = Minecraft.getInstance().player;
         if(!player.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)){
-            ParticleEmitterInfo emitter =  FIRE.clone().bindOnEntity(player).useEntityHeadSpace().rotation(0, -90, 0);
+            ParticleEmitterInfo emitter =  FIRE.clone().bindOnEntity(player).useEntityHeadSpace().rotation(0, -100, 0).position(0, -1, 0);
             activeFlameEmitter.put(player.getUUID(), emitter);
             AAALevel.addParticle(player.level(), true, emitter);
-            System.out.println("particles");
+            System.out.println("particles start");
             context.get().setPacketHandled(true);
         }
     }

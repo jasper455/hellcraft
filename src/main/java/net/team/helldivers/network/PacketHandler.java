@@ -51,6 +51,18 @@ public class PacketHandler {
                 .consumerMainThread(SShootPacket::handle)
                 .add();
 
+        INSTANCE.messageBuilder(SStartShootPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SStartShootPacket::encode)
+                .decoder(SStartShootPacket::new)
+                .consumerMainThread(SStartShootPacket::handle)
+                .add();
+        
+        INSTANCE.messageBuilder(SStopShootPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SStopShootPacket::encode)
+                .decoder(SStopShootPacket::new)
+                .consumerMainThread(SStopShootPacket::handle)
+                .add();
+
         INSTANCE.messageBuilder(SGunReloadPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
                 .encoder(SGunReloadPacket::encode)
                 .decoder(SGunReloadPacket::new)

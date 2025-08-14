@@ -25,8 +25,11 @@ public class CFlamesEndParticlePacket {
     }
     public void handle(Supplier<NetworkEvent.Context> context) {
         LocalPlayer player = Minecraft.getInstance().player;
-        ParticleEmitterInfo info = fire.get(player.getUUID());
-        AAALevel.sendTriggerFor(player, Type.FIRST_PERSON_MAINHAND, info.effek, info.emitter, new int[]{0});
+        ParticleEmitterInfo info = fire.remove(player.getUUID()); // removes from map
+        if (info != null) {
+            AAALevel.sendTriggerFor(player, Type.FIRST_PERSON_MAINHAND, info.effek, info.emitter, new int[]{0});
+            System.out.println("particle end");
+        }
         context.get().setPacketHandled(true);
     }
 
