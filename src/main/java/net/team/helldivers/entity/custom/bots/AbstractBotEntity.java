@@ -91,12 +91,12 @@ public abstract class AbstractBotEntity extends Monster implements GeoEntity{
         LivingEntity target = this.getTarget();
         if (target == null) return;
 
-        this.getLookControl().setLookAt(target, 30.0F, 30.0F);
+        this.getLookControl().setLookAt(target, 180.0F, 180.0F);
         double distanceSq = this.distanceToSqr(target.getX(), target.getY(), target.getZ());
-
-        if (!(distanceSq > 100)) {
+        
+        if (!(distanceSq > 100) && this.tickCount % 5==0) {
             target.sendSystemMessage(Component.literal("test"));
-            ShootHelper.shoot(this, this.level(), 0, 5, 0, false);
+            ShootHelper.shoot(this, this.level(), 0, 5, 0.3, false);
         }
     }
 

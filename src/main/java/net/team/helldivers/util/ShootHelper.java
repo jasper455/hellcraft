@@ -65,7 +65,7 @@ public class ShootHelper {
         if(result.getType() == HitResult.Type.BLOCK){
             BlockHitResult resultB = ((BlockHitResult)result);
             BlockPos pos = resultB.getBlockPos();
-            BlockState block = Minecraft.getInstance().level.getBlockState(pos);
+            BlockState block = level.getBlockState(pos);
             if (block.is(BlockTags.IMPERMEABLE) || block.getBlock() instanceof IronBarsBlock) {
                 level.destroyBlock(pos, false);
             }

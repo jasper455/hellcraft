@@ -1,5 +1,6 @@
 package net.team.helldivers.entity.goal;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.team.helldivers.entity.custom.bots.AbstractBotEntity;
@@ -24,7 +25,9 @@ public class BotShootTargetGoal extends Goal {
         LivingEntity target = botEntity.getTarget();
         if (target != null) {
             botEntity.getLookControl().setLookAt(target.getX(), target.getY(), target.getZ());
-            ShootHelper.shoot(botEntity, botEntity.level(), 0.2, 5, 0, false);
+            //if(botEntity.tickCount % 5==0){
+                ShootHelper.shoot(botEntity, botEntity.level(), 0.2, 5, 0.3, false);
+            }
         }
     }
 

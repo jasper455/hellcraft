@@ -39,7 +39,7 @@ public class BotWalkAndShootGoal extends Goal {
         LivingEntity target = mob.getTarget();
         if (target == null) return;
 
-        mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
+        mob.getLookControl().setLookAt(target, 180f, 180f);
         double distanceSq = mob.distanceToSqr(target.getX(), target.getY(), target.getZ());
 
         if (distanceSq > (attackRange * attackRange)) {
@@ -60,7 +60,9 @@ public class BotWalkAndShootGoal extends Goal {
 
     private void shootAt(LivingEntity target) {
         // Your shooting logic here (spawn projectile, play animation, etc.)
-        if (target != null) {
+        if (target != null && !mob.level().isClientSide) {
+            mob.getLookControl().setLookAt(target, 180f, 180f);
+            ShootHelper.shoot(mob, mob.level(), 0, 5, 0.3, false);
         }
     }
 }
