@@ -8,15 +8,15 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.team.helldivers.entity.custom.GatlingSentryHellpodEntity;
+import net.team.helldivers.entity.goal.BotShootTargetGoal;
+import net.team.helldivers.entity.goal.BotWalkAndShootGoal;
+import net.team.helldivers.util.ShootHelper;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.constant.DefaultAnimations;
@@ -45,12 +45,10 @@ public abstract class AbstractBotEntity extends Monster implements GeoEntity{
 
     @Override
     protected void registerGoals() {
-        this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Player.class, 0, true,
-                true, entity -> (entity instanceof Player)));
-
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 1f, false));
-        this.goalSelector.addGoal(6, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1.0D));
+        this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        this.goalSelector.addGoal(1, new BotWalkAndShootGoal(this, 1.0D, 10.0F, 40)); // speed, range, cooldown
+        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1.0D));
     }
 
 //    private PlayState animations(AnimationState event) {
@@ -84,6 +82,21 @@ public abstract class AbstractBotEntity extends Monster implements GeoEntity{
         data.add(walkIdleAnimController);
         if (hasDeathAnim) {
             data.add(deathAnimController);
+        }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        LivingEntity target = this.getTarget();
+        if (target == null) return;
+
+        this.getLookControl().setLookAt(target, 30.0F, 30.0F);
+        double distanceSq = this.distanceToSqr(target.getX(), target.getY(), target.getZ());
+
+        if (!(distanceSq > 100)) {
+            target.sendSystemMessage(Component.literal("test"));
+            ShootHelper.shoot(this, this.level(), 0, 5, 0, false);
         }
     }
 

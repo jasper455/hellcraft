@@ -3,6 +3,8 @@ package net.team.helldivers.util;
 import java.util.Map;
 import java.util.Optional;
 
+import net.minecraft.core.particles.DustParticleOptions;
+import net.team.helldivers.entity.custom.bots.AbstractBotEntity;
 import org.checkerframework.checker.units.qual.h;
 
 import com.mojang.datafixers.util.Pair;
@@ -104,7 +106,14 @@ public class ShootHelper {
                 Optional<Vec3> clipped = entityHit.getEntity().getBoundingBox().clip(start, end);//returning the correct coords
                 Vec3 hitPos = clipped.orElse(end);
                 if (!level.isClientSide) {
-                 ((ServerLevel) level).sendParticles(ParticleTypes.CRIT, hitPos.x, hitPos.y, hitPos.z, 10, 0, 0, 0, 0);
+                    if (shooter instanceof AbstractBotEntity) {
+                        DustParticleOptions dustParticle = new DustParticleOptions(
+                                Vec3.fromRGB24(0xff0000).toVector3f(), 5F);
+
+                        ((ServerLevel) level).sendParticles(dustParticle, hitPos.x, hitPos.y, hitPos.z, 10, 0, 0, 0, 0);
+                    } else {
+                        ((ServerLevel) level).sendParticles(ParticleTypes.CRIT, hitPos.x, hitPos.y, hitPos.z, 10, 0, 0, 0, 0);
+                    }
                 }
                 return new Pair<>(entityHit, hitPos);
             }
