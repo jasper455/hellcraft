@@ -1,5 +1,6 @@
 package net.team.helldivers.item.custom.guns;
 
+import mod.chloeprime.aaaparticles.api.client.effekseer.ParticleEmitter;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
@@ -17,9 +18,8 @@ import net.team.helldivers.util.ShootHelper;
 public class FLAM40Item extends AbstractGunItem {
     public boolean pilotLightLit;
     public int litTicks;
-    private boolean shooting = false;
     public FLAM40Item(Properties properties) {
-        super(properties.durability(47).rarity(Rarity.COMMON), false, true, "§e[Flamethrower]", 1 ,new AmrRenderer(), ModSounds.AMR_RELOAD);//TODO temp renderer and sounds
+        super(properties.durability(47).rarity(Rarity.COMMON), true, true, "§e[Flamethrower]", 1 ,new AmrRenderer(), ModSounds.AMR_RELOAD);//TODO temp renderer and sounds
     }
     @Override
     public void onStartShoot(ItemStack itemStack, ServerPlayer player) {
@@ -29,11 +29,9 @@ public class FLAM40Item extends AbstractGunItem {
     @Override
     public void onEndShoot(ItemStack itemStack, ServerPlayer player) {
         System.out.println("end");
-        PacketHandler.sendToPlayer(new CFlamesEndParticlePacket(), player);
+        //PacketHandler.sendToPlayer(new CFlamesEndParticlePacket(), player);
     }
     @Override
-    public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
-        super.inventoryTick(itemstack, world, entity, slot, selected);
-        //pilotlight logic
+    public void onShoot(ItemStack itemStack, ServerPlayer player) {
     }
 }

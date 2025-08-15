@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.UUID;
 
 public class CFlamesEndParticlePacket {
-    private Map<UUID, ParticleEmitterInfo> fire = CFlamesParticlePacket.activeFlameEmitter;
     public CFlamesEndParticlePacket(){}
     public CFlamesEndParticlePacket(FriendlyByteBuf buffer){
         this();
@@ -24,13 +23,14 @@ public class CFlamesEndParticlePacket {
     public void encode(FriendlyByteBuf buffer) {
     }
     public void handle(Supplier<NetworkEvent.Context> context) {
-        LocalPlayer player = Minecraft.getInstance().player;
-        ParticleEmitterInfo info = fire.remove(player.getUUID()); // removes from map
-        if (info != null) {
-            AAALevel.sendTriggerFor(player, Type.FIRST_PERSON_MAINHAND, info.effek, info.emitter, new int[]{0});
-            System.out.println("particle end");
-        }
+        context.get().enqueueWork(() -> {
+            LocalPlayer player = Minecraft.getInstance().player;
+            ParticleEmitterInfo info = CFlamesParticlePacket.activeFlameEmitter.remove(player.getUUID());// removes from map
+            if (info != null) {
+                AAALevel.sendTriggerFor(player, Type.WORLD, info.effek, info.emitter, new int[]{0});
+                System.out.println("particle end");
+            }
+        });
         context.get().setPacketHandled(true);
     }
-
 }

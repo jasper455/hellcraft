@@ -30,12 +30,10 @@ public class GunKeyHelper {
         if (shootingNow && !wasShooting) {
             // Key just presseds
             PacketHandler.sendToServer(new SStartShootPacket());
-            System.out.println("startshoot");
         } 
         else if (!shootingNow && wasShooting) {
             // Key just released
             PacketHandler.sendToServer(new SStopShootPacket());
-            System.out.println("endshooting");
         }
 
         wasShooting = shootingNow;
