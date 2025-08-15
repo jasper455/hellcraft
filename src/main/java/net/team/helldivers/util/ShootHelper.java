@@ -1,5 +1,6 @@
 package net.team.helldivers.util;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
@@ -42,6 +43,9 @@ public class ShootHelper {
         if(result.getType() == HitResult.Type.ENTITY){
             EntityHitResult resultE = ((EntityHitResult)result);
             Entity entity = resultE.getEntity();
+            if (!level.isClientSide) {
+                 ((ServerLevel) level).sendParticles(ParticleTypes.CRIT, hitPos.x, hitPos.y, hitPos.z, 10, 0, 0, 0, 0);
+                }
             if(checkHeadShot(resultE, hitPos)){
                 entity.hurt(entity.damageSources().generic(), dam*2);
                 System.out.println("HEADSHOT");
@@ -103,9 +107,6 @@ public class ShootHelper {
             if (entityDist < blockDist) {
                 Optional<Vec3> clipped = entityHit.getEntity().getBoundingBox().clip(start, end);//returning the correct coords
                 Vec3 hitPos = clipped.orElse(end);
-                if (!level.isClientSide) {
-                 ((ServerLevel) level).sendParticles(ParticleTypes.CRIT, hitPos.x, hitPos.y, hitPos.z, 10, 0, 0, 0, 0);
-                }
                 return new Pair<>(entityHit, hitPos);
             }
         }
@@ -122,23 +123,37 @@ public class ShootHelper {
         else if (hitboxes != null) {
             Entity entity = result.getEntity();
             ResourceLocation id = EntityType.getKey(entity.getType());
+
             HeadHitbox headHitbox = hitboxes.get(id.toString());//TODO: add the rest of the entities to the HeadLocations json
-            if (headHitbox != null) {
+            if (!headHitbox.isVert()) {
                 AABB box = headHitbox.getBox(entity.getBoundingBox());
-                box =rotateHeadBox(entity, box);
-                if(box.contains(pos)) return true;
+                OBB rotated =rotateHeadOBB(entity, box);
+                if(rotated.contains(pos)) return true;
+            }
+            else{
+                 AABB box = headHitbox.getBox(entity.getBoundingBox());
+                 AABB rotated = rotateAABB(box, entity);
+                 rotated.expandTowards(0.3, 0, 0.3);
+                 if (entity instanceof AgeableMob mob && mob.isBaby()) {
+                     box.move(0, -3, 0);
+                }
+                 if(rotated.contains(pos)) return true;
             }
         }
         return false;
     }
-    public static AABB rotateHeadBox(Entity entity, AABB box){
-        float headYaw = entity.getYHeadRot();
+    public static OBB rotateHeadOBB(Entity entity, AABB box) {//TODO fix this. the OBB object might also not be right
+        OBB rotated = new OBB(box);
+        rotated.rotateYaw(-entity.getYRot(), entity.getBoundingBox().getCenter());
+        if (entity instanceof AgeableMob mob && mob.isBaby()) {
+            rotated.moveY(-3);
+        }
+        return rotated;
+    }
+    public  static AABB rotateAABB(AABB box, Entity entity){
+        float headYaw = entity.getYRot();
         double angle = Math.toRadians(-headYaw);
-        Vec3 pivot = new Vec3(
-            (box.minX + box.maxX) / 2.0,
-            (box.minY + box.maxY) / 2.0,
-            (box.minZ + box.maxZ) / 2.0
-        );
+        Vec3 pivot = entity.position();
         Vec3[] corners = new Vec3[] {
             new Vec3(box.minX, box.minY, box.minZ),
             new Vec3(box.minX, box.minY, box.maxZ),
@@ -177,15 +192,15 @@ public class ShootHelper {
             maxY = Math.max(maxY, y);
             maxZ = Math.max(maxZ, z);
         }
+        AABB end = new AABB(minX, minY, minZ, maxX, maxY, maxZ).inflate(0.3, 0, 0.3);
         if(entity instanceof AgeableMob mob){
             if(mob.isBaby()){
-                minY = minY - 2;//TODO edit these
-                maxY = maxY - 2;
+                end.move(0, -2, 0);
             }
         }
-        AABB end = new AABB(minX, minY, minZ, maxX, maxY, maxZ);
-        return end.inflate(0.03, 0, 0.03);
+        return end;
     }
+
     private static int plusmin(){
         if(Math.random()>0.5){
             return -1;

@@ -1,8 +1,10 @@
 package net.team.helldivers;
 
 import com.mojang.logging.LogUtils;
+
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
+import dev.architectury.registry.ReloadListenerRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
@@ -89,6 +91,7 @@ public class HelldiversMod {
         EntityRenderers.register(ModEntities.EAGLE_500KG_BOMB.get(), Eagle500KgRenderer::new);
         EntityRenderers.register(ModEntities.STRATAGEM_ORB.get(), StratagemOrbProjectileRenderer::new);
         EntityRenderers.register(ModEntities.BULLET.get(), BulletProjectileRenderer::new);
+        EntityRenderers.register(ModEntities.FIRE_BULLET.get(), FireBulletProjectileRenderer::new);
         EntityRenderers.register(ModEntities.ROCKET.get(), RocketProjectileRenderer::new);
         EntityRenderers.register(ModEntities.FRAG_GRENADE.get(), FragGrenadeProjectileRenderer::new);
         EntityRenderers.register(ModEntities.FIRE_GRENADE.get(), FireGrenadeProjectileRenderer::new);

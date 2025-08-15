@@ -12,12 +12,10 @@ import net.minecraftforge.network.NetworkEvent;
 import net.team.helldivers.item.custom.guns.AbstractGunItem;
 import net.team.helldivers.worldgen.dimension.ModDimensions;
 
-public class SShootPacket {
-    private static final Map<UUID, Long> lastShootTime = new HashMap<>();
-    private static final long SHOOT_COOLDOWN = 50; // milliseconds
-    public SShootPacket() {}
+public class SStartShootPacket {
+    public SStartShootPacket() {}
 
-    public SShootPacket(FriendlyByteBuf buffer) {
+    public SStartShootPacket(FriendlyByteBuf buffer) {
         this();
     }
 
@@ -28,17 +26,13 @@ public class SShootPacket {
         ServerPlayer player = context.get().getSender();
         if (player == null) return;
         if (player.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) return;
-
-        // Add cooldown check to prevent multiple shots
-        long currentTime = System.currentTimeMillis();
-        long lastTime = lastShootTime.getOrDefault(player.getUUID(), 0L);
-        if (currentTime - lastTime < SHOOT_COOLDOWN) {
-            return;
-        }
-        lastShootTime.put(player.getUUID(), currentTime);
         ItemStack heldItem = player.getMainHandItem();
-        if(heldItem.getItem() instanceof AbstractGunItem gun && gun.isAuto){
-            gun.onShoot(heldItem, player);
+        if(heldItem.getItem() instanceof AbstractGunItem gun){
+            if(!gun.isAuto){
+                gun.onShoot(heldItem, player);
+                gun.onStartShoot(heldItem, player);
+            }
+            else gun.onStartShoot(heldItem, player);
         }
     }
 }
