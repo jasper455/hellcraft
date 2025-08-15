@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -12,7 +13,14 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
+import net.team.helldivers.damage.ModDamageTypes;
 import net.team.helldivers.entity.custom.GatlingSentryHellpodEntity;
 import net.team.helldivers.entity.goal.BotShootTargetGoal;
 import net.team.helldivers.entity.goal.BotWalkAndShootGoal;
@@ -30,25 +38,17 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public abstract class AbstractBotEntity extends Monster implements GeoEntity{
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-    private final boolean hasDeathAnim;
     private final boolean hasMeleeAttack;
+    private boolean isShooting;
 
     public static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle");
     public static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk");
     public static final RawAnimation DEATH = RawAnimation.begin().thenPlayAndHold("death");
+    public static final RawAnimation SHOOT = RawAnimation.begin().thenLoop("shoot");
 
-    public AbstractBotEntity(EntityType<? extends Monster> pEntityType, Level pLevel, boolean hasDeathAnim, boolean hasMeleeAttack) {
+    public AbstractBotEntity(EntityType<? extends Monster> pEntityType, Level pLevel, boolean hasMeleeAttack) {
         super(pEntityType, pLevel);
-        this.hasDeathAnim = hasDeathAnim;
         this.hasMeleeAttack = hasMeleeAttack;
-    }
-
-    @Override
-    protected void registerGoals() {
-        this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        this.goalSelector.addGoal(1, new BotWalkAndShootGoal(this, 1.0D, 10.0F, 40)); // speed, range, cooldown
-        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 1.0D));
     }
 
 //    private PlayState animations(AnimationState event) {
@@ -78,25 +78,36 @@ public abstract class AbstractBotEntity extends Monster implements GeoEntity{
         AnimationController<?> deathAnimController = new AnimationController<>(this, "death", 0,
                 state -> state.getAnimatable().isDeadOrDying() ? state.setAndContinue(DEATH) : PlayState.STOP);
 
+        AnimationController<?> shootAnimController = new AnimationController<>(this, "shoot", 5,
+                state -> {
+            if (isShooting) {
+                return state.setAndContinue(SHOOT);
+            }
+            return PlayState.STOP;
+        });
+
 //        data.add(animationController);
         data.add(walkIdleAnimController);
-        if (hasDeathAnim) {
-            data.add(deathAnimController);
-        }
+        data.add(deathAnimController);
+        data.add(shootAnimController);
     }
 
     @Override
     public void tick() {
         super.tick();
         LivingEntity target = this.getTarget();
+        isShooting = false; // reset every tick
+
         if (target == null) return;
 
         this.getLookControl().setLookAt(target, 180.0F, 180.0F);
         double distanceSq = this.distanceToSqr(target.getX(), target.getY(), target.getZ());
-        
-        if (!(distanceSq > 100) && this.tickCount % 5==0) {
-            target.sendSystemMessage(Component.literal("test"));
-            ShootHelper.shoot(this, this.level(), 0, 5, 0.3, false);
+
+        if (distanceSq <= 100 && this.tickCount % 5 == 0) {
+            if (!hasMeleeAttack) {
+                ShootHelper.shoot(this, this.level(), 0, 5, 0.3, false);
+                isShooting = true;
+            }
         }
     }
 
@@ -127,4 +138,19 @@ public abstract class AbstractBotEntity extends Monster implements GeoEntity{
     protected @Nullable SoundEvent getAmbientSound() {
         return super.getAmbientSound();
     }
+
+    @Override
+    public boolean hurt(DamageSource pSource, float pAmount) {
+//        Minecraft.getInstance().player.sendSystemMessage(Component.literal(String.valueOf(pSource.is(ModDamageTypes.RAYCAST))));
+        if (pSource.is(ModDamageTypes.RAYCAST) ||
+                pSource.is(ModDamageTypes.ORBITAL_LASER) ||
+                pSource.is(DamageTypes.EXPLOSION)) {
+            super.hurt(pSource, pAmount);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public abstract AABB getDamageHitbox();
 }

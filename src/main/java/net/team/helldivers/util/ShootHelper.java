@@ -4,7 +4,10 @@ import java.util.Map;
 import java.util.Optional;
 
 import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.network.chat.Component;
+import net.team.helldivers.damage.ModDamageSources;
 import net.team.helldivers.entity.custom.bots.AbstractBotEntity;
+import net.team.helldivers.entity.custom.bots.RangedHulkEntity;
 import org.checkerframework.checker.units.qual.h;
 
 import com.mojang.datafixers.util.Pair;
@@ -45,7 +48,7 @@ public class ShootHelper {
             EntityHitResult resultE = ((EntityHitResult)result);
             Entity entity = resultE.getEntity();
             if(checkHeadShot(resultE, hitPos)){
-                entity.hurt(entity.damageSources().generic(), dam*2);
+                entity.hurt(ModDamageSources.raycast(shooter), dam*2);
                 System.out.println("HEADSHOT");
                 if(entity instanceof LivingEntity alive){
                     if(ignoreIframes) alive.invulnerableTime = 0;
@@ -54,11 +57,14 @@ public class ShootHelper {
                }
             }
             else{
-                entity.hurt(entity.damageSources().generic(), dam);
+                entity.hurt(ModDamageSources.raycast(shooter), dam);
                if(entity instanceof LivingEntity alive){
-                    if(ignoreIframes) alive.invulnerableTime = 0;
-                    Vec3 look = shooter.getLookAngle().normalize();
-                    alive.knockback(knockback, -look.x, -look.z);
+                   if(ignoreIframes) alive.invulnerableTime = 0;
+                   Vec3 look = shooter.getLookAngle().normalize();
+                   alive.knockback(knockback, -look.x, -look.z);
+                   if (entity instanceof AbstractBotEntity botEntity) {
+//                       shooter.sendSystemMessage(Component.literal(hitPos.toString()));
+                   }
                }
             }
         }

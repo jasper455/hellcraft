@@ -21,6 +21,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.registries.ForgeRegistries;
+import net.team.helldivers.entity.custom.bots.AbstractBotEntity;
 import net.team.helldivers.util.ShootHelper;
 import net.team.helldivers.util.Headshots.HeadHitbox;
 import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
@@ -66,6 +67,15 @@ public class DebugRenderer {
                     1.0F, 0.0F, 0.0F, // red
                     1.0F              // full alpha
                 );
+                if (entity instanceof AbstractBotEntity botEntity) {
+                    LevelRenderer.renderLineBox(
+                            poseStack,
+                            lines,
+                            botEntity.getDamageHitbox(),
+                            1.0F, 0.0F, 0.0F, // red
+                            1.0F              // full alpha
+                    );
+                }
             }
 
             bufferSource.endBatch(RenderType.lines());

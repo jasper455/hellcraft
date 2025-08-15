@@ -42,10 +42,13 @@ import net.team.helldivers.client.renderer.entity.HellbombHellpodRenderer;
 import net.team.helldivers.client.renderer.entity.HellpodRenderer;
 import net.team.helldivers.client.renderer.entity.OrbitalLaserRenderer;
 import net.team.helldivers.client.renderer.entity.SupportHellpodRenderer;
+import net.team.helldivers.client.renderer.entity.bots.AutomatonTrooperRenderer;
+import net.team.helldivers.client.renderer.entity.bots.BerserkerRenderer;
 import net.team.helldivers.client.renderer.entity.bots.RangedHulkRenderer;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.ModBotEntities;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.entity.custom.bots.AutomatonTrooperEntity;
 import net.team.helldivers.item.custom.guns.AmrItem;
 import net.team.helldivers.item.custom.guns.AbstractGunItem;
 import net.team.helldivers.item.custom.guns.Plas1Item;
@@ -241,6 +244,8 @@ public class ModClientEvents {
             event.registerEntityRenderer(ModEntities.GATLING_SENTRY.get(), GatlingSentryHellpodRenderer::new);
 
             event.registerEntityRenderer(ModBotEntities.HULK.get(), RangedHulkRenderer::new);
+            event.registerEntityRenderer(ModBotEntities.BERSERKER.get(), BerserkerRenderer::new);
+            event.registerEntityRenderer(ModBotEntities.AUTOMATON_TROOPER.get(), AutomatonTrooperRenderer::new);
 
             event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
             event.registerBlockEntityRenderer(ModBlockEntities.EXTRACTION_TERMINAL.get(), context -> new ExtractionTerminalBlockRenderer());

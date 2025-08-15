@@ -47,7 +47,7 @@ public class BotWalkAndShootGoal extends Goal {
         } else {
             mob.getNavigation().stop();
 //            if (cooldownTicks <= 0) {
-                target.sendSystemMessage(Component.literal("test"));
+//                target.sendSystemMessage(Component.literal("test"));
                 shootAt(target); // Custom shoot logic
                 cooldownTicks = attackCooldown;
 //            }

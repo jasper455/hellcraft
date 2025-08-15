@@ -11,17 +11,17 @@ public class RangedHulkModel extends DefaultedEntityGeoModel<RangedHulkEntity> {
     }
 
     @Override
-    public ResourceLocation getModelResource(RangedHulkEntity orbitalLaserEntity) {
+    public ResourceLocation getModelResource(RangedHulkEntity botEntity) {
         return ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "geo/entity/bots/hulk.geo.json");
     }
 
     @Override
-    public ResourceLocation getTextureResource(RangedHulkEntity orbitalLaserEntity) {
+    public ResourceLocation getTextureResource(RangedHulkEntity botEntity) {
         return ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/entity/bots/hulk/hulk.png");
     }
 
     @Override
-    public ResourceLocation getAnimationResource(RangedHulkEntity orbitalLaserEntity) {
+    public ResourceLocation getAnimationResource(RangedHulkEntity botEntity) {
         return ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "animations/entity/bots/hulk.animation.json");
     }
 }

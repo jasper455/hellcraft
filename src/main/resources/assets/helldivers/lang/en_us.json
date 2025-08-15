@@ -92,13 +92,20 @@
   "entity.helldivers.stratagem_orb": "Stratagem Orb",
   "entity.helldivers.hellpod": "Hellpod",
   "entity.helldivers.support_hellpod": "Support Hellpod",
+  "entity.helldivers.hellbomb_hellpod": "Hellbomb",
   "entity.helldivers.bullet": "Bullet",
   "entity.helldivers.rocket": "Rocket",
   "entity.helldivers.heated_gas": "Heated Gas",
   "entity.helldivers.frag_grenade": "Frag Grenade",
+  "entity.helldivers.fire_grenade": "Fire Grenade",
   "entity.helldivers.eagle_airship": "Eagle Airship",
   "entity.helldivers.orbital_laser": "Orbital Laser",
   "entity.helldivers.cluster_bomb": "Cluster Bomb Projectile",
+  "entity.helldivers.gatling_sentry": "Gatling Sentry",
+
+  "entity.helldivers.hulk": "Automaton Hulk",
+  "entity.helldivers.berserker": "Automaton Berserker",
+  "entity.helldivers.automaton_trooper": "Automaton Trooper",
 
   "sounds.helldivers.stratagem_input": "Stratagem Input",
   "sounds.helldivers.falling_shell": "Missile Falls",
@@ -134,5 +141,8 @@
   "container.helldivers.stratagem_picker": "§oStratagem Picker",
 
   "death.attack.orbitalLaser": "%1$s was vaporized by an Orbital Laser",
-  "death.attack.orbitalLaser.player": "%1$s was strategically eliminated by %2$s's Orbital Laser"
+  "death.attack.orbitalLaser.player": "%1$s was strategically eliminated by %2$s's Orbital Laser",
+
+  "death.attack.raycast": "%1$s was shot",
+  "death.attack.raycast.player": "%1$s was shot by %2$s"
 }

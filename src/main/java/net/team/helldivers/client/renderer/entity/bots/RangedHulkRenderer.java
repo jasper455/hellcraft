@@ -34,6 +34,10 @@ public class RangedHulkRenderer extends GeoEntityRenderer<RangedHulkEntity> {
         poseStack.popPose();
     }
 
+    @Override
+    protected float getDeathMaxRotation(RangedHulkEntity animatable) {
+        return 0;
+    }
 
     @Override
     public ResourceLocation getTextureLocation(RangedHulkEntity animatable) {

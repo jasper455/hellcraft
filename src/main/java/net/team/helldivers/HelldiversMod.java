@@ -128,6 +128,8 @@ public class HelldiversMod {
         public static void registerDamageTypes(RegisterEvent event) {
             event.register(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "orbital_laser"),
                     () -> new DamageType("orbital_laser", 0.1F));
+            event.register(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "raycast"),
+                    () -> new DamageType("raycast", 0.1F));
         }
 
     }

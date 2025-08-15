@@ -244,7 +244,7 @@ public class OrbitalLaserEntity extends Monster implements GeoEntity {
 
     @Override
     public boolean doHurtTarget(Entity entity) {
-        return entity.hurt(this.damageSources().mobAttack(this), 3.0F);
+        return entity.hurt(ModDamageSources.orbitalLaser(this), 3.0F);
     }
 
     public void setOwner(Entity owner) {
