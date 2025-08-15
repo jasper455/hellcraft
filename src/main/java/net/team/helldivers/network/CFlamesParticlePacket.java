@@ -9,6 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.particle.EffekLoader;
@@ -30,22 +32,16 @@ public class CFlamesParticlePacket {
         context.get().enqueueWork(() -> {
             LocalPlayer player = Minecraft.getInstance().player;
             if(!player.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)){
-                ParticleEmitterInfo emitter = newEmitterForPlayer(player);
-                activeFlameEmitter.put(player.getUUID(), emitter);
-                AAALevel.addParticle(player.level(), true, emitter);
+                //ParticleEmitterInfo emitter = newEmitterForPlayer(player);
+                //activeFlameEmitter.put(player.getUUID(), emitter);
+                float yaw = -player.getYRot();
+                float pitch = -player.getXRot();
+                Vec2 dir = new Vec2(pitch, yaw);
+
+                AAALevel.addParticle(player.level(), true, EffekLoader.FIRE.clone().rotation(dir).position(player.getEyePosition()));
                 System.out.println("particles start");
             }
         });
         context.get().setPacketHandled(true);
     }
-    private ParticleEmitterInfo newEmitterForPlayer(LocalPlayer player) {
-    return new ParticleEmitterInfo(EffekLoader.FIRE.effek,  new ResourceLocation(
-            HelldiversMod.MOD_ID, "flame_" + UUID.randomUUID()))
-        .bindOnEntity(player)
-        .useEntityHeadSpace()
-        .rotation(0, -100, 0)
-        .position(0, -1, 0);
-    }
-
-
 }

@@ -164,8 +164,7 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
                     } else {
                         event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot"));
                     }
-                    PacketHandler.sendToServer(new SShootPacket());
-                    shootCooldown = fireDelay;
+                    //PacketHandler.sendToServer(new SShootPacket());
                     return PlayState.CONTINUE;
                 }
             }
@@ -245,7 +244,11 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
         if (world.isClientSide() && entity instanceof Player player) {
             if (selected) {
                 isShooting = KeyBinding.SHOOT.isDown();
-                 firstShot = KeyBinding.SHOOT.consumeClick();
+                firstShot = KeyBinding.SHOOT.consumeClick();
+                if (isShooting && shootCooldown == 0 && canShoot(Minecraft.getInstance().player.getMainHandItem()) && !isReloading && isAuto) {
+                    PacketHandler.sendToServer(new SShootPacket());
+                     shootCooldown = fireDelay;
+                }
                 if (shootCooldown > 0) {
                         shootCooldown--;
                     }
