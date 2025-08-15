@@ -43,6 +43,9 @@ public class ShootHelper {
         if(result.getType() == HitResult.Type.ENTITY){
             EntityHitResult resultE = ((EntityHitResult)result);
             Entity entity = resultE.getEntity();
+            if (!level.isClientSide) {
+                 ((ServerLevel) level).sendParticles(ParticleTypes.CRIT, hitPos.x, hitPos.y, hitPos.z, 10, 0, 0, 0, 0);
+                }
             if(checkHeadShot(resultE, hitPos)){
                 entity.hurt(entity.damageSources().generic(), dam*2);
                 System.out.println("HEADSHOT");
@@ -104,9 +107,6 @@ public class ShootHelper {
             if (entityDist < blockDist) {
                 Optional<Vec3> clipped = entityHit.getEntity().getBoundingBox().clip(start, end);//returning the correct coords
                 Vec3 hitPos = clipped.orElse(end);
-                if (!level.isClientSide) {
-                 ((ServerLevel) level).sendParticles(ParticleTypes.CRIT, hitPos.x, hitPos.y, hitPos.z, 10, 0, 0, 0, 0);
-                }
                 return new Pair<>(entityHit, hitPos);
             }
         }

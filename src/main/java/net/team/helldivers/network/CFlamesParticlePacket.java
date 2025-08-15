@@ -32,14 +32,15 @@ public class CFlamesParticlePacket {
         context.get().enqueueWork(() -> {
             LocalPlayer player = Minecraft.getInstance().player;
             if(!player.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)){
-                //ParticleEmitterInfo emitter = newEmitterForPlayer(player);
-                //activeFlameEmitter.put(player.getUUID(), emitter);
-                float yaw = -player.getYRot();
-                float pitch = -player.getXRot();
-                Vec2 dir = new Vec2(pitch, yaw);
-
-                AAALevel.addParticle(player.level(), true, EffekLoader.FIRE.clone().rotation(dir).position(player.getEyePosition()));
-                System.out.println("particles start");
+                float partialTicks = Minecraft.getInstance().getFrameTime();
+                float rotY = (float) Math.toRadians(player.getViewYRot(partialTicks));
+                float rotX = (float) Math.toRadians(player.getViewXRot(partialTicks));
+                Vec2 dir = new Vec2(rotX, -rotY);
+                ParticleEmitterInfo fire = EffekLoader.FIRE.clone().rotation(dir).position(player.getEyePosition().add(0, -0.3, 0)).rotation(dir);
+                AAALevel.addParticle(player.level(), true, fire);
+                System.out.println("rotx " + rotX);
+                System.out.println("roty " + rotY);
+                //extend bullet entity and make a new entity that lasts for the duration of the flames animation. spawn like 10 per tick
             }
         });
         context.get().setPacketHandled(true);
