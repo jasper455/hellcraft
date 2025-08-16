@@ -28,12 +28,14 @@ public abstract class SurvivalInventoryMenuMixin extends AbstractContainerMenu {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void onInit(Inventory pPlayerInventory, boolean pActive, Player player, CallbackInfo ci) {
-        // Access your PlayerBackSlot capability
+        // Avoid injecting into creative screen
+
         player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
+            if (player.isCreative()) return;
             this.addSlot(new SlotItemHandler(backSlot.getInventory(), 0, 77, 44) {
                 @Override
                 public int getMaxStackSize() {
-                    return 1; // only 1 item allowed in back slot
+                    return 1;
                 }
             });
         });

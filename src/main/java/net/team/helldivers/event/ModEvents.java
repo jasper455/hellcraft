@@ -11,10 +11,12 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -43,15 +45,18 @@ import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.backslot.PlayerBackSlot;
 import net.team.helldivers.backslot.PlayerBackSlotProvider;
 import net.team.helldivers.block.ModBlocks;
+import net.team.helldivers.client.hud.BackSlotHud;
 import net.team.helldivers.client.skybox.SkyboxRenderer;
 import net.team.helldivers.command.StopUseLodestoneCommand;
 import net.team.helldivers.command.UseLodestoneCommand;
 import net.team.helldivers.data.StructureGenerationData;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.custom.BulletProjectileEntity;
+import net.team.helldivers.helper.ClientBackSlotCache;
 import net.team.helldivers.item.custom.armor.IDemocracyProtects;
 import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
 import net.team.helldivers.network.PacketHandler;
+import net.team.helldivers.network.SInitializeBackSlotPacket;
 import net.team.helldivers.network.SSyncJammedPacket;
 import net.team.helldivers.util.KeyBinding;
 import net.team.helldivers.worldgen.dimension.ModDimensions;
@@ -129,6 +134,22 @@ public class ModEvents {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
         if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide()) return;
+
+        if (!player.getMainHandItem().isEmpty() && KeyBinding.EQUIP_BACKPACK.consumeClick()) {
+                ItemStack stack = player.getMainHandItem();
+                PacketHandler.sendToServer(new SInitializeBackSlotPacket());
+//                ClientBackSlotCache.addToSlotCache(stack);
+                player.sendSystemMessage(Component.literal(String.valueOf(ClientBackSlotCache.getItem())));
+        }/* else if (player.getMainHandItem().isEmpty() && KeyBinding.EQUIP_BACKPACK.consumeClick()) {
+            if (ClientBackSlotCache.getItem() != null) {
+                PacketHandler.sendToServer(new SInitializeBackSlotPacket());
+                player.setItemInHand(InteractionHand.MAIN_HAND, ClientBackSlotCache.getItem());
+//                ClientBackSlotCache.removeFromSlotCache(ClientBackSlotCache.getItem());
+            }
+        }*/
+        player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
+            player.sendSystemMessage(Component.literal(String.valueOf(backSlot.getInventory().getStackInSlot(0))));
+        });
 
         if (KeyBinding.SHOW_STRATAGEM_KEY.isDown() && player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0 &&
                 player.getMainHandItem().isEmpty() &&

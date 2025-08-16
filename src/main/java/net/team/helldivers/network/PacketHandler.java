@@ -99,6 +99,12 @@ public class PacketHandler {
                 .consumerMainThread(STeleportToDimensionPacket::handle)
                 .add();
 
+        INSTANCE.messageBuilder(SInitializeBackSlotPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SInitializeBackSlotPacket::encode)
+                .decoder(SInitializeBackSlotPacket::new)
+                .consumerMainThread(SInitializeBackSlotPacket::handle)
+                .add();
+
 
         // CLIENT
         INSTANCE.messageBuilder(CSmallExplosionParticlesPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)

@@ -12,6 +12,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.backslot.PlayerBackSlotProvider;
 import net.team.helldivers.helper.ClientItemCache;
 import net.team.helldivers.helper.ClientJammedSync;
 import net.team.helldivers.item.ModItems;
@@ -1074,6 +1075,12 @@ public class Stratagems {
 
         int screenWidth = minecraft.getWindow().getGuiScaledWidth();
         int screenHeight = minecraft.getWindow().getGuiScaledHeight();
+        if (player == null) return;
+
+        player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
+            BackSlotHud.renderBackSlotHud(guiGraphics, backSlot.getInventory().getStackInSlot(0));
+        });
+
         if (Minecraft.getInstance().level == null || Minecraft.getInstance().level.dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) return;
 
         // only render the menu if your not moving, all inputs aren't down, your hand is empty, you have a helldiver chestplate on
