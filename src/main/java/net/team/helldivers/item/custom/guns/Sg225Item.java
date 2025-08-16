@@ -14,7 +14,7 @@ import net.team.helldivers.util.ShootHelper;
 public class Sg225Item extends AbstractGunItem {
 
     public Sg225Item(Properties properties) {
-        super(properties.durability(8).rarity(Rarity.COMMON), true,true, "§e[Shotgun]", ModSounds.AR_23_RELOAD);
+        super(properties.durability(8).rarity(Rarity.COMMON), true,true, "§e[Shotgun]", 20, ModSounds.AR_23_RELOAD);
     }
     @Override
     public void onShoot(ItemStack itemStack, ServerPlayer player) {
@@ -25,10 +25,10 @@ public class Sg225Item extends AbstractGunItem {
                 player.level().playSound(null, player.blockPosition(),
                         ModSounds.SG225_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                 PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
-                for(int i=0; i<21;i++){
-                    ShootHelper.shoot(player, player.level(), 0.3, 1, 0.3, true);
+                for(int i=0; i<11;i++){
+                    ShootHelper.shoot(player, player.level(), 0.3, 2, 0.3, true);
                 }
-                player.getCooldowns().addCooldown(itemStack.getItem(), fireDelay);
+                player.getCooldowns().addCooldown(itemStack.getItem(), 20);
 
                 // Damage the item
                 if (!player.getAbilities().instabuild) {
