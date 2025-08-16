@@ -115,33 +115,38 @@ public class ShootHelper {
 
     private static boolean checkHeadShot(EntityHitResult result, Vec3 pos) {
         Map<String, HeadHitbox> hitboxes = HeadHitboxRegistry.getAll();
+
         if (result.getEntity() instanceof EnderDragonPart part) {
-            if("head".equals(part.getName().getString())){
+            if ("head".equals(part.getName().getString())) {
                 return true;
             }
-        }
-        else if (hitboxes != null) {
+        } else if (hitboxes != null) {
             Entity entity = result.getEntity();
             ResourceLocation id = EntityType.getKey(entity.getType());
 
-            HeadHitbox headHitbox = hitboxes.get(id.toString());//TODO: add the rest of the entities to the HeadLocations json
-            if (!headHitbox.isVert()) {
-                AABB box = headHitbox.getBox(entity.getBoundingBox());
-                OBB rotated =rotateHeadOBB(entity, box);
-                if(rotated.contains(pos)) return true;
+            HeadHitbox headHitbox = hitboxes.get(id.toString());
+            if (headHitbox == null) {
+                System.out.println("No head hitbox registered for: " + id);
+                return false;
             }
-            else{
-                 AABB box = headHitbox.getBox(entity.getBoundingBox());
-                 AABB rotated = rotateAABB(box, entity);
-                 rotated.expandTowards(0.3, 0, 0.3);
-                 if (entity instanceof AgeableMob mob && mob.isBaby()) {
-                     box.move(0, -3, 0);
+
+            AABB box = headHitbox.getBox(entity.getBoundingBox());
+            if (!headHitbox.isVert()) {
+                OBB rotated = rotateHeadOBB(entity, box);
+                if (rotated.contains(pos)) return true;
+            } else {
+                AABB rotated = rotateAABB(box, entity);
+                rotated = rotated.expandTowards(0.3, 0, 0.3);
+                if (entity instanceof AgeableMob mob && mob.isBaby()) {
+                    rotated = rotated.move(0, -3, 0);
                 }
-                 if(rotated.contains(pos)) return true;
+                if (rotated.contains(pos)) return true;
             }
         }
+
         return false;
     }
+
     public static OBB rotateHeadOBB(Entity entity, AABB box) {//TODO fix this. the OBB object might also not be right
         OBB rotated = new OBB(box);
         rotated.rotateYaw(-entity.getYRot(), entity.getBoundingBox().getCenter());

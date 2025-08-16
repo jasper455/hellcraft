@@ -19,6 +19,7 @@ public class EAT17Item extends AbstractGunItem {
     }
     @Override
     public void onShoot(ItemStack itemStack, ServerPlayer player) {
+        super.onShoot(itemStack, player);
          if (itemStack.getDamageValue() < itemStack.getMaxDamage()) {
 
                 player.level().playSound(null, player.blockPosition(),
@@ -37,7 +38,6 @@ public class EAT17Item extends AbstractGunItem {
                 itemStack.hurtAndBreak(47, player, (serverPlayer) -> {
                         player.broadcastBreakEvent(EquipmentSlot.MAINHAND);
                     });
-
             }
     }
 

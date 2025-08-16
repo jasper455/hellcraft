@@ -3,6 +3,8 @@ package net.team.helldivers.item.custom.guns;
 import java.util.List;
 import java.util.function.Consumer;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.block.state.BlockState;
 import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -302,6 +304,12 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
     public boolean onEntitySwing(ItemStack stack, LivingEntity entity) {
         return true;
     }
+
+    @Override
+    public boolean onBlockStartBreak(ItemStack itemstack, BlockPos pos, Player player) {
+        return true;
+    }
+
     public void onStartShoot(ItemStack itemStack, ServerPlayer player){};
     public void onEndShoot(ItemStack itemStack, ServerPlayer player){};
     public void onShoot(ItemStack itemStack, ServerPlayer player){
