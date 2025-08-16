@@ -10,6 +10,7 @@ import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.entity.custom.*;
 import net.team.helldivers.entity.custom.bots.AutomatonTrooperEntity;
 import net.team.helldivers.entity.custom.bots.BerserkerEntity;
+import net.team.helldivers.entity.custom.bots.DevastatorEntity;
 import net.team.helldivers.entity.custom.bots.RangedHulkEntity;
 
 public class ModBotEntities {
@@ -26,7 +27,11 @@ public class ModBotEntities {
 
     public static final RegistryObject<EntityType<AutomatonTrooperEntity>> AUTOMATON_TROOPER =
             ENTITY_TYPES.register("automaton_trooper", () -> EntityType.Builder.of(AutomatonTrooperEntity::new, MobCategory.MONSTER)
-                    .sized(1f, 2.6f).build("automaton_trooper"));
+                    .sized(0.75f, 2.6f).build("automaton_trooper"));
+
+    public static final RegistryObject<EntityType<DevastatorEntity>> DEVASTATOR =
+            ENTITY_TYPES.register("devastator", () -> EntityType.Builder.of(DevastatorEntity::new, MobCategory.MONSTER)
+                    .sized(1f, 2.6f).build("devastator"));
 
 
     public static void register(IEventBus eventBus) {
