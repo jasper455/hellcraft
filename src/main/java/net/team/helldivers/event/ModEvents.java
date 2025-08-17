@@ -5,10 +5,8 @@ import com.mojang.math.Axis;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
-import net.minecraft.client.gui.screens.inventory.InventoryScreen;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -16,12 +14,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -31,8 +28,6 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.client.event.ScreenEvent;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -42,12 +37,12 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.server.command.ConfigCommand;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.backslot.PlayerBackSlot;
 import net.team.helldivers.backslot.PlayerBackSlotProvider;
 import net.team.helldivers.block.ModBlocks;
-import net.team.helldivers.client.hud.BackSlotHud;
 import net.team.helldivers.client.skybox.SkyboxRenderer;
 import net.team.helldivers.command.StopUseLodestoneCommand;
 import net.team.helldivers.command.UseLodestoneCommand;
@@ -57,8 +52,9 @@ import net.team.helldivers.entity.custom.BulletProjectileEntity;
 import net.team.helldivers.helper.ClientBackSlotCache;
 import net.team.helldivers.item.custom.armor.IDemocracyProtects;
 import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
+import net.team.helldivers.network.CSyncBackSlotPacket;
 import net.team.helldivers.network.PacketHandler;
-import net.team.helldivers.network.SInitializeBackSlotPacket;
+import net.team.helldivers.network.SSetBackSlotPacket;
 import net.team.helldivers.network.SSyncJammedPacket;
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.sound.custom.MovingSoundInstance;
@@ -139,21 +135,16 @@ public class ModEvents {
         Player player = event.player;
         if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide()) return;
 
-        if (!player.getMainHandItem().isEmpty() && KeyBinding.EQUIP_BACKPACK.consumeClick()) {
-                ItemStack stack = player.getMainHandItem();
-                PacketHandler.sendToServer(new SInitializeBackSlotPacket());
-//                ClientBackSlotCache.addToSlotCache(stack);
-                player.sendSystemMessage(Component.literal(String.valueOf(ClientBackSlotCache.getItem())));
-        }/* else if (player.getMainHandItem().isEmpty() && KeyBinding.EQUIP_BACKPACK.consumeClick()) {
-            if (ClientBackSlotCache.getItem() != null) {
-                PacketHandler.sendToServer(new SInitializeBackSlotPacket());
-                player.setItemInHand(InteractionHand.MAIN_HAND, ClientBackSlotCache.getItem());
-//                ClientBackSlotCache.removeFromSlotCache(ClientBackSlotCache.getItem());
-            }
-        }*/
-        player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
-            player.sendSystemMessage(Component.literal(String.valueOf(backSlot.getInventory().getStackInSlot(0))));
-        });
+//        if (KeyBinding.EQUIP_BACKPACK.consumeClick()) {
+//            if (player instanceof ServerPlayer serverPlayer) {
+//                player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
+//                    CompoundTag nbt = new CompoundTag();
+//                    backSlot.saveNBTData(nbt);
+//                    PacketHandler.sendToServer(new SSetBackSlotPacket());
+//                    PacketHandler.sendToPlayer(new CSyncBackSlotPacket(nbt), serverPlayer);
+//                });
+//            }
+//        }
 
         if (KeyBinding.SHOW_STRATAGEM_KEY.isDown() && player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0 &&
                 player.getMainHandItem().isEmpty() &&
@@ -201,6 +192,32 @@ public class ModEvents {
         } else {
             superDestroyerDimTicks = 0;
         }
+    }
+
+    @SubscribeEvent
+    public static void onRenderGuiOverlay(CustomizeGuiOverlayEvent event) {
+        Minecraft mc = Minecraft.getInstance();
+        LocalPlayer player = mc.player;
+        GuiGraphics guiGraphics = event.getGuiGraphics();
+
+        if (player == null) return;
+
+        player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
+            ItemStackHandler handler = backSlot.getInventory();
+            ItemStack stack = handler.getStackInSlot(0);
+
+            if (!stack.isEmpty()) {
+                int x = 417;
+                int y = 331;
+
+                guiGraphics.blit(ResourceLocation.fromNamespaceAndPath(
+                                HelldiversMod.MOD_ID, "textures/gui/backslot.png"),
+                        x, y, 22, 22, 22, 22, 22, 22,
+                        22, 22);
+                guiGraphics.renderItem(stack, x + 3, y + 3);
+                guiGraphics.renderItemDecorations(mc.font, stack, x + 3, y + 3);
+            }
+        });
     }
 
     @SubscribeEvent

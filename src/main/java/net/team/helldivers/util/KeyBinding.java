@@ -43,5 +43,5 @@ public class KeyBinding {
             InputConstants.Type.MOUSE, GLFW.GLFW_MOUSE_BUTTON_RIGHT, KEY_CATEGORY_HELLDIVERS);
 
     public static final KeyMapping EQUIP_BACKPACK = new KeyMapping(BACKPACK_EQUIP_KEY, KeyConflictContext.IN_GAME,
-            InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_H, KEY_CATEGORY_HELLDIVERS);
+            InputConstants.Type.KEYSYM, GLFW.GLFW_KEY_LEFT_SHIFT, KEY_CATEGORY_HELLDIVERS);
 }

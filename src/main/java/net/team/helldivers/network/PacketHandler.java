@@ -111,10 +111,10 @@ public class PacketHandler {
                 .consumerMainThread(STeleportToDimensionPacket::handle)
                 .add();
 
-        INSTANCE.messageBuilder(SInitializeBackSlotPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
-                .encoder(SInitializeBackSlotPacket::encode)
-                .decoder(SInitializeBackSlotPacket::new)
-                .consumerMainThread(SInitializeBackSlotPacket::handle)
+        INSTANCE.messageBuilder(SSetBackSlotPacket.class, index++, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(SSetBackSlotPacket::encode)
+                .decoder(SSetBackSlotPacket::new)
+                .consumerMainThread(SSetBackSlotPacket::handle)
                 .add();
 
 
@@ -146,6 +146,12 @@ public class PacketHandler {
                 .encoder(CClusterBombExplosionParticlesPacket::encode)
                 .decoder(CClusterBombExplosionParticlesPacket::new)
                 .consumerMainThread(CClusterBombExplosionParticlesPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(CSyncBackSlotPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(CSyncBackSlotPacket::encode)
+                .decoder(CSyncBackSlotPacket::new)
+                .consumerMainThread(CSyncBackSlotPacket::handle)
                 .add();
     }
 

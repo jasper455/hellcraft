@@ -1077,10 +1077,6 @@ public class Stratagems {
         int screenHeight = minecraft.getWindow().getGuiScaledHeight();
         if (player == null) return;
 
-        player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
-            BackSlotHud.renderBackSlotHud(guiGraphics, backSlot.getInventory().getStackInSlot(0));
-        });
-
         if (Minecraft.getInstance().level == null || Minecraft.getInstance().level.dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) return;
 
         // only render the menu if your not moving, all inputs aren't down, your hand is empty, you have a helldiver chestplate on
