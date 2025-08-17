@@ -1,6 +1,10 @@
 package net.team.helldivers;
 
 import com.mojang.logging.LogUtils;
+
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
+import dev.architectury.registry.ReloadListenerRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
@@ -37,7 +41,7 @@ import net.team.helldivers.worldgen.chunk.ModChunkGenerators;
 import org.slf4j.Logger;
 import software.bernie.geckolib.GeckoLib;
 import team.lodestar.lodestone.systems.particle.world.type.LodestoneWorldParticleType;
-
+//TODO: hit indicators
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(HelldiversMod.MOD_ID)
 public class HelldiversMod {
@@ -83,6 +87,7 @@ public class HelldiversMod {
         EntityRenderers.register(ModEntities.EAGLE_500KG_BOMB.get(), Eagle500KgRenderer::new);
         EntityRenderers.register(ModEntities.STRATAGEM_ORB.get(), StratagemOrbProjectileRenderer::new);
         EntityRenderers.register(ModEntities.BULLET.get(), BulletProjectileRenderer::new);
+        EntityRenderers.register(ModEntities.FIRE_BULLET.get(), FireBulletProjectileRenderer::new);
         EntityRenderers.register(ModEntities.ROCKET.get(), RocketProjectileRenderer::new);
         EntityRenderers.register(ModEntities.FRAG_GRENADE.get(), FragGrenadeProjectileRenderer::new);
         EntityRenderers.register(ModEntities.FIRE_GRENADE.get(), FireGrenadeProjectileRenderer::new);
@@ -108,6 +113,8 @@ public class HelldiversMod {
             MenuScreens.register(ModMenuTypes.HELLBOMB_ENTITY_INPUT_MENU.get(), HellbombEntityInputScreen::new);
             MenuScreens.register(ModMenuTypes.EXTRACTION_TERMINAL.get(), ExtractionTerminalScreen::new);
             MenuScreens.register(ModMenuTypes.GALAXY_MAP_MENU.get(), GalaxyMapScreen::new);
+
+            ItemBlockRenderTypes.setRenderLayer(ModBlocks.SUPER_DESTROYER_GLASS.get(), RenderType.translucent());
         }
 
         @SubscribeEvent

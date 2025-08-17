@@ -4,6 +4,7 @@ import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.block.entity.custom.BotContactMineBlockEntity;
 import net.team.helldivers.block.entity.custom.ExtractionTerminalBlockEntity;
+import net.team.helldivers.block.entity.custom.GalacticTerminalBlockEntity;
 import net.team.helldivers.block.entity.custom.HellbombBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -23,6 +24,10 @@ public class ModBlockEntities {
     public static final RegistryObject<BlockEntityType<ExtractionTerminalBlockEntity>> EXTRACTION_TERMINAL = BLOCK_ENTITIES
             .register("extraction_terminal", () -> BlockEntityType.Builder
                     .of(ExtractionTerminalBlockEntity::new, ModBlocks.EXTRACTION_TERMINAL.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<GalacticTerminalBlockEntity>> GALACTIC_TERMINAL = BLOCK_ENTITIES
+            .register("galactic_terminal", () -> BlockEntityType.Builder
+                    .of(GalacticTerminalBlockEntity::new, ModBlocks.GALACTIC_TERMINAL.get()).build(null));
 
     public static final RegistryObject<BlockEntityType<BotContactMineBlockEntity>> BOT_CONTACT_MINE = BLOCK_ENTITIES
             .register("bot_contact_mine", () -> BlockEntityType.Builder

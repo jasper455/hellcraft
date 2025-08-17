@@ -30,6 +30,7 @@
 
   "item.helldivers.stratagem_picker": "§dStratagem Selector",
   "item.helldivers.extraction_terminal_block_item": "§dExtraction Terminal",
+  "item.helldivers.galactic_terminal_block_item": "§dGalactic Terminal",
 
   "item.helldivers.common_sample": "Common Sample",
   "item.helldivers.rare_sample": "Rare Sample",
@@ -44,6 +45,7 @@
   "item.helldivers.sg225": "SG-225 Breaker",
   "item.helldivers.stalwart": "M-105 Stalwart",
   "item.helldivers.amr": "APW-1 Anti-Materiel Rifle",
+  "item.helldivers.flam40": "FLAM-40 Flamethrower",
 
   "item.helldivers.hellbomb_item": "§bHellbomb",
   "item.helldivers.resupply": "§bResupply",
@@ -76,11 +78,13 @@
   "block.helldivers.ammo_crate": "Ammo Crate",
   "block.helldivers.barbed_wire": "Barbed Wire",
   "block.helldivers.extraction_terminal": "§dExtraction Terminal",
+  "block.helldivers.galactic_terminal": "§dGalactic Terminal",
   "block.helldivers.common_sample_container": "Common Sample Container",
   "block.helldivers.bot_common_sample": "Automaton Common Sample",
   "block.helldivers.rare_sample_crystal": "Rare Sample Crystal",
   "block.helldivers.super_sample_crystal": "Super Sample Crystal",
   "block.helldivers.bot_contact_mine": "Automaton Contact Mine",
+  "block.helldivers.super_destroyer_glass": "Super Destroyer Glass",
   "block.helldivers.stratagem_jammer": "Stratagem Jammer",
   "block.helldivers.stratagem_jammer.desc": "(Jams Stratagems for players within a 50 block radius)",
 

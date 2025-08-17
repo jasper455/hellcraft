@@ -76,6 +76,8 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> TRAP_ROYALTY = registerSoundEvent("trap_royalty");
 
+    public static final RegistryObject<SoundEvent> SUPER_DESTROYER_AMBIENT = registerSoundEvent("super_destroyer_ambient");
+
     private static RegistryObject<SoundEvent> registerSoundEvent(String name) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, name);
         return SOUND_EVENTS.register(name, () -> SoundEvent.createVariableRangeEvent(id));

@@ -21,6 +21,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.AMMO_CRATE.get());
                         output.accept(ModBlocks.BARBED_WIRE.get());
                         output.accept(ModItems.EXTRACTION_TERMINAL_BLOCK_ITEM.get());
+                        output.accept(ModItems.GALACTIC_TERMINAL_BLOCK_ITEM.get());
                         output.accept(ModItems.BOT_CONTACT_MINE_BLOCK_ITEM.get());
                         output.accept(ModSampleBlocks.COMMON_SAMPLE_CONTAINER.get());
                         output.accept(ModSampleBlocks.BOT_COMMON_SAMPLE.get());
@@ -64,6 +65,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.AMR.get());
                         output.accept(ModItems.FRAG_GRENADE.get());
                         output.accept(ModItems.FIRE_GRENADE.get());
+                        output.accept(ModItems.FLAM40.get());
                     }).build());
     public static final RegistryObject<CreativeModeTab> STRATAGEMS_TAB = CREATIVE_MODE_TABS.register("stratagems_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.PRECISION_STRIKE.get()))

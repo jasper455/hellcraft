@@ -1,0 +1,6 @@
+{
+  "parent": "helldivers:displaysettings/galactic_terminal",
+  "textures": {
+    "particle": "helldivers:block/galactic_terminal"
+  }
+}

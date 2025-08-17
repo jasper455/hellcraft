@@ -1,0 +1,6 @@
+{
+  "parent": "helldivers:displaysettings/flam_display",
+  "textures": {
+    "all": "helldivers:item/flam40"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 37622233,
+    "separation": 30,
+    "spacing": 45,
+    "spread_type": "triangular",
+    "frequency_reduction_method": "legacy_type_1",
+    "frequency": 0.4
+  },
+  "structures": [
+    {
+      "structure": "helldivers:extraction_terminal_snowy",
+      "weight": 1
+    }
+  ]
+}

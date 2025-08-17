@@ -1,6 +1,12 @@
 package net.team.helldivers.util;
 
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
+
+import org.checkerframework.checker.units.qual.h;
+
+import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -9,6 +15,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,33 +36,21 @@ import net.team.helldivers.util.Headshots.HeadHitbox;
 import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
 
 public class ShootHelper {
-      public static void shoot(LivingEntity shooter, Level level, boolean isShotgun, boolean isAmr){
-        int dist = 128;
-        double drift = 0.03;
-        float dam = 5;
-        double knockback = 0.3f;
-        if(isShotgun) {
-          dist = 28;
-          drift = 0.2;
-          dam = 1;
-          knockback = 0.5f;
-
-        }
-        else  if(isAmr){
-           dist = 256;
-           drift = 0;
-           dam = 10;
-           knockback = 0.5f;
-        }
-        HitResult result = raycast(level, shooter, dist, drift);
-        System.out.print(result);
+      public static void shoot(LivingEntity shooter, Level level, double drift, float dam, double knockback, boolean ignoreIframes){
+        Pair<HitResult, Vec3> pair = raycast(level, shooter, drift);
+        HitResult result = pair.getFirst();
+        Vec3 hitPos = pair.getSecond();
         if(result.getType() == HitResult.Type.ENTITY){
             EntityHitResult resultE = ((EntityHitResult)result);
             Entity entity = resultE.getEntity();
-            if(checkHeadShot(resultE)){
-                entity.hurt(entity.damageSources().generic(), dam*0.6f);
+            if (!level.isClientSide) {
+                 ((ServerLevel) level).sendParticles(ParticleTypes.CRIT, hitPos.x, hitPos.y, hitPos.z, 10, 0, 0, 0, 0);
+                }
+            if(checkHeadShot(resultE, hitPos)){
+                entity.hurt(entity.damageSources().generic(), dam*2);
+                System.out.println("HEADSHOT");
                 if(entity instanceof LivingEntity alive){
-                    if(isShotgun) alive.invulnerableTime = 0;
+                    if(ignoreIframes) alive.invulnerableTime = 0;
                     Vec3 look = shooter.getLookAngle().normalize();
                     alive.knockback(knockback, -look.x, -look.z);
                }
@@ -63,7 +58,7 @@ public class ShootHelper {
             else{
                 entity.hurt(entity.damageSources().generic(), dam);
                if(entity instanceof LivingEntity alive){
-                    if(isShotgun) alive.invulnerableTime = 0;
+                    if(ignoreIframes) alive.invulnerableTime = 0;
                     Vec3 look = shooter.getLookAngle().normalize();
                     alive.knockback(knockback, -look.x, -look.z);
                }
@@ -85,64 +80,132 @@ public class ShootHelper {
             //add particles on hit
             if(!level.isClientSide){
                 BlockParticleOption blockParticle = new BlockParticleOption(ParticleTypes.BLOCK, block);
+                ((ServerLevel) level).sendParticles(ParticleTypes.SMOKE, pos.getX(), pos.getY(), pos.getZ(), 10, 0, 0, 0, 0);
                 for(int i=0;i<20;i++){
                     double rand1 = Math.random()*plusmin();
                     double rand2 = Math.random()*plusmin();          
                     double rand3 = Math.random()*plusmin();  
                     double rand4 = Math.random()*plusmin();  
-                    ((ServerLevel)level).sendParticles(blockParticle,pos.getX(), pos.getY(), pos.getZ(), 2,rand1, rand2, rand3, rand4);  
+                    ((ServerLevel)level).sendParticles(blockParticle, pos.getX(), pos.getY(), pos.getZ(), 2,rand1, rand2, rand3, rand4); 
                 }
             }
         }
     }
-    public static HitResult raycast(Level level, Entity shooter, double maxDistance, double drift) {
+    public static Pair<HitResult, Vec3> raycast(Level level, Entity shooter, double drift) {
         double r1 = Math.random()*plusmin()*drift;
         double r2 = Math.random()*plusmin()*drift;          
         double r3 = Math.random()*plusmin()*drift; 
         Vec3 start = shooter.getEyePosition(1.0F);
         Vec3 look = shooter.getLookAngle().add(r1, r2, r3);
-        Vec3 end = start.add(look.scale(maxDistance));
+        Vec3 end = start.add(look.scale(128));
         BlockHitResult blockHit = level.clip(new ClipContext(start, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, shooter));
-        Vec3 blockHitPos = blockHit != null ? blockHit.getLocation() : end;
-        double blockDist = blockHit != null ? blockHit.getLocation().distanceTo(start) : maxDistance;
-        AABB box = shooter.getBoundingBox().expandTowards(look.scale(maxDistance)).inflate(1.0);
+        double blockDist = blockHit != null ? blockHit.getLocation().distanceTo(start) : 128;
+        AABB box = shooter.getBoundingBox().expandTowards(look.scale(128)).inflate(1.0);
         EntityHitResult entityHit = ProjectileUtil.getEntityHitResult(level, shooter, start, end, box, e -> !e.isSpectator() && e.isPickable());
-
         if (entityHit != null) {
             double entityDist = entityHit.getLocation().distanceTo(start);
             if (entityDist < blockDist) {
-                return entityHit;
+                Optional<Vec3> clipped = entityHit.getEntity().getBoundingBox().clip(start, end);//returning the correct coords
+                Vec3 hitPos = clipped.orElse(end);
+                return new Pair<>(entityHit, hitPos);
             }
         }
+        return new Pair<HitResult,Vec3>(blockHit, blockHit.getLocation());
+    }
 
-        return blockHit;
-}
-
-    private static boolean checkHeadShot(EntityHitResult result) {
+    private static boolean checkHeadShot(EntityHitResult result, Vec3 pos) {
         Map<String, HeadHitbox> hitboxes = HeadHitboxRegistry.getAll();
+
         if (result.getEntity() instanceof EnderDragonPart part) {
-            if("head".equals(part.getName().getString())){
+            if ("head".equals(part.getName().getString())) {
                 return true;
             }
-        }
-        else if (hitboxes != null) {
+        } else if (hitboxes != null) {
             Entity entity = result.getEntity();
             ResourceLocation id = EntityType.getKey(entity.getType());
-            HeadHitbox headHitbox = hitboxes.get(id.toString());//TODO: add the rest of the entities to the HeadLocations json
-            if (headHitbox != null) {
-                AABB box = headHitbox.getBox(entity.getBoundingBox());
-                box =rotateHeadBox(entity, box);
-                System.out.println("Checking box: " + box);
-                if(box.contains(result.getLocation())) return true;
-                System.out.println("entity hit but not headshot");
+
+            HeadHitbox headHitbox = hitboxes.get(id.toString());
+            if (headHitbox == null) {
+                System.out.println("No head hitbox registered for: " + id);
+                return false;
             }
-            System.out.println("entity not found");
+
+            AABB box = headHitbox.getBox(entity.getBoundingBox());
+            if (!headHitbox.isVert()) {
+                OBB rotated = rotateHeadOBB(entity, box);
+                if (rotated.contains(pos)) return true;
+            } else {
+                AABB rotated = rotateAABB(box, entity);
+                rotated = rotated.expandTowards(0.3, 0, 0.3);
+                if (entity instanceof AgeableMob mob && mob.isBaby()) {
+                    rotated = rotated.move(0, -3, 0);
+                }
+                if (rotated.contains(pos)) return true;
+            }
         }
+
         return false;
     }
-    private static AABB rotateHeadBox(Entity entity, AABB box){//TODO add head rotation logic here
-        return box;
+
+    public static OBB rotateHeadOBB(Entity entity, AABB box) {//TODO fix this. the OBB object might also not be right
+        OBB rotated = new OBB(box);
+        rotated.rotateYaw(-entity.getYRot(), entity.getBoundingBox().getCenter());
+        if (entity instanceof AgeableMob mob && mob.isBaby()) {
+            rotated.moveY(-3);
+        }
+        return rotated;
     }
+    public  static AABB rotateAABB(AABB box, Entity entity){
+        float headYaw = entity.getYRot();
+        double angle = Math.toRadians(-headYaw);
+        Vec3 pivot = entity.position();
+        Vec3[] corners = new Vec3[] {
+            new Vec3(box.minX, box.minY, box.minZ),
+            new Vec3(box.minX, box.minY, box.maxZ),
+            new Vec3(box.minX, box.maxY, box.minZ),
+            new Vec3(box.minX, box.maxY, box.maxZ),
+            new Vec3(box.maxX, box.minY, box.minZ),
+            new Vec3(box.maxX, box.minY, box.maxZ),
+            new Vec3(box.maxX, box.maxY, box.minZ),
+            new Vec3(box.maxX, box.maxY, box.maxZ)
+        };
+
+        double cos = Math.cos(angle);
+        double sin = Math.sin(angle);
+
+        double minX = Double.POSITIVE_INFINITY;
+        double minY = Double.POSITIVE_INFINITY;
+        double minZ = Double.POSITIVE_INFINITY;
+        double maxX = Double.NEGATIVE_INFINITY;
+        double maxY = Double.NEGATIVE_INFINITY;
+        double maxZ = Double.NEGATIVE_INFINITY;
+
+        for (Vec3 corner : corners) {
+            double dx = corner.x - pivot.x;
+            double dz = corner.z - pivot.z;
+
+            double rx = dx * cos - dz * sin;
+            double rz = dx * sin + dz * cos;
+
+            double x = pivot.x + rx;
+            double y = corner.y;
+            double z = pivot.z + rz;
+            minX = Math.min(minX, x);
+            minY = Math.min(minY, y);
+            minZ = Math.min(minZ, z);
+            maxX = Math.max(maxX, x);
+            maxY = Math.max(maxY, y);
+            maxZ = Math.max(maxZ, z);
+        }
+        AABB end = new AABB(minX, minY, minZ, maxX, maxY, maxZ).inflate(0.3, 0, 0.3);
+        if(entity instanceof AgeableMob mob){
+            if(mob.isBaby()){
+                end.move(0, -2, 0);
+            }
+        }
+        return end;
+    }
+
     private static int plusmin(){
         if(Math.random()>0.5){
             return -1;

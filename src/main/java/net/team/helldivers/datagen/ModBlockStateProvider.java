@@ -20,6 +20,7 @@ public class ModBlockStateProvider extends BlockStateProvider  {
     @Override
     protected void registerStatesAndModels() {
         blockWithItem(ModBlocks.STRATAGEM_JAMMER);
+        blockWithItem(ModBlocks.SUPER_DESTROYER_GLASS);
     }
 
     private void leavesBlock(RegistryObject<Block> blockRegistryObject) {

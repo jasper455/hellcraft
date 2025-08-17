@@ -1,36 +1,43 @@
 package net.team.helldivers.event;
 
-
 import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+
+import mod.chloeprime.aaaparticles.AAAParticles;
+import mod.chloeprime.aaaparticles.api.client.effekseer.Effekseer;
+import mod.chloeprime.aaaparticles.api.common.AAALevel;
+import mod.chloeprime.aaaparticles.client.AAAParticlesClient;
+import mod.chloeprime.aaaparticles.client.loader.EffekAssetLoader;
+import mod.chloeprime.aaaparticles.forge.AAAParticlesForge;
 import net.minecraft.client.renderer.ShaderInstance;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ClientChatReceivedEvent;
-import net.minecraftforge.client.event.ComputeFovModifierEvent;
-import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.event.RegisterClientReloadListenersEvent;
-import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.client.event.RenderGuiOverlayEvent;
+import net.minecraftforge.event.AddReloadListenerEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.client.event.*;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.entity.ModBlockEntities;
+import net.team.helldivers.block.entity.custom.ExtractionTerminalBlockEntity;
 import net.team.helldivers.client.renderer.block.BotContactMineBlockRenderer;
 import net.team.helldivers.client.renderer.block.ExtractionTerminalBlockRenderer;
+import net.team.helldivers.client.renderer.block.GalacticTerminalBlockRenderer;
 import net.team.helldivers.client.renderer.block.HellbombBlockRenderer;
 import net.team.helldivers.client.renderer.entity.EagleAirshipRenderer;
 import net.team.helldivers.client.renderer.entity.GatlingSentryHellpodRenderer;
@@ -41,9 +48,15 @@ import net.team.helldivers.client.renderer.entity.SupportHellpodRenderer;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.item.custom.guns.AmrItem;
-import net.team.helldivers.item.custom.guns.IGunItem;
+import net.team.helldivers.item.custom.guns.AbstractGunItem;
+import net.team.helldivers.item.custom.guns.Plas1Item;
+import net.team.helldivers.item.custom.guns.StalwartItem;
+import net.team.helldivers.network.PacketHandler;
+import net.team.helldivers.network.SShootPacket;
 import net.team.helldivers.sound.ModSounds;
+import net.team.helldivers.sound.custom.MovingSoundInstance;
 import net.team.helldivers.util.KeyBinding;
+import net.team.helldivers.worldgen.dimension.ModDimensions;
 import software.bernie.geckolib.GeckoLib;
 import team.lodestar.lodestone.systems.postprocess.PostProcessHandler;
 
@@ -55,11 +68,12 @@ public class ModClientEvents {
     private static float alpha = 0.0f;
     private static float fadeOutSpeed;
     private static boolean hasFadedIn = false;
+    private static Color flashColor;
 
     @SubscribeEvent
     public static void onComputerFovModifierEvent(ComputeFovModifierEvent event) {
         if (Minecraft.getInstance().options.keySaveHotbarActivator.isDown()
-                && !(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem)) {
+                && !(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof AbstractGunItem)) {
             float fovModifier = 1f;
             float deltaTicks = ((float) 20) / 20f;
             deltaTicks *= deltaTicks;
@@ -67,7 +81,7 @@ public class ModClientEvents {
             event.setNewFovModifier(fovModifier);
         }
         if (Minecraft.getInstance().options.keyLoadHotbarActivator.isDown()
-                && !(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem)) {
+                && !(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof AbstractGunItem)) {
             float fovModifier = 1f;
             float deltaTicks = ((float) 30) / 20f;
             deltaTicks *= deltaTicks;
@@ -75,7 +89,7 @@ public class ModClientEvents {
             event.setNewFovModifier(fovModifier);
         }
         if (KeyBinding.AIM.isDown()
-                && (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem)) {
+                && (Minecraft.getInstance().player.getMainHandItem().getItem() instanceof AbstractGunItem)) {
             double sensitivity = Minecraft.getInstance().options.sensitivity().get();
             Minecraft.getInstance().options.sensitivity().set(sensitivity/2);
             float fovModifier = 1f;
@@ -96,16 +110,17 @@ public class ModClientEvents {
             event.setNewFovModifier(fovModifier);
             Minecraft.getInstance().options.sensitivity().set(sensitivity/3);
         }
-        if(!(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof IGunItem) || !KeyBinding.AIM.isDown()) {
+        if(!(Minecraft.getInstance().player.getMainHandItem().getItem() instanceof AbstractGunItem) || !KeyBinding.AIM.isDown()) {
             double sensitivity = Minecraft.getInstance().options.sensitivity().get();
-            Minecraft.getInstance().options.sensitivity().set(100d);
+            Minecraft.getInstance().options.sensitivity().set(0.5d);
         }
     }
 
-    public static void triggerFlashEffect(float fadeOutSpeed) {
+    public static void triggerFlashEffect(float fadeOutSpeed, Color color) {
         alpha = 0.001f;
         ModClientEvents.fadeOutSpeed = fadeOutSpeed;
         hasFadedIn = false;
+        flashColor = color;
     }
 
     @SubscribeEvent
@@ -120,7 +135,10 @@ public class ModClientEvents {
         RenderSystem.defaultBlendFunc();
         RenderSystem.disableDepthTest();
 
-        guiGraphics.fill(0, 0, screenWidth, screenHeight, new Color(255, 251, 216, (int)(alpha * 255)).getRGB());
+        // Explosion flash color: Color(255, 251, 216, (int)(alpha * 255))
+
+        guiGraphics.fill(0, 0, screenWidth, screenHeight, new Color(flashColor.getRed(),
+                flashColor.getGreen(), flashColor.getBlue(), (int)(alpha * 255)).getRGB());
 
         RenderSystem.enableDepthTest();
         RenderSystem.disableBlend();
@@ -138,7 +156,6 @@ public class ModClientEvents {
             alpha -= fadeOutSpeed; // Tweak as needed
         }
     }
-
     @SubscribeEvent
     public static void onChat(ClientChatReceivedEvent event) {
         String message = event.getMessage().getString();
@@ -181,6 +198,18 @@ public class ModClientEvents {
         }
     }
 
+    @SubscribeEvent
+    public static void clientTickEvent(TickEvent.ClientTickEvent event) {
+        Player player = Minecraft.getInstance().player;
+        if (player != null) {
+            Vec3 location  = player.pick(2, 1, false).getLocation();
+            BlockPos pos = new BlockPos(((int) location.x), ((int) location.y), ((int) location.z));
+            if (player.level().getBlockEntity(pos) instanceof ExtractionTerminalBlockEntity) {
+                player.displayClientMessage(Component.literal("Shift right click to teleport super destroyer"), true);
+            }
+        }
+    }
+
     @Mod.EventBusSubscriber(modid = HelldiversMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public class ModClientBusEvents {
 
@@ -214,6 +243,7 @@ public class ModClientEvents {
 
             event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
             event.registerBlockEntityRenderer(ModBlockEntities.EXTRACTION_TERMINAL.get(), context -> new ExtractionTerminalBlockRenderer());
+            event.registerBlockEntityRenderer(ModBlockEntities.GALACTIC_TERMINAL.get(), context -> new GalacticTerminalBlockRenderer());
             event.registerBlockEntityRenderer(ModBlockEntities.BOT_CONTACT_MINE.get(), context -> new BotContactMineBlockRenderer());
         }
 

@@ -1,4 +1,7 @@
-// 1.20.1	2025-07-23T13:04:34.2749559	Block States: helldivers
+// 1.20.1	2025-08-12T12:51:22.3250335	Block States: helldivers
 38837a85577e0c67083b3e50edc159dd4f101f23 assets/helldivers/blockstates/stratagem_jammer.json
+8a5468239840811114e2fa8ea81758484e031ad0 assets/helldivers/blockstates/super_destroyer_glass.json
 dffc9b94fe1f1d765931fe577a47a610bb6478ab assets/helldivers/models/block/stratagem_jammer.json
+6c998448e7182bebfc851afdc36f09489e319793 assets/helldivers/models/block/super_destroyer_glass.json
 2034046a431fd86e2fe8ef0831e59277dda94dd2 assets/helldivers/models/item/stratagem_jammer.json
+15cad50b62a4ed9947432448abe8a6360a98c7d5 assets/helldivers/models/item/super_destroyer_glass.json

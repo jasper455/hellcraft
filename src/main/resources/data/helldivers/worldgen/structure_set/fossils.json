@@ -1,15 +1,16 @@
 {
   "placement": {
     "type": "minecraft:random_spread",
-    "salt": 19011220,
+    "salt": 69664325,
     "separation": 2,
-    "spacing": 3,
-    "spread_type": "triangular"
+    "spacing": 5,
+    "frequency_reduction_method": "legacy_type_1",
+    "frequency": 1
   },
   "structures": [
     {
-    "structure": "helldivers:fossils",
-    "weight": 1
+      "structure": "helldivers:fossils",
+      "weight": 1
     }
   ]
 }
