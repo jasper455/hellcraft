@@ -4,9 +4,12 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -15,6 +18,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -22,8 +26,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -31,8 +37,11 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.server.command.ConfigCommand;
 import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.backslot.PlayerBackSlot;
+import net.team.helldivers.backslot.PlayerBackSlotProvider;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.client.skybox.SkyboxRenderer;
 import net.team.helldivers.command.StopUseLodestoneCommand;
@@ -40,9 +49,12 @@ import net.team.helldivers.command.UseLodestoneCommand;
 import net.team.helldivers.data.StructureGenerationData;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.custom.BulletProjectileEntity;
+import net.team.helldivers.helper.ClientBackSlotCache;
 import net.team.helldivers.item.custom.armor.IDemocracyProtects;
 import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
+import net.team.helldivers.network.CSyncBackSlotPacket;
 import net.team.helldivers.network.PacketHandler;
+import net.team.helldivers.network.SSetBackSlotPacket;
 import net.team.helldivers.network.SSyncJammedPacket;
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.sound.custom.MovingSoundInstance;
@@ -54,6 +66,19 @@ public class ModEvents {
     private static int superDestroyerDimTicks = 0;
 
     @SubscribeEvent
+    public static void onAttachCapabilitiesPlayer(AttachCapabilitiesEvent<Entity> event) {
+        if(event.getObject() instanceof Player) {
+            if(!event.getObject().getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).isPresent()) {
+                event.addCapability(ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "properties"), new PlayerBackSlotProvider());
+            }
+        }
+    }
+    @SubscribeEvent
+    public static void onRegisterCapabilities(RegisterCapabilitiesEvent event) {
+        event.register(PlayerBackSlot.class);
+    }
+
+    @SubscribeEvent
     public static void onCommandsRegister(RegisterCommandsEvent event) {
         new StopUseLodestoneCommand(event.getDispatcher());
         new UseLodestoneCommand(event.getDispatcher());
@@ -62,16 +87,17 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void onPlayerCloned(PlayerEvent.Clone event) {
-        event.getEntity().getPersistentData().putBoolean("helldivers.useLodestone",
-                event.getOriginal().getPersistentData().getBoolean("helldivers.useLodestone"));
+        if(event.isWasDeath()) {
+            event.getEntity().getPersistentData().putBoolean("helldivers.useLodestone",
+                    event.getOriginal().getPersistentData().getBoolean("helldivers.useLodestone"));
 
-        event.getOriginal().getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(oldCap -> {
-            event.getEntity().getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(newCap -> {
-                for (int i = 0; i < oldCap.getSlots(); i++) {
-                    newCap.insertItem(i, oldCap.getStackInSlot(i), false);
-                }
+            event.getOriginal().getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(oldStore -> {
+                event.getOriginal().getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(newStore -> {
+                    newStore.copyFrom(oldStore);
+                });
             });
-        });
+        }
+
     }
 
     @SubscribeEvent
@@ -108,6 +134,17 @@ public class ModEvents {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
         if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide()) return;
+
+//        if (KeyBinding.EQUIP_BACKPACK.consumeClick()) {
+//            if (player instanceof ServerPlayer serverPlayer) {
+//                player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
+//                    CompoundTag nbt = new CompoundTag();
+//                    backSlot.saveNBTData(nbt);
+//                    PacketHandler.sendToServer(new SSetBackSlotPacket());
+//                    PacketHandler.sendToPlayer(new CSyncBackSlotPacket(nbt), serverPlayer);
+//                });
+//            }
+//        }
 
         if (KeyBinding.SHOW_STRATAGEM_KEY.isDown() && player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0 &&
                 player.getMainHandItem().isEmpty() &&
@@ -155,6 +192,32 @@ public class ModEvents {
         } else {
             superDestroyerDimTicks = 0;
         }
+    }
+
+    @SubscribeEvent
+    public static void onRenderGuiOverlay(CustomizeGuiOverlayEvent event) {
+        Minecraft mc = Minecraft.getInstance();
+        LocalPlayer player = mc.player;
+        GuiGraphics guiGraphics = event.getGuiGraphics();
+
+        if (player == null) return;
+
+        player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
+            ItemStackHandler handler = backSlot.getInventory();
+            ItemStack stack = handler.getStackInSlot(0);
+
+            if (!stack.isEmpty()) {
+                int x = 417;
+                int y = 331;
+
+                guiGraphics.blit(ResourceLocation.fromNamespaceAndPath(
+                                HelldiversMod.MOD_ID, "textures/gui/backslot.png"),
+                        x, y, 22, 22, 22, 22, 22, 22,
+                        22, 22);
+                guiGraphics.renderItem(stack, x + 3, y + 3);
+                guiGraphics.renderItemDecorations(mc.font, stack, x + 3, y + 3);
+            }
+        });
     }
 
     @SubscribeEvent

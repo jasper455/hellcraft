@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.team.helldivers.network.SSetBackSlotPacket;
 import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -200,12 +201,20 @@ public class ModClientEvents {
 
     @SubscribeEvent
     public static void clientTickEvent(TickEvent.ClientTickEvent event) {
-        Player player = Minecraft.getInstance().player;
+        Minecraft mc = Minecraft.getInstance();
+        Player player = mc.player;
         if (player != null) {
             Vec3 location  = player.pick(2, 1, false).getLocation();
             BlockPos pos = new BlockPos(((int) location.x), ((int) location.y), ((int) location.z));
             if (player.level().getBlockEntity(pos) instanceof ExtractionTerminalBlockEntity) {
                 player.displayClientMessage(Component.literal("Shift right click to teleport super destroyer"), true);
+            }
+        }
+        if (player == null || mc.level == null) return;
+        if (event.phase == TickEvent.Phase.END) {
+            if (KeyBinding.EQUIP_BACKPACK.consumeClick()) {
+                // Send request to server to toggle/swap back slot
+                PacketHandler.sendToServer(new SSetBackSlotPacket());
             }
         }
     }
