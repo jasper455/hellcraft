@@ -8,10 +8,7 @@ import net.team.helldivers.entity.client.*;
 import net.team.helldivers.entity.custom.EagleAirshipEntity;
 import net.team.helldivers.entity.custom.GatlingSentryHellpodEntity;
 import net.team.helldivers.entity.custom.OrbitalLaserEntity;
-import net.team.helldivers.entity.custom.bots.AutomatonTrooperEntity;
-import net.team.helldivers.entity.custom.bots.BerserkerEntity;
-import net.team.helldivers.entity.custom.bots.DevastatorEntity;
-import net.team.helldivers.entity.custom.bots.RangedHulkEntity;
+import net.team.helldivers.entity.custom.bots.*;
 import net.team.helldivers.network.PacketHandler;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,6 +41,8 @@ public class ModEventBusEvents {
         event.put(ModBotEntities.BERSERKER.get(), BerserkerEntity.createAttributes().build());
         event.put(ModBotEntities.AUTOMATON_TROOPER.get(), AutomatonTrooperEntity.createAttributes().build());
         event.put(ModBotEntities.DEVASTATOR.get(), DevastatorEntity.createAttributes().build());
+        event.put(ModBotEntities.COMMISSAR.get(), CommissarEntity.createAttributes().build());
+        event.put(ModBotEntities.BRAWLER.get(), BrawlerEntity.createAttributes().build());
     }
 
     @SubscribeEvent

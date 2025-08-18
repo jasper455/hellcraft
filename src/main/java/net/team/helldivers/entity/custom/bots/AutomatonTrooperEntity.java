@@ -27,7 +27,7 @@ public class AutomatonTrooperEntity extends AbstractBotEntity {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 120f)
+                .add(Attributes.MAX_HEALTH, 40f)
                 .add(Attributes.MOVEMENT_SPEED, 0.3f)
                 .add(Attributes.ATTACK_DAMAGE, 30.0D)
                 .add(Attributes.FOLLOW_RANGE, 25);

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.team.helldivers.client.renderer.entity.bots.*;
 import net.team.helldivers.network.SSetBackSlotPacket;
 import org.lwjgl.glfw.GLFW;
 
@@ -46,10 +47,6 @@ import net.team.helldivers.client.renderer.entity.HellbombHellpodRenderer;
 import net.team.helldivers.client.renderer.entity.HellpodRenderer;
 import net.team.helldivers.client.renderer.entity.OrbitalLaserRenderer;
 import net.team.helldivers.client.renderer.entity.SupportHellpodRenderer;
-import net.team.helldivers.client.renderer.entity.bots.AutomatonTrooperRenderer;
-import net.team.helldivers.client.renderer.entity.bots.BerserkerRenderer;
-import net.team.helldivers.client.renderer.entity.bots.DevastatorRenderer;
-import net.team.helldivers.client.renderer.entity.bots.RangedHulkRenderer;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.ModBotEntities;
 import net.team.helldivers.entity.ModEntities;
@@ -260,6 +257,8 @@ public class ModClientEvents {
             event.registerEntityRenderer(ModBotEntities.BERSERKER.get(), BerserkerRenderer::new);
             event.registerEntityRenderer(ModBotEntities.AUTOMATON_TROOPER.get(), AutomatonTrooperRenderer::new);
             event.registerEntityRenderer(ModBotEntities.DEVASTATOR.get(), DevastatorRenderer::new);
+            event.registerEntityRenderer(ModBotEntities.COMMISSAR.get(), CommissarRenderer::new);
+            event.registerEntityRenderer(ModBotEntities.BRAWLER.get(), BrawlerRenderer::new);
 
             event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
             event.registerBlockEntityRenderer(ModBlockEntities.EXTRACTION_TERMINAL.get(), context -> new ExtractionTerminalBlockRenderer());

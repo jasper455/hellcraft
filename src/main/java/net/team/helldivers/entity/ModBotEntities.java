@@ -7,11 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.team.helldivers.HelldiversMod;
-import net.team.helldivers.entity.custom.*;
-import net.team.helldivers.entity.custom.bots.AutomatonTrooperEntity;
-import net.team.helldivers.entity.custom.bots.BerserkerEntity;
-import net.team.helldivers.entity.custom.bots.DevastatorEntity;
-import net.team.helldivers.entity.custom.bots.RangedHulkEntity;
+import net.team.helldivers.entity.custom.bots.*;
 
 public class ModBotEntities {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
@@ -32,6 +28,14 @@ public class ModBotEntities {
     public static final RegistryObject<EntityType<DevastatorEntity>> DEVASTATOR =
             ENTITY_TYPES.register("devastator", () -> EntityType.Builder.of(DevastatorEntity::new, MobCategory.MONSTER)
                     .sized(1f, 2.6f).build("devastator"));
+
+    public static final RegistryObject<EntityType<CommissarEntity>> COMMISSAR =
+            ENTITY_TYPES.register("commissar", () -> EntityType.Builder.of(CommissarEntity::new, MobCategory.MONSTER)
+                    .sized(1f, 2.6f).build("commissar"));
+
+    public static final RegistryObject<EntityType<BrawlerEntity>> BRAWLER =
+            ENTITY_TYPES.register("brawler", () -> EntityType.Builder.of(BrawlerEntity::new, MobCategory.MONSTER)
+                    .sized(1f, 2.6f).build("brawler"));
 
 
     public static void register(IEventBus eventBus) {

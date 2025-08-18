@@ -45,6 +45,7 @@ public abstract class AbstractBotEntity extends Monster implements GeoEntity{
     public static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk");
     public static final RawAnimation DEATH = RawAnimation.begin().thenPlayAndHold("death");
     public static final RawAnimation SHOOT = RawAnimation.begin().thenLoop("shoot");
+    public static final RawAnimation ATTACK = RawAnimation.begin().thenLoop("melee_attack");
 
     public AbstractBotEntity(EntityType<? extends Monster> pEntityType, Level pLevel, boolean hasMeleeAttack) {
         super(pEntityType, pLevel);
@@ -86,10 +87,20 @@ public abstract class AbstractBotEntity extends Monster implements GeoEntity{
             return PlayState.STOP;
         });
 
-//        data.add(animationController);
+        AnimationController<?> meleeAttackAnimController = new AnimationController<>(this, "melee_attack", 0, state -> {
+            if (this.swinging) {
+                return state.setAndContinue(ATTACK);
+            }
+
+//            state.getController().forceAnimationReset();
+
+            return PlayState.STOP;
+        });
+
         data.add(walkIdleAnimController);
         data.add(deathAnimController);
         data.add(shootAnimController);
+        data.add(meleeAttackAnimController);
     }
 
     @Override

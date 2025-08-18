@@ -43,6 +43,9 @@ public class RocketProjectileEntity extends AbstractArrow {
         super.onHitEntity(result);
         PacketHandler.sendToServer(new SExplosionPacket(result.getEntity().blockPosition(), 3, false));
         this.playSound(ModSounds.EXPLOSION.get(), 10.0f, 1.0f);
+        this.level().getEntitiesOfClass(LivingEntity.class, new AABB(result.getEntity().blockPosition()).inflate(4.0)).forEach(entity -> {
+            entity.hurt(this.level().damageSources().explosion(null), 250F);
+        });
         this.discard();
     }
 
@@ -59,12 +62,14 @@ public class RocketProjectileEntity extends AbstractArrow {
                 entity.hurt(this.level().damageSources().explosion(null), 12.5F);
             });
         }
+        this.level().getEntitiesOfClass(LivingEntity.class, new AABB(result.getBlockPos()).inflate(3.0)).forEach(entity -> {
+            entity.hurt(this.level().damageSources().explosion(null), 250F);
+        });
         this.discard();
     }
 
     @Override
     public void tick() {
-
         if (this.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) {
             this.discard();
         }
