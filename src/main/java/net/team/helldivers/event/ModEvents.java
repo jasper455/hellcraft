@@ -186,7 +186,7 @@ public class ModEvents {
         if (player.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) {
             if (superDestroyerDimTicks % 7280 == 0 || superDestroyerDimTicks == 0) {
                 Minecraft.getInstance().getSoundManager()
-                        .play(new MovingSoundInstance(player, ModSounds.SUPER_DESTROYER_AMBIENT.get(), 1f));
+                        .play(new MovingSoundInstance(player, ModSounds.SUPER_DESTROYER_AMBIENT.get(), 1f, true));
             }
             superDestroyerDimTicks++;
         } else {

@@ -153,6 +153,12 @@ public class PacketHandler {
                 .decoder(CSyncBackSlotPacket::new)
                 .consumerMainThread(CSyncBackSlotPacket::handle)
                 .add();
+
+        INSTANCE.messageBuilder(CStopSoundPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(CStopSoundPacket::encode)
+                .decoder(CStopSoundPacket::new)
+                .consumerMainThread(CStopSoundPacket::handle)
+                .add();
     }
 
     public static void sendToServer(Object msg) {
