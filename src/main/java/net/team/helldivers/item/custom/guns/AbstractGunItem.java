@@ -105,7 +105,7 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
         drift = -1;
     }
     private boolean canShoot(ItemStack stack) {
-        return stack.getDamageValue() < stack.getMaxDamage() - 1;
+        return stack.getDamageValue() <= stack.getMaxDamage() - 1;
     }
 
     @Override
@@ -317,7 +317,7 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
     }
     public void shoot(ItemStack itemStack, ServerPlayer player){
          if (!player.getCooldowns().isOnCooldown(itemStack.getItem()) && drift != -1) {
-            if (itemStack.getDamageValue() < itemStack.getMaxDamage() - 5) {
+            if (itemStack.getDamageValue() < itemStack.getMaxDamage() - 1) {
 
                 // Play sound
                 player.level().playSound(null, player.blockPosition(),

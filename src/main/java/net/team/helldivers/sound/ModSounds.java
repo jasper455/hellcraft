@@ -74,6 +74,12 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> AMR_RELOAD = registerSoundEvent("amr_reload");
 
+    public static final RegistryObject<SoundEvent> FLAMETHROWER_SHOOT = registerSoundEvent("flamethrower_shoot");
+
+    public static final RegistryObject<SoundEvent> FLAMETHROWER_START_SHOOTING = registerSoundEvent("flamethrower_start_shooting");
+
+    public static final RegistryObject<SoundEvent> FLAMETHROWER_STOP_SHOOTING = registerSoundEvent("flamethrower_stop_shooting");
+
     public static final RegistryObject<SoundEvent> TRAP_ROYALTY = registerSoundEvent("trap_royalty");
 
     public static final RegistryObject<SoundEvent> SUPER_DESTROYER_AMBIENT = registerSoundEvent("super_destroyer_ambient");

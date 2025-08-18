@@ -179,6 +179,24 @@
       "helldivers:amr_reload"
     ]
   },
+  "flamethrower_shoot": {
+    "subtitle": "sounds.helldivers.flamethrower_shoot",
+    "sounds": [
+      "helldivers:flamethrower_shoot"
+    ]
+  },
+  "flamethrower_start_shooting": {
+    "subtitle": "sounds.helldivers.flamethrower_start_shooting",
+    "sounds": [
+      "helldivers:flamethrower_start_shooting"
+    ]
+  },
+  "flamethrower_stop_shooting": {
+    "subtitle": "sounds.helldivers.flamethrower_stop_shooting",
+    "sounds": [
+      "helldivers:flamethrower_stop_shooting"
+    ]
+  },
   "trap_royalty": {
     "sounds": [
       {
