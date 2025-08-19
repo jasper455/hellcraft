@@ -127,8 +127,9 @@ public class OrbitalLaserEntity extends Monster implements GeoEntity {
                     .min(Comparator.comparingDouble(entity ->
                             entity.distanceToSqr(this.getX(), this.getY(), this.getZ())))
                     .orElse(null);
+            this.setTarget(currentTarget);
 
-            if (currentTarget != null) {
+            if (this.getTarget() != null) {
                 // Get the position above the target with clear sky access
                 BlockPos targetPos = getHighestAccessiblePosition(currentTarget.blockPosition());
                 this.getNavigation().moveTo(
@@ -216,13 +217,13 @@ public class OrbitalLaserEntity extends Monster implements GeoEntity {
     @Override
     protected void registerGoals() {
         // We're handling targeting manually, so we only need movement goals
-        this.goalSelector.addGoal(1, new MeleeAttackGoal(this, 0.2D, true) {
+        this.goalSelector.addGoal(0, new MeleeAttackGoal(this, 0.2D, true) {
             @Override
             protected void checkAndPerformAttack(LivingEntity target, double distToEnemySqr) {
                 // Damage is handled in tick()
             }
         });
-        this.goalSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 10, false,
+        this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 10, false,
                 true, entity -> !(entity instanceof OrbitalLaserEntity) && entity.isAlive()
                 && hasPathToSky(entity.blockPosition())
         ));
@@ -232,7 +233,7 @@ public class OrbitalLaserEntity extends Monster implements GeoEntity {
     public static AttributeSupplier.Builder createAttributes() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, Float.MAX_VALUE)
-                .add(Attributes.MOVEMENT_SPEED, 0.5D)
+                .add(Attributes.MOVEMENT_SPEED, 5D)
                 .add(Attributes.ATTACK_DAMAGE, 10.0D)
                 .add(Attributes.FOLLOW_RANGE, 128.0D); // Increased range
     }

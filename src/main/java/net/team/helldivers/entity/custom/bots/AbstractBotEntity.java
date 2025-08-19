@@ -3,6 +3,7 @@ package net.team.helldivers.entity.custom.bots;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
@@ -20,10 +21,12 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.team.helldivers.damage.ModDamageSources;
 import net.team.helldivers.damage.ModDamageTypes;
 import net.team.helldivers.entity.custom.GatlingSentryHellpodEntity;
 import net.team.helldivers.entity.goal.BotShootTargetGoal;
 import net.team.helldivers.entity.goal.BotWalkAndShootGoal;
+import net.team.helldivers.particle.ModParticles;
 import net.team.helldivers.util.ShootHelper;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -152,7 +155,6 @@ public abstract class AbstractBotEntity extends Monster implements GeoEntity{
 
     @Override
     public boolean hurt(DamageSource pSource, float pAmount) {
-//        Minecraft.getInstance().player.sendSystemMessage(Component.literal(String.valueOf(pSource.is(ModDamageTypes.RAYCAST))));
         if (pSource.is(ModDamageTypes.RAYCAST) ||
                 pSource.is(ModDamageTypes.ORBITAL_LASER) ||
                 pSource.is(DamageTypes.EXPLOSION)) {

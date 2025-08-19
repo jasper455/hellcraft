@@ -1,4 +1,5 @@
 package net.team.helldivers.event;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
@@ -35,6 +37,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.level.ExplosionEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.items.ItemStackHandler;
@@ -49,6 +52,7 @@ import net.team.helldivers.command.UseLodestoneCommand;
 import net.team.helldivers.data.StructureGenerationData;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.custom.BulletProjectileEntity;
+import net.team.helldivers.entity.custom.bots.AbstractBotEntity;
 import net.team.helldivers.helper.ClientBackSlotCache;
 import net.team.helldivers.item.custom.armor.IDemocracyProtects;
 import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
@@ -304,6 +308,17 @@ public class ModEvents {
         }
 
         data.put(Player.PERSISTED_NBT_TAG, persisted);
+    }
+
+    @SubscribeEvent
+    public static void onExplosionDetonate(ExplosionEvent.Detonate event) {
+        List<Entity> affectedEntities = event.getAffectedEntities();
+        for (Entity entity : affectedEntities) {
+            if (entity instanceof AbstractBotEntity customEntity) {
+                // Cancel velocity from explosion
+                customEntity.setDeltaMovement(new Vec3(0, -2, 0)); // or limit Y motion
+            }
+        }
     }
 
     @SubscribeEvent

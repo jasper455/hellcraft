@@ -4,7 +4,6 @@ import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
-import dev.architectury.registry.ReloadListenerRegistry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageType;
@@ -20,6 +19,7 @@ import net.team.helldivers.item.ModArmorItems;
 import net.team.helldivers.item.ModCreativeModeTabs;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.particle.ModParticles;
+import net.team.helldivers.particle.custom.ShrapnelParticle;
 import net.team.helldivers.screen.ModMenuTypes;
 import net.team.helldivers.screen.custom.*;
 import net.team.helldivers.sound.ModSounds;
@@ -123,6 +123,7 @@ public class HelldiversMod {
         @SubscribeEvent
         public static void registerParticleFactory(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(ModParticles.SMOKE.get(), LodestoneWorldParticleType.Factory::new);
+            event.registerSpriteSet(ModParticles.SHRAPNEL.get(), ShrapnelParticle.Provider::new);
         }
         @SubscribeEvent
         public static void registerDamageTypes(RegisterEvent event) {

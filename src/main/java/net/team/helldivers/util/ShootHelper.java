@@ -6,9 +6,11 @@ import java.util.Optional;
 
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.team.helldivers.damage.ModDamageSources;
 import net.team.helldivers.entity.custom.bots.AbstractBotEntity;
 import net.team.helldivers.entity.custom.bots.RangedHulkEntity;
+import net.team.helldivers.particle.ModParticles;
 import org.checkerframework.checker.units.qual.h;
 
 import com.mojang.datafixers.util.Pair;
@@ -67,7 +69,14 @@ public class ShootHelper {
                    Vec3 look = shooter.getLookAngle().normalize();
                    alive.knockback(knockback, -look.x, -look.z);
                    if (entity instanceof AbstractBotEntity botEntity) {
-//                       shooter.sendSystemMessage(Component.literal(hitPos.toString()));
+                       if (level.isClientSide) {
+                           for (int i = 0; i < 15; i++) {
+                               if (Minecraft.getInstance().level != null) {
+                                   Minecraft.getInstance().level.addParticle(ModParticles.SHRAPNEL.get(), hitPos.x, hitPos.y, hitPos.z, 1,
+                                           Mth.nextDouble(level.random, -1, 1), 0);
+                               }
+                           }
+                       }
                    }
                }
             }

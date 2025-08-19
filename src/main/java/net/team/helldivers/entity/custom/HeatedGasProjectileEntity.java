@@ -20,6 +20,8 @@ import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.team.helldivers.block.custom.BotContactMineBlock;
+import net.team.helldivers.damage.ModDamageSources;
+import net.team.helldivers.damage.ModDamageTypes;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.worldgen.dimension.ModDimensions;
 
@@ -59,7 +61,9 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
         this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER,
                 pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(1.5)).forEach(entity1 -> {
-            entity1.hurt(level().damageSources().explosion(null), 20.0F);
+            if (this.getOwner() != null) {
+                entity1.hurt(ModDamageSources.raycast(this.getOwner()), 20.0F);
+            }
         });
         this.discard();
     }
@@ -75,12 +79,16 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
         this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER,
                 pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(1.5)).forEach(entity -> {
-            entity.hurt(level().damageSources().explosion(null), 10.0F);
+            if (this.getOwner() != null) {
+                entity.hurt(ModDamageSources.raycast(this.getOwner()), 10.0F);
+            }
         });
         if (block.getBlock() instanceof BotContactMineBlock) {
             this.level().setBlockAndUpdate(result.getBlockPos(), Blocks.AIR.defaultBlockState());
             this.level().getEntitiesOfClass(LivingEntity.class, new AABB(result.getBlockPos()).inflate(3.0)).forEach(entity -> {
-                entity.hurt(this.level().damageSources().explosion(null), 12.5F);
+                if (this.getOwner() != null) {
+                    entity.hurt(ModDamageSources.raycast(this.getOwner()), 12.5F);
+                }
             });
         }
         this.discard();
