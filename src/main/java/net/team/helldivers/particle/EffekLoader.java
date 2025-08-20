@@ -8,4 +8,5 @@ import net.team.helldivers.HelldiversMod;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class EffekLoader {
 	public static final ParticleEmitterInfo FIRE = new ParticleEmitterInfo(new ResourceLocation(HelldiversMod.MOD_ID, "flame_long"));
+	public static final ParticleEmitterInfo TRAIL = new ParticleEmitterInfo(new ResourceLocation(HelldiversMod.MOD_ID, "trail"));
 }

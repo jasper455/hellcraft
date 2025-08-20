@@ -33,7 +33,6 @@ public class FlameBulletEntity extends AbstractArrow{
             alive.setSecondsOnFire(5);
             alive.hurt( alive.damageSources().inFire(), 2);
         }
-        this.discard();
     }
     @Override
     protected void onHitBlock(BlockHitResult result) {

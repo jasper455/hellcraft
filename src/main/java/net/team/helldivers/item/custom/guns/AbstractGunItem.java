@@ -160,7 +160,7 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
 
             // Handle shooting with proper aim state
             if (isShooting && shootCooldown == 0 && canShoot(Minecraft.getInstance().player.getMainHandItem()) && !isReloading) {
-                if(!(!isAuto && !firstShot)){
+                if(!(!isAuto && !firstShot && !Minecraft.getInstance().player.getCooldowns().isOnCooldown(this))){
                     if (isAiming) {
                     event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot_aim").thenPlay("aim"));
                     } else {

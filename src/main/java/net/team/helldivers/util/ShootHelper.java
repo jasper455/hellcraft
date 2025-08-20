@@ -8,6 +8,10 @@ import org.checkerframework.checker.units.qual.h;
 
 import com.mojang.datafixers.util.Pair;
 
+import mod.chloeprime.aaaparticles.api.common.AAALevel;
+import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
+import mod.chloeprime.aaaparticles.client.registry.EffectDefinition;
+import mod.chloeprime.aaaparticles.client.registry.EffectRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -30,16 +34,29 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.team.helldivers.block.custom.BotContactMineBlock;
+import net.team.helldivers.particle.EffekLoader;
 import net.team.helldivers.util.Headshots.HeadHitbox;
 import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
 
 public class ShootHelper {
+        
       public static void shoot(LivingEntity shooter, Level level, double drift, float dam, double knockback, boolean ignoreIframes){
         Pair<HitResult, Vec3> pair = raycast(level, shooter, drift);
         HitResult result = pair.getFirst();
         Vec3 hitPos = pair.getSecond();
+         float dist = ((float)result.distanceTo(shooter));
+        if(result.getType() == HitResult.Type.MISS ){
+            dist = 50f;
+        }
+        float rotY = (float) Math.toRadians(shooter.getYRot());
+        float rotX = (float) Math.toRadians(shooter.getXRot());
+        Vec2 dir = new Vec2(rotX, -rotY);
+        ParticleEmitterInfo trail = EffekLoader.TRAIL.clone().parameter(0, dist-2).position(shooter.getEyePosition().add(0, -0.1, 0)).rotation(dir);
+
+        AAALevel.addParticle(shooter.level(), true, trail);
         if(result.getType() == HitResult.Type.ENTITY){
             EntityHitResult resultE = ((EntityHitResult)result);
             Entity entity = resultE.getEntity();
