@@ -47,7 +47,7 @@ public class ShootHelper {
         Pair<HitResult, Vec3> pair = raycast(level, shooter, drift);
         HitResult result = pair.getFirst();
         Vec3 hitPos = pair.getSecond();
-         float dist = ((float)result.distanceTo(shooter));
+         float dist = ((float)result.distanceTo(shooter)-5);
         if(result.getType() == HitResult.Type.MISS ){
             dist = 50f;
         }
@@ -55,8 +55,9 @@ public class ShootHelper {
         float rotX = (float) Math.toRadians(shooter.getXRot());
         Vec2 dir = new Vec2(rotX, -rotY);
         ParticleEmitterInfo trail = EffekLoader.TRAIL.clone().parameter(0, dist-2).position(shooter.getEyePosition().add(0, -0.1, 0)).rotation(dir);
-
+        ParticleEmitterInfo hit = EffekLoader.HIT.clone().position(result.getLocation()).scale(0.1f);
         AAALevel.addParticle(shooter.level(), true, trail);
+        AAALevel.addParticle(shooter.level(), true, hit);
         if(result.getType() == HitResult.Type.ENTITY){
             EntityHitResult resultE = ((EntityHitResult)result);
             Entity entity = resultE.getEntity();
