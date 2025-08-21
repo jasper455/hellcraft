@@ -9,11 +9,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import net.team.helldivers.HelldiversMod;
 
-public class ExtractionTerminalScreen extends AbstractContainerScreen<ExtractionTerminalMenu> {
+public class StratagemSelectScreen extends AbstractContainerScreen<StratagemSelectMenu> {
     private static final ResourceLocation GUI_TEXTURE =
             ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/gui/extraction_terminal/extraction_terminal.png");
 
-    public ExtractionTerminalScreen(ExtractionTerminalMenu menu, Inventory inventory, Component title) {
+    public StratagemSelectScreen(StratagemSelectMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
         this.inventoryLabelX = 1000;
         this.inventoryLabelY = 1000;

@@ -130,7 +130,9 @@
   "sounds.helldivers.sg225_shoot": "SG-225 Breaker Shoots",
   "sounds.helldivers.stalwart_shoot": "M-105 Stalwart Shoots",
   "sounds.helldivers.amr_shoot": "APW-1 Anti-Materiel Rifle Shoots",
-  "sounds.helldivers.amr_reload": "APW-1 Anti-Materiel Rifle Reloads",
+  "sounds.helldivers.flamethrower_shoot": "FLAM-40 Fires",
+  "sounds.helldivers.flamethrower_start_shooting": "FLAM-40 Starts Firing",
+  "sounds.helldivers.flamethrower_stop_shooting": "FLAM-40 Stops Firing",
 
   "container.helldivers.stratagem_picker": "§oStratagem Picker",
 

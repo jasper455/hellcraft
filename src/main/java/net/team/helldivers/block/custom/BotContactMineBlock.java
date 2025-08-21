@@ -2,19 +2,8 @@ package net.team.helldivers.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.Container;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -27,16 +16,9 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.network.NetworkHooks;
 import net.team.helldivers.block.entity.ModBlockEntities;
-import net.team.helldivers.block.entity.custom.ExtractionTerminalBlockEntity;
-import net.team.helldivers.entity.ModEntities;
-import net.team.helldivers.entity.custom.BulletProjectileEntity;
-import net.team.helldivers.screen.custom.ExtractionTerminalMenu;
 import org.jetbrains.annotations.Nullable;
 
 public class BotContactMineBlock extends BaseEntityBlock implements EntityBlock {

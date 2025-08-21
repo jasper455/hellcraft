@@ -56,6 +56,8 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> EASTER_EGG = registerSoundEvent("easter_egg");
 
+    public static final RegistryObject<SoundEvent> EASTER_EGG2 = registerSoundEvent("easter_egg2");
+
     public static final RegistryObject<SoundEvent> EAGLE_FLYBY = registerSoundEvent("eagle_flyby");
 
     public static final RegistryObject<SoundEvent> ORBITAL_STRIKE_INCOMING = registerSoundEvent("orbital_strike_incoming");
@@ -73,6 +75,12 @@ public class ModSounds {
     public static final RegistryObject<SoundEvent> AMR_SHOOT = registerSoundEvent("amr_shoot");
 
     public static final RegistryObject<SoundEvent> AMR_RELOAD = registerSoundEvent("amr_reload");
+
+    public static final RegistryObject<SoundEvent> FLAMETHROWER_SHOOT = registerSoundEvent("flamethrower_shoot");
+
+    public static final RegistryObject<SoundEvent> FLAMETHROWER_START_SHOOTING = registerSoundEvent("flamethrower_start_shooting");
+
+    public static final RegistryObject<SoundEvent> FLAMETHROWER_STOP_SHOOTING = registerSoundEvent("flamethrower_stop_shooting");
 
     public static final RegistryObject<SoundEvent> TRAP_ROYALTY = registerSoundEvent("trap_royalty");
 

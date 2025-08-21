@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.team.helldivers.network.SSetBackSlotPacket;
 import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -67,6 +68,7 @@ public class ModClientEvents {
     private static boolean SHOW_INVINCIBLE_HUD = false;
     private static float alpha = 0.0f;
     private static float fadeOutSpeed;
+    private static float fadeInSpeed;
     private static boolean hasFadedIn = false;
     private static Color flashColor;
 
@@ -116,9 +118,10 @@ public class ModClientEvents {
         }
     }
 
-    public static void triggerFlashEffect(float fadeOutSpeed, Color color) {
+    public static void triggerFlashEffect(float fadeInSpeed, float fadeOutSpeed, Color color) {
         alpha = 0.001f;
         ModClientEvents.fadeOutSpeed = fadeOutSpeed;
+        ModClientEvents.fadeInSpeed = fadeInSpeed;
         hasFadedIn = false;
         flashColor = color;
     }
@@ -149,7 +152,7 @@ public class ModClientEvents {
 
         // Fade in the alpha
         if (!hasFadedIn && alpha < 0.5f) {
-            alpha += 0.001f; // Tweak as needed
+            alpha += fadeInSpeed; // Tweak as needed
         }
         // Fade out the alpha
         if (hasFadedIn) {
@@ -180,6 +183,21 @@ public class ModClientEvents {
                 }
             }, 4700);
         }
+        // I have absolutely no clue if this works on servers and I'm not excited to find out
+        if (message.contains("MADE IN HEAVEN") || message.contains("I HAVE ACHIEVED HEAVEN")) {
+            player.level().playSound(player, player.blockPosition(),
+                    ModSounds.EASTER_EGG2.get(), SoundSource.PLAYERS, 1f, 1f);
+            player.sendSystemMessage(Component.literal("I don't even watch jojo, but this is just too funny to pass up"));
+            for (int i = 1000; i > 0; i--) {
+                TimerTask task = new TimerTask() {
+                    @Override
+                    public void run() {
+                        Minecraft.getInstance().level.setDayTime(Minecraft.getInstance().level.getDayTime() + 5);
+                    }
+                };
+                timer.schedule(task, i + 1000, 250);
+            }
+        }
     }
 
     @SubscribeEvent
@@ -200,12 +218,20 @@ public class ModClientEvents {
 
     @SubscribeEvent
     public static void clientTickEvent(TickEvent.ClientTickEvent event) {
-        Player player = Minecraft.getInstance().player;
+        Minecraft mc = Minecraft.getInstance();
+        Player player = mc.player;
         if (player != null) {
             Vec3 location  = player.pick(2, 1, false).getLocation();
             BlockPos pos = new BlockPos(((int) location.x), ((int) location.y), ((int) location.z));
             if (player.level().getBlockEntity(pos) instanceof ExtractionTerminalBlockEntity) {
-                player.displayClientMessage(Component.literal("Shift right click to teleport super destroyer"), true);
+                player.displayClientMessage(Component.literal("Right click to teleport super destroyer"), true);
+            }
+        }
+        if (player == null || mc.level == null) return;
+        if (event.phase == TickEvent.Phase.END) {
+            if (KeyBinding.EQUIP_BACKPACK.consumeClick()) {
+                // Send request to server to toggle/swap back slot
+                PacketHandler.sendToServer(new SSetBackSlotPacket());
             }
         }
     }

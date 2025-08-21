@@ -23,6 +23,8 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class GalacticTerminalBlockEntity extends BlockEntity implements GeoBlockEntity, MenuProvider, Container {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private static final String EXTRACTION_INVENTORY_KEY = "ExtractionInventory";
+    private static final int INVENTORY_SIZE = 4;
 
     public GalacticTerminalBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.GALACTIC_TERMINAL.get(), pos, state);
@@ -80,6 +82,61 @@ public class GalacticTerminalBlockEntity extends BlockEntity implements GeoBlock
     @Override
     public @Nullable AbstractContainerMenu createMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
         return new GalaxyMapMenu(pContainerId, pPlayerInventory, this);
+    }
+
+    public Container getPlayerInventory(Player player) {
+        CompoundTag persistentData = getPersistentData(player);
+        SimpleContainer container = new SimpleContainer(INVENTORY_SIZE);
+
+        if (persistentData.contains("Items")) {
+            ListTag items = persistentData.getList("Items", 10);
+            for (int i = 0; i < items.size(); i++) {
+                CompoundTag itemTag = items.getCompound(i);
+                int slot = itemTag.getByte("Slot") & 255;
+                if (slot < container.getContainerSize()) {
+                    container.setItem(slot, ItemStack.of(itemTag));
+                }
+            }
+        }
+
+        return container;
+    }
+
+    public void savePlayerInventory(Player player, Container container) {
+        CompoundTag persistentData = getPersistentData(player);
+        ListTag items = new ListTag();
+
+        for (int i = 0; i < container.getContainerSize(); i++) {
+            ItemStack stack = container.getItem(i);
+            if (!stack.isEmpty()) {
+                CompoundTag itemTag = new CompoundTag();
+                itemTag.putByte("Slot", (byte) i);
+                stack.save(itemTag);
+                items.add(itemTag);
+            }
+        }
+
+        persistentData.put("Items", items);
+        setPersistentData(player, persistentData);
+    }
+
+    private CompoundTag getPersistentData(Player player) {
+        CompoundTag persistentData = player.getPersistentData();
+        CompoundTag forgeData = persistentData.getCompound(Player.PERSISTED_NBT_TAG);
+
+        if (!forgeData.contains(EXTRACTION_INVENTORY_KEY)) {
+            forgeData.put(EXTRACTION_INVENTORY_KEY, new CompoundTag());
+        }
+
+        return forgeData.getCompound(EXTRACTION_INVENTORY_KEY);
+    }
+
+    private void setPersistentData(Player player, CompoundTag data) {
+        CompoundTag persistentData = player.getPersistentData();
+        CompoundTag forgeData = persistentData.getCompound(Player.PERSISTED_NBT_TAG);
+
+        forgeData.put(EXTRACTION_INVENTORY_KEY, data);
+        persistentData.put(Player.PERSISTED_NBT_TAG, forgeData);
     }
 }
 

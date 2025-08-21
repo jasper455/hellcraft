@@ -69,7 +69,7 @@ public class OrbitalLaserEntity extends Monster implements GeoEntity {
             }
             if (this.tickCount % 8 == 0) {
                 Minecraft.getInstance().getSoundManager()
-                        .play(new MovingSoundInstance(this, ModSounds.ORBITAL_LASER_IDLE.get(), 2.25f));
+                        .play(new MovingSoundInstance(this, ModSounds.ORBITAL_LASER_IDLE.get(), 2.25f, true));
             }
         }
 

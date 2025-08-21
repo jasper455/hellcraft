@@ -125,6 +125,12 @@
       "helldivers:easter_egg"
     ]
   },
+  "easter_egg2": {
+    "subtitle": "sounds.helldivers.easter_egg2",
+    "sounds": [
+      "helldivers:easter_egg2"
+    ]
+  },
   "eagle_flyby": {
     "subtitle": "sounds.helldivers.eagle_flyby",
     "sounds": [
@@ -177,6 +183,24 @@
     "subtitle": "sounds.helldivers.amr_reload",
     "sounds": [
       "helldivers:amr_reload"
+    ]
+  },
+  "flamethrower_shoot": {
+    "subtitle": "sounds.helldivers.flamethrower_shoot",
+    "sounds": [
+      "helldivers:flamethrower_shoot"
+    ]
+  },
+  "flamethrower_start_shooting": {
+    "subtitle": "sounds.helldivers.flamethrower_start_shooting",
+    "sounds": [
+      "helldivers:flamethrower_start_shooting"
+    ]
+  },
+  "flamethrower_stop_shooting": {
+    "subtitle": "sounds.helldivers.flamethrower_stop_shooting",
+    "sounds": [
+      "helldivers:flamethrower_stop_shooting"
     ]
   },
   "trap_royalty": {

@@ -10,7 +10,6 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -19,14 +18,10 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.network.NetworkHooks;
 import net.team.helldivers.block.entity.ModBlockEntities;
-import net.team.helldivers.block.entity.custom.ExtractionTerminalBlockEntity;
 import net.team.helldivers.block.entity.custom.GalacticTerminalBlockEntity;
-import net.team.helldivers.screen.custom.ExtractionTerminalMenu;
+import net.team.helldivers.screen.custom.StratagemSelectMenu;
 import net.team.helldivers.screen.custom.GalaxyMapMenu;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,13 +46,22 @@ public class GalacticTerminalBlock extends BaseEntityBlock implements EntityBloc
         }
 
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof GalacticTerminalBlockEntity) {
+        if (blockEntity instanceof GalacticTerminalBlockEntity galacticTerminal) {
             if (player instanceof ServerPlayer serverPlayer) {
-                NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider(
-                        (containerId, playerInventory, playerEntity) -> new GalaxyMapMenu(
-                                containerId, playerInventory, blockEntity),
-                        Component.literal("Galaxy Map")
-                ), pos);
+                Container inventory = galacticTerminal.getPlayerInventory(player);
+                if (player.isShiftKeyDown()) {
+                    NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider(
+                            (containerId, playerInventory, playerEntity) -> new StratagemSelectMenu(
+                                    containerId, playerInventory, inventory, pos),
+                            Component.literal("Extraction Terminal")
+                    ), pos);
+                } else {
+                    NetworkHooks.openScreen(serverPlayer, new SimpleMenuProvider(
+                            (containerId, playerInventory, playerEntity) -> new GalaxyMapMenu(
+                                    containerId, playerInventory, blockEntity),
+                            Component.literal("Galaxy Map")
+                    ), pos);
+                }
             }
         }
 

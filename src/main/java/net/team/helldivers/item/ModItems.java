@@ -1,6 +1,7 @@
 package net.team.helldivers.item;
 
 
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.RecordItem;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.ModBlocks;
@@ -19,7 +20,7 @@ public class ModItems {
             DeferredRegister.create(ForgeRegistries.ITEMS, HelldiversMod.MOD_ID);
 
     public static final RegistryObject<Item> TRAP_ROYALTY_MUSIC_DISC = ITEMS.register("trap_royalty_music_disc",
-            () -> new RecordItem(6, ModSounds.TRAP_ROYALTY, new Item.Properties().stacksTo(1), 3300));
+            () -> new RecordItem(6, ModSounds.TRAP_ROYALTY, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3300));
 
     public static final RegistryObject<Item> EFFECT_TESTER = ITEMS.register("effect_tester",
             () -> new EffectTesterItem(new Item.Properties()));
