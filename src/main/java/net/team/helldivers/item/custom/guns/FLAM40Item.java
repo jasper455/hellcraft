@@ -35,7 +35,7 @@ public class FLAM40Item extends AbstractGunItem {
         float rotY = (float) Math.toRadians(player.getYRot());
         float rotX = (float) Math.toRadians(player.getXRot());
         Vec2 dir = new Vec2(rotX, -rotY);
-        ParticleEmitterInfo fire = EffekLoader.FIRE.clone().position(player.getEyePosition().add(0, -0.3, 0)).rotation(dir);
+        ParticleEmitterInfo fire = EffekLoader.FIRE.clone().position(player.getEyePosition().add(0, -0.1, 0)).rotation(dir);
         AAALevel.addParticle(player.level(), true, fire);
         System.out.println("rotx " + rotX);
         System.out.println("roty " + rotY);

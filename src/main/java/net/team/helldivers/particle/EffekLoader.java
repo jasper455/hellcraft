@@ -10,4 +10,6 @@ public class EffekLoader {
 	public static final ParticleEmitterInfo FIRE = new ParticleEmitterInfo(new ResourceLocation(HelldiversMod.MOD_ID, "flame_long"));
 	public static final ParticleEmitterInfo TRAIL = new ParticleEmitterInfo(new ResourceLocation(HelldiversMod.MOD_ID, "trail"));
 	public static final ParticleEmitterInfo HIT= new ParticleEmitterInfo(new ResourceLocation(HelldiversMod.MOD_ID, "hit"));
+	public static final ParticleEmitterInfo BLAST =  new ParticleEmitterInfo(new ResourceLocation(HelldiversMod.MOD_ID, "blast"));
+
 }

@@ -40,6 +40,9 @@ public class ModEntities {
             ENTITY_TYPES.register("flame_bullet", () -> EntityType.Builder.<FlameBulletEntity>of(FlameBulletEntity::new, MobCategory.MISC)
                     .sized(0.3f, 0.3f).build("flame_bullet"));
 
+  public static final RegistryObject<EntityType<FlameBulletEntity>> SMALL_GRENADE =
+            ENTITY_TYPES.register("small_grenade", () -> EntityType.Builder.<FlameBulletEntity>of(FlameBulletEntity::new, MobCategory.MISC)
+                    .sized(0.3f, 0.3f).build("small_grenade"));
 
     public static final RegistryObject<EntityType<RocketProjectileEntity>> ROCKET =
             ENTITY_TYPES.register("rocket", () -> EntityType.Builder.<RocketProjectileEntity>of(RocketProjectileEntity::new, MobCategory.MISC)

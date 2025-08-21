@@ -15,34 +15,34 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.network.PacketHandler;
+import net.team.helldivers.network.SExplosionPacket;
+import net.team.helldivers.sound.ModSounds;
 
-public class FlameBulletEntity extends AbstractArrow{
-    private int maxLife = 25;
+public class SmallGrenadeEntity extends AbstractArrow{
+    private int maxLife = 1000;
     private int lifetime = 0;
-    public FlameBulletEntity(EntityType<? extends AbstractArrow> pEntityType, Level pLevel) {
+    public int strength = 1;
+    public SmallGrenadeEntity(EntityType<? extends AbstractArrow> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
-    public FlameBulletEntity(LivingEntity shooter, Level level) {
-        super(ModEntities.FIRE_BULLET.get(), shooter, level);
-        this.setNoGravity(true);
+    public SmallGrenadeEntity(LivingEntity shooter, Level level, int strength) {
+        super(ModEntities.SMALL_GRENADE.get(), shooter, level);
     }
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
         if(result.getEntity() instanceof LivingEntity alive){
-            alive.setSecondsOnFire(5);
-            alive.hurt( alive.damageSources().inFire(), 2);
+            alive.hurt( alive.damageSources().generic(), strength+2);
         }
+        BlockPos pos = new BlockPos(((int)result.getLocation().x), ((int)result.getLocation().y), ((int)result.getLocation().z));
+        PacketHandler.sendToServer(new SExplosionPacket(pos, 1, false));
+        this.playSound(ModSounds.EXPLOSION.get(), 5.0f, 1.0f); 
     }
     @Override
     protected void onHitBlock(BlockHitResult result) {
-        Level level = this.level();
-        BlockPos hitPos = result.getBlockPos();
-        Direction hitFace = result.getDirection();
-        BlockPos firePos = hitPos.relative(hitFace);
-        if (level.isEmptyBlock(firePos)) {
-            level.setBlock(firePos, Blocks.FIRE.defaultBlockState(), 11);
-        }
+        PacketHandler.sendToServer(new SExplosionPacket(result.getBlockPos(), 1, false));
+        this.playSound(ModSounds.EXPLOSION.get(), 5.0f, 1.0f);
         this.discard();
     }
     @Override
@@ -50,7 +50,8 @@ public class FlameBulletEntity extends AbstractArrow{
         super.tick();
         lifetime++;
         if (lifetime >= maxLife) {
-            this.discard();
+            BlockPos pos = new BlockPos(((int)this.position().x), ((int)position().y), ((int)position().z));
+            this.onHitBlock(new BlockHitResult(this.position(), getDirection(), pos, false));
         }
     }
      @Override

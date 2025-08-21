@@ -53,9 +53,9 @@ public class ShootHelper {
         }
         float rotY = (float) Math.toRadians(shooter.getYRot());
         float rotX = (float) Math.toRadians(shooter.getXRot());
-        Vec2 dir = new Vec2(rotX, -rotY);
+        Vec2 dir = new Vec2(rotX, -rotY);//TODO make the particle adjusted for drift
         ParticleEmitterInfo trail = EffekLoader.TRAIL.clone().parameter(0, dist-2).position(shooter.getEyePosition().add(0, -0.1, 0)).rotation(dir);
-        ParticleEmitterInfo hit = EffekLoader.HIT.clone().position(result.getLocation()).scale(0.1f);
+        ParticleEmitterInfo hit = EffekLoader.HIT.clone().position(result.getLocation()).scale(0.1f);//.parameter(0, dist/2); 
         AAALevel.addParticle(shooter.level(), true, trail);
         AAALevel.addParticle(shooter.level(), true, hit);
         if(result.getType() == HitResult.Type.ENTITY){
