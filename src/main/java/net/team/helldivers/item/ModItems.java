@@ -11,6 +11,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import net.team.helldivers.item.custom.backpacks.JumpPackItem;
 import net.team.helldivers.item.custom.guns.*;
 import net.team.helldivers.sound.ModSounds;
 
@@ -78,6 +79,9 @@ public class ModItems {
             () -> new Item(new Item.Properties().fireResistant()));
     public static final RegistryObject<Item> SUPER_SAMPLE = ITEMS.register("super_sample",
             () -> new Item(new Item.Properties().fireResistant()));
+
+    public static final RegistryObject<Item> JUMP_PACK = ITEMS.register("jump_pack",
+            () -> new JumpPackItem(new Item.Properties().fireResistant()));
 
     // STRATAGEMS
 

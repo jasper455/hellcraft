@@ -117,7 +117,6 @@ public class PacketHandler {
                 .consumerMainThread(SSetBackSlotPacket::handle)
                 .add();
 
-
         // CLIENT
         INSTANCE.messageBuilder(CSmallExplosionParticlesPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
                 .encoder(CSmallExplosionParticlesPacket::encode)

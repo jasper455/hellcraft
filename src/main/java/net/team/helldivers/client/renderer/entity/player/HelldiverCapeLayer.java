@@ -27,6 +27,7 @@ import net.team.helldivers.backslot.PlayerBackSlotProvider;
 import net.team.helldivers.client.model.entity.player.HelldiverCapeModel;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
+import net.team.helldivers.item.custom.backpacks.AbstractBackpackItem;
 
 public class HelldiverCapeLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     private final HelldiverCapeModel capeModel;
@@ -78,6 +79,9 @@ public class HelldiverCapeLayer extends RenderLayer<AbstractClientPlayer, Player
                 pPoseStack.mulPose(Axis.XP.rotationDegrees((backSlotItem.isEmpty() ? -6.0F : 0.0f) - f2 / 2.0F + f1));
                 pPoseStack.mulPose(Axis.ZP.rotationDegrees(f3 / 2.0F));
                 pPoseStack.mulPose(Axis.YP.rotationDegrees(180.0F - f3 / 2.0F));
+                if (backSlotItem.getItem() instanceof AbstractBackpackItem) {
+                    pPoseStack.mulPose(Axis.XP.rotationDegrees((-20)));
+                }
                 VertexConsumer vertexConsumer = pBuffer.getBuffer(RenderType.entitySolid(ResourceLocation.fromNamespaceAndPath(
                         HelldiversMod.MOD_ID, "textures/entity/helldiver_cape.png")));
                 capeModel.renderToBuffer(pPoseStack, vertexConsumer, pPackedLight, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);

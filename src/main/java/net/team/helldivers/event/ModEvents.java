@@ -57,6 +57,7 @@ import net.team.helldivers.entity.custom.bots.AbstractBotEntity;
 import net.team.helldivers.helper.ClientBackSlotCache;
 import net.team.helldivers.item.custom.armor.IDemocracyProtects;
 import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
+import net.team.helldivers.item.custom.backpacks.AbstractBackpackItem;
 import net.team.helldivers.network.CSyncBackSlotPacket;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SSetBackSlotPacket;
@@ -140,16 +141,16 @@ public class ModEvents {
         Player player = event.player;
         if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide()) return;
 
-//        if (KeyBinding.EQUIP_BACKPACK.consumeClick()) {
-//            if (player instanceof ServerPlayer serverPlayer) {
-//                player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
-//                    CompoundTag nbt = new CompoundTag();
-//                    backSlot.saveNBTData(nbt);
-//                    PacketHandler.sendToServer(new SSetBackSlotPacket());
-//                    PacketHandler.sendToPlayer(new CSyncBackSlotPacket(nbt), serverPlayer);
-//                });
-//            }
-//        }
+        if (KeyBinding.USE_BACKPACK.consumeClick()) {
+            // Send request to server to toggle/swap back slot
+            player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
+                ItemStackHandler handler = backSlot.getInventory();
+                ItemStack backSlotItem = handler.getStackInSlot(0);
+                if (backSlotItem.getItem() instanceof AbstractBackpackItem backpackItem) {
+                    backpackItem.onUse(player);
+                }
+            });
+        }
 
         if (KeyBinding.SHOW_STRATAGEM_KEY.isDown() && player.getDeltaMovement().x == 0 && player.getDeltaMovement().z == 0 &&
                 player.getMainHandItem().isEmpty() &&

@@ -234,16 +234,6 @@ public class ModClientEvents {
                 // Send request to server to toggle/swap back slot
                 PacketHandler.sendToServer(new SSetBackSlotPacket());
             }
-            if (KeyBinding.USE_BACKPACK.consumeClick()) {
-                // Send request to server to toggle/swap back slot
-                player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
-                    ItemStackHandler handler = backSlot.getInventory();
-                    ItemStack backSlotItem = handler.getStackInSlot(0);
-                    if (backSlotItem.getItem() instanceof AbstractBackpackItem backpackItem) {
-                        backpackItem.onUse();
-                    }
-                });
-            }
         }
     }
 

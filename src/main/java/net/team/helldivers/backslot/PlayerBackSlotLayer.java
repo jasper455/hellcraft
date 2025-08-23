@@ -17,6 +17,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ShieldItem;
 import net.minecraftforge.items.ItemStackHandler;
 import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
+import net.team.helldivers.item.custom.backpacks.AbstractBackpackItem;
 
 public class PlayerBackSlotLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
 
@@ -35,54 +36,65 @@ public class PlayerBackSlotLayer extends RenderLayer<AbstractClientPlayer, Playe
             ItemStackHandler handler = backSlot.getInventory();
             ItemStack backSlotItem = handler.getStackInSlot(0);
 
-
-            pPoseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
-            pPoseStack.translate(0.0F, 0F, 0.05F);
-            double d0 = Mth.lerp((double)pPartialTick, player.xCloakO, player.xCloak) - Mth.lerp((double)pPartialTick, player.xo, player.getX());
-            double d1 = Mth.lerp((double)pPartialTick, player.yCloakO, player.yCloak) - Mth.lerp((double)pPartialTick, player.yo, player.getY());
-            double d2 = Mth.lerp((double)pPartialTick, player.zCloakO, player.zCloak) - Mth.lerp((double)pPartialTick, player.zo, player.getZ());
-            float f = Mth.rotLerp(pPartialTick, player.yBodyRotO, player.yBodyRot);
-            double d3 = (double)Mth.sin(f * ((float)Math.PI / 180F));
-            double d4 = (double)(-Mth.cos(f * ((float)Math.PI / 180F)));
-            float f1 = (float)d1 * 2.0F; // instead of *10.0F
-            f1 = Mth.clamp(f1, -2.0F, 4.0F);
-            float f2 = (float)(d0 * d3 + d2 * d4) * 100.0F;
-            ItemStack itemstack = player.getItemBySlot(EquipmentSlot.CHEST);
-            f2 = Mth.clamp(f2, itemstack.getItem() instanceof IHelldiverArmorItem ? 40F : 0, 50.0F);
-            float f3 = (float)(d0 * d4 - d2 * d3) * 100.0F;
-            f3 = Mth.clamp(f3, -20.0F, 20.0F);
-            if (f2 < 0.0F) {
-                f2 = 0.0F;
-            }
-            float f4 = Mth.lerp(pPartialTick, player.oBob * 2, player.bob * 2);
-            f1 += Mth.sin(Mth.lerp(pPartialTick, player.walkDistO, player.walkDist) * 6.0F) * 32.0F * f4;
-            if (player.isCrouching()) {
-//                f1 -= 25.0F;
-                pPoseStack.translate(0.0F, 0.15F, 0F);
-            }
-            pPoseStack.mulPose(Axis.XP.rotationDegrees(-6.0F - f2 / 2.0F + f1));
-            pPoseStack.mulPose(Axis.ZP.rotationDegrees(f3 / 2.0F));
-            pPoseStack.mulPose(Axis.YP.rotationDegrees(180.0F - f3 / 2.0F));
-
-
-            if (!(backSlotItem.getItem() instanceof ShieldItem)) {
-                pPoseStack.translate(0.1, 0, 0.1);
-                pPoseStack.mulPose(Axis.YP.rotationDegrees(90f));
-                pPoseStack.mulPose(Axis.XN.rotationDegrees(25f));
+            if (!(backSlotItem.getItem() instanceof AbstractBackpackItem)) {
+                pPoseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
+                pPoseStack.translate(0.0F, 0F, 0.05F);
+                double d0 = Mth.lerp((double)pPartialTick, player.xCloakO, player.xCloak) - Mth.lerp((double)pPartialTick, player.xo, player.getX());
+                double d1 = Mth.lerp((double)pPartialTick, player.yCloakO, player.yCloak) - Mth.lerp((double)pPartialTick, player.yo, player.getY());
+                double d2 = Mth.lerp((double)pPartialTick, player.zCloakO, player.zCloak) - Mth.lerp((double)pPartialTick, player.zo, player.getZ());
+                float f = Mth.rotLerp(pPartialTick, player.yBodyRotO, player.yBodyRot);
+                double d3 = (double)Mth.sin(f * ((float)Math.PI / 180F));
+                double d4 = (double)(-Mth.cos(f * ((float)Math.PI / 180F)));
+                float f1 = (float)d1 * 2.0F; // instead of *10.0F
+                f1 = Mth.clamp(f1, -2.0F, 4.0F);
+                float f2 = (float)(d0 * d3 + d2 * d4) * 100.0F;
+                ItemStack itemstack = player.getItemBySlot(EquipmentSlot.CHEST);
+                f2 = Mth.clamp(f2, itemstack.getItem() instanceof IHelldiverArmorItem ? 40F : 0, 50.0F);
+                float f3 = (float)(d0 * d4 - d2 * d3) * 100.0F;
+                f3 = Mth.clamp(f3, -20.0F, 20.0F);
+                if (f2 < 0.0F) {
+                    f2 = 0.0F;
+                }
+                float f4 = Mth.lerp(pPartialTick, player.oBob * 2, player.bob * 2);
+                f1 += Mth.sin(Mth.lerp(pPartialTick, player.walkDistO, player.walkDist) * 6.0F) * 32.0F * f4;
                 if (player.isCrouching()) {
-                    pPoseStack.mulPose(Axis.ZP.rotationDegrees(30f));
-                    pPoseStack.mulPose(Axis.YN.rotationDegrees(15f));
-                    pPoseStack.translate(0.1, 0.2, 0);
+//                f1 -= 25.0F;
+                    pPoseStack.translate(0.0F, 0.15F, 0F);
+                }
+                pPoseStack.mulPose(Axis.XP.rotationDegrees(-6.0F - f2 / 2.0F + f1));
+                pPoseStack.mulPose(Axis.ZP.rotationDegrees(f3 / 2.0F));
+                pPoseStack.mulPose(Axis.YP.rotationDegrees(180.0F - f3 / 2.0F));
+            }
+
+
+            if (!(backSlotItem.getItem() instanceof AbstractBackpackItem)) {
+                if (!(backSlotItem.getItem() instanceof ShieldItem)) {
+                    pPoseStack.translate(0.1, 0, 0.1);
+                    pPoseStack.mulPose(Axis.YP.rotationDegrees(90f));
+                    pPoseStack.mulPose(Axis.XN.rotationDegrees(25f));
+                    if (player.isCrouching()) {
+                        pPoseStack.mulPose(Axis.ZP.rotationDegrees(30f));
+                        pPoseStack.mulPose(Axis.YN.rotationDegrees(15f));
+                        pPoseStack.translate(0.1, 0.2, 0);
+                    }
+                } else {
+                    pPoseStack.mulPose(Axis.YN.rotationDegrees(90));
+                    pPoseStack.mulPose(Axis.XN.rotationDegrees(45f));
+                    pPoseStack.translate(0.055, 0.5, 0f);
+                    pPoseStack.scale(0.75f, 1, 1);
+                    if (player.isCrouching()) {
+                        pPoseStack.mulPose(Axis.ZN.rotationDegrees(30f));
+                        pPoseStack.mulPose(Axis.YP.rotationDegrees(30f));
+                        pPoseStack.translate(0.1, 0.2, 0.1);
+                    }
                 }
             } else {
-                pPoseStack.mulPose(Axis.YN.rotationDegrees(90));
-                pPoseStack.mulPose(Axis.XN.rotationDegrees(45f));
-                pPoseStack.translate(0.055, 0.5, 0f);
-                pPoseStack.scale(0.75f, 1, 1);
+                pPoseStack.scale(3, 3, 3);
+                pPoseStack.mulPose(Axis.XP.rotationDegrees(180));
+                pPoseStack.translate(0.1, -0.1, -0.025);
                 if (player.isCrouching()) {
-                    pPoseStack.mulPose(Axis.ZN.rotationDegrees(30f));
-                    pPoseStack.mulPose(Axis.YP.rotationDegrees(30f));
-                    pPoseStack.translate(0.1, 0.2, 0.1);
+                    pPoseStack.mulPose(Axis.XP.rotationDegrees(30f));
+                    pPoseStack.translate(0, -0.05, 0);
                 }
             }
 
