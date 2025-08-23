@@ -100,7 +100,7 @@ public class ShootHelper {
             }
         }
     }
-    public static Pair<HitResult, Vec3> raycast(Level level, Entity shooter, double drift, boolean spawnParticles) {
+    public static Pair<HitResult, Vec3> raycast(Level level, Entity shooter, double drift, boolean spawnParticles) {//TODO sync the hit and shoot particles
         double r1 = Math.random()*plusmin()*drift;
         double r2 = Math.random()*plusmin()*drift;          
         double r3 = Math.random()*plusmin()*drift; 
@@ -119,7 +119,7 @@ public class ShootHelper {
             }
             float yaw = (float)(Math.atan2(look.z, look.x)-Math.PI/2);
             float pitch = (float)(Math.asin(look.y));
-             ParticleEmitterInfo trail = EffekLoader.TRAIL.clone().parameter(0, dist-12).position(shooter.getEyePosition().add(0, -0.1, 0)).rotation(-pitch, -yaw, 0);
+             ParticleEmitterInfo trail = EffekLoader.TRAIL.clone().parameter(0, (dist/2)-12).position(shooter.getEyePosition().add(0, -0.1, 0)).rotation(-pitch, -yaw, 0);
              AAALevel.addParticle(shooter.level(), true, trail);
 
         }
