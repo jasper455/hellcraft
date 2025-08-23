@@ -316,15 +316,20 @@ public class ModClientEvents {
                     if (renderer instanceof PlayerRenderer playerRenderer) {
                         playerRenderer.addLayer(new PlayerBackSlotLayer(playerRenderer));
 
-                        playerRenderer.addLayer(new HelldiverCapeLayer(playerRenderer, ResourceLocation.fromNamespaceAndPath(
-                                HelldiversMod.MOD_ID, "textures/armor/b01_armor.png"
-                        )));
+                        playerRenderer.addLayer(new HelldiverCapeLayer(playerRenderer));
                     }
                 } catch (Exception e) {
                     // Log the error but continue execution
-                    System.out.println("Failed to add cape layer for skin type: " + skinType);
+                    System.out.println("Failed to add cape layer for skin type: " + e);
                 }
             }
+        }
+
+        @SubscribeEvent
+        public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+            event.registerLayerDefinition(new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(
+                            HelldiversMod.MOD_ID, "textures/entity/helldiver_cape.png"), "main"),
+                    HelldiverCapeModel::createBodyLayer);
         }
 
     }
