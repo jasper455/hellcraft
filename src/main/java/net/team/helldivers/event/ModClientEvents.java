@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.team.helldivers.backslot.PlayerBackSlotLayer;
 import net.team.helldivers.client.renderer.entity.bots.*;
 import net.team.helldivers.network.SSetBackSlotPacket;
 import org.lwjgl.glfw.GLFW;
@@ -281,6 +285,22 @@ public class ModClientEvents {
                 // You can store the shader here for later use if you want to use it manually
             });
         }
+
+        @SubscribeEvent
+        public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
+            for (String skinType : event.getSkins()) {
+                try {
+                    EntityRenderer<?> renderer = event.getSkin(skinType);
+                    if (renderer instanceof PlayerRenderer playerRenderer) {
+                        playerRenderer.addLayer(new PlayerBackSlotLayer(playerRenderer));
+                    }
+                } catch (Exception e) {
+                    // Log the error but continue execution
+                    System.out.println("Failed to add cape layer for skin type: " + skinType);
+                }
+            }
+        }
+
     }
 
 }

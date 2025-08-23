@@ -17,6 +17,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -211,18 +212,39 @@ public class ModEvents {
             ItemStack stack = handler.getStackInSlot(0);
 
             if (!stack.isEmpty()) {
-                int x = 417;
-                int y = 331;
+                int screenWidth = mc.getWindow().getGuiScaledWidth();
+                int screenHeight = mc.getWindow().getGuiScaledHeight();
 
-                guiGraphics.blit(ResourceLocation.fromNamespaceAndPath(
-                                HelldiversMod.MOD_ID, "textures/gui/backslot.png"),
-                        x, y, 22, 22, 22, 22, 22, 22,
-                        22, 22);
-                guiGraphics.renderItem(stack, x + 3, y + 3);
-                guiGraphics.renderItemDecorations(mc.font, stack, x + 3, y + 3);
+                // Base hotbar dimensions
+                int hotbarWidth = 182;
+                int hotbarHeight = 22;
+
+                // Calculate the left edge of the hotbar (it's centered)
+                int hotbarX = (screenWidth - hotbarWidth) / 2;
+                int hotbarY = screenHeight - hotbarHeight - 1;
+
+                // Determine position to the right of hotbar (assume main hand is RIGHT)
+                int iconX;
+                if (player.getMainArm() == HumanoidArm.RIGHT) {
+                    // If main hand is right, offhand shows on left, so we place our icon on the right
+                    iconX = hotbarX + hotbarWidth + 4; // 4 pixels of padding
+                } else {
+                    // If main hand is left, offhand shows on right, so we place our icon on the left
+                    iconX = hotbarX - 22 - 4; // 22 = icon width, 4px padding
+                }
+
+                int iconY = hotbarY + 1; // align vertically with hotbar
+
+                guiGraphics.blit(
+                        ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "textures/gui/backslot.png"),
+                        iconX, iconY, 22, 22, 22, 22, 22, 22, 22, 22
+                );
+                guiGraphics.renderItem(stack, iconX + 3, iconY + 3);
+                guiGraphics.renderItemDecorations(mc.font, stack, iconX + 3, iconY + 3);
             }
         });
     }
+
 
     @SubscribeEvent
     public static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {

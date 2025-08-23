@@ -5,6 +5,8 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.TieredItem;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.NetworkEvent;
 import net.team.helldivers.backslot.PlayerBackSlotProvider;
@@ -32,14 +34,18 @@ public class SSetBackSlotPacket {
             ItemStack backSlotItem = handler.getStackInSlot(0);
 
             if (backSlotItem.isEmpty() && !mainHand.isEmpty()) {
-                handler.setStackInSlot(0, mainHand.copy());
-                player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+                if (mainHand.getItem() instanceof TieredItem || mainHand.getItem() instanceof ShieldItem) {
+                    handler.setStackInSlot(0, mainHand.copy());
+                    player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+                }
             } else if (!backSlotItem.isEmpty() && mainHand.isEmpty()) {
                 player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
                 handler.setStackInSlot(0, ItemStack.EMPTY);
             } else if (!backSlotItem.isEmpty() && !mainHand.isEmpty()) {
-                handler.setStackInSlot(0, mainHand.copy());
-                player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
+                if (mainHand.getItem() instanceof TieredItem || mainHand.getItem() instanceof ShieldItem) {
+                    handler.setStackInSlot(0, mainHand.copy());
+                    player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
+                }
             }
 
             // Sync back to client
