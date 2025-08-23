@@ -20,6 +20,7 @@ import net.minecraft.world.phys.Vec2;
 import net.team.helldivers.client.renderer.item.AmrRenderer;
 import net.team.helldivers.client.renderer.item.FLAM40Renderer;
 import net.team.helldivers.entity.custom.FlameBulletEntity;
+import net.team.helldivers.network.CStopSoundPacket;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.particle.EffekLoader;
 import net.team.helldivers.sound.ModSounds;
