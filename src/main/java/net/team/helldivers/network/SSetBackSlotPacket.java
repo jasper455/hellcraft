@@ -11,6 +11,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.NetworkEvent;
 import net.team.helldivers.backslot.PlayerBackSlotProvider;
 import net.team.helldivers.helper.ClientBackSlotCache;
+import net.team.helldivers.item.custom.backpacks.AbstractBackpackItem;
 
 import java.util.function.Supplier;
 
@@ -34,7 +35,8 @@ public class SSetBackSlotPacket {
             ItemStack backSlotItem = handler.getStackInSlot(0);
 
             if (backSlotItem.isEmpty() && !mainHand.isEmpty()) {
-                if (mainHand.getItem() instanceof TieredItem || mainHand.getItem() instanceof ShieldItem) {
+                if (mainHand.getItem() instanceof TieredItem || mainHand.getItem() instanceof ShieldItem
+                        || mainHand.getItem() instanceof AbstractBackpackItem) {
                     handler.setStackInSlot(0, mainHand.copy());
                     player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
                 }
@@ -42,7 +44,8 @@ public class SSetBackSlotPacket {
                 player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
                 handler.setStackInSlot(0, ItemStack.EMPTY);
             } else if (!backSlotItem.isEmpty() && !mainHand.isEmpty()) {
-                if (mainHand.getItem() instanceof TieredItem || mainHand.getItem() instanceof ShieldItem) {
+                if (mainHand.getItem() instanceof TieredItem || mainHand.getItem() instanceof ShieldItem
+                        || mainHand.getItem() instanceof AbstractBackpackItem) {
                     handler.setStackInSlot(0, mainHand.copy());
                     player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
                 }

@@ -7,8 +7,17 @@ import java.util.TimerTask;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.TieredItem;
+import net.minecraftforge.items.ItemStackHandler;
 import net.team.helldivers.backslot.PlayerBackSlotLayer;
+import net.team.helldivers.backslot.PlayerBackSlotProvider;
 import net.team.helldivers.client.renderer.entity.bots.*;
+import net.team.helldivers.item.custom.backpacks.AbstractBackpackItem;
+import net.team.helldivers.network.CSyncBackSlotPacket;
 import net.team.helldivers.network.SSetBackSlotPacket;
 import org.lwjgl.glfw.GLFW;
 
@@ -214,7 +223,7 @@ public class ModClientEvents {
             Vec3 location  = player.pick(2, 1, false).getLocation();
             BlockPos pos = new BlockPos(((int) location.x), ((int) location.y), ((int) location.z));
             if (player.level().getBlockEntity(pos) instanceof ExtractionTerminalBlockEntity) {
-                player.displayClientMessage(Component.literal("Shift right click to teleport super destroyer"), true);
+                player.displayClientMessage(Component.literal("Right click to teleport super destroyer"), true);
             }
         }
         if (player == null || mc.level == null) return;
@@ -222,6 +231,16 @@ public class ModClientEvents {
             if (KeyBinding.EQUIP_BACKPACK.consumeClick()) {
                 // Send request to server to toggle/swap back slot
                 PacketHandler.sendToServer(new SSetBackSlotPacket());
+            }
+            if (KeyBinding.USE_BACKPACK.consumeClick()) {
+                // Send request to server to toggle/swap back slot
+                player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
+                    ItemStackHandler handler = backSlot.getInventory();
+                    ItemStack backSlotItem = handler.getStackInSlot(0);
+                    if (backSlotItem.getItem() instanceof AbstractBackpackItem backpackItem) {
+                        backpackItem.onUse();
+                    }
+                });
             }
         }
     }
@@ -246,6 +265,7 @@ public class ModClientEvents {
             event.register(KeyBinding.RELOAD);
             event.register(KeyBinding.AIM);
             event.register(KeyBinding.EQUIP_BACKPACK);
+            event.register(KeyBinding.USE_BACKPACK);
         }
 
         @SubscribeEvent
