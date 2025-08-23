@@ -31,7 +31,7 @@ import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
 //this will render a red outline over the area where an entity can be headshotted 
 @Mod.EventBusSubscriber(value = Dist.CLIENT)
 public class DebugRenderer {
-    private static boolean shouldRender = true;
+    private static boolean shouldRender = false;
     @SubscribeEvent
     public static void onRenderWorld(RenderLevelStageEvent event) {
         if(shouldRender){

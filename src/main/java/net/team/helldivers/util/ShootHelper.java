@@ -47,10 +47,6 @@ public class ShootHelper {
         Pair<HitResult, Vec3> pair = raycast(level, shooter, drift, true);
         HitResult result = pair.getFirst();
         Vec3 hitPos = pair.getSecond();
-        float rotY = (float) Math.toRadians(shooter.getYRot());
-        float rotX = (float) Math.toRadians(shooter.getXRot());
-        Vec2 dir = new Vec2(rotX, -rotY);//TODO make the particle adjusted for drift
-       
         ParticleEmitterInfo hit = EffekLoader.HIT.clone().position(result.getLocation()).scale(0.1f);//.parameter(0, dist/2); 
         AAALevel.addParticle(shooter.level(), true, hit);
         if(result.getType() == HitResult.Type.ENTITY){
@@ -59,7 +55,7 @@ public class ShootHelper {
             if (!level.isClientSide) {
                  ((ServerLevel) level).sendParticles(ParticleTypes.CRIT, hitPos.x, hitPos.y, hitPos.z, 10, 0, 0, 0, 0);
                 }
-            if(checkHeadShot(resultE, hitPos)){
+            /*if(checkHeadShot(resultE, hitPos)){
                 entity.hurt(entity.damageSources().generic(), dam*2);
                 System.out.println("HEADSHOT");
                 if(entity instanceof LivingEntity alive){
@@ -67,7 +63,7 @@ public class ShootHelper {
                     Vec3 look = shooter.getLookAngle().normalize();
                     alive.knockback(knockback, -look.x, -look.z);
                }
-            }
+            }*/ //TODO fix this stuff... the obb is just not working and if we are going to upload this I would rather have a fully working headshot system then a buggy mess
             else{
                 entity.hurt(entity.damageSources().generic(), dam);
                if(entity instanceof LivingEntity alive){
@@ -121,7 +117,9 @@ public class ShootHelper {
             if(result.getType() == HitResult.Type.MISS ){
             dist = 50f;
             }
-             ParticleEmitterInfo trail = EffekLoader.TRAIL.clone().parameter(0, dist-12).position(shooter.getEyePosition().add(0, -0.1, 0)).rotation((float)look.x, (float)look.y, (float)look.z);
+            float yaw = (float)(Math.atan2(look.z, look.x)-Math.PI/2);
+            float pitch = (float)(Math.asin(look.y));
+             ParticleEmitterInfo trail = EffekLoader.TRAIL.clone().parameter(0, dist-12).position(shooter.getEyePosition().add(0, -0.1, 0)).rotation(-pitch, -yaw, 0);
              AAALevel.addParticle(shooter.level(), true, trail);
 
         }
@@ -170,7 +168,7 @@ public class ShootHelper {
         return false;
     }
 
-    public static OBB rotateHeadOBB(Entity entity, AABB box) {//TODO fix this. the OBB object might also not be right
+    public static OBB rotateHeadOBB(Entity entity, AABB box) {
         OBB rotated = new OBB(box);
         rotated.rotateYaw(-entity.getYRot(), entity.getBoundingBox().getCenter());
         if (entity instanceof AgeableMob mob && mob.isBaby()) {

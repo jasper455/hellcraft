@@ -36,7 +36,7 @@ public class FLAM40Item extends AbstractGunItem {
     private MovingSoundInstance flamethrowerStopSound;
 
     public FLAM40Item(Properties properties) {
-        super(properties.durability(100).rarity(Rarity.COMMON), true, true, "§e[Flamethrower]", 1, ModSounds.AR_23_RELOAD);//TODO temp renderer and sounds
+        super(properties.durability(100).rarity(Rarity.COMMON), true, true, "§e[Flamethrower]", 1, ModSounds.AR_23_RELOAD);
     }
     @Override
     public void onShoot(ItemStack itemStack, ServerPlayer player) {
