@@ -1,0 +1,6 @@
+{
+  "parent": "helldivers:displaysettings/backpack_display",
+  "textures": {
+    "all": "helldivers:item/portable_hellbomb"
+  }
+}
