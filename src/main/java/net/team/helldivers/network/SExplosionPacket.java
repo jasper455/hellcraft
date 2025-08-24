@@ -65,7 +65,7 @@ public class SExplosionPacket {
 
     public void flyingBlocksExplosion(Level level, BlockPos center, int radius) {
         for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius; y <= radius; y++) {`
+            for (int y = -radius; y <= radius; y++) {
                 for (int z = -radius; z <= radius; z++) {
                     double distance = Math.sqrt(x * x + y * y + z * z);
                     if (distance <= radius) {
