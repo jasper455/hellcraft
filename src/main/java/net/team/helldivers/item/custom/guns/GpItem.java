@@ -23,10 +23,10 @@ public class  GpItem extends AbstractGunItem {
                 // Play sound
                 player.level().playSound(null, player.blockPosition(),
                         ModSounds.PLAS1_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
-                PacketHandler.sendToPlayer(new CApplyRecoilPacket(2.0f), player);
+                PacketHandler.sendToPlayer(new CApplyRecoilPacket(7.0f), player);
                 // Actually shoot the bullet
                 SmallGrenadeEntity grenade = new SmallGrenadeEntity(player, player.level(), 1);
-                grenade.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 2.5f, 0.0f);
+                grenade.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 4f, 0.0f);
                 grenade.setXRot(player.getXRot());
                 grenade.setYRot(player.getYRot());
                 player.level().addFreshEntity(grenade);

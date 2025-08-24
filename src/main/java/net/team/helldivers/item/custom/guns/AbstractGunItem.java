@@ -51,6 +51,7 @@ import net.team.helldivers.util.KeyBinding;
 import net.team.helldivers.util.ShootHelper;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
@@ -79,8 +80,8 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
     public float dam;
     public double drift;
     public float recoil;
-    private RegistryObject<SoundEvent> reloadSound;
-    private  RegistryObject<SoundEvent> shootSound;
+    public RegistryObject<SoundEvent> reloadSound;
+    public  RegistryObject<SoundEvent> shootSound;
 
 
     public AbstractGunItem(Properties properties, float recoil, boolean isAuto, boolean reloadable, String type, int fireDelay, float dam, double drift, RegistryObject<SoundEvent> shootSound, RegistryObject<SoundEvent> reloadSound) {
@@ -166,9 +167,10 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
                     } else {
                         event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot"));
                     }
-                    //PacketHandler.sendToServer(new SShootPacket());
-                    return PlayState.CONTINUE;
+                    PacketHandler.sendToServer(new SShootPacket());
+                     shootCooldown = fireDelay;
                 }
+                return PlayState.CONTINUE;
             }
             // Handle aiming states only if not reloading or shooting
             if (!isReloading && !isShooting) {
@@ -247,13 +249,14 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
             if (selected) {
                 isShooting = KeyBinding.SHOOT.isDown();
                 firstShot = KeyBinding.SHOOT.consumeClick();
-                if (isShooting && shootCooldown == 0 && canShoot(Minecraft.getInstance().player.getMainHandItem()) && !isReloading && isAuto) {
+                if (isShooting && shootCooldown == 0 && canShoot(Minecraft.getInstance().player.getMainHandItem()) && !isReloading && isAuto && !(itemstack.getItem() instanceof GeoAnimatable)) {
                     PacketHandler.sendToServer(new SShootPacket());
                      shootCooldown = fireDelay;
                 }
                 if (shootCooldown > 0) {
                         shootCooldown--;
                     }
+
                 // Handle reload
                 if (KeyBinding.RELOAD.consumeClick()) {
                     for (ItemStack stack : player.getInventory().items) {

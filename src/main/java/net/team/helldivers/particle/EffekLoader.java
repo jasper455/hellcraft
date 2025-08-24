@@ -15,4 +15,5 @@ public class EffekLoader {
 	public static final ParticleEmitterInfo PLASMA =  new ParticleEmitterInfo(new ResourceLocation(HelldiversMod.MOD_ID, "plasma_shot"));
 	public static final ParticleEmitterInfo PLASMA_HIT =  new ParticleEmitterInfo(new ResourceLocation(HelldiversMod.MOD_ID, "hit_plasma"));
 	public static final ParticleEmitterInfo NAPALM_BURST =  new ParticleEmitterInfo(new ResourceLocation(HelldiversMod.MOD_ID, "napalm"));
+	public static final ParticleEmitterInfo GRENADE =  new ParticleEmitterInfo(new ResourceLocation(HelldiversMod.MOD_ID, "grenade"));
 }

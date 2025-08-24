@@ -44,8 +44,6 @@ public class FLAM40Item extends AbstractGunItem {
         float rotY = (float) Math.toRadians(player.getYRot());
         float rotX = (float) Math.toRadians(player.getXRot());
         Vec2 dir = new Vec2(rotX, -rotY);
-        ParticleEmitterInfo fire = EffekLoader.FIRE.clone().position(player.getEyePosition().add(0, -0.1, 0)).rotation(dir);
-        AAALevel.addParticle(player.level(), true, fire);
         if (itemStack.getDamageValue() >= itemStack.getMaxDamage() - 1) {
             if (flamethrowerSound != null && flamethrowerStartSound != null) {
                 PacketHandler.sendToAllClients(new CStopSoundPacket(flamethrowerSound.getLocation()));
@@ -53,6 +51,8 @@ public class FLAM40Item extends AbstractGunItem {
             }
             return;
         };
+        ParticleEmitterInfo fire = EffekLoader.FIRE.clone().position(player.getEyePosition().add(0, -0.1, 0)).rotation(dir);
+        AAALevel.addParticle(player.level(), true, fire);
         FlameBulletEntity flame = new FlameBulletEntity(player, player.level());
         flame.setPos(player.getEyePosition().add(0, -0.3, 0));
         flame.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 0.5f, 7f);
