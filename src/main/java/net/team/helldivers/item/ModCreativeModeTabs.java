@@ -58,6 +58,7 @@ public class ModCreativeModeTabs {
 
                         output.accept(ModItems.AR23.get());
                         output.accept(ModItems.P2_PEACEMAKER.get());
+                        output.accept(ModItems.GP31.get());
                         output.accept(ModItems.PLAS1.get());
                         output.accept(ModItems.SG225.get());
                         output.accept(ModItems.EAT_17.get());

@@ -125,6 +125,12 @@
       "helldivers:easter_egg"
     ]
   },
+  "easter_egg2": {
+    "subtitle": "sounds.helldivers.easter_egg2",
+    "sounds": [
+      "helldivers:easter_egg2"
+    ]
+  },
   "eagle_flyby": {
     "subtitle": "sounds.helldivers.eagle_flyby",
     "sounds": [

@@ -15,6 +15,10 @@ import org.checkerframework.checker.units.qual.h;
 
 import com.mojang.datafixers.util.Pair;
 
+import mod.chloeprime.aaaparticles.api.common.AAALevel;
+import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
+import mod.chloeprime.aaaparticles.client.registry.EffectDefinition;
+import mod.chloeprime.aaaparticles.client.registry.EffectRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -37,23 +41,28 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.team.helldivers.block.custom.BotContactMineBlock;
+import net.team.helldivers.particle.EffekLoader;
 import net.team.helldivers.util.Headshots.HeadHitbox;
 import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
 
 public class ShootHelper {
+
       public static void shoot(LivingEntity shooter, Level level, double drift, float dam, double knockback, boolean ignoreIframes){
-        Pair<HitResult, Vec3> pair = raycast(level, shooter, drift);
+        Pair<HitResult, Vec3> pair = raycast(level, shooter, drift, true);
         HitResult result = pair.getFirst();
         Vec3 hitPos = pair.getSecond();
+        ParticleEmitterInfo hit = EffekLoader.HIT.clone().position(result.getLocation()).scale(0.1f);//.parameter(0, dist/2);
+        AAALevel.addParticle(shooter.level(), true, hit);
         if(result.getType() == HitResult.Type.ENTITY){
             EntityHitResult resultE = ((EntityHitResult)result);
             Entity entity = resultE.getEntity();
             if (!level.isClientSide) {
                  ((ServerLevel) level).sendParticles(ParticleTypes.CRIT, hitPos.x, hitPos.y, hitPos.z, 10, 0, 0, 0, 0);
                 }
-            if(checkHeadShot(resultE, hitPos)){
+            /*if(checkHeadShot(resultE, hitPos)){
                 entity.hurt(ModDamageSources.raycast(shooter), dam*2);
                 System.out.println("HEADSHOT");
                 if(entity instanceof LivingEntity alive){
@@ -61,23 +70,13 @@ public class ShootHelper {
                     Vec3 look = shooter.getLookAngle().normalize();
                     alive.knockback(knockback, -look.x, -look.z);
                }
-            }
+            }*/ //TODO fix this stuff... the obb is just not working and if we are going to upload this I would rather have a fully working headshot system then a buggy mess
             else{
                 entity.hurt(ModDamageSources.raycast(shooter), dam);
                if(entity instanceof LivingEntity alive){
-                   if(ignoreIframes) alive.invulnerableTime = 0;
-                   Vec3 look = shooter.getLookAngle().normalize();
-                   alive.knockback(knockback, -look.x, -look.z);
-                   if (entity instanceof AbstractBotEntity botEntity) {
-                       if (level.isClientSide) {
-                           for (int i = 0; i < 15; i++) {
-                               if (Minecraft.getInstance().level != null) {
-                                   Minecraft.getInstance().level.addParticle(ModParticles.SHRAPNEL.get(), hitPos.x, hitPos.y, hitPos.z, 1,
-                                           Mth.nextDouble(level.random, -1, 1), 0);
-                               }
-                           }
-                       }
-                   }
+                    if(ignoreIframes) alive.invulnerableTime = 0;
+                    Vec3 look = shooter.getLookAngle().normalize();
+                    alive.knockback(knockback, -look.x, -look.z);
                }
             }
         }
@@ -108,7 +107,7 @@ public class ShootHelper {
             }
         }
     }
-    public static Pair<HitResult, Vec3> raycast(Level level, Entity shooter, double drift) {
+    public static Pair<HitResult, Vec3> raycast(Level level, Entity shooter, double drift, boolean spawnParticles) {//TODO sync the hit and shoot particles
         double r1 = Math.random()*plusmin()*drift;
         double r2 = Math.random()*plusmin()*drift;          
         double r3 = Math.random()*plusmin()*drift; 
@@ -119,14 +118,23 @@ public class ShootHelper {
         double blockDist = blockHit != null ? blockHit.getLocation().distanceTo(start) : 128;
         AABB box = shooter.getBoundingBox().expandTowards(look.scale(128)).inflate(1.0);
         EntityHitResult entityHit = ProjectileUtil.getEntityHitResult(level, shooter, start, end, box, e -> !e.isSpectator() && e.isPickable());
+        if(spawnParticles){
+             HitResult result = blockHit != null ? blockHit : entityHit;
+            float dist = ((float)result.distanceTo(shooter));
+            if(result.getType() == HitResult.Type.MISS ){
+            dist = 50f;
+            }
+            float yaw = (float)(Math.atan2(look.z, look.x)-Math.PI/2);
+            float pitch = (float)(Math.asin(look.y));
+             ParticleEmitterInfo trail = EffekLoader.TRAIL.clone().parameter(0, (dist/2)-12).position(shooter.getEyePosition().add(0, -0.1, 0)).rotation(-pitch, -yaw, 0);
+             AAALevel.addParticle(shooter.level(), true, trail);
+
+        }
         if (entityHit != null) {
             double entityDist = entityHit.getLocation().distanceTo(start);
             if (entityDist < blockDist) {
                 Optional<Vec3> clipped = entityHit.getEntity().getBoundingBox().clip(start, end);//returning the correct coords
                 Vec3 hitPos = clipped.orElse(end);
-                if (!level.isClientSide) {
-                 ((ServerLevel) level).sendParticles(ParticleTypes.CRIT, hitPos.x, hitPos.y, hitPos.z, 10, 0, 0, 0, 0);
-                }
                 return new Pair<>(entityHit, hitPos);
             }
         }
@@ -167,7 +175,7 @@ public class ShootHelper {
         return false;
     }
 
-    public static OBB rotateHeadOBB(Entity entity, AABB box) {//TODO fix this. the OBB object might also not be right
+    public static OBB rotateHeadOBB(Entity entity, AABB box) {
         OBB rotated = new OBB(box);
         rotated.rotateYaw(-entity.getYRot(), entity.getBoundingBox().getCenter());
         if (entity instanceof AgeableMob mob && mob.isBaby()) {

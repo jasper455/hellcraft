@@ -52,6 +52,8 @@ public class ModItems {
             () -> new Plas1Item(new Item.Properties().stacksTo(1).fireResistant()));
     public static final RegistryObject<Item> FLAM40 = ITEMS.register("flam40",
             () -> new FLAM40Item(new Item.Properties().stacksTo(1).fireResistant()));
+ public static final RegistryObject<Item> GP31 = ITEMS.register("Gp31",
+            () -> new GpItem(new Item.Properties().stacksTo(1).fireResistant()));
 
     public static final RegistryObject<Item> SG225 = ITEMS.register("sg225",
             () -> new Sg225Item(new Item.Properties().stacksTo(1).fireResistant()));

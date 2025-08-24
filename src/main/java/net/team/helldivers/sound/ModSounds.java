@@ -56,6 +56,8 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> EASTER_EGG = registerSoundEvent("easter_egg");
 
+    public static final RegistryObject<SoundEvent> EASTER_EGG2 = registerSoundEvent("easter_egg2");
+
     public static final RegistryObject<SoundEvent> EAGLE_FLYBY = registerSoundEvent("eagle_flyby");
 
     public static final RegistryObject<SoundEvent> ORBITAL_STRIKE_INCOMING = registerSoundEvent("orbital_strike_incoming");
