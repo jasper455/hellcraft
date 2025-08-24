@@ -5,49 +5,75 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.items.ItemStackHandler;
+import net.team.helldivers.HelldiversMod;
+import net.team.helldivers.backslot.PlayerBackSlot;
+import net.team.helldivers.backslot.PlayerBackSlotProvider;
 import net.team.helldivers.client.renderer.item.JumpPackRenderer;
 import net.team.helldivers.damage.ModDamageSources;
 import net.team.helldivers.damage.ModDamageTypes;
 
+
+@Mod.EventBusSubscriber(modid = HelldiversMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class JumpPackItem extends AbstractBackpackItem {
     public JumpPackItem(Properties properties) {
         super(properties);
     }
-
-    @Override
-    public void onUse(Player player) {
-        Pig pig = new Pig(EntityType.PIG, player.level());
-        pig.setPos(player.position());
-        player.level().addFreshEntity(pig);
-        shootFromRotation(player, pig, player.getXRot(), player.getYRot(), 0.0f, 3, 15);
-    }
-
     @Override
     public BlockEntityWithoutLevelRenderer createRenderer() {
         return new JumpPackRenderer();
     }
-    public void shoot(Entity shotEntity, double pX, double pY, double pZ, float pVelocity, float pInaccuracy) {
-        Vec3 vec3 = (new Vec3(pX, pY, pZ)).normalize().add(shotEntity.level().random.triangle(0.0D, 0.0172275D * (double)pInaccuracy), shotEntity.level().random.triangle(0.0D, 0.0172275D * (double)pInaccuracy), shotEntity.level().random.triangle(0.0D, 0.0172275D * (double)pInaccuracy)).scale((double)pVelocity);
-        shotEntity.setDeltaMovement(vec3);
-        double d0 = vec3.horizontalDistance();
-        shotEntity.setYRot((float)(Mth.atan2(vec3.x, vec3.z) * (double)(180F / (float)Math.PI)));
-        shotEntity.setXRot((float)(Mth.atan2(vec3.y, d0) * (double)(180F / (float)Math.PI)));
-        shotEntity.yRotO = shotEntity.getYRot();
-        shotEntity.xRotO = shotEntity.getXRot();
+    @Override
+    public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
+        super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
+        if(pEntity instanceof Player player){
+             player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
+                ItemStackHandler handler = backSlot.getInventory();
+                ItemStack backItem = handler.getStackInSlot(0);
+                if (!backItem.isEmpty() && backItem.getItem() instanceof JumpPackItem) {
+                   MobEffectInstance slowFall = new MobEffectInstance(MobEffects.SLOW_FALLING, 20);
+                   player.addEffect(slowFall);
+                }
+            });
+        }
     }
-
-    public void shootFromRotation(Entity pShooter, Entity shotEntity, float pX, float pY, float pZ, float pVelocity, float pInaccuracy) {
-        float f = -Mth.sin(pY * ((float)Math.PI / 180F)) * Mth.cos(pX * ((float)Math.PI / 180F));
-        float f1 = -Mth.sin((pX + pZ) * ((float)Math.PI / 180F));
-        float f2 = Mth.cos(pY * ((float)Math.PI / 180F)) * Mth.cos(pX * ((float)Math.PI / 180F));
-        shoot(shotEntity, (double)f, (double)f1, (double)f2, pVelocity, pInaccuracy);
-        Vec3 vec3 = pShooter.getDeltaMovement();
-        shotEntity.setDeltaMovement(shotEntity.getDeltaMovement().add(vec3.x, pShooter.onGround() ? 0.0D : vec3.y, vec3.z));
+    @SubscribeEvent
+    public static void onLivingJump(LivingEvent.LivingJumpEvent event) {
+        if (event.getEntity() instanceof Player player) {
+            jump(player);
+            System.out.println("jump");
+        }
     }
-
+    @Override
+    public void onUse(Player player) {
+        jump(player);
+    }
+    private static void jump(Player player){
+        player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
+        ItemStackHandler handler = backSlot.getInventory();
+        ItemStack backItem = handler.getStackInSlot(0);
+            if (!backItem.isEmpty() && backItem.getItem() instanceof JumpPackItem pack && !player.getCooldowns().isOnCooldown(pack))  {
+                Vec3 look = player.getLookAngle();
+                player.addDeltaMovement(new Vec3(look.x * 0.5, 1.0, look.z * 0.5));
+                player.getCooldowns().addCooldown(pack, 260);
+                System.out.print(pack);
+            }
+            });
+        System.out.println("jump");   
+    }
 }
