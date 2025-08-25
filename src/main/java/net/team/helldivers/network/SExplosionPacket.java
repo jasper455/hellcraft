@@ -48,16 +48,17 @@ public class SExplosionPacket {
         if (player == null) return;
         boolean doFlyingBlocks = player.level().getGameRules().getBoolean(ModGameRules.DO_FLYING_BLOCKS);
         if (!isNapalm) {
-            ParticleEmitterInfo hit = EffekLoader.HIT.clone().position(position.getCenter()).scale(0.5f).scale(radius);
+            ParticleEmitterInfo boom = EffekLoader.BLAST.clone().position(position.getCenter()).scale(radius);
+            AAALevel.addParticle(player.level(), 256, boom);
             if (!doFlyingBlocks) {
-                 AAALevel.addParticle(player.level(), hit);
                 player.level().explode(null, position.getX(), position.getY(), position.getZ(), radius, false, Level.ExplosionInteraction.BLOCK);
             } else {
-                 AAALevel.addParticle(player.level(), hit);
                 player.level().explode(null, position.getX(), position.getY(), position.getZ(), radius, false, Level.ExplosionInteraction.BLOCK);
                 flyingBlocksExplosion(player.level(), position, radius / 2);
             }
         } else {
+            ParticleEmitterInfo boom = EffekLoader.NAPALM_BURST.clone().position(position.getCenter()).scale(radius);
+            AAALevel.addParticle(player.level(), 256, boom);
             player.level().explode(null, position.getX(), position.getY(), position.getZ(), radius, true, Level.ExplosionInteraction.NONE);
         }
     }

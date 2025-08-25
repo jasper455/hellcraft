@@ -1,5 +1,7 @@
 package net.team.helldivers.entity.custom;
 
+import mod.chloeprime.aaaparticles.api.common.AAALevel;
+import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -23,12 +25,14 @@ import net.team.helldivers.block.custom.BotContactMineBlock;
 import net.team.helldivers.damage.ModDamageSources;
 import net.team.helldivers.damage.ModDamageTypes;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.particle.EffekLoader;
 import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 public class HeatedGasProjectileEntity extends AbstractArrow {
     public Vec2 groundedOffset;
     private Vec3 previousPos;
     private int lifetime = 0;
+    private boolean hasParticle;
 
     public HeatedGasProjectileEntity(EntityType<? extends AbstractArrow> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -51,6 +55,8 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
+        ParticleEmitterInfo hit = EffekLoader.PLASMA_HIT.clone().position(this.position());
+        AAALevel.addParticle(this.level(), true, hit);
         super.onHitEntity(result);
         Entity entity = result.getEntity();
         BlockPos pos = entity.blockPosition();
@@ -58,8 +64,8 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
         if (!this.level().isClientSide) {
             this.level().broadcastEntityEvent(this, (byte)3);
         }
-        this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER,
-                pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
+        //this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER,
+               // pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(1.5)).forEach(entity1 -> {
             if (this.getOwner() != null) {
                 entity1.hurt(ModDamageSources.raycast(this.getOwner()), 20.0F);
@@ -76,8 +82,10 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
         if (block.is(BlockTags.IMPERMEABLE) || block.getBlock() instanceof IronBarsBlock) {
             this.level().destroyBlock(pos, false);
         }
-        this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER,
-                pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
+        ParticleEmitterInfo hit = EffekLoader.PLASMA_HIT.clone().position(this.position());
+        AAALevel.addParticle(this.level(), true, hit);
+       // this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER,
+              //  pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(1.5)).forEach(entity -> {
             if (this.getOwner() != null) {
                 entity.hurt(ModDamageSources.raycast(this.getOwner()), 10.0F);
@@ -96,8 +104,12 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
 
     @Override
     public void tick() {
-        this.setDeltaMovement(this.getDeltaMovement().normalize().scale(20f));
-
+        this.setDeltaMovement(this.getDeltaMovement().normalize().scale(5f));
+        if(!hasParticle){
+            ParticleEmitterInfo trail = EffekLoader.PLASMA.clone().bindOnEntity(this);
+            AAALevel.addParticle(this.level(), true, trail);
+            hasParticle = true;
+        }
         this.previousPos = new Vec3(this.getX(), this.getY(), this.getZ());
 
         if (this.level().dimension().equals(ModDimensions.SUPER_DESTROYER_DIM)) {
@@ -108,7 +120,7 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
         lifetime++;
         if (this.level().isClientSide) {
             Entity owner = this.getOwner();
-            if (owner instanceof Player player) {
+            /*if (owner instanceof Player player) {
                 // Create particles along the path
                 Vec3 current = new Vec3(this.getX(), this.getY(), this.getZ());
                 Vec3 direction = current.subtract(previousPos);
@@ -127,7 +139,7 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
                     this.level().addParticle(ParticleTypes.ENCHANTED_HIT,
                             pos.x, pos.y, pos.z, 0, 0, 0);
                 }
-            }
+            }*/
         }
         if (lifetime >= 200) {
             this.discard();
