@@ -3,7 +3,6 @@ package net.team.helldivers.screen.custom;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -12,16 +11,16 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.team.helldivers.block.entity.custom.ExtractionTerminalBlockEntity;
+import net.team.helldivers.block.entity.custom.GalacticTerminalBlockEntity;
 import net.team.helldivers.item.custom.IStratagemItem;
 import net.team.helldivers.screen.ModMenuTypes;
 
-public class ExtractionTerminalMenu extends AbstractContainerMenu {
+public class StratagemSelectMenu extends AbstractContainerMenu {
     private final Container inventory;
     private final Player player;
     private final BlockPos pos;
 
-    public ExtractionTerminalMenu(int containerId, Inventory playerInventory, Container inventory, BlockPos pos) {
+    public StratagemSelectMenu(int containerId, Inventory playerInventory, Container inventory, BlockPos pos) {
         super(ModMenuTypes.EXTRACTION_TERMINAL.get(), containerId);
         this.inventory = inventory;
         this.player = playerInventory.player;
@@ -42,7 +41,7 @@ public class ExtractionTerminalMenu extends AbstractContainerMenu {
     }
 
     // Client-side constructor
-    public ExtractionTerminalMenu(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
+    public StratagemSelectMenu(int containerId, Inventory playerInventory, FriendlyByteBuf buf) {
         this(containerId, playerInventory, new SimpleContainer(4), buf.readBlockPos());
 
         // Add the stratagem inventory slots
@@ -115,8 +114,8 @@ public class ExtractionTerminalMenu extends AbstractContainerMenu {
         super.removed(player);
         if (!player.level().isClientSide) {
             BlockEntity blockEntity = player.level().getBlockEntity(this.pos);
-            if (blockEntity instanceof ExtractionTerminalBlockEntity extractionTerminal) {
-                extractionTerminal.savePlayerInventory(player, this.inventory);
+            if (blockEntity instanceof GalacticTerminalBlockEntity GalacticTerminal) {
+                GalacticTerminal.savePlayerInventory(player, this.inventory);
             }
         }
     }

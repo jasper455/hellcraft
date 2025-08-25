@@ -1,5 +1,7 @@
 package net.team.helldivers.entity.custom;
 
+import mod.chloeprime.aaaparticles.api.common.AAALevel;
+import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -16,6 +18,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.particle.EffekLoader;
 import net.team.helldivers.worldgen.dimension.ModDimensions;
 
 public class FireGrenadeEntity extends AbstractArrow {
@@ -87,6 +90,8 @@ public class FireGrenadeEntity extends AbstractArrow {
         }
 
         if (!this.level().isClientSide && this.groundedTicks >= 1) {
+            ParticleEmitterInfo boom = EffekLoader.NAPALM_BURST.clone().position(this.position());
+            AAALevel.addParticle(this.level(), 256, boom);
             this.level().explode(this, this.getX(), this.getY(), this.getZ(), 1, true , Level.ExplosionInteraction.NONE);
             this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(1.5)).forEach(entity -> {
                 entity.hurt(level().damageSources().explosion(null), 10.0F);

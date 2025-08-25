@@ -15,8 +15,12 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.network.NetworkEvent;
 import net.team.helldivers.gamerule.ModGameRules;
+import net.team.helldivers.particle.EffekLoader;
 
 import java.util.function.Supplier;
+
+import mod.chloeprime.aaaparticles.api.common.AAALevel;
+import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 
 public class SExplosionPacket {
     private final BlockPos position;
@@ -44,6 +48,8 @@ public class SExplosionPacket {
         if (player == null) return;
         boolean doFlyingBlocks = player.level().getGameRules().getBoolean(ModGameRules.DO_FLYING_BLOCKS);
         if (!isNapalm) {
+            ParticleEmitterInfo boom = EffekLoader.BLAST.clone().position(position.getCenter()).scale(radius);
+            AAALevel.addParticle(player.level(), 256, boom);
             if (!doFlyingBlocks) {
                 player.level().explode(null, position.getX(), position.getY(), position.getZ(), radius, false, Level.ExplosionInteraction.BLOCK);
             } else {
@@ -51,6 +57,8 @@ public class SExplosionPacket {
                 flyingBlocksExplosion(player.level(), position, radius / 2);
             }
         } else {
+            ParticleEmitterInfo boom = EffekLoader.NAPALM_BURST.clone().position(position.getCenter()).scale(radius);
+            AAALevel.addParticle(player.level(), 256, boom);
             player.level().explode(null, position.getX(), position.getY(), position.getZ(), radius, true, Level.ExplosionInteraction.NONE);
         }
     }

@@ -91,6 +91,7 @@ public class HelldiversMod {
         EntityRenderers.register(ModEntities.STRATAGEM_ORB.get(), StratagemOrbProjectileRenderer::new);
         EntityRenderers.register(ModEntities.BULLET.get(), BulletProjectileRenderer::new);
         EntityRenderers.register(ModEntities.FIRE_BULLET.get(), FireBulletProjectileRenderer::new);
+        EntityRenderers.register(ModEntities.SMALL_GRENADE.get(), SmallGrenadeProjectileRenderer::new);
         EntityRenderers.register(ModEntities.ROCKET.get(), RocketProjectileRenderer::new);
         EntityRenderers.register(ModEntities.FRAG_GRENADE.get(), FragGrenadeProjectileRenderer::new);
         EntityRenderers.register(ModEntities.FIRE_GRENADE.get(), FireGrenadeProjectileRenderer::new);
@@ -114,7 +115,7 @@ public class HelldiversMod {
             MenuScreens.register(ModMenuTypes.SUPPORT_HELLPOD_MENU.get(), SupportHellpodScreen::new);
             MenuScreens.register(ModMenuTypes.HELLBOMB_INPUT_MENU.get(), HellbombInputScreen::new);
             MenuScreens.register(ModMenuTypes.HELLBOMB_ENTITY_INPUT_MENU.get(), HellbombEntityInputScreen::new);
-            MenuScreens.register(ModMenuTypes.EXTRACTION_TERMINAL.get(), ExtractionTerminalScreen::new);
+            MenuScreens.register(ModMenuTypes.EXTRACTION_TERMINAL.get(), StratagemSelectScreen::new);
             MenuScreens.register(ModMenuTypes.GALAXY_MAP_MENU.get(), GalaxyMapScreen::new);
 
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.SUPER_DESTROYER_GLASS.get(), RenderType.translucent());

@@ -1,5 +1,7 @@
 package net.team.helldivers.entity.custom;
 
+import mod.chloeprime.aaaparticles.api.common.AAALevel;
+import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.core.Direction;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -23,6 +25,7 @@ import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.helper.OrbitalBarrage;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SExplosionPacket;
+import net.team.helldivers.particle.EffekLoader;
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.worldgen.dimension.ModDimensions;
 
@@ -93,6 +96,8 @@ public class FragGrenadeEntity extends AbstractArrow {
         }
 
         if (groundedTicks == 15 && !this.level().isClientSide) {
+            ParticleEmitterInfo boom = EffekLoader.BLAST.clone().position(this.position());
+            AAALevel.addParticle(this.level(), 256, boom);
             this.level().explode(this, this.getX(), this.getY(), this.getZ(), 1, false, Level.ExplosionInteraction.BLOCK);
             this.level().explode(this, this.getX(), this.getY(), this.getZ(), 1, false, Level.ExplosionInteraction.BLOCK);
             this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(3.0)).forEach(entity -> {
