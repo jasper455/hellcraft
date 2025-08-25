@@ -74,7 +74,6 @@ public class ModCreativeModeTabs {
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.PRECISION_STRIKE.get()))
                     .title(Component.translatable("creativetab.stratagems"))
                     .displayItems((itemDisplayParameters, output) -> {
-                        output.accept(ModBlocks.HELLBOMB.get());
                         //Other
                         output.accept(ModItems.HELLBOMB_ITEM.get());
                         //Supports
@@ -82,6 +81,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.ANTI_TANK_STRATAGEM.get());
                         output.accept(ModItems.STALWART_STRATAGEM.get());
                         output.accept(ModItems.AMR_STRATAGEM.get());
+                        output.accept(ModItems.PORTABLE_HELLBOMB_STRATAGEM.get());
+                        output.accept(ModItems.JUMP_PACK_STRATAGEM.get());
                         //Orbitals
                         output.accept(ModItems.SMALL_BARRAGE.get());
                         output.accept(ModItems.BIG_BARRAGE.get());

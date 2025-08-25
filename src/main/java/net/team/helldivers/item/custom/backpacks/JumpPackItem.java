@@ -1,6 +1,7 @@
 package net.team.helldivers.item.custom.backpacks;
 
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -34,10 +35,12 @@ public class JumpPackItem extends AbstractBackpackItem {
     public JumpPackItem(Properties properties) {
         super(properties);
     }
+
     @Override
     public BlockEntityWithoutLevelRenderer createRenderer() {
         return new JumpPackRenderer();
     }
+
     @Override
     public void inventoryTick(ItemStack pStack, Level pLevel, Entity pEntity, int pSlotId, boolean pIsSelected) {
         super.inventoryTick(pStack, pLevel, pEntity, pSlotId, pIsSelected);
@@ -52,17 +55,20 @@ public class JumpPackItem extends AbstractBackpackItem {
             });
         }
     }
+
     @SubscribeEvent
     public static void onLivingJump(LivingEvent.LivingJumpEvent event) {
         if (event.getEntity() instanceof Player player) {
             jump(player);
-            System.out.println("jump");
+//            System.out.println("jump");
         }
     }
+
     @Override
     public void onUse(Player player) {
         jump(player);
     }
+
     private static void jump(Player player){
         player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
         ItemStackHandler handler = backSlot.getInventory();
@@ -71,9 +77,11 @@ public class JumpPackItem extends AbstractBackpackItem {
                 Vec3 look = player.getLookAngle();
                 player.addDeltaMovement(new Vec3(look.x * 0.5, 1.0, look.z * 0.5));
                 player.getCooldowns().addCooldown(pack, 260);
-                System.out.print(pack);
+                MobEffectInstance slowFall = new MobEffectInstance(MobEffects.SLOW_FALLING, 60);
+                player.addEffect(slowFall);
+//                System.out.print(pack);
             }
             });
-        System.out.println("jump");   
+//        System.out.println("jump");
     }
 }

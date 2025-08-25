@@ -19,6 +19,6 @@ public class PortableHellbombModel extends GeoModel<PortableHellbombItem> {
 
     @Override
     public ResourceLocation getAnimationResource(PortableHellbombItem animatable) {
-        return null;
+        return ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "animations/item/portable_hellbomb.animation.json");
     }
 }

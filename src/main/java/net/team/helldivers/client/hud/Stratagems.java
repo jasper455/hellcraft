@@ -409,6 +409,116 @@ public class Stratagems {
                 }
             }
 
+            // Portable Hellbomb inputs
+
+            if (ClientItemCache.contains(ModItems.PORTABLE_HELLBOMB_STRATAGEM.get().getDefaultInstance()) &&
+                ClientItemCache.isOnCooldown(ModItems.PORTABLE_HELLBOMB_STRATAGEM.get().getDefaultInstance()) && !isJammed) {
+                switch (PortableHellbombHud.inputStep) {
+                    case 0 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            PortableHellbombHud.firstInputDown = true;
+                            PortableHellbombHud.inputStep++;
+                        } else if (downNotPressed) {
+                            PortableHellbombHud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            PortableHellbombHud.secondInputDown = true;
+                            PortableHellbombHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            PortableHellbombHud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            PortableHellbombHud.thirdInputDown = true;
+                            PortableHellbombHud.inputStep++;
+                        } else if (upNotPressed) {
+                            PortableHellbombHud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            PortableHellbombHud.fourthInputDown = true;
+                            PortableHellbombHud.inputStep++;
+                        } else if (upNotPressed) {
+                            PortableHellbombHud.resetInputValues();
+                        }
+                    }
+                    case 4 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            PortableHellbombHud.fifthInputDown = true;
+                            PortableHellbombHud.allInputsDown = true;
+                            PortableHellbombHud.inputStep++;
+                        } else if (upNotPressed) {
+                            PortableHellbombHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
+            // Jump Pack inputs
+
+            if (ClientItemCache.contains(ModItems.JUMP_PACK_STRATAGEM.get().getDefaultInstance()) &&
+                ClientItemCache.isOnCooldown(ModItems.JUMP_PACK_STRATAGEM.get().getDefaultInstance()) && !isJammed) {
+                switch (JumpPackHud.inputStep) {
+                    case 0 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            JumpPackHud.firstInputDown = true;
+                            JumpPackHud.inputStep++;
+                        } else if (downNotPressed) {
+                            JumpPackHud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            JumpPackHud.secondInputDown = true;
+                            JumpPackHud.inputStep++;
+                        } else if (upNotPressed) {
+                            JumpPackHud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            JumpPackHud.thirdInputDown = true;
+                            JumpPackHud.inputStep++;
+                        } else if (upNotPressed) {
+                            JumpPackHud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            JumpPackHud.fourthInputDown = true;
+                            JumpPackHud.inputStep++;
+                        } else if (downNotPressed) {
+                            JumpPackHud.resetInputValues();
+                        }
+                    }
+                    case 4 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            JumpPackHud.fifthInputDown = true;
+                            JumpPackHud.allInputsDown = true;
+                            JumpPackHud.inputStep++;
+                        } else if (upNotPressed) {
+                            JumpPackHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
             // Precision Strike inputs
 
             if (ClientItemCache.contains(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) &&
@@ -1003,6 +1113,18 @@ public class Stratagems {
                     ClientItemCache.getSlotWithItem(ModItems.AMR_STRATAGEM.get().getDefaultInstance())), 9600));
             resetInputValues();
         }
+        if (PortableHellbombHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Portable Hellbomb"));
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
+                    ClientItemCache.getSlotWithItem(ModItems.PORTABLE_HELLBOMB_STRATAGEM.get().getDefaultInstance())), 6000));
+            resetInputValues();
+        }
+        if (JumpPackHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Jump Pack"));
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
+                    ClientItemCache.getSlotWithItem(ModItems.JUMP_PACK_STRATAGEM.get().getDefaultInstance())), 9600));
+            resetInputValues();
+        }
         if (PrecisionStrikeHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Precision Strike"));
             PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
@@ -1141,6 +1263,26 @@ public class Stratagems {
             else if (ClientItemCache.contains(ModItems.AMR_STRATAGEM.get().getDefaultInstance()) &&
                     !ClientItemCache.isOnCooldown(ModItems.AMR_STRATAGEM.get().getDefaultInstance())) {
                 AmrHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.AMR_STRATAGEM.get().getDefaultInstance()));
+            }
+
+            // Portable Hellbomb Render HUD Code
+            if (ClientItemCache.contains(ModItems.PORTABLE_HELLBOMB_STRATAGEM.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.PORTABLE_HELLBOMB_STRATAGEM.get().getDefaultInstance())) {
+                PortableHellbombHud.renderPortableHellbombHud(guiGraphics, ClientItemCache.getSlotWithItem(ModItems.PORTABLE_HELLBOMB_STRATAGEM.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (ClientItemCache.contains(ModItems.PORTABLE_HELLBOMB_STRATAGEM.get().getDefaultInstance()) &&
+                    !ClientItemCache.isOnCooldown(ModItems.PORTABLE_HELLBOMB_STRATAGEM.get().getDefaultInstance())) {
+                PortableHellbombHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.PORTABLE_HELLBOMB_STRATAGEM.get().getDefaultInstance()));
+            }
+
+            // Jump Render HUD Code
+            if (ClientItemCache.contains(ModItems.JUMP_PACK_STRATAGEM.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.JUMP_PACK_STRATAGEM.get().getDefaultInstance())) {
+                JumpPackHud.renderJumpPackHud(guiGraphics, ClientItemCache.getSlotWithItem(ModItems.JUMP_PACK_STRATAGEM.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (ClientItemCache.contains(ModItems.JUMP_PACK_STRATAGEM.get().getDefaultInstance()) &&
+                    !ClientItemCache.isOnCooldown(ModItems.JUMP_PACK_STRATAGEM.get().getDefaultInstance())) {
+                JumpPackHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.JUMP_PACK_STRATAGEM.get().getDefaultInstance()));
             }
 
             // ORBITAL
@@ -1290,6 +1432,20 @@ public class Stratagems {
                 AmrHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.AMR_STRATAGEM.get().getDefaultInstance()));
             }
 
+            // Portable Hellbomb Cooldown Complete Popup Code
+            if (!ClientItemCache.isOnCooldown(ModItems.PORTABLE_HELLBOMB_STRATAGEM.get().getDefaultInstance()) &&
+                    ClientItemCache.getCooldownLeft(ModItems.PORTABLE_HELLBOMB_STRATAGEM.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.PORTABLE_HELLBOMB_STRATAGEM.get().getDefaultInstance())) {
+                PortableHellbombHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.PORTABLE_HELLBOMB_STRATAGEM.get().getDefaultInstance()));
+            }
+
+            // Jump Pack Cooldown Complete Popup Code
+            if (!ClientItemCache.isOnCooldown(ModItems.JUMP_PACK_STRATAGEM.get().getDefaultInstance()) &&
+                    ClientItemCache.getCooldownLeft(ModItems.JUMP_PACK_STRATAGEM.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.JUMP_PACK_STRATAGEM.get().getDefaultInstance())) {
+                JumpPackHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.JUMP_PACK_STRATAGEM.get().getDefaultInstance()));
+            }
+
             // ORBITAL
 
             if (!ClientItemCache.isOnCooldown(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) &&
@@ -1399,6 +1555,8 @@ public class Stratagems {
         NapalmAirstrikeHud.resetInputValues();
         StalwartHud.resetInputValues();
         AmrHud.resetInputValues();
+        PortableHellbombHud.resetInputValues();
+        JumpPackHud.resetInputValues();
         allInputsDown = false;
     }
 }

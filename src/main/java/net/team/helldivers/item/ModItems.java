@@ -104,6 +104,12 @@ public class ModItems {
             () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
     public static final RegistryObject<Item> AMR_STRATAGEM = ITEMS.register("amr_stratagem",
             () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
+
+    public static final RegistryObject<Item> PORTABLE_HELLBOMB_STRATAGEM = ITEMS.register("portable_hellbomb_stratagem",
+            () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
+
+    public static final RegistryObject<Item> JUMP_PACK_STRATAGEM = ITEMS.register("jump_pack_stratagem",
+            () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
     // ORBITAL
     public static final RegistryObject<Item> SMALL_BARRAGE = ITEMS.register("small_barrage",
             () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));

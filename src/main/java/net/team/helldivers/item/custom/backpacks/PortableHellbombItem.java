@@ -21,16 +21,37 @@ import net.team.helldivers.helper.DelayedPortableHellbombExplosion;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.STeleportToDimensionPacket;
 import net.team.helldivers.worldgen.dimension.ModDimensions;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 
 public class PortableHellbombItem extends AbstractBackpackItem {
+    public static final RawAnimation ACTIVATE = RawAnimation.begin().thenPlay("activate");
+    public static final RawAnimation IDLE = RawAnimation.begin().thenPlayAndHold("idle");
+
+    private boolean isActivated;
+
     public PortableHellbombItem(Properties properties) {
         super(properties);
     }
 
     @Override
     public void onUse(Player player) {
-        MinecraftForge.EVENT_BUS.register(new DelayedPortableHellbombExplosion(player.level(), player.blockPosition(),
-                15, 300, player));
+        if (!this.isActivated) {
+            MinecraftForge.EVENT_BUS.register(new DelayedPortableHellbombExplosion(player.level(), player.blockPosition(),
+                    15, 300, player));
+            this.isActivated = true;
+        }
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        AnimationController<?> activateController = new AnimationController<>(this, "activate", 0,
+                state -> state.setAndContinue(this.isActivated ? ACTIVATE : IDLE));
+
+        controllers.add(activateController);
+
     }
 
     @Override
@@ -38,4 +59,11 @@ public class PortableHellbombItem extends AbstractBackpackItem {
         return new PortableHellbombRenderer();
     }
 
+    public boolean isActivated() {
+        return this.isActivated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.isActivated = activated;
+    }
 }
