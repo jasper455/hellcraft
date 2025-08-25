@@ -14,7 +14,7 @@ import net.team.helldivers.sound.ModSounds;
 public class  GpItem extends AbstractGunItem {
 
     public GpItem(Properties properties) {
-        super(properties.durability(6).rarity(Rarity.COMMON),false,  true, "§e[Explosive]", 10, ModSounds.PLAS1_RELOAD);//TEMP SOUNDS
+        super(properties.durability(2).rarity(Rarity.COMMON),false,  true, "§e[Explosive]", 10, ModSounds.PLAS1_RELOAD);//TEMP SOUNDS
     }
     @Override
     public void onShoot(ItemStack itemStack, ServerPlayer player) {
@@ -22,7 +22,7 @@ public class  GpItem extends AbstractGunItem {
             if (itemStack.getDamageValue() < itemStack.getMaxDamage() - 1) {
                 // Play sound
                 player.level().playSound(null, player.blockPosition(),
-                        ModSounds.PLAS1_SHOOT.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
+                        ModSounds.PLAS1_SHOOT.get(), SoundSource.PLAYERS, 1.0f, 1.0f);
                 PacketHandler.sendToPlayer(new CApplyRecoilPacket(7.0f), player);
                 // Actually shoot the bullet
                 SmallGrenadeEntity grenade = new SmallGrenadeEntity(player, player.level(), 1);

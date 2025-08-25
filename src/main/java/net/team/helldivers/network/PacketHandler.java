@@ -153,6 +153,7 @@ public class PacketHandler {
                 .decoder(CStopSoundPacket::new)
                 .consumerMainThread(CStopSoundPacket::handle)
                 .add();
+        
     }
 
     public static void sendToServer(Object msg) {
