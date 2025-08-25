@@ -64,14 +64,14 @@ public class ShootHelper {
                     alive.knockback(knockback, -look.x, -look.z);
                }
             }*/ //TODO fix this stuff... the obb is just not working and if we are going to upload this I would rather have a fully working headshot system then a buggy mess
-            else{
+            //else{
                 entity.hurt(entity.damageSources().generic(), dam);
                if(entity instanceof LivingEntity alive){
                     if(ignoreIframes) alive.invulnerableTime = 0;
                     Vec3 look = shooter.getLookAngle().normalize();
                     alive.knockback(knockback, -look.x, -look.z);
                }
-            }
+            //}
         }
         if(result.getType() == HitResult.Type.BLOCK){
             BlockHitResult resultB = ((BlockHitResult)result);
