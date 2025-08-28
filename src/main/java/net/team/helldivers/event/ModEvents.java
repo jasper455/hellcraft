@@ -14,6 +14,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
@@ -52,6 +54,7 @@ import net.team.helldivers.entity.custom.BulletProjectileEntity;
 import net.team.helldivers.helper.ClientBackSlotCache;
 import net.team.helldivers.item.custom.armor.IDemocracyProtects;
 import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
+import net.team.helldivers.network.CHitMarkPacket;
 import net.team.helldivers.network.CSyncBackSlotPacket;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SSetBackSlotPacket;
@@ -129,6 +132,20 @@ public class ModEvents {
             event.setCanceled(true); // Prevent damage
         }
     }
+    @SubscribeEvent
+    public static void onLivingHurt(LivingHurtEvent event) {
+    DamageSource source = event.getSource();
+        if (source.is(DamageTypeTags.IS_EXPLOSION)) {
+            System.out.println(source.getEntity());//this is null when any of the mod explosions damages somthing. not null when a player ignites a tnt with flint and steel
+            if(source.getEntity() instanceof Player player){
+                System.out.println("boom");
+                if(!player.level().isClientSide){
+                    PacketHandler.sendToPlayer(new CHitMarkPacket(), ((ServerPlayer)player));
+                }
+            }
+        }
+    }
+
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
