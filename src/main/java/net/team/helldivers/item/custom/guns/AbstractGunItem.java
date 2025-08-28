@@ -332,7 +332,7 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
                 if(isAiming){
                     ShootHelper.shoot(player, player.level(), drift, dam, 0.3f, true);
                 }else{
-                    ShootHelper.shoot(player, player.level(), drift+0.03, dam, 0.3f, true);
+                    ShootHelper.shoot(player, player.level(), drift+0.01, dam, 0.3f, true);
                 }
                 player.getCooldowns().addCooldown(itemStack.getItem(), fireDelay);
 

@@ -153,6 +153,11 @@ public class PacketHandler {
                 .decoder(CStopSoundPacket::new)
                 .consumerMainThread(CStopSoundPacket::handle)
                 .add();
+        INSTANCE.messageBuilder(CHitMarkPacket.class, index++, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(CHitMarkPacket::encode)
+                .decoder(CHitMarkPacket::new)
+                .consumerMainThread(CHitMarkPacket::handle)
+                .add();
         
     }
 

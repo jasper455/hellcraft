@@ -2,6 +2,7 @@ package net.team.helldivers.entity.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.EntityType;
@@ -15,6 +16,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.network.CHitMarkPacket;
+import net.team.helldivers.network.PacketHandler;
 
 public class FlameBulletEntity extends AbstractArrow{
     private int maxLife = 25;
@@ -31,7 +34,10 @@ public class FlameBulletEntity extends AbstractArrow{
     protected void onHitEntity(EntityHitResult result) {
         if(result.getEntity() instanceof LivingEntity alive){
             alive.setSecondsOnFire(5);
-            alive.hurt( alive.damageSources().inFire(), 2);
+             if (!this.level().isClientSide && this.getOwner() instanceof ServerPlayer player) {
+                    PacketHandler.sendToPlayer(new CHitMarkPacket(), player);
+            }
+            alive.hurt( alive.damageSources().inFire(), 3);
         }
     }
     @Override

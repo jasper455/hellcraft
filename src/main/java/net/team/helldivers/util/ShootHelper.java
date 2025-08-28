@@ -18,12 +18,14 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.boss.EnderDragonPart;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
@@ -37,6 +39,9 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import net.team.helldivers.block.custom.BotContactMineBlock;
+import net.team.helldivers.network.CApplyRecoilPacket;
+import net.team.helldivers.network.CHitMarkPacket;
+import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.particle.EffekLoader;
 import net.team.helldivers.util.Headshots.HeadHitbox;
 import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
@@ -47,14 +52,17 @@ public class ShootHelper {
         Pair<HitResult, Vec3> pair = raycast(level, shooter, drift, true);
         HitResult result = pair.getFirst();
         Vec3 hitPos = pair.getSecond();
-        ParticleEmitterInfo hit = EffekLoader.HIT.clone().position(result.getLocation()).scale(0.1f);//.parameter(0, dist/2); 
+        ParticleEmitterInfo hit = EffekLoader.HIT.clone().position(hitPos).scale(0.1f);//.parameter(0, dist/2); 
         AAALevel.addParticle(shooter.level(), true, hit);
         if(result.getType() == HitResult.Type.ENTITY){
             EntityHitResult resultE = ((EntityHitResult)result);
             Entity entity = resultE.getEntity();
             if (!level.isClientSide) {
-                 ((ServerLevel) level).sendParticles(ParticleTypes.CRIT, hitPos.x, hitPos.y, hitPos.z, 10, 0, 0, 0, 0);
+                if(shooter instanceof ServerPlayer player){
+                    PacketHandler.sendToPlayer(new CHitMarkPacket(), player);
                 }
+                 ((ServerLevel) level).sendParticles(ParticleTypes.CRIT, hitPos.x, hitPos.y, hitPos.z, 10, 0, 0, 0, 0);
+            }
             /*if(checkHeadShot(resultE, hitPos)){
                 entity.hurt(entity.damageSources().generic(), dam*2);
                 System.out.println("HEADSHOT");
@@ -77,6 +85,12 @@ public class ShootHelper {
             BlockHitResult resultB = ((BlockHitResult)result);
             BlockPos pos = resultB.getBlockPos();
             BlockState block = Minecraft.getInstance().level.getBlockState(pos);
+            if (block.getBlock() instanceof BotContactMineBlock) {
+            shooter.level().setBlockAndUpdate(resultB.getBlockPos(), Blocks.AIR.defaultBlockState());
+            shooter.level().getEntitiesOfClass(LivingEntity.class, new AABB(resultB.getBlockPos()).inflate(3.0)).forEach(entity -> {
+                entity.hurt(shooter.level().damageSources().explosion(null), 12.5F);
+            });
+        }
             if (block.is(BlockTags.IMPERMEABLE) || block.getBlock() instanceof IronBarsBlock) {
                 level.destroyBlock(pos, false);
             }

@@ -6,6 +6,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
@@ -23,6 +25,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.team.helldivers.block.custom.BotContactMineBlock;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.network.CHitMarkPacket;
+import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.particle.EffekLoader;
 import net.team.helldivers.worldgen.dimension.ModDimensions;
 
@@ -59,6 +63,9 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
         Entity entity = result.getEntity();
         BlockPos pos = entity.blockPosition();
         entity.hurt(this.damageSources().arrow(this, this.getOwner()), 30);
+        if (!this.level().isClientSide && this.getOwner() instanceof ServerPlayer player) {
+                    PacketHandler.sendToPlayer(new CHitMarkPacket(), player);
+        }
         if (!this.level().isClientSide) {
             this.level().broadcastEntityEvent(this, (byte)3);
         }
@@ -66,6 +73,9 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
                // pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(1.5)).forEach(entity1 -> {
             entity1.hurt(level().damageSources().explosion(null), 20.0F);
+             if (!this.level().isClientSide && this.getOwner() instanceof ServerPlayer player && entity1 !=null) {
+                PacketHandler.sendToPlayer(new CHitMarkPacket(), player);
+            }
         });
         this.discard();
     }
@@ -84,6 +94,9 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
               //  pos.getX(), pos.getY(), pos.getZ(), 0, 0, 0);
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(1.5)).forEach(entity -> {
             entity.hurt(level().damageSources().explosion(null), 10.0F);
+             if (!this.level().isClientSide && this.getOwner() instanceof ServerPlayer player && entity !=null) {
+                PacketHandler.sendToPlayer(new CHitMarkPacket(), player);
+            }
         });
         if (block.getBlock() instanceof BotContactMineBlock) {
             this.level().setBlockAndUpdate(result.getBlockPos(), Blocks.AIR.defaultBlockState());
