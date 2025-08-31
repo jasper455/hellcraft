@@ -39,7 +39,7 @@ public class MovingSoundInstance extends AbstractTickableSoundInstance {
     }
 
     public void stopSound() {
-        entity.sendSystemMessage(Component.literal("test"));
+//        entity.sendSystemMessage(Component.literal("test"));
         this.stop();
     }
 }
