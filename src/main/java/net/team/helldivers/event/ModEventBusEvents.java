@@ -43,6 +43,7 @@ public class ModEventBusEvents {
         event.put(ModBotEntities.DEVASTATOR.get(), DevastatorEntity.createAttributes().build());
         event.put(ModBotEntities.COMMISSAR.get(), CommissarEntity.createAttributes().build());
         event.put(ModBotEntities.BRAWLER.get(), BrawlerEntity.createAttributes().build());
+        event.put(ModBotEntities.AUTOMATON_CANNON.get(), AutomatonCannonEntity.createAttributes().build());
     }
 
     @SubscribeEvent
