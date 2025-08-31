@@ -63,7 +63,7 @@ public class DebugRenderer {
                     OBB rotated = ShootHelper.rotateHeadOBB(entity, box);
                     Vec3[] corners = rotated.getCorners();
                     for (Vec3 corner : corners) {
-                        double size = 0.01; 
+                        double size = 0.01;
                         AABB dotBox = new AABB(
                             corner.x - size, corner.y - size, corner.z - size,
                             corner.x + size, corner.y + size, corner.z + size

@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.team.helldivers.client.renderer.entity.bots.*;
 import net.team.helldivers.network.SSetBackSlotPacket;
 import org.lwjgl.glfw.GLFW;
 
@@ -47,7 +48,9 @@ import net.team.helldivers.client.renderer.entity.HellpodRenderer;
 import net.team.helldivers.client.renderer.entity.OrbitalLaserRenderer;
 import net.team.helldivers.client.renderer.entity.SupportHellpodRenderer;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
+import net.team.helldivers.entity.ModBotEntities;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.entity.custom.bots.AutomatonTrooperEntity;
 import net.team.helldivers.item.custom.guns.AmrItem;
 import net.team.helldivers.item.custom.guns.AbstractGunItem;
 import net.team.helldivers.item.custom.guns.Plas1Item;
@@ -266,6 +269,13 @@ public class ModClientEvents {
             event.registerEntityRenderer(ModEntities.HELLBOMB_HELLPOD.get(), HellbombHellpodRenderer::new);
             event.registerEntityRenderer(ModEntities.HELLPOD.get(), HellpodRenderer::new);
             event.registerEntityRenderer(ModEntities.GATLING_SENTRY.get(), GatlingSentryHellpodRenderer::new);
+
+            event.registerEntityRenderer(ModBotEntities.HULK.get(), RangedHulkRenderer::new);
+            event.registerEntityRenderer(ModBotEntities.BERSERKER.get(), BerserkerRenderer::new);
+            event.registerEntityRenderer(ModBotEntities.AUTOMATON_TROOPER.get(), AutomatonTrooperRenderer::new);
+            event.registerEntityRenderer(ModBotEntities.DEVASTATOR.get(), DevastatorRenderer::new);
+            event.registerEntityRenderer(ModBotEntities.COMMISSAR.get(), CommissarRenderer::new);
+            event.registerEntityRenderer(ModBotEntities.BRAWLER.get(), BrawlerRenderer::new);
 
             event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
             event.registerBlockEntityRenderer(ModBlockEntities.EXTRACTION_TERMINAL.get(), context -> new ExtractionTerminalBlockRenderer());
