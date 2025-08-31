@@ -1,4 +1,4 @@
-// 1.20.1	2025-07-28T16:16:38.8969578	Item Models: helldivers
+// 1.20.1	2025-08-30T20:25:33.5198416	Item Models: helldivers
 975afeeffe669bd7a27ffebc2f385a50bc6897c4 assets/helldivers/models/item/500kg_bomb.json
 f2dc75440c892fff7ccfc27da727b8f1ddf053ad assets/helldivers/models/item/amr_stratagem.json
 1e70d3b46a91d0a9f10f4a23e869ed2a037b2476 assets/helldivers/models/item/b01_boots.json
@@ -22,6 +22,7 @@ dbcc18d882ec334612f2fd276174a69918fe31e8 assets/helldivers/models/item/fs05_legg
 ecdcee673c5722b7d2e7230f1653ff7283b32a0d assets/helldivers/models/item/napalm_airstrike.json
 2c28c4d7dbddd84740c4c57112ba0c6ac7f5aa47 assets/helldivers/models/item/napalm_barrage.json
 677c823c3218906390a44b93a9ca73ab88861eb2 assets/helldivers/models/item/orbital_laser.json
+12ce7d3762e4dd8942e80731ed495da168e2fb8e assets/helldivers/models/item/portable_hellbomb_stratagem.json
 1ec3a0283830eece3eec6f2ab9a0ee5889c482f4 assets/helldivers/models/item/precision_strike.json
 5f23624013f02a4223cf7f1cf15e39290a9f6b8d assets/helldivers/models/item/resupply.json
 a2ae146268303b0956d4550b85e0cf3636baff71 assets/helldivers/models/item/sc30_boots.json
