@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.client.model.entity.bots.AutomatonCannonModel;
 import net.team.helldivers.client.model.entity.bots.BerserkerModel;
+import net.team.helldivers.client.renderer.entity.bots.layer.BotEmissiveLayer;
 import net.team.helldivers.entity.custom.bots.AutomatonCannonEntity;
 import net.team.helldivers.entity.custom.bots.BerserkerEntity;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
@@ -15,6 +16,11 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class AutomatonCannonRenderer extends GeoEntityRenderer<AutomatonCannonEntity> {
     public AutomatonCannonRenderer(EntityRendererProvider.Context context) {
         super(context, new AutomatonCannonModel());
+        this.addRenderLayer(new BotEmissiveLayer<>(
+                this,
+                entity -> ResourceLocation.fromNamespaceAndPath(
+                        HelldiversMod.MOD_ID, "textures/entity/bots/cannon/cannon_e.png")
+        ));
         this.shadowRadius = 0.75f;
     }
 

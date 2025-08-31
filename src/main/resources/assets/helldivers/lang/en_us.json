@@ -141,6 +141,11 @@
   "sounds.helldivers.flamethrower_start_shooting": "FLAM-40 Starts Firing",
   "sounds.helldivers.flamethrower_stop_shooting": "FLAM-40 Stops Firing",
 
+  "sounds.helldivers.generic_automaton_death": "Automaton Dies",
+  "sounds.helldivers.generic_automaton_idle": "Automaton Idle",
+  "sounds.helldivers.hulk_death_explosion": "Automaton Hulk Explodes",
+  "sounds.helldivers.hulk_idle": "Automaton Hulk Idle",
+
   "container.helldivers.stratagem_picker": "§oStratagem Picker",
 
   "death.attack.orbitalLaser": "%1$s was vaporized by an Orbital Laser",

@@ -203,6 +203,30 @@
       "helldivers:flamethrower_stop_shooting"
     ]
   },
+  "generic_automaton_death": {
+    "subtitle": "sounds.helldivers.generic_automaton_death",
+    "sounds": [
+      "helldivers:generic_automaton_death"
+    ]
+  },
+  "generic_automaton_idle": {
+    "subtitle": "sounds.helldivers.generic_automaton_idle",
+    "sounds": [
+      "helldivers:generic_automaton_idle"
+    ]
+  },
+  "hulk_death_explosion": {
+    "subtitle": "sounds.helldivers.hulk_death_explosion",
+    "sounds": [
+      "helldivers:hulk_death_explosion"
+    ]
+  },
+  "hulk_idle": {
+    "subtitle": "sounds.helldivers.hulk_idle",
+    "sounds": [
+      "helldivers:hulk_idle"
+    ]
+  },
   "trap_royalty": {
     "sounds": [
       {

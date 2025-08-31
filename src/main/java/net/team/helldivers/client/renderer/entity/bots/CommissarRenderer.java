@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.client.model.entity.bots.AutomatonTrooperModel;
 import net.team.helldivers.client.model.entity.bots.CommissarModel;
+import net.team.helldivers.client.renderer.entity.bots.layer.BotEmissiveLayer;
 import net.team.helldivers.entity.custom.bots.AutomatonTrooperEntity;
 import net.team.helldivers.entity.custom.bots.CommissarEntity;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
@@ -15,6 +16,11 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class CommissarRenderer extends GeoEntityRenderer<CommissarEntity> {
     public CommissarRenderer(EntityRendererProvider.Context context) {
         super(context, new CommissarModel());
+        this.addRenderLayer(new BotEmissiveLayer<>(
+                this,
+                entity -> ResourceLocation.fromNamespaceAndPath(
+                        HelldiversMod.MOD_ID, "textures/entity/bots/commissar/commissar_e.png")
+        ));
         this.shadowRadius = 0.5f;
     }
 

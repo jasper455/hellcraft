@@ -4,10 +4,12 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.team.helldivers.HelldiversMod;
+import org.lwjgl.opengl.GL11;
 
 public class ModRenderTypes {
     public static final ResourceLocation SKY_ONE = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID,
@@ -18,6 +20,55 @@ public class ModRenderTypes {
             "textures/environment/sky_three.png");
     public static final ResourceLocation STARS = ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID,
             "textures/environment/stars.png");
+
+    public static final RenderType TRANSPARENT_SOLID = createTransparentSolid("custom_transparent_solid");
+
+    private static RenderType createTransparentSolid(String name) {
+        RenderStateShard.TextureStateShard textureState = new RenderStateShard.TextureStateShard(
+                null, // will be set per entity
+                false, false
+        );
+
+        return RenderType.create(
+                name,
+                DefaultVertexFormat.NEW_ENTITY, // same format used for translucent entities
+                VertexFormat.Mode.TRIANGLES,
+                256,
+                true,
+                true,
+                RenderType.CompositeState.builder()
+                        .setShaderState(RENDERTYPE_ENTITY_TRANSLUCENT_SHADER) // use translucent shader
+                        .setTextureState(textureState)
+                        .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                        .setDepthTestState(LEQUAL_DEPTH_TEST)
+                        .setCullState(NO_CULL)
+                        .setLightmapState(LIGHTMAP)
+                        .setOverlayState(OVERLAY)
+                        .createCompositeState(true)
+        );
+    }
+
+    // Reference to RenderStates used above
+    private static final RenderStateShard.ShaderStateShard RENDERTYPE_ENTITY_TRANSLUCENT_SHADER =
+            new RenderStateShard.ShaderStateShard(GameRenderer::getRendertypeEntityTranslucentShader);
+
+    private static final RenderStateShard.TransparencyStateShard TRANSLUCENT_TRANSPARENCY =
+            new RenderStateShard.TransparencyStateShard("translucent_transparency", () -> {
+                RenderSystem.enableBlend();
+                RenderSystem.defaultBlendFunc();
+            }, () -> RenderSystem.disableBlend());
+
+    private static final RenderStateShard.DepthTestStateShard LEQUAL_DEPTH_TEST =
+            new RenderStateShard.DepthTestStateShard("lequal_depth", GL11.GL_LEQUAL);
+
+    private static final RenderStateShard.CullStateShard NO_CULL =
+            new RenderStateShard.CullStateShard(false);
+
+    private static final RenderStateShard.LightmapStateShard LIGHTMAP =
+            new RenderStateShard.LightmapStateShard(true);
+
+    private static final RenderStateShard.OverlayStateShard OVERLAY =
+            new RenderStateShard.OverlayStateShard(true);
 
     public static final RenderType CUSTOM_SKY = RenderType.create(
             "custom_portal", // Name

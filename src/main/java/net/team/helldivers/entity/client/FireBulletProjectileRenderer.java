@@ -35,15 +35,15 @@ public class FireBulletProjectileRenderer extends EntityRenderer<FlameBulletEnti
         this.model.renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
         poseStack.mulPose(Axis.YP.rotationDegrees(pEntity.tickCount * 10));
 
-        VFXBuilders.WorldVFXBuilder builder = VFXBuilders.WorldVFXBuilder.createWorld();
-        builder.setColor(1.0f, 1.0f, 1.0f)
-                .setAlpha(1f)
-                .setUV(0f, 0f, 1f, 1f) // important!
-                .setLight(0xF000F0)
-                .replaceBufferSource(buffer)
-                .setRenderType(ModRenderTypes.CUSTOM_SKY);
-//                .renderCylinder(vertexconsumer, poseStack, -10, 50, 1)
-//                .renderSphere(vertexconsumer, poseStack, -50, 50, 50);
+//        VFXBuilders.WorldVFXBuilder builder = VFXBuilders.WorldVFXBuilder.createWorld();
+//        builder.setColor(1.0f, 1.0f, 1.0f)
+//                .setAlpha(1f)
+//                .setUV(0f, 0f, 1f, 1f) // important!
+//                .setLight(0xF000F0)
+//                .replaceBufferSource(buffer)
+//                .setRenderType(ModRenderTypes.CUSTOM_SKY);
+////                .renderCylinder(vertexconsumer, poseStack, -10, 50, 1)
+////                .renderSphere(vertexconsumer, poseStack, -50, 50, 50);
         poseStack.popPose();
         super.render(pEntity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }

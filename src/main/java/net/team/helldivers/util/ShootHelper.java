@@ -71,23 +71,24 @@ public class ShootHelper {
                     alive.knockback(knockback, -look.x, -look.z);
                }
             }*/ //TODO fix this stuff... the obb is just not working and if we are going to upload this I would rather have a fully working headshot system then a buggy mess
-            else{
-                entity.hurt(ModDamageSources.raycast(shooter), dam);
-               if(entity instanceof LivingEntity alive){
-                   if(ignoreIframes) alive.invulnerableTime = 0;
-                   Vec3 look = shooter.getLookAngle().normalize();
-                   alive.knockback(knockback, -look.x, -look.z);
-                   if (entity instanceof AbstractBotEntity botEntity) {
-                       if (level.isClientSide) {
-                           for (int i = 0; i < 15; i++) {
-                               if (Minecraft.getInstance().level != null) {
-                                   Minecraft.getInstance().level.addParticle(ModParticles.SHRAPNEL.get(), hitPos.x, hitPos.y, hitPos.z, 1,
-                                           Mth.nextDouble(level.random, -1, 1), 0);
-                               }
-                           }
-                       }
-                   }
-               }
+            {
+
+                if(entity instanceof LivingEntity alive && !alive.isBlocking()) {
+                    entity.hurt(ModDamageSources.raycast(shooter), dam);
+                    if(ignoreIframes) alive.invulnerableTime = 0;
+                    Vec3 look = shooter.getLookAngle().normalize();
+                    alive.knockback(knockback, -look.x, -look.z);
+                    if (entity instanceof AbstractBotEntity botEntity) {
+                        if (level.isClientSide) {
+                            for (int i = 0; i < 15; i++) {
+                                if (Minecraft.getInstance().level != null) {
+                                    Minecraft.getInstance().level.addParticle(ModParticles.SHRAPNEL.get(), hitPos.x, hitPos.y, hitPos.z, 1,
+                                            Mth.nextDouble(level.random, -1, 1), 0);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
         if(result.getType() == HitResult.Type.BLOCK){

@@ -1,6 +1,11 @@
 package net.team.helldivers.entity.custom.bots;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.EntityType;
@@ -9,6 +14,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.team.helldivers.damage.ModDamageTypes;
+import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.util.ShootHelper;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -19,7 +25,7 @@ import software.bernie.geckolib.core.animation.RawAnimation;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public abstract class AbstractBotEntity extends Monster implements GeoEntity{
+public abstract class AbstractBotEntity extends Monster implements GeoEntity {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
     private final boolean hasMeleeAttack;
     private boolean isShooting;
@@ -104,6 +110,14 @@ public abstract class AbstractBotEntity extends Monster implements GeoEntity{
             }
         }
     }
+    @Override
+    protected void tickDeath() {
+        // Increment deathTime without applying default rotation
+        ++this.deathTime;
+        if (this.deathTime >= 50 && !this.level().isClientSide()) {
+            this.remove(RemovalReason.KILLED);
+        }
+    }
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
@@ -129,20 +143,32 @@ public abstract class AbstractBotEntity extends Monster implements GeoEntity{
     }
 
     @Override
-    protected @Nullable SoundEvent getAmbientSound() {
-        return super.getAmbientSound();
-    }
-
-    @Override
     public boolean hurt(DamageSource pSource, float pAmount) {
         if (pSource.is(ModDamageTypes.RAYCAST) ||
                 pSource.is(ModDamageTypes.ORBITAL_LASER) ||
-                pSource.is(DamageTypes.EXPLOSION)) {
+                pSource.is(DamageTypes.EXPLOSION) ||
+                pSource.is(DamageTypes.GENERIC_KILL) ||
+                pSource.is(DamageTypes.PLAYER_ATTACK)) {
             super.hurt(pSource, pAmount);
             return true;
         } else {
             return false;
         }
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.GENERIC_AUTOMATON_DEATH.get();
+    }
+
+    @Override
+    protected @Nullable SoundEvent getAmbientSound() {
+        return ModSounds.GENERIC_AUTOMATON_IDLE.get();
+    }
+
+    @Override
+    public int getAmbientSoundInterval() {
+        return 200;
     }
 
     public abstract AABB getDamageHitbox();
