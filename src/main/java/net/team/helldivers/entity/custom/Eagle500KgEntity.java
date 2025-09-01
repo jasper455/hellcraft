@@ -39,7 +39,7 @@ public class Eagle500KgEntity extends AbstractArrow {
         this.setNoGravity(true);
         this.setPos(pResult.getEntity().position());
         this.inGround = true;
-        Minecraft.getInstance().player.sendSystemMessage(Component.literal("test"));
+//        Minecraft.getInstance().player.sendSystemMessage(Component.literal("test"));
     }
 
     public boolean isGrounded() {
