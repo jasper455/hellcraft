@@ -1,21 +1,17 @@
 package net.team.helldivers.block;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.GlassBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.VoxelShape;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.custom.*;
-import net.team.helldivers.block.custom.samples.CommonSampleBlock;
-import net.team.helldivers.block.custom.samples.RareSampleBlock;
-import net.team.helldivers.block.custom.samples.SuperSampleBlock;
+import net.team.helldivers.entity.ModBotEntities;
 import net.team.helldivers.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -63,6 +59,16 @@ public class ModBlocks {
 
     public static final RegistryObject<Block> SUPER_DESTROYER_GLASS = registerBlock("super_destroyer_glass",
             () -> new GlassBlock(BlockBehaviour.Properties.of().noOcclusion().destroyTime(-2)));
+
+    public static final RegistryObject<EnemySpawnerBlock> AUTOMATON_FABRICATOR_SPAWNER =
+            registerBlock("automaton_fabricator_spawner",
+                    () -> new EnemySpawnerBlock(
+                            List.of(
+                                    () -> ModBotEntities.AUTOMATON_TROOPER.get(),
+                                    () -> ModBotEntities.COMMISSAR.get()
+                            ),
+                            false
+                    ));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);

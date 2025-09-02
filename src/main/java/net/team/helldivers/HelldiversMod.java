@@ -119,6 +119,8 @@ public class HelldiversMod {
             MenuScreens.register(ModMenuTypes.GALAXY_MAP_MENU.get(), GalaxyMapScreen::new);
 
             ItemBlockRenderTypes.setRenderLayer(ModBlocks.SUPER_DESTROYER_GLASS.get(), RenderType.translucent());
+
+//            ItemBlockRenderTypes.setRenderLayer(ModBlocks.AUTOMATON_FABRICATOR_SPAWNER.get(), RenderType.translucent());
         }
 
         @SubscribeEvent
