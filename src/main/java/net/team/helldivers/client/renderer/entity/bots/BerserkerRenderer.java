@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.client.model.entity.bots.BerserkerModel;
 import net.team.helldivers.client.model.entity.bots.RangedHulkModel;
+import net.team.helldivers.client.renderer.entity.bots.layer.BotEmissiveLayer;
 import net.team.helldivers.entity.custom.bots.BerserkerEntity;
 import net.team.helldivers.entity.custom.bots.RangedHulkEntity;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
@@ -15,6 +16,11 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class BerserkerRenderer extends GeoEntityRenderer<BerserkerEntity> {
     public BerserkerRenderer(EntityRendererProvider.Context context) {
         super(context, new BerserkerModel());
+        this.addRenderLayer(new BotEmissiveLayer<>(
+                this,
+                entity -> ResourceLocation.fromNamespaceAndPath(
+                        HelldiversMod.MOD_ID, "textures/entity/bots/berserker/berserker_e.png")
+        ));
         this.shadowRadius = 0.75f;
     }
 
