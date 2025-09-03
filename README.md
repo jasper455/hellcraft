@@ -32,4 +32,10 @@ Become a hero.<br>Become a legend.<br>Become...A Helldiver!<br>The galaxy awaits
 
 <div align="center">
 <h3>This mod is not associated with Sony or Arrowhead</h3>
+
+</div>
+
+- This mod has been developed by Silver20632222, Infinite1274 & XeO3.
+<div> 
+- Special thanks to Robot-Pineapple, Redmonsterthing & LiNeOx for designing the mod's structures.
 </div>
