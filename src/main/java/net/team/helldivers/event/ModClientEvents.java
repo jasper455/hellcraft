@@ -5,8 +5,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import net.team.helldivers.client.renderer.entity.bots.*;
+import net.team.helldivers.entity.custom.bots.AutomatonCannonEntity;
 import net.team.helldivers.network.SSetBackSlotPacket;
-import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
@@ -14,12 +14,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 
-import mod.chloeprime.aaaparticles.AAAParticles;
-import mod.chloeprime.aaaparticles.api.client.effekseer.Effekseer;
-import mod.chloeprime.aaaparticles.api.common.AAALevel;
-import mod.chloeprime.aaaparticles.client.AAAParticlesClient;
-import mod.chloeprime.aaaparticles.client.loader.EffekAssetLoader;
-import mod.chloeprime.aaaparticles.forge.AAAParticlesForge;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -28,7 +22,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -50,17 +43,11 @@ import net.team.helldivers.client.renderer.entity.SupportHellpodRenderer;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.ModBotEntities;
 import net.team.helldivers.entity.ModEntities;
-import net.team.helldivers.entity.custom.bots.AutomatonTrooperEntity;
 import net.team.helldivers.item.custom.guns.AmrItem;
 import net.team.helldivers.item.custom.guns.AbstractGunItem;
-import net.team.helldivers.item.custom.guns.Plas1Item;
-import net.team.helldivers.item.custom.guns.StalwartItem;
 import net.team.helldivers.network.PacketHandler;
-import net.team.helldivers.network.SShootPacket;
 import net.team.helldivers.sound.ModSounds;
-import net.team.helldivers.sound.custom.MovingSoundInstance;
 import net.team.helldivers.util.KeyBinding;
-import net.team.helldivers.worldgen.dimension.ModDimensions;
 import software.bernie.geckolib.GeckoLib;
 import team.lodestar.lodestone.systems.postprocess.PostProcessHandler;
 
@@ -276,6 +263,7 @@ public class ModClientEvents {
             event.registerEntityRenderer(ModBotEntities.DEVASTATOR.get(), DevastatorRenderer::new);
             event.registerEntityRenderer(ModBotEntities.COMMISSAR.get(), CommissarRenderer::new);
             event.registerEntityRenderer(ModBotEntities.BRAWLER.get(), BrawlerRenderer::new);
+            event.registerEntityRenderer(ModBotEntities.AUTOMATON_CANNON.get(), AutomatonCannonRenderer::new);
 
             event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
             event.registerBlockEntityRenderer(ModBlockEntities.EXTRACTION_TERMINAL.get(), context -> new ExtractionTerminalBlockRenderer());

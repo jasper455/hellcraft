@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.client.model.entity.HellbombHellpodModel;
 import net.team.helldivers.client.model.entity.bots.RangedHulkModel;
+import net.team.helldivers.client.renderer.entity.bots.layer.BotEmissiveLayer;
 import net.team.helldivers.client.renderer.entity.layer.HellbombHellpodLayer;
 import net.team.helldivers.entity.custom.HellbombHellpodEntity;
 import net.team.helldivers.entity.custom.bots.RangedHulkEntity;
@@ -17,6 +18,11 @@ import software.bernie.geckolib.renderer.GeoEntityRenderer;
 public class RangedHulkRenderer extends GeoEntityRenderer<RangedHulkEntity> {
     public RangedHulkRenderer(EntityRendererProvider.Context context) {
         super(context, new RangedHulkModel());
+        this.addRenderLayer(new BotEmissiveLayer<>(
+                this,
+                entity -> ResourceLocation.fromNamespaceAndPath(
+                        HelldiversMod.MOD_ID, "textures/entity/bots/hulk/hulk_e.png")
+        ));
         this.shadowRadius = 1.0f;
     }
 

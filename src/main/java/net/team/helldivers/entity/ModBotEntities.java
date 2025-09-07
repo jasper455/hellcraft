@@ -37,6 +37,10 @@ public class ModBotEntities {
             ENTITY_TYPES.register("brawler", () -> EntityType.Builder.of(BrawlerEntity::new, MobCategory.MONSTER)
                     .sized(1f, 2.6f).build("brawler"));
 
+    public static final RegistryObject<EntityType<AutomatonCannonEntity>> AUTOMATON_CANNON =
+            ENTITY_TYPES.register("cannon", () -> EntityType.Builder.of(AutomatonCannonEntity::new, MobCategory.MONSTER)
+                    .sized(3, 1f).build("cannon"));
+
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

@@ -82,6 +82,11 @@ public class ModSounds {
 
     public static final RegistryObject<SoundEvent> FLAMETHROWER_STOP_SHOOTING = registerSoundEvent("flamethrower_stop_shooting");
 
+    public static final RegistryObject<SoundEvent> GENERIC_AUTOMATON_DEATH = registerSoundEvent("generic_automaton_death");
+    public static final RegistryObject<SoundEvent> GENERIC_AUTOMATON_IDLE = registerSoundEvent("generic_automaton_idle");
+    public static final RegistryObject<SoundEvent> AUTOMATON_HULK_EXPLODE = registerSoundEvent("hulk_death_explosion");
+    public static final RegistryObject<SoundEvent> AUTOMATON_HULK_IDLE = registerSoundEvent("hulk_idle");
+
     public static final RegistryObject<SoundEvent> TRAP_ROYALTY = registerSoundEvent("trap_royalty");
 
     public static final RegistryObject<SoundEvent> SUPER_DESTROYER_AMBIENT = registerSoundEvent("super_destroyer_ambient");

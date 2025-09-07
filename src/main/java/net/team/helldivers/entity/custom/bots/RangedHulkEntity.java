@@ -1,6 +1,10 @@
 package net.team.helldivers.entity.custom.bots;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -15,6 +19,8 @@ import net.minecraft.world.phys.AABB;
 import net.team.helldivers.damage.ModDamageSources;
 import net.team.helldivers.damage.ModDamageTypes;
 import net.team.helldivers.entity.goal.BotWalkAndShootGoal;
+import net.team.helldivers.sound.ModSounds;
+import org.jetbrains.annotations.Nullable;
 
 public class RangedHulkEntity extends AbstractBotEntity {
     public RangedHulkEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
@@ -42,9 +48,15 @@ public class RangedHulkEntity extends AbstractBotEntity {
         // Increment deathTime without applying default rotation
         ++this.deathTime;
         if (this.deathTime >= 50 && !this.level().isClientSide()) {
+            this.level().playSound(this, this.blockPosition(), ModSounds.AUTOMATON_HULK_EXPLODE.get(), SoundSource.HOSTILE, 1, 1);
             this.remove(RemovalReason.KILLED);
             this.level().explode(this, this.getX(), this.getY(), this.getZ(), 5, Level.ExplosionInteraction.TNT);
         }
+    }
+
+    @Override
+    protected @Nullable SoundEvent getAmbientSound() {
+        return ModSounds.AUTOMATON_HULK_IDLE.get();
     }
 
     @Override

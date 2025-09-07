@@ -27,7 +27,7 @@ public class HellbombHellpodLayer extends GeoRenderLayer<HellbombHellpodEntity> 
         RenderType glowRenderType = RenderType.eyes(EMMISSIVE);
         poseStack.pushPose();
         getRenderer().reRender(getDefaultBakedModel(hellpodEntity), poseStack, bufferSource, hellpodEntity,
-                LodestoneRenderTypeRegistry.TRANSPARENT_SOLID, bufferSource.getBuffer(glowRenderType), partialTick, packedLight,
+                RenderType.energySwirl(EMMISSIVE, 0, 0), bufferSource.getBuffer(glowRenderType), partialTick, packedLight,
                 OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
         poseStack.popPose();
     }
