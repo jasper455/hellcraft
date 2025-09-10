@@ -7,8 +7,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.GlassBlock;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.custom.*;
 import net.team.helldivers.entity.ModBotEntities;
@@ -54,6 +56,11 @@ public class ModBlocks {
                 public void appendHoverText(ItemStack pStack, @Nullable BlockGetter pLevel, List<Component> pTooltip, TooltipFlag pFlag) {
                     super.appendHoverText(pStack, pLevel, pTooltip, pFlag);
                     pTooltip.add(Component.translatable("block.helldivers.stratagem_jammer.desc"));
+                }
+
+                @Override
+                public RenderShape getRenderShape(BlockState pState) {
+                    return RenderShape.INVISIBLE;
                 }
             });
 

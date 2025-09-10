@@ -8,8 +8,14 @@ import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.EntityCollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -20,7 +26,7 @@ public class EnemySpawnerBlock extends Block {
     private final int maxEnemiesToSpawn;
 
     public EnemySpawnerBlock(List<Supplier<EntityType<? extends LivingEntity>>> entitySuppliers, boolean isAreaSpawn, int maxEnemiesToSpawn) {
-        super(Properties.of().randomTicks());
+        super(Properties.of().randomTicks().noCollission());
         this.entitySuppliers = entitySuppliers;
         this.isAreaSpawn = isAreaSpawn;
         this.maxEnemiesToSpawn = maxEnemiesToSpawn;
@@ -46,9 +52,26 @@ public class EnemySpawnerBlock extends Block {
                 double spawnX = pos.getX() + (isAreaSpawn ? randomX : 0.5);
                 double spawnZ = pos.getZ() + (isAreaSpawn ? randomZ : 0.5);
 
-                entity.moveTo(spawnX, pos.getY() + 1, spawnZ);
+                entity.moveTo(spawnX, pos.getY(), spawnZ);
                 level.addFreshEntity(entity);
             }
         }
     }
+
+    @Override
+    public RenderShape getRenderShape(BlockState pState) {
+        return RenderShape.INVISIBLE;
+    }
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        if (context instanceof EntityCollisionContext entityContext) {
+            if (entityContext.getEntity() instanceof Player player) {
+                if (player.isCreative()) {
+                    return Shapes.block(); // Full cube outline for Creative players
+                }
+            }
+        }
+        return Shapes.empty(); // No outline for everyone else
+    }
+
 }
