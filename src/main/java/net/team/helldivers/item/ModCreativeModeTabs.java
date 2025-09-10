@@ -93,6 +93,18 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.EAGLE_AIRSTRIKE.get());
                         output.accept(ModItems.NAPALM_AIRSTRIKE.get());
                     }).build());
+    public static final RegistryObject<CreativeModeTab> AUTOMATON_SPAWN_EGGS = CREATIVE_MODE_TABS.register("automaton_spawn_eggs_tab",
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModSpawnEggItems.BERSERKER_SPAWN_EGG.get()))
+                    .title(Component.translatable("creativetab.automaton_spawn_eggs"))
+                    .displayItems((itemDisplayParameters, output) -> {
+                        output.accept(ModSpawnEggItems.HULK_SPAWN_EGG.get());
+                        output.accept(ModSpawnEggItems.BERSERKER_SPAWN_EGG.get());
+                        output.accept(ModSpawnEggItems.AUTOMATON_TROOPER_SPAWN_EGG.get());
+                        output.accept(ModSpawnEggItems.DEVASTATOR_SPAWN_EGG.get());
+                        output.accept(ModSpawnEggItems.COMMISSAR_SPAWN_EGG.get());
+                        output.accept(ModSpawnEggItems.BRAWLER_SPAWN_EGG.get());
+                        output.accept(ModSpawnEggItems.AUTOMATON_CANNON_SPAWN_EGG.get());
+                    }).build());
 
     public static void register(IEventBus eventBus) {
         CREATIVE_MODE_TABS.register(eventBus);
