@@ -14,6 +14,7 @@ import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
+import net.team.helldivers.item.ModSpawnEggItems;
 
 import java.util.LinkedHashMap;
 
@@ -78,6 +79,14 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.CLUSTER_BOMB.get());
         basicItem(ModItems.EAGLE_AIRSTRIKE.get());
         basicItem(ModItems.NAPALM_AIRSTRIKE.get());
+
+        withExistingParent(ModSpawnEggItems.HULK_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModSpawnEggItems.BERSERKER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModSpawnEggItems.AUTOMATON_TROOPER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModSpawnEggItems.DEVASTATOR_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModSpawnEggItems.COMMISSAR_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModSpawnEggItems.BRAWLER_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
+        withExistingParent(ModSpawnEggItems.AUTOMATON_CANNON_SPAWN_EGG.getId().getPath(), mcLoc("item/template_spawn_egg"));
     }
 
 

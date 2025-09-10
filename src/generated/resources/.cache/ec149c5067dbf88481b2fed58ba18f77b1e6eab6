@@ -1,12 +1,18 @@
-// 1.20.1	2025-07-28T16:16:38.8969578	Item Models: helldivers
+// 1.20.1	2025-09-09T21:28:32.3520813	Item Models: helldivers
 975afeeffe669bd7a27ffebc2f385a50bc6897c4 assets/helldivers/models/item/500kg_bomb.json
 f2dc75440c892fff7ccfc27da727b8f1ddf053ad assets/helldivers/models/item/amr_stratagem.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/helldivers/models/item/automaton_cannon_spawn_egg.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/helldivers/models/item/automaton_trooper_spawn_egg.json
 1e70d3b46a91d0a9f10f4a23e869ed2a037b2476 assets/helldivers/models/item/b01_boots.json
 fd49abbcbe58c4c800f408349a84e554eba0fb4d assets/helldivers/models/item/b01_chestplate.json
 2df6e370b1c574f0fd86723daededa7268eae587 assets/helldivers/models/item/b01_helmet.json
 c1fc9cbe851ab105cb0ace733e7334b260bfd8e5 assets/helldivers/models/item/b01_leggings.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/helldivers/models/item/berserker_spawn_egg.json
 a2817df7d503990bccde8f168033c5e1d3ba09c6 assets/helldivers/models/item/big_barrage.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/helldivers/models/item/brawler_spawn_egg.json
 b6608914061f7e2ece24179fa67f4783050339de assets/helldivers/models/item/cluster_bomb.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/helldivers/models/item/commissar_spawn_egg.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/helldivers/models/item/devastator_spawn_egg.json
 abbb8ab9d921b9189054b4d31e87fcba45ac285d assets/helldivers/models/item/dp40_boots.json
 fb06d860705e3295fba86f4b3a584e3fb120d932 assets/helldivers/models/item/dp40_chestplate.json
 7dec265bb7ecb476f84032cb1c38985b5647ecc7 assets/helldivers/models/item/dp40_helmet.json
@@ -19,6 +25,7 @@ ad7fbfdcaa0ade003a31215bfe603d2c84bc6c68 assets/helldivers/models/item/fs05_ches
 7f44bcd58da5b065d1c9782d4e2d7719906328b2 assets/helldivers/models/item/fs05_helmet.json
 dbcc18d882ec334612f2fd276174a69918fe31e8 assets/helldivers/models/item/fs05_leggings.json
 5c6bdcd2a329d62fd61c69d7ddedfee7e9483c8f assets/helldivers/models/item/hellbomb_item.json
+63ec6c618a3a23eab4cab9c52d7d3250de9b516e assets/helldivers/models/item/hulk_spawn_egg.json
 ecdcee673c5722b7d2e7230f1653ff7283b32a0d assets/helldivers/models/item/napalm_airstrike.json
 2c28c4d7dbddd84740c4c57112ba0c6ac7f5aa47 assets/helldivers/models/item/napalm_barrage.json
 677c823c3218906390a44b93a9ca73ab88861eb2 assets/helldivers/models/item/orbital_laser.json

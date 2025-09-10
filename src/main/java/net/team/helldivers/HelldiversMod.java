@@ -18,6 +18,7 @@ import net.team.helldivers.gamerule.ModGameRules;
 import net.team.helldivers.item.ModArmorItems;
 import net.team.helldivers.item.ModCreativeModeTabs;
 import net.team.helldivers.item.ModItems;
+import net.team.helldivers.item.ModSpawnEggItems;
 import net.team.helldivers.particle.ModParticles;
 import net.team.helldivers.particle.custom.ShrapnelParticle;
 import net.team.helldivers.screen.ModMenuTypes;
@@ -61,6 +62,7 @@ public class HelldiversMod {
 
         ModItems.register(modEventBus);
         ModArmorItems.register(modEventBus);
+        ModSpawnEggItems.register(modEventBus);
         ModBlocks.register(modEventBus);
         ModSampleBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);

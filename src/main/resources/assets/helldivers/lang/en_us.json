@@ -2,6 +2,7 @@
   "creativetab.seaf_equipment": "§lS.E.A.F Equipment",
   "creativetab.stratagems": "§lStratagems",
   "creativetab.helldivers": "§lHelldivers",
+  "creativetab.automaton_spawn_eggs": "§lAutomaton Spawn Eggs",
 
   "item.helldivers.effect_tester": "Effect Tester",
   "item.helldivers.trap_royalty_music_disc": "Music Disc",
@@ -62,6 +63,14 @@
   "item.helldivers.napalm_airstrike": "§bEagle Napalm Airstrike",
   "item.helldivers.stalwart_stratagem": "§bM-105 Stalwart",
   "item.helldivers.amr_stratagem": "§bAPW-1 Anti-Materiel Rifle",
+
+  "item.helldivers.hulk_spawn_egg": "§cAutomaton Hulk Spawn Egg",
+  "item.helldivers.berserker_spawn_egg": "§cAutomaton Berserker Spawn Egg",
+  "item.helldivers.automaton_trooper_spawn_egg": "§cAutomaton Trooper Spawn Egg",
+  "item.helldivers.devastator_spawn_egg": "§cAutomaton Devastator Spawn Egg",
+  "item.helldivers.commissar_spawn_egg": "§cAutomaton Commissar Spawn Egg",
+  "item.helldivers.brawler_spawn_egg": "§cAutomaton Brawler Spawn Egg",
+  "item.helldivers.automaton_cannon_spawn_egg": "§cAutomaton Cannon Spawn Egg",
 
   "key.category.helldivers": "Crafted Democracy",
   "key.helldivers.show_stratagem_hud": "Show Stratagem HUD",
