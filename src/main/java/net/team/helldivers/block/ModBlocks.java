@@ -64,10 +64,13 @@ public class ModBlocks {
             registerBlock("automaton_fabricator_spawner",
                     () -> new EnemySpawnerBlock(
                             List.of(
-                                    () -> ModBotEntities.AUTOMATON_TROOPER.get(),
-                                    () -> ModBotEntities.COMMISSAR.get()
-                            ),
-                            false
+                                    ModBotEntities.AUTOMATON_TROOPER::get,
+                                    ModBotEntities.COMMISSAR::get,
+                                    ModBotEntities.BRAWLER::get,
+                                    ModBotEntities.BERSERKER::get,
+                                    ModBotEntities.DEVASTATOR::get
+                                            ),
+                            false, 3
                     ));
 
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
