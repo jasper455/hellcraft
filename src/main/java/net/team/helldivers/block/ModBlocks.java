@@ -80,6 +80,20 @@ public class ModBlocks {
                             false, 3
                     ));
 
+    public static final RegistryObject<EnemySpawnerBlock> AUTOMATON_AREA_SPAWNER =
+            registerBlock("automaton_area_spawner",
+                    () -> new EnemySpawnerBlock(
+                            List.of(
+                                    ModBotEntities.AUTOMATON_TROOPER::get,
+                                    ModBotEntities.COMMISSAR::get,
+                                    ModBotEntities.BRAWLER::get,
+                                    ModBotEntities.BERSERKER::get,
+                                    ModBotEntities.HULK::get,
+                                    ModBotEntities.DEVASTATOR::get
+                                            ),
+                            true, 6
+                    ));
+
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);

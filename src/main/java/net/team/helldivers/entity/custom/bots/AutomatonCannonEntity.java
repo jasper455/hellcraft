@@ -1,6 +1,7 @@
 package net.team.helldivers.entity.custom.bots;
 
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -16,6 +17,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.team.helldivers.entity.goal.BotRangedAttackGoal;
+import net.team.helldivers.sound.ModSounds;
+import org.jetbrains.annotations.Nullable;
 
 public class AutomatonCannonEntity extends AbstractBotEntity {
     public AutomatonCannonEntity(EntityType<? extends Monster> pEntityType, Level pLevel) {
@@ -86,5 +89,10 @@ public class AutomatonCannonEntity extends AbstractBotEntity {
         shoot(shotEntity, (double)f, (double)f1, (double)f2, pVelocity, pInaccuracy);
         Vec3 vec3 = pShooter.getDeltaMovement();
         shotEntity.setDeltaMovement(shotEntity.getDeltaMovement().add(vec3.x, pShooter.onGround() ? 0.0D : vec3.y, vec3.z));
+    }
+
+    @Override
+    protected @Nullable SoundEvent getAmbientSound() {
+        return null;
     }
 }

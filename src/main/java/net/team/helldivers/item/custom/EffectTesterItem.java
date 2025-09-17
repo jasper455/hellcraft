@@ -28,7 +28,7 @@ public class EffectTesterItem extends Item {
         if (pLevel.isClientSide()) {
             for (int i = 0; i < 15; i++) {
                 pLevel.addParticle(ModParticles.SHRAPNEL.get(), pPlayer.getX(), pPlayer.getY(), pPlayer.getZ(), 1,
-                        Mth.nextDouble(pLevel.random, -1, 1), 0);
+                        0, 0);
             }
         }
         return super.use(pLevel, pPlayer, pUsedHand);

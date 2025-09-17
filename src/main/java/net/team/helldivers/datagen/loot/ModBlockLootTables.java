@@ -27,7 +27,8 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         dropSelf(ModBlocks.AMMO_CRATE.get());
         dropSelf(ModBlocks.BARBED_WIRE.get());
         dropSelf(ModBlocks.SUPER_DESTROYER_GLASS.get());
-        dropSelf(ModBlocks.AUTOMATON_FABRICATOR_SPAWNER.get());
+        dropOther(ModBlocks.AUTOMATON_FABRICATOR_SPAWNER.get(), Items.AIR);
+        dropOther(ModBlocks.AUTOMATON_AREA_SPAWNER.get(), Items.AIR);
         dropOther(ModBlocks.EXTRACTION_TERMINAL.get(), ModItems.EXTRACTION_TERMINAL_BLOCK_ITEM.get());
         dropOther(ModBlocks.GALACTIC_TERMINAL.get(), ModItems.GALACTIC_TERMINAL_BLOCK_ITEM.get());
         dropOther(ModBlocks.BOT_CONTACT_MINE.get(), ModItems.BOT_CONTACT_MINE_BLOCK_ITEM.get());

@@ -96,6 +96,8 @@
   "block.helldivers.super_destroyer_glass": "Super Destroyer Glass",
   "block.helldivers.stratagem_jammer": "Stratagem Jammer",
   "block.helldivers.stratagem_jammer.desc": "(Jams Stratagems for players within a 50 block radius)",
+  "block.helldivers.automaton_fabricator_spawner": "Automaton Fabricator Spawner Block",
+  "block.helldivers.automaton_area_spawner": "Automaton Area Spawner Block",
 
   "entity.helldivers.missile": "Missile",
   "entity.helldivers.eagle_500kg_bomb": "Eagle 500KG Bomb",

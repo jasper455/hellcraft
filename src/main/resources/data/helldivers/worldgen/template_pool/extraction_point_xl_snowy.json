@@ -1,0 +1,15 @@
+{
+  "name": "helldivers:extraction_point_xl_snowy",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "helldivers:extraction_point_xl/extraction_point_xl_snowy",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

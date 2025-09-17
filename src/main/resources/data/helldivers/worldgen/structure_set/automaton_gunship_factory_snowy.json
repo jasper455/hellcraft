@@ -1,0 +1,16 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 73789894,
+    "separation": 20,
+    "spacing": 40,
+    "frequency_reduction_method": "legacy_type_3",
+    "frequency": 0.4
+  },
+  "structures": [
+    {
+      "structure": "helldivers:automaton_gunship_factory_snowy",
+      "weight": 1
+    }
+  ]
+}

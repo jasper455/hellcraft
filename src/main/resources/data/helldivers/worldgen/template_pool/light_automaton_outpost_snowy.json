@@ -1,0 +1,15 @@
+{
+  "name": "helldivers:light_automaton_outpost_snowy",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "helldivers:light_automaton_outpost/light_automaton_outpost_snowy",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

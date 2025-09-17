@@ -1,5 +1,7 @@
-// 1.20.1	2025-08-12T12:51:22.3266192	Loot Tables
+// 1.20.1	2025-09-14T18:48:08.6806207	Loot Tables
 2781dc527c86d991ff95271bad7f0d27ab810942 data/helldivers/loot_tables/blocks/ammo_crate.json
+658a02a40fa08259ccf1f3f34216ec0c76506625 data/helldivers/loot_tables/blocks/automaton_area_spawner.json
+9a87f457c2bacc35b7b9917b5edd2ed7c9e9bb8d data/helldivers/loot_tables/blocks/automaton_fabricator_spawner.json
 8deb12268b199f353932113da132eb14a17e7fa4 data/helldivers/loot_tables/blocks/barbed_wire.json
 9763c4ba28417c8766453383ec54af57719bce39 data/helldivers/loot_tables/blocks/bot_common_sample.json
 3c770297a2831dc8a6706e0bed778d434163b135 data/helldivers/loot_tables/blocks/bot_contact_mine.json

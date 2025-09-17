@@ -19,6 +19,7 @@ import net.minecraft.world.phys.AABB;
 import net.team.helldivers.damage.ModDamageSources;
 import net.team.helldivers.damage.ModDamageTypes;
 import net.team.helldivers.entity.goal.BotWalkAndShootGoal;
+import net.team.helldivers.particle.ModParticles;
 import net.team.helldivers.sound.ModSounds;
 import org.jetbrains.annotations.Nullable;
 
@@ -51,6 +52,10 @@ public class RangedHulkEntity extends AbstractBotEntity {
             this.level().playSound(this, this.blockPosition(), ModSounds.AUTOMATON_HULK_EXPLODE.get(), SoundSource.HOSTILE, 1, 1);
             this.remove(RemovalReason.KILLED);
             this.level().explode(this, this.getX(), this.getY(), this.getZ(), 5, Level.ExplosionInteraction.TNT);
+//            for (int i = 0; i < 15; i++) {
+//                Minecraft.getInstance().level.addParticle(ModParticles.SHRAPNEL.get(), this.getX() + 0.5, this.getY(), this.getZ() + 0.5, 1,
+//                        0, 0);
+//            }
         }
     }
 

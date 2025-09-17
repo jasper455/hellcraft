@@ -1,0 +1,15 @@
+{
+  "name": "helldivers:automaton_gunship_factory_snowy",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "location": "helldivers:automaton_gunship_factory/automaton_gunship_factory_snowy",
+        "processors": "minecraft:empty",
+        "projection": "rigid",
+        "element_type": "minecraft:single_pool_element"
+      }
+    }
+  ]
+}

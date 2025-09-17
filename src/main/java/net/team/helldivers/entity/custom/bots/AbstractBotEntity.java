@@ -14,6 +14,7 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.team.helldivers.damage.ModDamageTypes;
+import net.team.helldivers.particle.ModParticles;
 import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.util.ShootHelper;
 import org.jetbrains.annotations.Nullable;
@@ -38,6 +39,7 @@ public abstract class AbstractBotEntity extends Monster implements GeoEntity {
 
     public AbstractBotEntity(EntityType<? extends Monster> pEntityType, Level pLevel, boolean hasMeleeAttack) {
         super(pEntityType, pLevel);
+        this.setPersistenceRequired();
         this.hasMeleeAttack = hasMeleeAttack;
     }
 
@@ -116,6 +118,10 @@ public abstract class AbstractBotEntity extends Monster implements GeoEntity {
         ++this.deathTime;
         if (this.deathTime >= 50 && !this.level().isClientSide()) {
             this.remove(RemovalReason.KILLED);
+//            for (int i = 0; i < 15; i++) {
+//                Minecraft.getInstance().level.addParticle(ModParticles.SHRAPNEL.get(), this.getX() + 0.5, this.getY(), this.getZ() + 0.5, 1,
+//                        0, 0);
+//            }
         }
     }
 

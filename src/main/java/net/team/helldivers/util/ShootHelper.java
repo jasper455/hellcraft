@@ -78,16 +78,6 @@ public class ShootHelper {
                     if(ignoreIframes) alive.invulnerableTime = 0;
                     Vec3 look = shooter.getLookAngle().normalize();
                     alive.knockback(knockback, -look.x, -look.z);
-                    if (entity instanceof AbstractBotEntity botEntity) {
-                        if (level.isClientSide) {
-                            for (int i = 0; i < 15; i++) {
-                                if (Minecraft.getInstance().level != null) {
-                                    Minecraft.getInstance().level.addParticle(ModParticles.SHRAPNEL.get(), hitPos.x, hitPos.y, hitPos.z, 1,
-                                            Mth.nextDouble(level.random, -1, 1), 0);
-                                }
-                            }
-                        }
-                    }
                 }
             }
         }
