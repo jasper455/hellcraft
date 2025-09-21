@@ -378,6 +378,18 @@ public class StratagemOrbEntity extends AbstractArrow {
 
         // Cluster Bomb Entity Stuff
         if (getStratagemType().equals("Eagle Cluster Bomb") && !this.level().isClientSide) {
+            if (groundedTicks == 25) {
+                this.playSound(ModSounds.EAGLE_FLYBY.get(), 10.0f, 1.0f);
+            }
+            if (groundedTicks == 65) {
+                EagleAirshipEntity eagleAirshipEntity = new EagleAirshipEntity(ModEntities.EAGLE_AIRSHIP.get(), this.level());
+                eagleAirshipEntity.setStratagemType(getStratagemType());
+                eagleAirshipEntity.setPos(this.getX(), this.getY() + 5, this.getZ());
+                if (ownerDirection == Direction.NORTH || ownerDirection == Direction.SOUTH) {
+                    eagleAirshipEntity.setYHeadRot(90);
+                }
+                this.level().addFreshEntity(eagleAirshipEntity);
+            }
             if (groundedTicks == 82) {
                 for (int i = 0; i < 4; i++) {
                     spawnClusterBomb();
