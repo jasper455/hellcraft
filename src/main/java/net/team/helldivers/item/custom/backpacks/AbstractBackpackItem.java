@@ -30,7 +30,7 @@ public abstract class AbstractBackpackItem extends Item implements GeoItem {
     private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public AbstractBackpackItem(Properties pProperties) {
-        super(pProperties.stacksTo(1));
+        super(pProperties);
     }
 
     @Override

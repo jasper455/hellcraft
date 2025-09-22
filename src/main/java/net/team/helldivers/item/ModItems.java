@@ -13,6 +13,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.team.helldivers.item.custom.backpacks.JumpPackItem;
 import net.team.helldivers.item.custom.backpacks.PortableHellbombItem;
+import net.team.helldivers.item.custom.backpacks.ShieldPackItem;
 import net.team.helldivers.item.custom.guns.*;
 import net.team.helldivers.sound.ModSounds;
 
@@ -89,6 +90,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> PORTABLE_HELLBOMB = ITEMS.register("portable_hellbomb",
             () -> new PortableHellbombItem(new Item.Properties().fireResistant()));
+
+    public static final RegistryObject<Item> SHIELD_PACK = ITEMS.register("shield_pack",
+            () -> new ShieldPackItem(new Item.Properties().fireResistant()));
 
     // STRATAGEMS
 

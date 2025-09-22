@@ -44,11 +44,11 @@ public class SSetBackSlotPacket {
                 }
             } else if (!backSlotItem.isEmpty() && mainHand.isEmpty()) {
                 if (backSlotItem.getItem() instanceof PortableHellbombItem hellbombItem) {
-                    if (!hellbombItem.isActivated()) {
+//                    if (!hellbombItem.isActivated()) {
                         player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
                         handler.setStackInSlot(0, ItemStack.EMPTY);
 //                        player.sendSystemMessage(Component.literal("test"));
-                    }
+//                    }
                 } else {
                     player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
                     handler.setStackInSlot(0, ItemStack.EMPTY);
@@ -57,11 +57,11 @@ public class SSetBackSlotPacket {
                 if (mainHand.getItem() instanceof TieredItem || mainHand.getItem() instanceof ShieldItem
                         || mainHand.getItem() instanceof AbstractBackpackItem) {
                     if (backSlotItem.getItem() instanceof PortableHellbombItem hellbombItem) {
-                        if (!hellbombItem.isActivated()) {
+//                        if (!hellbombItem.isActivated()) {
                             handler.setStackInSlot(0, mainHand.copy());
                             player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
 //                            player.sendSystemMessage(Component.literal("test1"));
-                        }
+//                        }
                     } else {
                         handler.setStackInSlot(0, mainHand.copy());
                         player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());

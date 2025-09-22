@@ -16,8 +16,10 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.team.helldivers.backslot.PlayerBackSlotLayer;
 import net.team.helldivers.backslot.PlayerBackSlotProvider;
 import net.team.helldivers.client.model.entity.player.HelldiverCapeModel;
+import net.team.helldivers.client.model.entity.player.ShieldPackShieldModel;
 import net.team.helldivers.client.renderer.entity.bots.*;
 import net.team.helldivers.client.renderer.entity.player.HelldiverCapeLayer;
+import net.team.helldivers.client.renderer.entity.player.ShieldPackShieldLayer;
 import net.team.helldivers.item.custom.backpacks.AbstractBackpackItem;
 import net.team.helldivers.network.CSyncBackSlotPacket;
 import net.team.helldivers.network.SSetBackSlotPacket;
@@ -322,8 +324,8 @@ public class ModClientEvents {
                     EntityRenderer<?> renderer = event.getSkin(skinType);
                     if (renderer instanceof PlayerRenderer playerRenderer) {
                         playerRenderer.addLayer(new PlayerBackSlotLayer(playerRenderer));
-
                         playerRenderer.addLayer(new HelldiverCapeLayer(playerRenderer));
+                        playerRenderer.addLayer(new ShieldPackShieldLayer(playerRenderer));
                     }
                 } catch (Exception e) {
                     // Log the error but continue execution
@@ -337,6 +339,9 @@ public class ModClientEvents {
             event.registerLayerDefinition(new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(
                             HelldiversMod.MOD_ID, "textures/entity/helldiver_cape.png"), "main"),
                     HelldiverCapeModel::createBodyLayer);
+            event.registerLayerDefinition(new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(
+                            HelldiversMod.MOD_ID, "textures/entity/shield_pack_shield.png"), "main"),
+                    ShieldPackShieldModel::createBodyLayer);
         }
 
     }

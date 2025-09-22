@@ -33,7 +33,7 @@ public class PortableHellbombItem extends AbstractBackpackItem {
     private boolean isActivated;
 
     public PortableHellbombItem(Properties properties) {
-        super(properties);
+        super(properties.stacksTo(1));
     }
 
     @Override

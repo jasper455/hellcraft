@@ -29,11 +29,10 @@ import net.team.helldivers.client.renderer.item.JumpPackRenderer;
 import net.team.helldivers.damage.ModDamageSources;
 import net.team.helldivers.damage.ModDamageTypes;
 
-
 @Mod.EventBusSubscriber(modid = HelldiversMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class JumpPackItem extends AbstractBackpackItem {
     public JumpPackItem(Properties properties) {
-        super(properties);
+        super(properties.stacksTo(1));
     }
 
     @Override

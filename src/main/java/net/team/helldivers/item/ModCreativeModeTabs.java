@@ -69,6 +69,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.FIRE_GRENADE.get());
                         output.accept(ModItems.JUMP_PACK.get());
                         output.accept(ModItems.PORTABLE_HELLBOMB.get());
+                        output.accept(ModItems.SHIELD_PACK.get());
                     }).build());
     public static final RegistryObject<CreativeModeTab> STRATAGEMS_TAB = CREATIVE_MODE_TABS.register("stratagems_tab",
             () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.PRECISION_STRIKE.get()))

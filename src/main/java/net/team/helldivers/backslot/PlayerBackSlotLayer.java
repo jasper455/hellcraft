@@ -91,10 +91,11 @@ public class PlayerBackSlotLayer extends RenderLayer<AbstractClientPlayer, Playe
             } else {
                 pPoseStack.scale(3, 3, 3);
                 pPoseStack.mulPose(Axis.XP.rotationDegrees(180));
-                pPoseStack.translate(0.1, -0.1, -0.025);
+                pPoseStack.mulPose(Axis.YN.rotationDegrees(180));
+                pPoseStack.translate(0.1, -0.175, 0.05);
                 if (player.isCrouching()) {
-                    pPoseStack.mulPose(Axis.XP.rotationDegrees(30f));
-                    pPoseStack.translate(0, -0.05, 0);
+                    pPoseStack.mulPose(Axis.XN.rotationDegrees(30f));
+                    pPoseStack.translate(0, -0.05, 0.05);
                 }
             }
 

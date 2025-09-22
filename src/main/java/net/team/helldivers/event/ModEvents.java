@@ -2,12 +2,14 @@ package net.team.helldivers.event;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
@@ -15,9 +17,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -30,6 +34,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.CustomizeGuiOverlayEvent;
+import net.minecraftforge.client.event.RenderGuiOverlayEvent;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -50,14 +55,18 @@ import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.client.skybox.SkyboxRenderer;
 import net.team.helldivers.command.StopUseLodestoneCommand;
 import net.team.helldivers.command.UseLodestoneCommand;
+import net.team.helldivers.damage.ModDamageSources;
+import net.team.helldivers.damage.ModDamageTypes;
 import net.team.helldivers.data.StructureGenerationData;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.custom.BulletProjectileEntity;
 import net.team.helldivers.entity.custom.bots.AbstractBotEntity;
 import net.team.helldivers.helper.ClientBackSlotCache;
+import net.team.helldivers.item.ModItems;
 import net.team.helldivers.item.custom.armor.IDemocracyProtects;
 import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
 import net.team.helldivers.item.custom.backpacks.AbstractBackpackItem;
+import net.team.helldivers.item.custom.backpacks.ShieldPackItem;
 import net.team.helldivers.network.CSyncBackSlotPacket;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SSetBackSlotPacket;
@@ -66,6 +75,7 @@ import net.team.helldivers.sound.ModSounds;
 import net.team.helldivers.sound.custom.MovingSoundInstance;
 import net.team.helldivers.util.KeyBinding;
 import net.team.helldivers.worldgen.dimension.ModDimensions;
+import net.team.lodestone.systems.rendering.VFXBuilders;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ModEvents {
@@ -124,6 +134,14 @@ public class ModEvents {
             event.setCanceled(true);
             player.setHealth(0.5f);
         }
+        player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
+            ItemStackHandler handler = backSlot.getInventory();
+            ItemStack backSlotItem = handler.getStackInSlot(0);
+            if (!backSlotItem.isEmpty() && !backSlotItem.is(ModItems.PORTABLE_HELLBOMB.get())) {
+                ItemEntity itemEntity = new ItemEntity(player.level(), player.getX(), player.getY(), player.getZ(), backSlotItem.copyAndClear());
+                player.level().addFreshEntity(itemEntity);
+            }
+        });
     }
 
     @SubscribeEvent
@@ -134,12 +152,45 @@ public class ModEvents {
         if (vehicle != null && vehicle.getType() == ModEntities.HELLPOD.get()) {
             event.setCanceled(true); // Prevent damage
         }
+
+        player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
+            ItemStackHandler handler = backSlot.getInventory();
+            ItemStack backSlotItem = handler.getStackInSlot(0);
+
+            if (backSlotItem.getItem() instanceof ShieldPackItem) {
+                if (backSlotItem.getDamageValue() <= backSlotItem.getMaxDamage() - 1) {
+                    if (event.getSource().is(DamageTypeTags.IS_PROJECTILE) || event.getSource().is(ModDamageTypes.RAYCAST)) {
+                        backSlotItem.hurt(((int) event.getAmount()), player.getRandom(), player);
+                        event.setCanceled(true);
+                    }
+                }
+            }
+            // Sync back to client
+            CompoundTag tag = new CompoundTag();
+            backSlot.saveNBTData(tag);
+            PacketHandler.sendToPlayer(new CSyncBackSlotPacket(tag), player);
+        });
     }
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         Player player = event.player;
         if (event.phase != TickEvent.Phase.END || event.player.level().isClientSide()) return;
+
+        player.getCapability(PlayerBackSlotProvider.PLAYER_BACK_SLOT).ifPresent(backSlot -> {
+            ItemStackHandler handler = backSlot.getInventory();
+            ItemStack backSlotItem = handler.getStackInSlot(0);
+            if (backSlotItem.getItem() instanceof ShieldPackItem shieldPackItem) {
+                if (backSlotItem.getDamageValue() == backSlotItem.getMaxDamage()) {
+                    if (!player.getCooldowns().isOnCooldown(shieldPackItem)) {
+                        player.getCooldowns().addCooldown(shieldPackItem, 1200);
+                    } else {
+                        player.sendSystemMessage(Component.literal("test"));
+                        backSlotItem.setDamageValue(0);
+                    }
+                }
+            }
+        });
 
         if (KeyBinding.USE_BACKPACK.consumeClick()) {
             // Send request to server to toggle/swap back slot
@@ -201,7 +252,7 @@ public class ModEvents {
     }
 
     @SubscribeEvent
-    public static void onRenderGuiOverlay(CustomizeGuiOverlayEvent event) {
+    public static void onRenderGuiOverlay(RenderGuiOverlayEvent.Post event) {
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer player = mc.player;
         GuiGraphics guiGraphics = event.getGuiGraphics();
@@ -242,6 +293,7 @@ public class ModEvents {
                 );
                 guiGraphics.renderItem(stack, iconX + 3, iconY + 3);
                 guiGraphics.renderItemDecorations(mc.font, stack, iconX + 3, iconY + 3);
+//                Minecraft.getInstance().player.sendSystemMessage(Component.literal(String.valueOf(stack.getDamageValue())));
             }
         });
     }
