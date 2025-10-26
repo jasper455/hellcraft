@@ -17,6 +17,7 @@ import net.team.helldivers.backslot.PlayerBackSlotLayer;
 import net.team.helldivers.backslot.PlayerBackSlotProvider;
 import net.team.helldivers.client.model.entity.player.HelldiverCapeModel;
 import net.team.helldivers.client.model.entity.player.ShieldPackShieldModel;
+import net.team.helldivers.client.renderer.entity.*;
 import net.team.helldivers.client.renderer.entity.bots.*;
 import net.team.helldivers.client.renderer.entity.player.HelldiverCapeLayer;
 import net.team.helldivers.client.renderer.entity.player.ShieldPackShieldLayer;
@@ -58,12 +59,6 @@ import net.team.helldivers.client.renderer.block.BotContactMineBlockRenderer;
 import net.team.helldivers.client.renderer.block.ExtractionTerminalBlockRenderer;
 import net.team.helldivers.client.renderer.block.GalacticTerminalBlockRenderer;
 import net.team.helldivers.client.renderer.block.HellbombBlockRenderer;
-import net.team.helldivers.client.renderer.entity.EagleAirshipRenderer;
-import net.team.helldivers.client.renderer.entity.GatlingSentryHellpodRenderer;
-import net.team.helldivers.client.renderer.entity.HellbombHellpodRenderer;
-import net.team.helldivers.client.renderer.entity.HellpodRenderer;
-import net.team.helldivers.client.renderer.entity.OrbitalLaserRenderer;
-import net.team.helldivers.client.renderer.entity.SupportHellpodRenderer;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
 import net.team.helldivers.entity.ModBotEntities;
 import net.team.helldivers.entity.ModEntities;
@@ -287,6 +282,7 @@ public class ModClientEvents {
             event.registerEntityRenderer(ModEntities.HELLBOMB_HELLPOD.get(), HellbombHellpodRenderer::new);
             event.registerEntityRenderer(ModEntities.HELLPOD.get(), HellpodRenderer::new);
             event.registerEntityRenderer(ModEntities.GATLING_SENTRY.get(), GatlingSentryHellpodRenderer::new);
+            event.registerEntityRenderer(ModEntities.PORTABLE_HELLBOMB.get(), PortableHellbombEntityRenderer::new);
 
             event.registerEntityRenderer(ModBotEntities.HULK.get(), RangedHulkRenderer::new);
             event.registerEntityRenderer(ModBotEntities.BERSERKER.get(), BerserkerRenderer::new);

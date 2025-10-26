@@ -15,6 +15,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.team.helldivers.block.custom.ExtractionTerminalBlock;
 import net.team.helldivers.client.renderer.item.JumpPackRenderer;
 import net.team.helldivers.client.renderer.item.PortableHellbombRenderer;
+import net.team.helldivers.entity.custom.PortableHellbombEntity;
 import net.team.helldivers.helper.Delay;
 import net.team.helldivers.helper.DelayedExplosion;
 import net.team.helldivers.helper.DelayedPortableHellbombExplosion;
@@ -40,7 +41,7 @@ public class PortableHellbombItem extends AbstractBackpackItem {
     public void onUse(Player player) {
         if (!this.isActivated) {
             MinecraftForge.EVENT_BUS.register(new DelayedPortableHellbombExplosion(player.level(), player.blockPosition(),
-                    15, 300, player));
+                    15, 300, player, true));
             this.isActivated = true;
         }
     }

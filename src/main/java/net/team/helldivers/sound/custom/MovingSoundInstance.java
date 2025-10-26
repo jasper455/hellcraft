@@ -8,7 +8,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 
 public class MovingSoundInstance extends AbstractTickableSoundInstance {
-    private final Entity entity;
+    private Entity entity;
 
     public MovingSoundInstance(Entity entity, SoundEvent sound, float volume, boolean looping) {
         super(sound, SoundSource.AMBIENT, RandomSource.create()); // Or use SoundSource.NEUTRAL
@@ -36,6 +36,10 @@ public class MovingSoundInstance extends AbstractTickableSoundInstance {
     @Override
     public Attenuation getAttenuation() {
         return Attenuation.LINEAR; // Default, but you can also use NONE for global
+    }
+
+    public void setSourceEntity(Entity newSourceEntity) {
+        entity = newSourceEntity;
     }
 
     public void stopSound() {

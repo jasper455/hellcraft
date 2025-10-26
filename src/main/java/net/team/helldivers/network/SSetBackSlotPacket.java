@@ -11,6 +11,7 @@ import net.minecraft.world.item.TieredItem;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.NetworkEvent;
 import net.team.helldivers.backslot.PlayerBackSlotProvider;
+import net.team.helldivers.entity.custom.PortableHellbombEntity;
 import net.team.helldivers.helper.ClientBackSlotCache;
 import net.team.helldivers.item.custom.backpacks.AbstractBackpackItem;
 import net.team.helldivers.item.custom.backpacks.PortableHellbombItem;
@@ -44,11 +45,11 @@ public class SSetBackSlotPacket {
                 }
             } else if (!backSlotItem.isEmpty() && mainHand.isEmpty()) {
                 if (backSlotItem.getItem() instanceof PortableHellbombItem hellbombItem) {
-//                    if (!hellbombItem.isActivated()) {
+                    if (!hellbombItem.isActivated()) {
                         player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
-                        handler.setStackInSlot(0, ItemStack.EMPTY);
-//                        player.sendSystemMessage(Component.literal("test"));
-//                    }
+                    }
+                    handler.setStackInSlot(0, ItemStack.EMPTY);
+                    hellbombItem.setActivated(false);
                 } else {
                     player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
                     handler.setStackInSlot(0, ItemStack.EMPTY);
@@ -57,11 +58,10 @@ public class SSetBackSlotPacket {
                 if (mainHand.getItem() instanceof TieredItem || mainHand.getItem() instanceof ShieldItem
                         || mainHand.getItem() instanceof AbstractBackpackItem) {
                     if (backSlotItem.getItem() instanceof PortableHellbombItem hellbombItem) {
-//                        if (!hellbombItem.isActivated()) {
-                            handler.setStackInSlot(0, mainHand.copy());
+                        if (!hellbombItem.isActivated()) {
                             player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
-//                            player.sendSystemMessage(Component.literal("test1"));
-//                        }
+                        }
+                        handler.setStackInSlot(0, mainHand.copy());
                     } else {
                         handler.setStackInSlot(0, mainHand.copy());
                         player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
