@@ -11,6 +11,7 @@ import net.minecraftforge.registries.RegisterEvent;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.block.custom.samples.ModSampleBlocks;
 import net.team.helldivers.block.entity.ModBlockEntities;
+import net.team.helldivers.entity.ModBotEntities;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.client.*;
 import net.team.helldivers.gamerule.ModGameRules;
@@ -18,6 +19,7 @@ import net.team.helldivers.item.ModArmorItems;
 import net.team.helldivers.item.ModCreativeModeTabs;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.particle.ModParticles;
+import net.team.helldivers.particle.custom.ShrapnelParticle;
 import net.team.helldivers.screen.ModMenuTypes;
 import net.team.helldivers.screen.custom.*;
 import net.team.helldivers.sound.ModSounds;
@@ -70,6 +72,8 @@ public class HelldiversMod {
         HeadHitboxRegistry.Register(); //pulls the bounding boxes that determine where a mob can be headshotted from json
         ModChunkGenerators.register(modEventBus);
 
+        ModBotEntities.register(modEventBus);
+
         MinecraftForge.EVENT_BUS.register(this);
         MinecraftForge.EVENT_BUS.register(HeadHitboxRegistry.class);
         // Register the item to a creative tab
@@ -120,11 +124,14 @@ public class HelldiversMod {
         @SubscribeEvent
         public static void registerParticleFactory(RegisterParticleProvidersEvent event) {
             event.registerSpriteSet(ModParticles.SMOKE.get(), LodestoneWorldParticleType.Factory::new);
+            event.registerSpriteSet(ModParticles.SHRAPNEL.get(), ShrapnelParticle.Provider::new);
         }
         @SubscribeEvent
         public static void registerDamageTypes(RegisterEvent event) {
             event.register(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "orbital_laser"),
                     () -> new DamageType("orbital_laser", 0.1F));
+            event.register(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "raycast"),
+                    () -> new DamageType("raycast", 0.1F));
         }
 
     }

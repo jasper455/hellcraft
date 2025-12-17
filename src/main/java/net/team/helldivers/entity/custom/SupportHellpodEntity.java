@@ -307,6 +307,14 @@ public class SupportHellpodEntity extends Entity implements GeoEntity {
             this.inventory.setItem(0, new ItemStack(ModItems.AMR.get(), 1));
             this.inventory.setItem(1, new ItemStack(Items.AIR));
         }
+        if (stratagemType.equals("Portable Hellbomb")) {
+            this.inventory.setItem(0, new ItemStack(ModItems.PORTABLE_HELLBOMB.get(), 1));
+            this.inventory.setItem(1, new ItemStack(Items.AIR));
+        }
+        if (stratagemType.equals("Jump Pack")) {
+            this.inventory.setItem(0, new ItemStack(ModItems.JUMP_PACK.get(), 1));
+            this.inventory.setItem(1, new ItemStack(Items.AIR));
+        }
     }
 
     public void onInventoryClosed() {

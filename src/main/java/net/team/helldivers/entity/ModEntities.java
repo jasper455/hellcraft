@@ -60,6 +60,10 @@ public class ModEntities {
             ENTITY_TYPES.register("fire_grenade", () -> EntityType.Builder.<FireGrenadeEntity>of(FireGrenadeEntity::new, MobCategory.MISC)
                     .sized(0.15f, 0.15f).build("fire_grenade"));
 
+    public static final RegistryObject<EntityType<PortableHellbombEntity>> PORTABLE_HELLBOMB =
+            ENTITY_TYPES.register("portable_hellbomb", () -> EntityType.Builder.<PortableHellbombEntity>of(PortableHellbombEntity::new, MobCategory.MISC)
+                    .sized(1f, 1f).build("portable_hellbomb"));
+
     public static final RegistryObject<EntityType<EagleAirshipEntity>> EAGLE_AIRSHIP =
             ENTITY_TYPES.register("eagle_airship", () -> EntityType.Builder.of(EagleAirshipEntity::new, MobCategory.MISC)
                     .sized(0.00001f, 0.00001f).build("eagle_airship"));

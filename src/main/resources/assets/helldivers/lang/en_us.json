@@ -46,6 +46,9 @@
   "item.helldivers.stalwart": "M-105 Stalwart",
   "item.helldivers.amr": "APW-1 Anti-Materiel Rifle",
   "item.helldivers.flam40": "FLAM-40 Flamethrower",
+  "item.helldivers.jump_pack": "LIFT-850 Jump Pack",
+  "item.helldivers.portable_hellbomb": "B-100 Portable Hellbomb",
+  "item.helldivers.shield_pack": "SH-32 Shield Generator Pack",
 
   "item.helldivers.hellbomb_item": "§bHellbomb",
   "item.helldivers.resupply": "§bResupply",
@@ -62,6 +65,8 @@
   "item.helldivers.napalm_airstrike": "§bEagle Napalm Airstrike",
   "item.helldivers.stalwart_stratagem": "§bM-105 Stalwart",
   "item.helldivers.amr_stratagem": "§bAPW-1 Anti-Materiel Rifle",
+  "item.helldivers.portable_hellbomb_stratagem": "§bB-100 Portable Hellbomb",
+  "item.helldivers.jump_pack_stratagem": "§bLIFT-850 Jump Pack",
 
   "key.category.helldivers": "Crafted Democracy",
   "key.helldivers.show_stratagem_hud": "Show Stratagem HUD",
@@ -73,6 +78,7 @@
   "key.helldivers.reload": "Reload",
   "key.helldivers.aim": "Aim",
   "key.helldivers.equip_backpack": "Equip Tac-Pack",
+  "key.helldivers.use_backpack": "Use Tac-Pack",
 
   "block.helldivers.hellbomb": "§eHellbomb",
   "block.helldivers.ammo_crate": "Ammo Crate",
@@ -93,13 +99,20 @@
   "entity.helldivers.stratagem_orb": "Stratagem Orb",
   "entity.helldivers.hellpod": "Hellpod",
   "entity.helldivers.support_hellpod": "Support Hellpod",
+  "entity.helldivers.hellbomb_hellpod": "Hellbomb",
   "entity.helldivers.bullet": "Bullet",
   "entity.helldivers.rocket": "Rocket",
   "entity.helldivers.heated_gas": "Heated Gas",
   "entity.helldivers.frag_grenade": "Frag Grenade",
+  "entity.helldivers.fire_grenade": "Fire Grenade",
   "entity.helldivers.eagle_airship": "Eagle Airship",
   "entity.helldivers.orbital_laser": "Orbital Laser",
   "entity.helldivers.cluster_bomb": "Cluster Bomb Projectile",
+  "entity.helldivers.gatling_sentry": "Gatling Sentry",
+
+  "entity.helldivers.hulk": "Automaton Hulk",
+  "entity.helldivers.berserker": "Automaton Berserker",
+  "entity.helldivers.automaton_trooper": "Automaton Trooper",
 
   "sounds.helldivers.stratagem_input": "Stratagem Input",
   "sounds.helldivers.falling_shell": "Missile Falls",
@@ -137,5 +150,8 @@
   "container.helldivers.stratagem_picker": "§oStratagem Picker",
 
   "death.attack.orbitalLaser": "%1$s was vaporized by an Orbital Laser",
-  "death.attack.orbitalLaser.player": "%1$s was strategically eliminated by %2$s's Orbital Laser"
+  "death.attack.orbitalLaser.player": "%1$s was strategically eliminated by %2$s's Orbital Laser",
+
+  "death.attack.raycast": "%1$s was shot",
+  "death.attack.raycast.player": "%1$s was shot by %2$s"
 }
