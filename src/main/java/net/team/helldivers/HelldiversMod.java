@@ -76,6 +76,7 @@ public class HelldiversMod {
         modEventBus.addListener(this::addCreative);
         ModGameRules.DO_FLYING_BLOCKS.getId();
         ModGameRules.FLYING_BLOCKS_INTENSITY.getId();
+        ModGameRules.DO_AIM_DOWN_SIGHT.getId();
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         context.registerConfig(ModConfig.Type.COMMON, Config.SPEC);

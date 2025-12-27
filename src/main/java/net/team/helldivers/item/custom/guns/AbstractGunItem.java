@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
+import net.team.helldivers.gamerule.ModGameRules;
 import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -289,6 +290,11 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
                         wasAiming = isAiming;
                         isAiming = newAimingState;
                     }
+                }
+                boolean doADS = player.level().getGameRules().getBoolean(ModGameRules.DO_AIM_DOWN_SIGHT);
+                if (!doADS) {
+                    isAiming = false;
+                    wasAiming = false;
                 }
             } else {
                 isShooting = false;
