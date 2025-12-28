@@ -90,6 +90,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.NAPALM_BARRAGE.get());
                         output.accept(ModItems.WALKING_BARRAGE.get());
                         output.accept(ModItems.PRECISION_STRIKE.get());
+                        output.accept(ModItems.RAILCANNON_STRIKE.get());
                         output.accept(ModItems.ORBITAL_LASER.get());
                         //Eagles
                         output.accept(ModItems.EAGLE_500KG_BOMB.get());

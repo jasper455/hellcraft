@@ -556,6 +556,61 @@ public class Stratagems {
                 }
             }
 
+            // Railcannon Strike inputs
+
+            if (ClientItemCache.contains(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance()) && !isJammed) {
+                switch (RailcannonStrikeHud.inputStep) {
+                    case 0 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            RailcannonStrikeHud.firstInputDown = true;
+                            RailcannonStrikeHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            RailcannonStrikeHud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            RailcannonStrikeHud.secondInputDown = true;
+                            RailcannonStrikeHud.inputStep++;
+                        } else if (upNotPressed) {
+                            RailcannonStrikeHud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            RailcannonStrikeHud.thirdInputDown = true;
+                            RailcannonStrikeHud.inputStep++;
+                        } else if (downNotPressed) {
+                            RailcannonStrikeHud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (downJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            RailcannonStrikeHud.fourthInputDown = true;
+                            RailcannonStrikeHud.inputStep++;
+                        } else if (downNotPressed) {
+                            RailcannonStrikeHud.resetInputValues();
+                        }
+                    }
+                    case 4 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            RailcannonStrikeHud.fifthInputDown = true;
+                            RailcannonStrikeHud.allInputsDown = true;
+                            RailcannonStrikeHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            RailcannonStrikeHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
             // 120MM Barrage inputs
 
             if (ClientItemCache.contains(ModItems.SMALL_BARRAGE.get().getDefaultInstance()) &&
@@ -1131,6 +1186,12 @@ public class Stratagems {
                     ClientItemCache.getSlotWithItem(ModItems.PRECISION_STRIKE.get().getDefaultInstance())), 1800));
             resetInputValues();
         }
+        if (RailcannonStrikeHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Railcannon Strike"));
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
+                    ClientItemCache.getSlotWithItem(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance())), 3600));
+            resetInputValues();
+        }
         if (SmallBarrageHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital 120MM HE Barrage"));
             PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
@@ -1297,6 +1358,16 @@ public class Stratagems {
                 PrecisionStrikeHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.PRECISION_STRIKE.get().getDefaultInstance()));
             }
 
+            // Railcannon Strike HUD Render Code
+            if (ClientItemCache.contains(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance())) {
+                RailcannonStrikeHud.renderRailcannonStrikeHud(guiGraphics, ClientItemCache.getSlotWithItem(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (ClientItemCache.contains(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance()) &&
+                    !ClientItemCache.isOnCooldown(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance())) {
+                RailcannonStrikeHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance()));
+            }
+
             // 120 Barrage Render HUD Code
             if (ClientItemCache.contains(ModItems.SMALL_BARRAGE.get().getDefaultInstance()) &&
                     ClientItemCache.isOnCooldown(ModItems.SMALL_BARRAGE.get().getDefaultInstance())) {
@@ -1454,6 +1525,12 @@ public class Stratagems {
                 PrecisionStrikeHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.PRECISION_STRIKE.get().getDefaultInstance()));
             }
 
+            if (!ClientItemCache.isOnCooldown(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance()) &&
+                    ClientItemCache.getCooldownLeft(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance())) {
+                RailcannonStrikeHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance()));
+            }
+
             // 120 Barrage Cooldown Complete Popup Code
             if (!ClientItemCache.isOnCooldown(ModItems.SMALL_BARRAGE.get().getDefaultInstance()) &&
                     ClientItemCache.getCooldownLeft(ModItems.SMALL_BARRAGE.get().getDefaultInstance()) <= 5 &&
@@ -1557,6 +1634,7 @@ public class Stratagems {
         AmrHud.resetInputValues();
         PortableHellbombHud.resetInputValues();
         JumpPackHud.resetInputValues();
+        RailcannonStrikeHud.resetInputValues();
         allInputsDown = false;
     }
 }

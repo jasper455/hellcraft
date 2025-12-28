@@ -18,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import static net.minecraft.client.renderer.blockentity.BeaconRenderer.BEAM_LOCATION;
 
@@ -30,7 +31,7 @@ public class StratagemOrbProjectileRenderer extends EntityRenderer<StratagemOrbE
 
     @Override
     public void render(StratagemOrbEntity pEntity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-        if (pEntity.isGrounded()) {
+        if (pEntity.hasBeenGrounded) {
             poseStack.pushPose();
             poseStack.translate(-0.5, 0, -0.5);
 
@@ -52,7 +53,9 @@ public class StratagemOrbProjectileRenderer extends EntityRenderer<StratagemOrbE
         VertexConsumer vertexconsumer = ItemRenderer.getFoilBufferDirect(
                 buffer, this.model.renderType(this.getTextureLocation(pEntity)), false, false);
 
-        this.model.renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
+        if (!Objects.equals(pEntity.getStratagemType(), "Orbital Railcannon Strike") || !pEntity.hasBeenGrounded) {
+            this.model.renderToBuffer(poseStack, vertexconsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0f, 1.0f, 1.0f, 1.0f);
+        }
 
         poseStack.popPose();
 
@@ -72,6 +75,7 @@ public class StratagemOrbProjectileRenderer extends EntityRenderer<StratagemOrbE
             case "Jump Pack" -> new float[]{0.51f, 0.996f, 1.0f, 1.0f}; // Support blue color
             // Orbital
             case "Orbital Precision Strike" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
+            case "Orbital Railcannon Strike" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
             case "Orbital 120MM HE Barrage" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
             case "Orbital 380MM HE Barrage" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color
             case "Orbital Laser" -> new float[]{0.922f, 0.251f, 0.204f, 1.0f}; // Default red color

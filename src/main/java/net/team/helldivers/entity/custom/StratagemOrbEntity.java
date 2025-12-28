@@ -1,5 +1,6 @@
 package net.team.helldivers.entity.custom;
 
+import it.unimi.dsi.fastutil.floats.FloatLists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -8,12 +9,18 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.common.Mod;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.helper.OrbitalBarrage;
+import net.team.helldivers.network.CSmallExplosionParticlesPacket;
+import net.team.helldivers.network.PacketHandler;
+import net.team.helldivers.network.SExplosionPacket;
 import net.team.helldivers.sound.ModSounds;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
@@ -30,6 +37,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
 import net.team.helldivers.worldgen.dimension.ModDimensions;
 
+import java.util.List;
+
 public class StratagemOrbEntity extends AbstractArrow {
     private static final EntityDataAccessor<String> STRATAGEM_TYPE =
             SynchedEntityData.defineId(StratagemOrbEntity.class, EntityDataSerializers.STRING);
@@ -37,7 +46,8 @@ public class StratagemOrbEntity extends AbstractArrow {
     private float rotation;
     public Vec3 groundedOffset;
     private int groundedTicks = 0;
-
+    public boolean hasBeenGrounded;
+    private LivingEntity strongest = null;
 
     public StratagemOrbEntity(EntityType<? extends AbstractArrow> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -59,7 +69,7 @@ public class StratagemOrbEntity extends AbstractArrow {
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
-        if (!this.level().isClientSide && result.getEntity() instanceof LivingEntity) {
+        if (!this.level().isClientSide && result.getEntity() instanceof LivingEntity && !getStratagemType().equals("Orbital Railcannon Strike")) {
             this.setDeltaMovement(Vec3.ZERO);
         }
     }
@@ -103,9 +113,11 @@ public class StratagemOrbEntity extends AbstractArrow {
             this.discard();
         }
 
-        if (this.isGrounded()) {
+        if (this.isGrounded() || hasBeenGrounded) {
+            hasBeenGrounded = true;
             groundedTicks++;
         }
+
         if (this.isGrounded() && groundedTicks == 1 && !this.level().isClientSide()) {
             this.playSound(ModSounds.STRATAGEM_ORB_LAND.get(), 3f, 1.0f);
         }
@@ -295,6 +307,55 @@ public class StratagemOrbEntity extends AbstractArrow {
             groundedTicks = 0;
         }
 
+        if (getStratagemType().equals("Orbital Railcannon Strike") && !this.level().isClientSide()) {
+
+            List<LivingEntity> nearbyEntities = level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(20.0));
+            double highestHealth = Double.MIN_VALUE;
+            if (strongest == null) {
+                for (LivingEntity nearbyEntity : nearbyEntities) {
+                    if (nearbyEntity.getAttribute(Attributes.MAX_HEALTH) == null) continue;
+
+                    double maxHealth = nearbyEntity.getAttributeValue(Attributes.MAX_HEALTH);
+                    if (maxHealth > highestHealth) {
+                        highestHealth = maxHealth;
+                        strongest = nearbyEntity;
+                    }
+                }
+            }
+            if (strongest != null) {
+                if (groundedTicks >= 60) {
+                    strongest.hurt(damageSources().explosion(null), 550f);
+                    this.playSound(ModSounds.EXPLOSION.get(), 10.0f, 1.0f);
+                    this.level().explode(this, this.getX(), this.getY(), this.getZ(), 5, Level.ExplosionInteraction.NONE);
+                    this.discard();
+                    groundedTicks = 0;
+                } else if (hasBeenGrounded) {
+//                if (groundedTicks == 1) {
+//                    this.setPos(this.getX(), this.getY() + 0.5D, this.getZ());
+//                }
+                    // Ungrounds the orb
+                    this.inGround = false;
+                    this.setNoPhysics(false); // ensures collisions work again
+                    this.hasImpulse = true;   // tells MC to reprocess motion
+                    this.setNoGravity(true);
+
+                    Vec3 toTarget = strongest.position()
+                            .add(0, strongest.getBbHeight(), 0)
+                            .subtract(this.position())
+                            .normalize()
+                            .scale(0.8D);
+
+                    Vec3 newMotion = this.getDeltaMovement().lerp(toTarget, 0.8);
+
+                    this.setDeltaMovement(newMotion);
+                }
+            } else {
+                if (groundedTicks >= 60) {
+                    this.discard();
+                    groundedTicks = 0;
+                }
+            }
+        }
 
         // 120 Barrage Entity Stuff
         if (getStratagemType().equals("Orbital 120MM HE Barrage") && !this.level().isClientSide) {
@@ -507,8 +568,6 @@ public class StratagemOrbEntity extends AbstractArrow {
             this.discard();
             groundedTicks = 0;
         }
-
-
     }
 
     private void spawnClusterBomb() {
