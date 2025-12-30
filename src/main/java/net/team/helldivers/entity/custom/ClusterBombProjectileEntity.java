@@ -32,8 +32,8 @@ public class ClusterBombProjectileEntity extends AbstractArrow {
         super(pEntityType, pLevel);
     }
 
-    public ClusterBombProjectileEntity(LivingEntity shooter, Level level, int power) {
-        super(ModEntities.CLUSTER_BOMB.get(), shooter, level);
+    public ClusterBombProjectileEntity(Level level, int power) {
+        super(ModEntities.CLUSTER_BOMB.get(), level);
         this.power = power;
     }
 
@@ -44,9 +44,9 @@ public class ClusterBombProjectileEntity extends AbstractArrow {
     @Override
     protected void onHitEntity(EntityHitResult result) {
         super.onHitEntity(result);
-        PacketHandler.sendToServer(new SExplosionPacket(result.getEntity().blockPosition(), this.power, false));
+        PacketHandler.sendToServer(new SExplosionPacket(result.getEntity().blockPosition(), this.power / 2, false));
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(6)).forEach(entity -> {
-            entity.hurt(level().damageSources().explosion(null), this.power * 4f);
+            entity.hurt(level().damageSources().explosion(null), 30);
         });
         if (this.level().isClientSide) {
             this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER, true,
@@ -58,10 +58,10 @@ public class ClusterBombProjectileEntity extends AbstractArrow {
     @Override
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
-        PacketHandler.sendToServer(new SExplosionPacket(result.getBlockPos(), this.power, false));
+        PacketHandler.sendToServer(new SExplosionPacket(result.getBlockPos(), this.power / 2, false));
         PacketHandler.sendToAllClients(new CClusterBombExplosionParticlesPacket(result.getBlockPos()));
         this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(6)).forEach(entity -> {
-            entity.hurt(level().damageSources().explosion(null), this.power * 4f);
+            entity.hurt(level().damageSources().explosion(null), 30);
         });
         if (this.level().isClientSide) {
             this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER, true,
@@ -84,6 +84,8 @@ public class ClusterBombProjectileEntity extends AbstractArrow {
             }
                 this.level().addParticle(ParticleTypes.EXPLOSION_EMITTER, false,
                         this.getX(), this.getY(), this.getZ(), 0, 0, 0);
+        } else {
+            this.setDeltaMovement(this.getDeltaMovement().x / 1.5f, this.getDeltaMovement().y, this.getDeltaMovement().z /1.5f);
         }
         soundTicks++;
         if (soundTicks == 120) soundTicks = 0;

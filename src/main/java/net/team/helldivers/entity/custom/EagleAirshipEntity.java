@@ -75,22 +75,22 @@ public class EagleAirshipEntity extends FlyingMob implements GeoEntity {
 
         if (this.stratagemType.equals("Eagle Napalm Airstrike")) {
             if (ticksLeft == 13) {
-                spawnAirstrikeMissile(9, true);
+                spawnAirstrikeMissile(9, true, false);
             }
             if (ticksLeft == 12) {
-                spawnAirstrikeMissile(6, true);
+                spawnAirstrikeMissile(6, true, false);
             }
             if (ticksLeft == 11) {
-                spawnAirstrikeMissile(3, true);
+                spawnAirstrikeMissile(3, true, false);
             }
             if (ticksLeft == 10) {
-                spawnAirstrikeMissile(0, true);
+                spawnAirstrikeMissile(0, true, false);
             }
             if (ticksLeft == 9) {
-                spawnAirstrikeMissile(-3, true);
+                spawnAirstrikeMissile(-3, true, false);
             }
             if (ticksLeft == 8) {
-                spawnAirstrikeMissile(-6, true);
+                spawnAirstrikeMissile(-6, true, false);
             }
             if (ticksLeft <= 0) {
                 this.discard();
@@ -99,22 +99,46 @@ public class EagleAirshipEntity extends FlyingMob implements GeoEntity {
 
         if (this.stratagemType.equals("Eagle Airstrike")) {
             if (ticksLeft == 13) {
-                spawnAirstrikeMissile(9, false);
+                spawnAirstrikeMissile(9, false, false);
             }
             if (ticksLeft == 12) {
-                spawnAirstrikeMissile(6, false);
+                spawnAirstrikeMissile(6, false, false);
             }
             if (ticksLeft == 11) {
-                spawnAirstrikeMissile(3, false);
+                spawnAirstrikeMissile(3, false, false);
             }
             if (ticksLeft == 10) {
-                spawnAirstrikeMissile(0, false);
+                spawnAirstrikeMissile(0, false, false);
             }
             if (ticksLeft == 9) {
-                spawnAirstrikeMissile(-3, false);
+                spawnAirstrikeMissile(-3, false, false);
             }
             if (ticksLeft == 8) {
-                spawnAirstrikeMissile(-6, false);
+                spawnAirstrikeMissile(-6, false, false);
+            }
+            if (ticksLeft <= 0) {
+                this.discard();
+            }
+        }
+
+        if (this.stratagemType.equals("Eagle Cluster Bomb")) {
+            if (ticksLeft == 13) {
+                spawnAirstrikeMissile(9, false, true);
+            }
+            if (ticksLeft == 12) {
+                spawnAirstrikeMissile(6, false, true);
+            }
+            if (ticksLeft == 11) {
+                spawnAirstrikeMissile(3, false, true);
+            }
+            if (ticksLeft == 10) {
+                spawnAirstrikeMissile(0, false, true);
+            }
+            if (ticksLeft == 9) {
+                spawnAirstrikeMissile(-3, false, true);
+            }
+            if (ticksLeft == 8) {
+                spawnAirstrikeMissile(-6, false, true);
             }
             if (ticksLeft <= 0) {
                 this.discard();
@@ -125,16 +149,16 @@ public class EagleAirshipEntity extends FlyingMob implements GeoEntity {
         }
     }
 
-    private void spawnAirstrikeMissile(int offset, boolean isNapalm) {
+    private void spawnAirstrikeMissile(int offset, boolean isNapalm, boolean isCluster) {
         float randomPosX = (Mth.randomBetween(this.level().getRandom(), -2.5f, 2.5f));
         float randomPosZ = (Mth.randomBetween(this.level().getRandom(), -2.5f, 2.5f));
         if (this.getYHeadRot() == 90) {
-            MissileProjectileEntity explosive = new MissileProjectileEntity(this, this.level(), 10, isNapalm);
+            MissileProjectileEntity explosive = new MissileProjectileEntity(this, this.level(), 10, isNapalm, isCluster);
             explosive.setPos(this.getX() + offset, this.getY() + 44, this.getZ() + randomPosZ);
             explosive.setDeltaMovement(0f, 0f, 0f);
             this.level().addFreshEntity(explosive);
         } else {
-            MissileProjectileEntity explosive = new MissileProjectileEntity(this, this.level(), 10, isNapalm);
+            MissileProjectileEntity explosive = new MissileProjectileEntity(this, this.level(), 10, isNapalm, isCluster);
             explosive.setPos(this.getX() + randomPosX, this.getY() + 44, this.getZ() - offset);
             explosive.setDeltaMovement(0f, 0f, 0f);
             this.level().addFreshEntity(explosive);

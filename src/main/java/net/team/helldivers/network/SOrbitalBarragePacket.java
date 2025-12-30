@@ -91,7 +91,7 @@ public class SOrbitalBarragePacket {
             float walkingZ = (Mth.randomBetween(player.level().getRandom(), groundedTicks / 7.5f, groundedTicks / 7.5f));
             float walkingX = (Mth.randomBetween(player.level().getRandom(), groundedTicks / 7.5f, groundedTicks / 7.5f));
 
-            MissileProjectileEntity explosive = new MissileProjectileEntity(player, player.level(),12, isNapalm);
+            MissileProjectileEntity explosive = new MissileProjectileEntity(player, player.level(),12, isNapalm, false);
             if (isWalking) {
                 if (walkingDirection == 0) {
                     explosive.setPos(position.getX() + randomPosX, 200, position.getZ() - walkingZ);
