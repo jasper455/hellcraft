@@ -611,6 +611,43 @@ public class Stratagems {
                 }
             }
 
+            // Airburst Strike inputs
+
+            if (ClientItemCache.contains(ModItems.AIRBURST_STRIKE.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.AIRBURST_STRIKE.get().getDefaultInstance()) && !isJammed) {
+                switch (AirburstStrikeHud.inputStep) {
+                    case 0 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            AirburstStrikeHud.firstInputDown = true;
+                            AirburstStrikeHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            AirburstStrikeHud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            AirburstStrikeHud.secondInputDown = true;
+                            AirburstStrikeHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            AirburstStrikeHud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            AirburstStrikeHud.thirdInputDown = true;
+                            AirburstStrikeHud.allInputsDown = true;
+                            AirburstStrikeHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            AirburstStrikeHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
             // 120MM Barrage inputs
 
             if (ClientItemCache.contains(ModItems.SMALL_BARRAGE.get().getDefaultInstance()) &&
@@ -1192,6 +1229,12 @@ public class Stratagems {
                     ClientItemCache.getSlotWithItem(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance())), 3600));
             resetInputValues();
         }
+        if (AirburstStrikeHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital Airburst Strike"));
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
+                    ClientItemCache.getSlotWithItem(ModItems.AIRBURST_STRIKE.get().getDefaultInstance())), 2000));
+            resetInputValues();
+        }
         if (SmallBarrageHud.allInputsDown) {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Orbital 120MM HE Barrage"));
             PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
@@ -1368,6 +1411,16 @@ public class Stratagems {
                 RailcannonStrikeHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance()));
             }
 
+            // Airburst Strike HUD Render Code
+            if (ClientItemCache.contains(ModItems.AIRBURST_STRIKE.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.AIRBURST_STRIKE.get().getDefaultInstance())) {
+                AirburstStrikeHud.renderAirburstStrikeHud(guiGraphics, ClientItemCache.getSlotWithItem(ModItems.AIRBURST_STRIKE.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (ClientItemCache.contains(ModItems.AIRBURST_STRIKE.get().getDefaultInstance()) &&
+                    !ClientItemCache.isOnCooldown(ModItems.AIRBURST_STRIKE.get().getDefaultInstance())) {
+                AirburstStrikeHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.AIRBURST_STRIKE.get().getDefaultInstance()));
+            }
+
             // 120 Barrage Render HUD Code
             if (ClientItemCache.contains(ModItems.SMALL_BARRAGE.get().getDefaultInstance()) &&
                     ClientItemCache.isOnCooldown(ModItems.SMALL_BARRAGE.get().getDefaultInstance())) {
@@ -1519,16 +1572,25 @@ public class Stratagems {
 
             // ORBITAL
 
+            // Precision Strike Cooldown Complete Popup Code
             if (!ClientItemCache.isOnCooldown(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) &&
                     ClientItemCache.getCooldownLeft(ModItems.PRECISION_STRIKE.get().getDefaultInstance()) <= 5 &&
                     ClientItemCache.contains(ModItems.PRECISION_STRIKE.get().getDefaultInstance())) {
                 PrecisionStrikeHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.PRECISION_STRIKE.get().getDefaultInstance()));
             }
 
+            // Railcannon Strike Cooldown Complete Popup Code
             if (!ClientItemCache.isOnCooldown(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance()) &&
                     ClientItemCache.getCooldownLeft(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance()) <= 5 &&
                     ClientItemCache.contains(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance())) {
                 RailcannonStrikeHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.RAILCANNON_STRIKE.get().getDefaultInstance()));
+            }
+
+            // Railcannon Strike Cooldown Complete Popup Code
+            if (!ClientItemCache.isOnCooldown(ModItems.AIRBURST_STRIKE.get().getDefaultInstance()) &&
+                    ClientItemCache.getCooldownLeft(ModItems.AIRBURST_STRIKE.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.AIRBURST_STRIKE.get().getDefaultInstance())) {
+                AirburstStrikeHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.AIRBURST_STRIKE.get().getDefaultInstance()));
             }
 
             // 120 Barrage Cooldown Complete Popup Code
@@ -1635,6 +1697,7 @@ public class Stratagems {
         PortableHellbombHud.resetInputValues();
         JumpPackHud.resetInputValues();
         RailcannonStrikeHud.resetInputValues();
+        AirburstStrikeHud.resetInputValues();
         allInputsDown = false;
     }
 }

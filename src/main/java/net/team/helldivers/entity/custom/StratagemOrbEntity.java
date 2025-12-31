@@ -302,11 +302,12 @@ public class StratagemOrbEntity extends AbstractArrow {
             explosive.setDeltaMovement(0f, 0f, 0f);
             this.level().addFreshEntity(explosive);
         }
-        if (getStratagemType().equals("Orbital Precision Strike") && groundedTicks == 100) {
+        if (getStratagemType().equals("Orbital Precision Strike") && groundedTicks >= 100) {
             this.discard();
             groundedTicks = 0;
         }
 
+        // Railcannon Strike Entity stuff
         if (getStratagemType().equals("Orbital Railcannon Strike") && !this.level().isClientSide()) {
 
             List<LivingEntity> nearbyEntities = level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(20.0));
@@ -355,6 +356,23 @@ public class StratagemOrbEntity extends AbstractArrow {
                     groundedTicks = 0;
                 }
             }
+        }
+
+        // Airburst Strike Entity Stuff
+        if (getStratagemType().equals("Orbital Airburst Strike") && groundedTicks >= 90 && !this.level().isClientSide()) {
+            if ((groundedTicks - 90) != 0 && ((groundedTicks - 90) % 60) == 0) {
+                float randomPosX = (Mth.randomBetween(this.level().getRandom(), -5.0f, 5.0f));
+                float randomPosY = (Mth.randomBetween(this.level().getRandom(), -5.0f, 5.0f));
+
+                MissileProjectileEntity explosive = new MissileProjectileEntity(((LivingEntity) this.getOwner()), this.level(), 10, false, true);
+                explosive.setPos(this.getX() + randomPosX, 200 + randomPosY, this.getZ());
+                explosive.setDeltaMovement(0f, 0f, 0f);
+                this.level().addFreshEntity(explosive);
+            }
+        }
+        if (getStratagemType().equals("Orbital Airburst Strike") && groundedTicks >= 330) {
+            this.discard();
+            groundedTicks = 0;
         }
 
         // 120 Barrage Entity Stuff

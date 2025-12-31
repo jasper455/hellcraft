@@ -62,6 +62,8 @@ public class StratagemHudOverlay {
             HelldiversMod.MOD_ID, "textures/stratagem_hud/precision_strike_gui.png");
     public static final ResourceLocation RAILCANNON_STRIKE = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/railcannon_strike_gui.png");
+    public static final ResourceLocation AIRBURST_STRIKE = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/airburst_strike_gui.png");
     public static final ResourceLocation SMALL_BARRAGE = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/120_barrage_gui.png");
     public static final ResourceLocation BIG_BARRAGE = ResourceLocation.fromNamespaceAndPath(
