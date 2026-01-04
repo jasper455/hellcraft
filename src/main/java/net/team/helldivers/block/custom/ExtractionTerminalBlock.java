@@ -67,7 +67,6 @@ public class ExtractionTerminalBlock extends BaseEntityBlock implements EntityBl
 //                            Component.literal("Extraction Terminal")
 //                    ), pos);
 //                } else {
-                    ModClientEvents.triggerFlashEffect(0.00005f, 0.00005f, new Color(0, 0, 0));
                     MinecraftForge.EVENT_BUS.register(ExtractionTerminalBlock.this);
                     MinecraftForge.EVENT_BUS.register(delay);
 //                }
