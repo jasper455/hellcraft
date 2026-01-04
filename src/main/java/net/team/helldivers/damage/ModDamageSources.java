@@ -9,5 +9,9 @@ public class ModDamageSources {
         return new DamageSource(source.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
                 .getHolder(ModDamageTypes.ORBITAL_LASER).get());
     }
+    public static DamageSource raycast(Entity source) {
+        return new DamageSource(source.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE)
+                .getHolder(ModDamageTypes.RAYCAST).get());
+    }
 }
 

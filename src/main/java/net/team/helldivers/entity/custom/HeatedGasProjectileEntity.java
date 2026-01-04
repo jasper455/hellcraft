@@ -24,6 +24,8 @@ import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.*;
 import net.team.helldivers.block.custom.BotContactMineBlock;
+import net.team.helldivers.damage.ModDamageSources;
+import net.team.helldivers.damage.ModDamageTypes;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.network.CHitMarkPacket;
 import net.team.helldivers.network.PacketHandler;
@@ -76,6 +78,9 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
              if (!this.level().isClientSide && this.getOwner() instanceof ServerPlayer player && entity1 !=null) {
                 PacketHandler.sendToPlayer(new CHitMarkPacket(), player);
             }
+            if (this.getOwner() != null) {
+                entity1.hurt(ModDamageSources.raycast(this.getOwner()), 20.0F);
+            }
         });
         this.discard();
     }
@@ -97,11 +102,16 @@ public class HeatedGasProjectileEntity extends AbstractArrow {
              if (!this.level().isClientSide && this.getOwner() instanceof ServerPlayer player && entity !=null) {
                 PacketHandler.sendToPlayer(new CHitMarkPacket(), player);
             }
+            if (this.getOwner() != null) {
+                entity.hurt(ModDamageSources.raycast(this.getOwner()), 10.0F);
+            }
         });
         if (block.getBlock() instanceof BotContactMineBlock) {
             this.level().setBlockAndUpdate(result.getBlockPos(), Blocks.AIR.defaultBlockState());
             this.level().getEntitiesOfClass(LivingEntity.class, new AABB(result.getBlockPos()).inflate(3.0)).forEach(entity -> {
-                entity.hurt(this.level().damageSources().explosion(null), 12.5F);
+                if (this.getOwner() != null) {
+                    entity.hurt(ModDamageSources.raycast(this.getOwner()), 12.5F);
+                }
             });
         }
         this.discard();

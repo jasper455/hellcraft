@@ -54,7 +54,7 @@ public class FLAM40Item extends AbstractGunItem {
         AAALevel.addParticle(player.level(), true, fire);
         FlameBulletEntity flame = new FlameBulletEntity(player, player.level());
         flame.setPos(player.getEyePosition().add(0, -0.3, 0));
-        flame.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 0.5f, 7f);
+        flame.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 0.7f, 7f);
         player.level().addFreshEntity(flame);
         if (!player.isCreative()) {
             itemStack.hurt(1, player.level().getRandom().fork(), player);

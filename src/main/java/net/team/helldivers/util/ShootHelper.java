@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
 
+import net.minecraft.core.particles.DustParticleOptions;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
+import net.team.helldivers.damage.ModDamageSources;
+import net.team.helldivers.entity.custom.bots.AbstractBotEntity;
+import net.team.helldivers.entity.custom.bots.RangedHulkEntity;
+import net.team.helldivers.particle.ModParticles;
 import org.checkerframework.checker.units.qual.h;
 
 import com.mojang.datafixers.util.Pair;
@@ -47,12 +54,12 @@ import net.team.helldivers.util.Headshots.HeadHitbox;
 import net.team.helldivers.util.Headshots.HeadHitboxRegistry;
 
 public class ShootHelper {
-        
+
       public static void shoot(LivingEntity shooter, Level level, double drift, float dam, double knockback, boolean ignoreIframes){
         Pair<HitResult, Vec3> pair = raycast(level, shooter, drift, true);
         HitResult result = pair.getFirst();
         Vec3 hitPos = pair.getSecond();
-        ParticleEmitterInfo hit = EffekLoader.HIT.clone().position(hitPos).scale(0.1f);//.parameter(0, dist/2); 
+        ParticleEmitterInfo hit = EffekLoader.HIT.clone().position(hitPos).scale(0.1f);//.parameter(0, dist/2);
         AAALevel.addParticle(shooter.level(), true, hit);
         if(result.getType() == HitResult.Type.ENTITY){
             EntityHitResult resultE = ((EntityHitResult)result);
@@ -64,7 +71,7 @@ public class ShootHelper {
                  ((ServerLevel) level).sendParticles(ParticleTypes.CRIT, hitPos.x, hitPos.y, hitPos.z, 10, 0, 0, 0, 0);
             }
             /*if(checkHeadShot(resultE, hitPos)){
-                entity.hurt(entity.damageSources().generic(), dam*2);
+                entity.hurt(ModDamageSources.raycast(shooter), dam*2);
                 System.out.println("HEADSHOT");
                 if(entity instanceof LivingEntity alive){
                     if(ignoreIframes) alive.invulnerableTime = 0;
@@ -84,7 +91,7 @@ public class ShootHelper {
         if(result.getType() == HitResult.Type.BLOCK){
             BlockHitResult resultB = ((BlockHitResult)result);
             BlockPos pos = resultB.getBlockPos();
-            BlockState block = Minecraft.getInstance().level.getBlockState(pos);
+            BlockState block = level.getBlockState(pos);
             if (block.getBlock() instanceof BotContactMineBlock) {
             shooter.level().setBlockAndUpdate(resultB.getBlockPos(), Blocks.AIR.defaultBlockState());
             shooter.level().getEntitiesOfClass(LivingEntity.class, new AABB(resultB.getBlockPos()).inflate(3.0)).forEach(entity -> {

@@ -120,6 +120,9 @@ public class EagleAirshipEntity extends FlyingMob implements GeoEntity {
                 this.discard();
             }
         }
+        if (ticksLeft <= 0) {
+            this.discard();
+        }
     }
 
     private void spawnAirstrikeMissile(int offset, boolean isNapalm) {

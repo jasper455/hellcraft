@@ -9,4 +9,7 @@ import net.team.helldivers.HelldiversMod;
 public interface ModDamageTypes {
     ResourceKey<DamageType> ORBITAL_LASER = ResourceKey.create(Registries.DAMAGE_TYPE, 
             ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "orbital_laser"));
+
+    ResourceKey<DamageType> RAYCAST = ResourceKey.create(Registries.DAMAGE_TYPE,
+            ResourceLocation.fromNamespaceAndPath(HelldiversMod.MOD_ID, "raycast"));
 }

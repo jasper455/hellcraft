@@ -53,9 +53,11 @@ public class HellbombInputScreen extends AbstractContainerScreen<HellbombInputMe
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         RenderSystem.setShaderTexture(0, GUI_TEXTURE);
-        int x = (int) ((width - 350) / 2);
+
+        int x = (int) ((Minecraft.getInstance().getWindow().getGuiScaledWidth() - imageWidth) / 2);
+        int y = (int) ((Minecraft.getInstance().getWindow().getGuiScaledHeight() - imageHeight) / 2) + 20;
         guiGraphics.blit(GUI_TEXTURE,
-                x, 20, 512, 512, 0, 0, 256, 256,
+                x, y, 512, 512, 0, 0, 256, 256,
                 256, 256);
     }
 
@@ -67,20 +69,23 @@ public class HellbombInputScreen extends AbstractContainerScreen<HellbombInputMe
 
         HellbombBlockEntity hellbombBlockEntity = this.menu.hellbombBlockEntity;
 
+        int x = (int) ((Minecraft.getInstance().getWindow().getGuiScaledWidth() - imageWidth) / 2);
+        int y = (int) ((Minecraft.getInstance().getWindow().getGuiScaledHeight() - imageHeight) / 2) + 20;
+
         if (hellbombBlockEntity.randomCode == 1) {
-            HellbombCombinations.combo1render(guiGraphics, firstInputDown, secondInputDown,
+            HellbombCombinations.combo1render(x, y, guiGraphics, firstInputDown, secondInputDown,
                     thirdInputDown, fourthInputDown, fifthInputDown, sixthInputDown);
         }
         if (hellbombBlockEntity.randomCode == 2) {
-            HellbombCombinations.combo2render(guiGraphics, firstInputDown, secondInputDown,
+            HellbombCombinations.combo2render(x, y, guiGraphics, firstInputDown, secondInputDown,
                     thirdInputDown, fourthInputDown, fifthInputDown, sixthInputDown);
         }
         if (hellbombBlockEntity.randomCode == 3) {
-            HellbombCombinations.combo3render(guiGraphics, firstInputDown, secondInputDown,
+            HellbombCombinations.combo3render(x, y, guiGraphics, firstInputDown, secondInputDown,
                     thirdInputDown, fourthInputDown, fifthInputDown, sixthInputDown);
         }
         if (hellbombBlockEntity.randomCode == 4) {
-            HellbombCombinations.combo4render(guiGraphics, firstInputDown, secondInputDown,
+            HellbombCombinations.combo4render(x, y, guiGraphics, firstInputDown, secondInputDown,
                     thirdInputDown, fourthInputDown, fifthInputDown, sixthInputDown);
         }
 

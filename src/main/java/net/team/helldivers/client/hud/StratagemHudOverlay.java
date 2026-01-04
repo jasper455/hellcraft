@@ -52,6 +52,11 @@ public class StratagemHudOverlay {
             HelldiversMod.MOD_ID, "textures/stratagem_hud/stalwart.png");
     public static final ResourceLocation AMR = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/amr.png");
+
+    public static final ResourceLocation PORTABLE_HELLBOMB = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/portable_hellbomb.png");
+    public static final ResourceLocation JUMP_PACK = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/jump_pack.png");
     //Orbitals
     public static final ResourceLocation PRECISION_STRIKE = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/precision_strike_gui.png");

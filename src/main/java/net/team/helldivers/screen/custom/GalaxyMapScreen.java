@@ -36,10 +36,28 @@ public class GalaxyMapScreen extends AbstractContainerScreen<GalaxyMapMenu> {
         this.inventoryLabelY = 1000;
         this.titleLabelX = 1000;
         this.titleLabelY = 1000;
-        this.addRenderableWidget(new TexturedButton(300, 140, 40, 40, OVERWORLD_NORMAL, OVERWORLD_HOVER,
-                pButton -> PacketHandler.sendToServer(new STeleportToDimensionPacket(Level.OVERWORLD.location())), "The Overworld"));
-        this.addRenderableWidget(new TexturedButton(190, 90, 40, 40, CHOEPESSA_NORMAL, CHOEPESSA_HOVER,
-                pButton -> PacketHandler.sendToServer(new STeleportToDimensionPacket(ModDimensions.CHOEPESSA_DIM.location())), "Choepessa IV"));
+    }
+
+    @Override
+    protected void init() {
+        super.init();
+        int x = this.leftPos;
+        int y = this.topPos;
+        this.addRenderableWidget(new TexturedButton(
+                x + 175, y + 55, 40, 40,
+                OVERWORLD_NORMAL, OVERWORLD_HOVER,
+                pButton -> PacketHandler.sendToServer(
+                        new STeleportToDimensionPacket(Level.OVERWORLD.location())),
+                "The Overworld"
+        ));
+
+        this.addRenderableWidget(new TexturedButton(
+                x + 65, y + 15, 40, 40,
+                CHOEPESSA_NORMAL, CHOEPESSA_HOVER,
+                pButton -> PacketHandler.sendToServer(
+                        new STeleportToDimensionPacket(ModDimensions.CHOEPESSA_DIM.location())),
+                "Choepessa IV"
+        ));
     }
 
     @Override
@@ -47,19 +65,20 @@ public class GalaxyMapScreen extends AbstractContainerScreen<GalaxyMapMenu> {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         RenderSystem.setShaderTexture(0, STARS_TEXTURE);
-        int x = (int) ((width - 310) / 2);
+        int x = ((width - imageWidth) / 2) - 75;
+        int y = (height - imageHeight) / 2;
         guiGraphics.blit(BACKGROUND_TEXTURE,
-                x, 70, 319, 179, 0, 0, 426, 239,
+                x, y, 319, 179, 0, 0, 426, 239,
                 426, 239);
         guiGraphics.blit(STARS_TEXTURE,
-                x + 5, 75, 309, 169, 0, 0, 768, 432,
+                x + 4, y + 5, 309, 169, 0, 0, 768, 432,
                 768, 432);
     }
 
     @Override
     public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
         renderBackground(guiGraphics);
-        renderTooltip(guiGraphics, mouseX, mouseY);
         super.render(guiGraphics, mouseX, mouseY, delta);
+        renderTooltip(guiGraphics, mouseX, mouseY);
     }
 }

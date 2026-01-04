@@ -30,6 +30,7 @@ import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.entity.goal.LookAtTargetGoal;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SHellpodDestroyBlocksPacket;
+import net.team.helldivers.util.ShootHelper;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
@@ -75,9 +76,10 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
 
     @Override
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 0, false,
+        this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, LivingEntity.class, 0, false,
                 false, entity -> (entity instanceof Monster) && entity.isAlive() && !(entity instanceof GatlingSentryHellpodEntity)));
-//        this.goalSelector.addGoal(0, new LookAtPlayerGoal(this, Monster.class, 25, 100f));
+
+        this.goalSelector.addGoal(0, new LookAtPlayerGoal(this, Monster.class, 25, 100f));
     }
 
     @Override
@@ -113,7 +115,7 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
         }
 
         if (this.level().isClientSide && !this.isGrounded() && Minecraft.getInstance().player.getPersistentData()
-                .getBoolean("helldivers.useLodestone")) {
+                .getBoolean("helldivers.useLodestone")) {//TODO might be best to replace this with effekseer particles at some point
                 WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)
                         .setScaleData(GenericParticleData.create(3f, 0f).build())
                         .setTransparencyData(GenericParticleData.create(1f, 0f).build())
@@ -128,12 +130,14 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
 
         }
         if (this.getTarget() != null) {
-            BulletProjectileEntity bulletProjectile = new BulletProjectileEntity(this, this.level(), false, false);
+            ShootHelper.shoot(this, this.level(), 0, 1, 0.3f, true);//TODO idk how much damage this should do so I put 1. it does ignore i frames now so that might still be quite a bit of damage
+            System.out.println("shot");
+            /*BulletProjectileEntity bulletProjectile = new BulletProjectileEntity(this, this.level(), false, false);
             bulletProjectile.shootFromRotation(this, this.getViewXRot(1), this.getViewYRot(1), 0.0f, 5f, 0f);
             bulletProjectile.setYRot(this.getViewXRot(1));
             bulletProjectile.setXRot(this.getViewYRot(1));
             bulletProjectile.setNoGravity(true);
-            this.level().addFreshEntity(bulletProjectile);
+            this.level().addFreshEntity(bulletProjectile);*/
         }
 
         if (this.isGrounded()) {
@@ -142,6 +146,7 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
 
         if (!this.isGrounded()) {
             this.level().getEntitiesOfClass(LivingEntity.class, new AABB(this.getOnPos()).inflate(1.0)).forEach(entity -> {
+                if (!(entity instanceof GatlingSentryHellpodEntity))
                 entity.hurt(level().damageSources().explosion(null), 9999.0F);
             });
             BlockPos pos = new BlockPos((int) this.getX(), (int) (this.getY() - 5), (int) this.getZ());
@@ -160,7 +165,7 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
 //            event.getController().setAnimation(EMPTY);
 //            return PlayState.CONTINUE;
 //        }
-        Minecraft.getInstance().player.sendSystemMessage(Component.literal(String.valueOf(this.isShooting())));
+//        Minecraft.getInstance().player.sendSystemMessage(Component.literal(String.valueOf(this.isShooting())));
         if (this.getTarget() != null) {
             event.getController().setAnimation(SHOOT);
             return PlayState.CONTINUE;
@@ -222,7 +227,7 @@ public class GatlingSentryHellpodEntity extends Monster implements GeoEntity {
     }
 
     public boolean isShooting() {
-        return this.entityData.get(IS_SHOOTING);
+        return this.getTarget() != null;
     }
 
     public void setShooting(boolean shooting) {

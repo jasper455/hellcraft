@@ -4,6 +4,25 @@ import java.awt.Color;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.TieredItem;
+import net.minecraftforge.items.ItemStackHandler;
+import net.team.helldivers.backslot.PlayerBackSlotLayer;
+import net.team.helldivers.backslot.PlayerBackSlotProvider;
+import net.team.helldivers.client.model.entity.player.HelldiverCapeModel;
+import net.team.helldivers.client.model.entity.player.ShieldPackShieldModel;
+import net.team.helldivers.client.renderer.entity.*;
+import net.team.helldivers.client.renderer.entity.bots.*;
+import net.team.helldivers.client.renderer.entity.player.HelldiverCapeLayer;
+import net.team.helldivers.client.renderer.entity.player.ShieldPackShieldLayer;
+import net.team.helldivers.item.custom.backpacks.AbstractBackpackItem;
+import net.team.helldivers.network.CSyncBackSlotPacket;
 import net.team.helldivers.network.SSetBackSlotPacket;
 import org.lwjgl.glfw.GLFW;
 
@@ -40,14 +59,10 @@ import net.team.helldivers.client.renderer.block.BotContactMineBlockRenderer;
 import net.team.helldivers.client.renderer.block.ExtractionTerminalBlockRenderer;
 import net.team.helldivers.client.renderer.block.GalacticTerminalBlockRenderer;
 import net.team.helldivers.client.renderer.block.HellbombBlockRenderer;
-import net.team.helldivers.client.renderer.entity.EagleAirshipRenderer;
-import net.team.helldivers.client.renderer.entity.GatlingSentryHellpodRenderer;
-import net.team.helldivers.client.renderer.entity.HellbombHellpodRenderer;
-import net.team.helldivers.client.renderer.entity.HellpodRenderer;
-import net.team.helldivers.client.renderer.entity.OrbitalLaserRenderer;
-import net.team.helldivers.client.renderer.entity.SupportHellpodRenderer;
 import net.team.helldivers.client.shader.post.tint.TintPostProcessor;
+import net.team.helldivers.entity.ModBotEntities;
 import net.team.helldivers.entity.ModEntities;
+import net.team.helldivers.entity.custom.bots.AutomatonTrooperEntity;
 import net.team.helldivers.item.custom.guns.AmrItem;
 import net.team.helldivers.item.custom.guns.AbstractGunItem;
 import net.team.helldivers.item.custom.guns.Plas1Item;
@@ -256,6 +271,7 @@ public class ModClientEvents {
             event.register(KeyBinding.RELOAD);
             event.register(KeyBinding.AIM);
             event.register(KeyBinding.EQUIP_BACKPACK);
+            event.register(KeyBinding.USE_BACKPACK);
         }
 
         @SubscribeEvent
@@ -266,6 +282,14 @@ public class ModClientEvents {
             event.registerEntityRenderer(ModEntities.HELLBOMB_HELLPOD.get(), HellbombHellpodRenderer::new);
             event.registerEntityRenderer(ModEntities.HELLPOD.get(), HellpodRenderer::new);
             event.registerEntityRenderer(ModEntities.GATLING_SENTRY.get(), GatlingSentryHellpodRenderer::new);
+            event.registerEntityRenderer(ModEntities.PORTABLE_HELLBOMB.get(), PortableHellbombEntityRenderer::new);
+
+            event.registerEntityRenderer(ModBotEntities.HULK.get(), RangedHulkRenderer::new);
+            event.registerEntityRenderer(ModBotEntities.BERSERKER.get(), BerserkerRenderer::new);
+            event.registerEntityRenderer(ModBotEntities.AUTOMATON_TROOPER.get(), AutomatonTrooperRenderer::new);
+            event.registerEntityRenderer(ModBotEntities.DEVASTATOR.get(), DevastatorRenderer::new);
+            event.registerEntityRenderer(ModBotEntities.COMMISSAR.get(), CommissarRenderer::new);
+            event.registerEntityRenderer(ModBotEntities.BRAWLER.get(), BrawlerRenderer::new);
 
             event.registerBlockEntityRenderer(ModBlockEntities.HELLBOMB.get(), context -> new HellbombBlockRenderer());
             event.registerBlockEntityRenderer(ModBlockEntities.EXTRACTION_TERMINAL.get(), context -> new ExtractionTerminalBlockRenderer());
@@ -288,6 +312,34 @@ public class ModClientEvents {
                 // You can store the shader here for later use if you want to use it manually
             });
         }
+
+        @SubscribeEvent
+        public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
+            for (String skinType : event.getSkins()) {
+                try {
+                    EntityRenderer<?> renderer = event.getSkin(skinType);
+                    if (renderer instanceof PlayerRenderer playerRenderer) {
+                        playerRenderer.addLayer(new PlayerBackSlotLayer(playerRenderer));
+                        playerRenderer.addLayer(new HelldiverCapeLayer(playerRenderer));
+                        playerRenderer.addLayer(new ShieldPackShieldLayer(playerRenderer));
+                    }
+                } catch (Exception e) {
+                    // Log the error but continue execution
+                    System.out.println("Failed to add cape layer for skin type: " + e);
+                }
+            }
+        }
+
+        @SubscribeEvent
+        public static void onRegisterLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+            event.registerLayerDefinition(new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(
+                            HelldiversMod.MOD_ID, "textures/entity/helldiver_cape.png"), "main"),
+                    HelldiverCapeModel::createBodyLayer);
+            event.registerLayerDefinition(new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(
+                            HelldiversMod.MOD_ID, "textures/entity/shield_pack_shield.png"), "main"),
+                    ShieldPackShieldModel::createBodyLayer);
+        }
+
     }
 
 }

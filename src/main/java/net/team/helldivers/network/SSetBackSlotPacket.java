@@ -2,13 +2,19 @@ package net.team.helldivers.network;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ShieldItem;
+import net.minecraft.world.item.TieredItem;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.NetworkEvent;
 import net.team.helldivers.backslot.PlayerBackSlotProvider;
+import net.team.helldivers.entity.custom.PortableHellbombEntity;
 import net.team.helldivers.helper.ClientBackSlotCache;
+import net.team.helldivers.item.custom.backpacks.AbstractBackpackItem;
+import net.team.helldivers.item.custom.backpacks.PortableHellbombItem;
 
 import java.util.function.Supplier;
 
@@ -32,14 +38,35 @@ public class SSetBackSlotPacket {
             ItemStack backSlotItem = handler.getStackInSlot(0);
 
             if (backSlotItem.isEmpty() && !mainHand.isEmpty()) {
-                handler.setStackInSlot(0, mainHand.copy());
-                player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+                if (mainHand.getItem() instanceof TieredItem || mainHand.getItem() instanceof ShieldItem
+                        || mainHand.getItem() instanceof AbstractBackpackItem) {
+                    handler.setStackInSlot(0, mainHand.copy());
+                    player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
+                }
             } else if (!backSlotItem.isEmpty() && mainHand.isEmpty()) {
-                player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
-                handler.setStackInSlot(0, ItemStack.EMPTY);
+                if (backSlotItem.getItem() instanceof PortableHellbombItem hellbombItem) {
+                    if (!hellbombItem.isActivated()) {
+                        player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
+                    }
+                    handler.setStackInSlot(0, ItemStack.EMPTY);
+                    hellbombItem.setActivated(false);
+                } else {
+                    player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
+                    handler.setStackInSlot(0, ItemStack.EMPTY);
+                }
             } else if (!backSlotItem.isEmpty() && !mainHand.isEmpty()) {
-                handler.setStackInSlot(0, mainHand.copy());
-                player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
+                if (mainHand.getItem() instanceof TieredItem || mainHand.getItem() instanceof ShieldItem
+                        || mainHand.getItem() instanceof AbstractBackpackItem) {
+                    if (backSlotItem.getItem() instanceof PortableHellbombItem hellbombItem) {
+                        if (!hellbombItem.isActivated()) {
+                            player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
+                        }
+                        handler.setStackInSlot(0, mainHand.copy());
+                    } else {
+                        handler.setStackInSlot(0, mainHand.copy());
+                        player.setItemInHand(InteractionHand.MAIN_HAND, backSlotItem.copy());
+                    }
+                }
             }
 
             // Sync back to client

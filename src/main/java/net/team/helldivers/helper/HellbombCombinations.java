@@ -11,19 +11,19 @@ import net.team.helldivers.sound.ModSounds;
 public class HellbombCombinations {
     // Different possible combinations for the hellbomb activation code
 
-    public static void combo1render(GuiGraphics guiGraphics, boolean firstInputDown, boolean secondInputDown, boolean thirdInputDown,
+    public static void combo1render(int x, int y, GuiGraphics guiGraphics, boolean firstInputDown, boolean secondInputDown, boolean thirdInputDown,
                                     boolean fourthInputDown, boolean fifthInputDown, boolean sixthInputDown) {
-        StratagemHudOverlay.renderRightArrow(guiGraphics, 260, 162, 20, 20,
+        StratagemHudOverlay.renderRightArrow(guiGraphics, x, y, 20, 20,
                 0, 0, 16, 16, 16, 16, firstInputDown);
-        StratagemHudOverlay.renderLeftArrow(guiGraphics, 280, 162, 20, 20,
+        StratagemHudOverlay.renderLeftArrow(guiGraphics, x + 20, y, 20, 20,
                 0, 0, 16, 16, 16, 16, secondInputDown);
-        StratagemHudOverlay.renderRightArrow(guiGraphics, 300, 162, 20, 20,
+        StratagemHudOverlay.renderRightArrow(guiGraphics, x + 40, y, 20, 20,
                 0, 0, 16, 16, 16, 16, thirdInputDown);
-        StratagemHudOverlay.renderDownArrow(guiGraphics, 320, 162, 20, 20,
+        StratagemHudOverlay.renderDownArrow(guiGraphics, x + 60, y, 20, 20,
                 0, 0, 16, 16, 16, 16, fourthInputDown);
-        StratagemHudOverlay.renderUpArrow(guiGraphics, 340, 162, 20, 20,
+        StratagemHudOverlay.renderUpArrow(guiGraphics, x + 80, y, 20, 20,
                 0, 0, 16, 16, 16, 16, fifthInputDown);
-        StratagemHudOverlay.renderRightArrow(guiGraphics, 360, 162, 20, 20,
+        StratagemHudOverlay.renderRightArrow(guiGraphics, x + 100, y, 20, 20,
                 0, 0, 16, 16, 16, 16, sixthInputDown);
     }
 
@@ -63,19 +63,19 @@ public class HellbombCombinations {
                 }
     }
 
-    public static void combo2render(GuiGraphics guiGraphics, boolean firstInputDown, boolean secondInputDown, boolean thirdInputDown,
+    public static void combo2render(int x, int y, GuiGraphics guiGraphics, boolean firstInputDown, boolean secondInputDown, boolean thirdInputDown,
                                     boolean fourthInputDown, boolean fifthInputDown, boolean sixthInputDown) {
-        StratagemHudOverlay.renderDownArrow(guiGraphics, 260, 162, 20, 20,
+        StratagemHudOverlay.renderDownArrow(guiGraphics, x, y, 20, 20,
                 0, 0, 16, 16, 16, 16, firstInputDown);
-        StratagemHudOverlay.renderRightArrow(guiGraphics, 280, 162, 20, 20,
+        StratagemHudOverlay.renderRightArrow(guiGraphics, x + 20, y, 20, 20,
                 0, 0, 16, 16, 16, 16, secondInputDown);
-        StratagemHudOverlay.renderUpArrow(guiGraphics, 300, 162, 20, 20,
+        StratagemHudOverlay.renderUpArrow(guiGraphics, x + 40, y, 20, 20,
                 0, 0, 16, 16, 16, 16, thirdInputDown);
-        StratagemHudOverlay.renderLeftArrow(guiGraphics, 320, 162, 20, 20,
+        StratagemHudOverlay.renderLeftArrow(guiGraphics, x + 60, y, 20, 20,
                 0, 0, 16, 16, 16, 16, fourthInputDown);
-        StratagemHudOverlay.renderDownArrow(guiGraphics, 340, 162, 20, 20,
+        StratagemHudOverlay.renderDownArrow(guiGraphics, x + 80, y, 20, 20,
                 0, 0, 16, 16, 16, 16, fifthInputDown);
-        StratagemHudOverlay.renderLeftArrow(guiGraphics, 360, 162, 20, 20,
+        StratagemHudOverlay.renderLeftArrow(guiGraphics, x + 100, y, 20, 20,
                 0, 0, 16, 16, 16, 16, sixthInputDown);
     }
 
@@ -115,19 +115,19 @@ public class HellbombCombinations {
                 }
     }
 
-    public static void combo3render(GuiGraphics guiGraphics, boolean firstInputDown, boolean secondInputDown, boolean thirdInputDown,
+    public static void combo3render(int x, int y, GuiGraphics guiGraphics, boolean firstInputDown, boolean secondInputDown, boolean thirdInputDown,
                                     boolean fourthInputDown, boolean fifthInputDown, boolean sixthInputDown) {
-        StratagemHudOverlay.renderLeftArrow(guiGraphics, 260, 162, 20, 20,
+        StratagemHudOverlay.renderLeftArrow(guiGraphics, x, y, 20, 20,
                 0, 0, 16, 16, 16, 16, firstInputDown);
-        StratagemHudOverlay.renderDownArrow(guiGraphics, 280, 162, 20, 20,
+        StratagemHudOverlay.renderDownArrow(guiGraphics, x + 20, y, 20, 20,
                 0, 0, 16, 16, 16, 16, secondInputDown);
-        StratagemHudOverlay.renderLeftArrow(guiGraphics, 300, 162, 20, 20,
+        StratagemHudOverlay.renderLeftArrow(guiGraphics, x + 40, y, 20, 20,
                 0, 0, 16, 16, 16, 16, thirdInputDown);
-        StratagemHudOverlay.renderRightArrow(guiGraphics, 320, 162, 20, 20,
+        StratagemHudOverlay.renderRightArrow(guiGraphics, x + 60, y, 20, 20,
                 0, 0, 16, 16, 16, 16, fourthInputDown);
-        StratagemHudOverlay.renderDownArrow(guiGraphics, 340, 162, 20, 20,
+        StratagemHudOverlay.renderDownArrow(guiGraphics, x + 80, y, 20, 20,
                 0, 0, 16, 16, 16, 16, fifthInputDown);
-        StratagemHudOverlay.renderUpArrow(guiGraphics, 360, 162, 20, 20,
+        StratagemHudOverlay.renderUpArrow(guiGraphics, x + 100, y, 20, 20,
                 0, 0, 16, 16, 16, 16, sixthInputDown);
     }
 
@@ -167,19 +167,19 @@ public class HellbombCombinations {
                 }
     }
 
-    public static void combo4render(GuiGraphics guiGraphics, boolean firstInputDown, boolean secondInputDown, boolean thirdInputDown,
+    public static void combo4render(int x, int y, GuiGraphics guiGraphics, boolean firstInputDown, boolean secondInputDown, boolean thirdInputDown,
                                     boolean fourthInputDown, boolean fifthInputDown, boolean sixthInputDown) {
-        StratagemHudOverlay.renderUpArrow(guiGraphics, 260, 162, 20, 20,
+        StratagemHudOverlay.renderUpArrow(guiGraphics, x, y, 20, 20,
                 0, 0, 16, 16, 16, 16, firstInputDown);
-        StratagemHudOverlay.renderRightArrow(guiGraphics, 280, 162, 20, 20,
+        StratagemHudOverlay.renderRightArrow(guiGraphics, x + 20, y, 20, 20,
                 0, 0, 16, 16, 16, 16, secondInputDown);
-        StratagemHudOverlay.renderDownArrow(guiGraphics, 300, 162, 20, 20,
+        StratagemHudOverlay.renderDownArrow(guiGraphics, x + 40, y, 20, 20,
                 0, 0, 16, 16, 16, 16, thirdInputDown);
-        StratagemHudOverlay.renderRightArrow(guiGraphics, 320, 162, 20, 20,
+        StratagemHudOverlay.renderRightArrow(guiGraphics, x + 60, y, 20, 20,
                 0, 0, 16, 16, 16, 16, fourthInputDown);
-        StratagemHudOverlay.renderLeftArrow(guiGraphics, 340, 162, 20, 20,
+        StratagemHudOverlay.renderLeftArrow(guiGraphics, x + 80, y, 20, 20,
                 0, 0, 16, 16, 16, 16, fifthInputDown);
-        StratagemHudOverlay.renderDownArrow(guiGraphics, 360, 162, 20, 20,
+        StratagemHudOverlay.renderDownArrow(guiGraphics, x + 100, y, 20, 20,
                 0, 0, 16, 16, 16, 16, sixthInputDown);
     }
 
