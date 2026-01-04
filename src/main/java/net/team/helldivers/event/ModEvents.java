@@ -18,6 +18,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
@@ -65,6 +67,7 @@ import net.team.helldivers.helper.ClientBackSlotCache;
 import net.team.helldivers.item.ModItems;
 import net.team.helldivers.item.custom.armor.IDemocracyProtects;
 import net.team.helldivers.item.custom.armor.IHelldiverArmorItem;
+import net.team.helldivers.network.CHitMarkPacket;
 import net.team.helldivers.item.custom.backpacks.AbstractBackpackItem;
 import net.team.helldivers.item.custom.backpacks.ShieldPackItem;
 import net.team.helldivers.network.CSyncBackSlotPacket;
@@ -171,6 +174,20 @@ public class ModEvents {
             PacketHandler.sendToPlayer(new CSyncBackSlotPacket(tag), player);
         });
     }
+    @SubscribeEvent
+    public static void onLivingHurt(LivingHurtEvent event) {
+    DamageSource source = event.getSource();
+        if (source.is(DamageTypeTags.IS_EXPLOSION)) {
+            System.out.println(source.getEntity());//this is null when any of the mod explosions damages somthing. not null when a player ignites a tnt with flint and steel
+            if(source.getEntity() instanceof Player player){
+                System.out.println("boom");
+                if(!player.level().isClientSide){
+                    PacketHandler.sendToPlayer(new CHitMarkPacket(), ((ServerPlayer)player));
+                }
+            }
+        }
+    }
+
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
@@ -297,7 +314,6 @@ public class ModEvents {
             }
         });
     }
-
 
     @SubscribeEvent
     public static void onPlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent event) {

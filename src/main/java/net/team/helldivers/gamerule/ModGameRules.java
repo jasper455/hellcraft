@@ -15,4 +15,10 @@ public class ModGameRules {
                     GameRules.Category.MISC,
                     GameRules.IntegerValue.create(3) // default value
             );
+    public static final GameRules.Key<GameRules.BooleanValue> DO_AIM_DOWN_SIGHT =
+            GameRules.register(
+                    "doAimDownSight",
+                    GameRules.Category.MISC,
+                    GameRules.BooleanValue.create(false) // default value
+            );
 }

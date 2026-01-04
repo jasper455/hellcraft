@@ -5,6 +5,7 @@ import java.util.function.Consumer;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.state.BlockState;
+import net.team.helldivers.gamerule.ModGameRules;
 import org.lwjgl.glfw.GLFW;
 
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -51,6 +52,7 @@ import net.team.helldivers.util.KeyBinding;
 import net.team.helldivers.util.ShootHelper;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.SingletonGeoAnimatable;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationController;
@@ -79,8 +81,8 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
     public float dam;
     public double drift;
     public float recoil;
-    private RegistryObject<SoundEvent> reloadSound;
-    private  RegistryObject<SoundEvent> shootSound;
+    public RegistryObject<SoundEvent> reloadSound;
+    public  RegistryObject<SoundEvent> shootSound;
 
 
     public AbstractGunItem(Properties properties, float recoil, boolean isAuto, boolean reloadable, String type, int fireDelay, float dam, double drift, RegistryObject<SoundEvent> shootSound, RegistryObject<SoundEvent> reloadSound) {
@@ -159,16 +161,18 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
             }
 
             // Handle shooting with proper aim state
-            if (isShooting && shootCooldown == 0 && canShoot(Minecraft.getInstance().player.getMainHandItem()) && !isReloading) {
+            ItemStack itemStack = Minecraft.getInstance().player.getMainHandItem();
+            if (isShooting && shootCooldown == 0 && canShoot(itemStack) && !isReloading && itemStack.getDamageValue() < itemStack.getMaxDamage() - 1) {
                 if(!(!isAuto && !firstShot && !Minecraft.getInstance().player.getCooldowns().isOnCooldown(this))){
                     if (isAiming) {
                     event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot_aim").thenPlay("aim"));
                     } else {
                         event.getController().setAnimation(RawAnimation.begin().thenPlay("shoot"));
                     }
-                    //PacketHandler.sendToServer(new SShootPacket());
-                    return PlayState.CONTINUE;
+                    PacketHandler.sendToServer(new SShootPacket());
+                     shootCooldown = fireDelay;
                 }
+                return PlayState.CONTINUE;
             }
             // Handle aiming states only if not reloading or shooting
             if (!isReloading && !isShooting) {
@@ -239,6 +243,8 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
             list.add(Component.literal("[Not Reloadable]"));
         }
         list.add(Component.literal(type));
+
+        list.add(Component.literal("Ammo: " + ((itemstack.getMaxDamage() - itemstack.getDamageValue())-1) +"/" + (itemstack.getMaxDamage()-1)));
     }
 
     @Override
@@ -247,13 +253,14 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
             if (selected) {
                 isShooting = KeyBinding.SHOOT.isDown();
                 firstShot = KeyBinding.SHOOT.consumeClick();
-                if (isShooting && shootCooldown == 0 && canShoot(Minecraft.getInstance().player.getMainHandItem()) && !isReloading && isAuto) {
+                if (isShooting && shootCooldown == 0 && canShoot(Minecraft.getInstance().player.getMainHandItem()) && !isReloading && isAuto && !(itemstack.getItem() instanceof GeoAnimatable)) {
                     PacketHandler.sendToServer(new SShootPacket());
                      shootCooldown = fireDelay;
                 }
                 if (shootCooldown > 0) {
                         shootCooldown--;
                     }
+
                 // Handle reload
                 if (KeyBinding.RELOAD.consumeClick()) {
                     for (ItemStack stack : player.getInventory().items) {
@@ -283,6 +290,11 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
                         wasAiming = isAiming;
                         isAiming = newAimingState;
                     }
+                }
+                boolean doADS = player.level().getGameRules().getBoolean(ModGameRules.DO_AIM_DOWN_SIGHT);
+                if (!doADS) {
+                    isAiming = false;
+                    wasAiming = false;
                 }
             } else {
                 isShooting = false;
@@ -323,7 +335,11 @@ public abstract class AbstractGunItem extends Item implements GeoItem {
                 player.level().playSound(null, player.blockPosition(),
                         shootSound.get(), SoundSource.PLAYERS, 5.0f, 1.0f);
                 PacketHandler.sendToPlayer(new CApplyRecoilPacket(recoil), player);
-                ShootHelper.shoot(player, player.level(), drift, dam, 0.3f, true);
+                if(isAiming){
+                    ShootHelper.shoot(player, player.level(), drift, dam, 0.3f, true);
+                }else{
+                    ShootHelper.shoot(player, player.level(), drift+0.01, dam, 0.3f, true);
+                }
                 player.getCooldowns().addCooldown(itemStack.getItem(), fireDelay);
 
                 // Damage the item

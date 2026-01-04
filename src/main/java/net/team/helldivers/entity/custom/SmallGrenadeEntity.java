@@ -1,5 +1,7 @@
 package net.team.helldivers.entity.custom;
 
+import mod.chloeprime.aaaparticles.api.common.AAALevel;
+import mod.chloeprime.aaaparticles.api.common.ParticleEmitterInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.damagesource.DamageSource;
@@ -17,12 +19,14 @@ import net.minecraft.world.phys.Vec3;
 import net.team.helldivers.entity.ModEntities;
 import net.team.helldivers.network.PacketHandler;
 import net.team.helldivers.network.SExplosionPacket;
+import net.team.helldivers.particle.EffekLoader;
 import net.team.helldivers.sound.ModSounds;
 
 public class SmallGrenadeEntity extends AbstractArrow{
     private int maxLife = 1000;
     private int lifetime = 0;
     public int strength = 1;
+    private boolean hasParticle;
     public SmallGrenadeEntity(EntityType<? extends AbstractArrow> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
@@ -47,6 +51,11 @@ public class SmallGrenadeEntity extends AbstractArrow{
     }
     @Override
     public void tick() {
+        if(!hasParticle){
+            ParticleEmitterInfo trail = EffekLoader.GRENADE.clone().bindOnEntity(this);
+            AAALevel.addParticle(this.level(), true, trail);
+            hasParticle = true;
+        }
         super.tick();
         lifetime++;
         if (lifetime >= maxLife) {

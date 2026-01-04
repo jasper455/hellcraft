@@ -29,7 +29,6 @@ import net.team.helldivers.util.KeyBinding;
 import net.team.helldivers.util.ShootHelper;
 
 public class FLAM40Item extends AbstractGunItem {
-    public boolean pilotLightLit;
     public int litTicks = 201;
     private MovingSoundInstance flamethrowerSound;
     private MovingSoundInstance flamethrowerStartSound;
@@ -44,27 +43,21 @@ public class FLAM40Item extends AbstractGunItem {
         float rotY = (float) Math.toRadians(player.getYRot());
         float rotX = (float) Math.toRadians(player.getXRot());
         Vec2 dir = new Vec2(rotX, -rotY);
-        ParticleEmitterInfo fire = EffekLoader.FIRE.clone().position(player.getEyePosition().add(0, -0.1, 0)).rotation(dir);
-        AAALevel.addParticle(player.level(), true, fire);
         if (itemStack.getDamageValue() >= itemStack.getMaxDamage() - 1) {
             if (flamethrowerSound != null && flamethrowerStartSound != null) {
                 PacketHandler.sendToAllClients(new CStopSoundPacket(flamethrowerSound.getLocation()));
                 PacketHandler.sendToAllClients(new CStopSoundPacket(flamethrowerStartSound.getLocation()));
             }
             return;
-        };
+        }
+        ParticleEmitterInfo fire = EffekLoader.FIRE.clone().position(player.getEyePosition().add(0, -0.1, 0)).rotation(dir);
+        AAALevel.addParticle(player.level(), true, fire);
         FlameBulletEntity flame = new FlameBulletEntity(player, player.level());
         flame.setPos(player.getEyePosition().add(0, -0.3, 0));
         flame.shootFromRotation(player, player.getXRot(), player.getYRot(), 0.0f, 0.7f, 7f);
         player.level().addFreshEntity(flame);
         if (!player.isCreative()) {
             itemStack.hurt(1, player.level().getRandom().fork(), player);
-        }
-        if (!pilotLightLit) {
-            this.flamethrowerStartSound = new MovingSoundInstance(player, ModSounds.FLAMETHROWER_START_SHOOTING.get(), 1.25f,  false);
-            Minecraft.getInstance().getSoundManager()
-                    .play(flamethrowerStartSound);
-            pilotLightLit = true;
         }
         if (litTicks <= 0 || litTicks == 200 || litTicks == 201) {
             this.flamethrowerSound = new MovingSoundInstance(player, ModSounds.FLAMETHROWER_SHOOT.get(), 1.25f, true);
@@ -83,12 +76,17 @@ public class FLAM40Item extends AbstractGunItem {
             PacketHandler.sendToAllClients(new CStopSoundPacket(flamethrowerStartSound.getLocation()));
         }
         litTicks = 201;
-        pilotLightLit = false;
         if (!(itemStack.getDamageValue() >= itemStack.getMaxDamage() - 1)) {
             this.flamethrowerStopSound = new MovingSoundInstance(player, ModSounds.FLAMETHROWER_STOP_SHOOTING.get(), 1.25f,  false);
             Minecraft.getInstance().getSoundManager()
                     .play(flamethrowerStopSound);
         }
+    }
+    @Override
+    public void onStartShoot(ItemStack itemStack, ServerPlayer player) {
+       this.flamethrowerStartSound = new MovingSoundInstance(player, ModSounds.FLAMETHROWER_START_SHOOTING.get(), 1.25f,  false);
+            Minecraft.getInstance().getSoundManager()
+                    .play(flamethrowerStartSound);
     }
 
     @Override
