@@ -121,6 +121,19 @@ public class EagleAirshipEntity extends FlyingMob implements GeoEntity {
             }
         }
 
+        if (this.stratagemType.equals("Eagle 110MM Rocket Pods")) {
+            if (ticksLeft == 11) {
+                spawnRocketPods(3);
+            }
+            if (ticksLeft == 10) {
+                spawnRocketPods(1);
+                spawnRocketPods(0);
+            }
+            if (ticksLeft <= 0) {
+                this.discard();
+            }
+        }
+
         if (this.stratagemType.equals("Eagle Cluster Bomb")) {
             if (ticksLeft == 13) {
                 spawnAirstrikeMissile(9, false, true);
@@ -159,6 +172,22 @@ public class EagleAirshipEntity extends FlyingMob implements GeoEntity {
             this.level().addFreshEntity(explosive);
         } else {
             MissileProjectileEntity explosive = new MissileProjectileEntity(this, this.level(), 10, isNapalm, isCluster);
+            explosive.setPos(this.getX() + randomPosX, this.getY() + 44, this.getZ() - offset);
+            explosive.setDeltaMovement(0f, 0f, 0f);
+            this.level().addFreshEntity(explosive);
+        }
+    }
+
+    private void spawnRocketPods(int offset) {
+        float randomPosX = (Mth.randomBetween(this.level().getRandom(), -2.5f, 2.5f));
+        float randomPosZ = (Mth.randomBetween(this.level().getRandom(), -2.5f, 2.5f));
+        if (this.getYHeadRot() == 90) {
+            MissileProjectileEntity explosive = new MissileProjectileEntity(this, this.level(), 3, false, false);
+            explosive.setPos(this.getX() + offset, this.getY() + 44, this.getZ() + randomPosZ);
+            explosive.setDeltaMovement(0f, 0f, 0f);
+            this.level().addFreshEntity(explosive);
+        } else {
+            MissileProjectileEntity explosive = new MissileProjectileEntity(this, this.level(), 3, false, false);
             explosive.setPos(this.getX() + randomPosX, this.getY() + 44, this.getZ() - offset);
             explosive.setDeltaMovement(0f, 0f, 0f);
             this.level().addFreshEntity(explosive);

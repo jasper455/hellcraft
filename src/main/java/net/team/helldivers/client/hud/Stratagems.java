@@ -1124,6 +1124,52 @@ public class Stratagems {
                 }
             }
 
+            // Rocket Pods inputs
+
+            if (ClientItemCache.contains(ModItems.ROCKET_PODS.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.ROCKET_PODS.get().getDefaultInstance()) && !isJammed) {
+                switch (RocketPodsHud.inputStep) {
+                    case 0 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            RocketPodsHud.firstInputDown = true;
+                            RocketPodsHud.inputStep++;
+                        } else if (upNotPressed) {
+                            RocketPodsHud.resetInputValues();
+                        }
+                    }
+                    case 1 -> {
+                        if (rightJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            RocketPodsHud.secondInputDown = true;
+                            RocketPodsHud.inputStep++;
+                        } else if (rightNotPressed) {
+                            RocketPodsHud.resetInputValues();
+                        }
+                    }
+                    case 2 -> {
+                        if (upJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            RocketPodsHud.thirdInputDown = true;
+                            RocketPodsHud.inputStep++;
+                        } else if (upNotPressed) {
+                            RocketPodsHud.resetInputValues();
+                        }
+                    }
+                    case 3 -> {
+                        if (leftJustPressed) {
+                            player.playSound(ModSounds.STRATAGEM_INPUT.get(), 0.5f, 1f);
+                            player.playSound(ModSounds.STRATAGEM_ACTIVATE.get(), 0.5f, 1f);
+                            RocketPodsHud.fourthInputDown = true;
+                            RocketPodsHud.allInputsDown = true;
+                            RocketPodsHud.inputStep++;
+                        } else if (leftNotPressed) {
+                            RocketPodsHud.resetInputValues();
+                        }
+                    }
+                }
+            }
+
             // Napalm Airstrike inputs
 
             if (ClientItemCache.contains(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance()) &&
@@ -1281,6 +1327,12 @@ public class Stratagems {
             PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Eagle Airstrike"));
             PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
                     ClientItemCache.getSlotWithItem(ModItems.EAGLE_AIRSTRIKE.get().getDefaultInstance())), 3000));
+            resetInputValues();
+        }
+        if (RocketPodsHud.allInputsDown) {
+            PacketHandler.sendToServer(new SGiveStratagemOrbPacket("Eagle 110MM Rocket Pods"));
+            PacketHandler.sendToServer(new SItemGiveCooldownPacket(ClientItemCache.getItem(
+                    ClientItemCache.getSlotWithItem(ModItems.ROCKET_PODS.get().getDefaultInstance())), 3000));
             resetInputValues();
         }
         if (NapalmAirstrikeHud.allInputsDown) {
@@ -1504,6 +1556,16 @@ public class Stratagems {
             }
 
             // Eagle Airstrike Render HUD Code
+            if (ClientItemCache.contains(ModItems.ROCKET_PODS.get().getDefaultInstance()) &&
+                    ClientItemCache.isOnCooldown(ModItems.ROCKET_PODS.get().getDefaultInstance())) {
+                RocketPodsHud.renderRocketPodsHud(guiGraphics, ClientItemCache.getSlotWithItem(ModItems.ROCKET_PODS.get().getDefaultInstance()));
+            } // Render the cooldown hud
+            else if (ClientItemCache.contains(ModItems.ROCKET_PODS.get().getDefaultInstance()) &&
+                    !ClientItemCache.isOnCooldown(ModItems.ROCKET_PODS.get().getDefaultInstance())) {
+                RocketPodsHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.ROCKET_PODS.get().getDefaultInstance()));
+            }
+
+            // Eagle Airstrike Render HUD Code
             if (ClientItemCache.contains(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance()) &&
                     ClientItemCache.isOnCooldown(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance())) {
                 NapalmAirstrikeHud.renderNapalmAirstrikeHud(guiGraphics, ClientItemCache.getSlotWithItem(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance()));
@@ -1651,6 +1713,13 @@ public class Stratagems {
                 EagleAirstrikeHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.EAGLE_AIRSTRIKE.get().getDefaultInstance()));
             }
 
+            // Eagle Airstrike Cooldown Complete Popup Code
+            if (!ClientItemCache.isOnCooldown(ModItems.ROCKET_PODS.get().getDefaultInstance()) &&
+                    ClientItemCache.getCooldownLeft(ModItems.ROCKET_PODS.get().getDefaultInstance()) <= 5 &&
+                    ClientItemCache.contains(ModItems.ROCKET_PODS.get().getDefaultInstance())) {
+                RocketPodsHud.renderCooldownHud(guiGraphics, ClientItemCache.getCooldownLeft(ModItems.ROCKET_PODS.get().getDefaultInstance()));
+            }
+
             // Napalm Airstrike Cooldown Complete Popup Code
             if (!ClientItemCache.isOnCooldown(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance()) &&
                     ClientItemCache.getCooldownLeft(ModItems.NAPALM_AIRSTRIKE.get().getDefaultInstance()) <= 5 &&
@@ -1698,6 +1767,7 @@ public class Stratagems {
         JumpPackHud.resetInputValues();
         RailcannonStrikeHud.resetInputValues();
         AirburstStrikeHud.resetInputValues();
+        RocketPodsHud.resetInputValues();
         allInputsDown = false;
     }
 }

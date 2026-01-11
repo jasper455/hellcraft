@@ -138,6 +138,8 @@ public class ModItems {
             () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
     public static final RegistryObject<Item> EAGLE_AIRSTRIKE = ITEMS.register("eagle_airstrike",
             () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
+    public static final RegistryObject<Item> ROCKET_PODS = ITEMS.register("rocket_pods",
+            () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
     public static final RegistryObject<Item> NAPALM_AIRSTRIKE = ITEMS.register("napalm_airstrike",
             () -> new StratagemItem(new Item.Properties().stacksTo(1).fireResistant()));
 

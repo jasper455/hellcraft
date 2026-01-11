@@ -81,6 +81,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.CLUSTER_BOMB.get());
         basicItem(ModItems.EAGLE_AIRSTRIKE.get());
         basicItem(ModItems.NAPALM_AIRSTRIKE.get());
+        basicItem(ModItems.ROCKET_PODS.get());
     }
 
 

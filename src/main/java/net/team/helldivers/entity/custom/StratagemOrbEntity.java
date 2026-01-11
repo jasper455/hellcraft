@@ -547,6 +547,27 @@ public class StratagemOrbEntity extends AbstractArrow {
             groundedTicks = 0;
         }
 
+        // Rocket Pods Entity Stuff
+
+        if (getStratagemType().equals("Eagle 110MM Rocket Pods") && !this.level().isClientSide) {
+            if (groundedTicks == 40) {
+                this.playSound(ModSounds.EAGLE_FLYBY.get(), 10.0f, 1.0f);
+            }
+            if (groundedTicks == 80) {
+                EagleAirshipEntity eagleAirshipEntity = new EagleAirshipEntity(ModEntities.EAGLE_AIRSHIP.get(), this.level());
+                eagleAirshipEntity.setStratagemType(getStratagemType());
+                eagleAirshipEntity.setPos(this.getX(), this.getY() + 5, this.getZ());
+                if (ownerDirection == Direction.NORTH || ownerDirection == Direction.SOUTH) {
+                    eagleAirshipEntity.setYHeadRot(90);
+                }
+                this.level().addFreshEntity(eagleAirshipEntity);
+            }
+        }
+        if (getStratagemType().equals("Eagle 110MM Rocket Pods") && groundedTicks > 90) {
+            this.discard();
+            groundedTicks = 0;
+        }
+
         // Napalm Airstrike Entity Stuff
         if (getStratagemType().equals("Eagle Napalm Airstrike") && !this.level().isClientSide) {
             if (groundedTicks == 40) {

@@ -81,6 +81,8 @@ public class StratagemHudOverlay {
             HelldiversMod.MOD_ID, "textures/stratagem_hud/cluster_bomb.png");
     public static final ResourceLocation EAGLE_AIRSTRIKE = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/eagle_airstrike.png");
+    public static final ResourceLocation ROCKET_PODS = ResourceLocation.fromNamespaceAndPath(
+            HelldiversMod.MOD_ID, "textures/stratagem_hud/rocket_pods_gui.png");
     public static final ResourceLocation NAPALM_AIRSTRIKE = ResourceLocation.fromNamespaceAndPath(
             HelldiversMod.MOD_ID, "textures/stratagem_hud/napalm_airstrike.png");
 

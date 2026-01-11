@@ -1,117 +1,117 @@
-[31Dec2025 13:23:48.857] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\ahkin\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.4.1, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, helldivers, --all, --output, C:\Users\ahkin\sandbox\hellcraft\src\generated\resources, --existing, C:\Users\ahkin\sandbox\hellcraft\src\main\resources, --mixin.config, mixins.helldivers.json]
-[31Dec2025 13:23:48.866] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.16 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
-[31Dec2025 13:23:49.219] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
-[31Dec2025 13:23:49.343] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/ahkin/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
-[31Dec2025 13:23:49.716] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.4.1\97b774cead20444ed9d0c2de762881a15d872397\javafmllanguage-1.20.1-47.4.1.jar is missing mods.toml file
-[31Dec2025 13:23:49.717] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.4.1\da4a2af4a4ebbbb33e35b292a16fe3f7122b236\lowcodelanguage-1.20.1-47.4.1.jar is missing mods.toml file
-[31Dec2025 13:23:49.718] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.4.1\75a8f0757adad78cbd8108dff9e0d39cbdb3d787\mclanguage-1.20.1-47.4.1.jar is missing mods.toml file
-[31Dec2025 13:23:49.720] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.4.1\3061e70b85c05f936d9fa24477be4d4205d8f6b8\fmlcore-1.20.1-47.4.1.jar is missing mods.toml file
-[31Dec2025 13:23:49.929] [main/WARN] [net.minecraftforge.jarjar.selection.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: architectury. Using Mod File: C:\Users\ahkin\.gradle\caches\forge_gradle\deobf_dependencies\maven\modrinth\architectury-api\9.2.14+forge_mapped_parchment_2023.06.26-1.20.1\architectury-api-9.2.14+forge_mapped_parchment_2023.06.26-1.20.1.jar
-[31Dec2025 13:23:49.929] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
-[31Dec2025 13:23:52.123] [main/WARN] [mixin/]: Compatibility level JAVA_17 specified by mixins.helldivers.json is higher than the maximum level supported by this version of mixin (JAVA_13).
-[31Dec2025 13:23:52.124] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
-[31Dec2025 13:23:52.124] [main/ERROR] [mixin/]: Mixin config mixins.helldivers.json does not specify "minVersion" property
-[31Dec2025 13:23:52.129] [main/WARN] [mixin/]: Compatibility level JAVA_16 specified by architectury.mixins.json is higher than the maximum level supported by this version of mixin (JAVA_13).
-[31Dec2025 13:23:52.130] [main/WARN] [mixin/]: Compatibility level JAVA_16 specified by architectury-common.mixins.json is higher than the maximum level supported by this version of mixin (JAVA_13).
-[31Dec2025 13:23:52.131] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\ahkin\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, helldivers, --all, --output, C:\Users\ahkin\sandbox\hellcraft\src\generated\resources, --existing, C:\Users\ahkin\sandbox\hellcraft\src\main\resources]
-[31Dec2025 13:23:52.210] [main/INFO] [mixin/]: Attempting to load Fernflower decompiler (Threaded mode)
-[31Dec2025 13:23:52.220] [main/INFO] [mixin/]: Fernflower could not be loaded, exported classes will not be decompiled. NoClassDefFoundError: org/jetbrains/java/decompiler/main/extern/IResultSaver
-[31Dec2025 13:23:52.267] [main/INFO] [mixin/]: Preparing mixins for MixinEnvironment[DEFAULT]
-[31Dec2025 13:23:52.267] [main/INFO] [mixin/]: Selecting config mixins.helldivers.json
-[31Dec2025 13:23:52.269] [main/WARN] [mixin/]: Reference map 'helldivers.mixin-refmap.json' for mixins.helldivers.json could not be read. If this is a development environment you can ignore this message
-[31Dec2025 13:23:52.274] [main/INFO] [mixin/]: Selecting config aaa_particles-common.mixins.json
-[31Dec2025 13:23:53.113] [main/INFO] [mixin/]: Remapping refMap aaa_particles-common-refmap.json using C:\Users\ahkin\sandbox\hellcraft\build\createSrgToMcp\output.srg
-[31Dec2025 13:23:53.113] [main/INFO] [mixin/]: Selecting config aaa_particles.mixins.json
-[31Dec2025 13:23:53.114] [main/WARN] [mixin/]: Reference map 'aaa_particles-forge-refmap.json' for aaa_particles.mixins.json could not be read. If this is a development environment you can ignore this message
-[31Dec2025 13:23:53.114] [main/INFO] [mixin/]: Selecting config lodestone.mixins.json
-[31Dec2025 13:23:53.115] [main/INFO] [mixin/]: Remapping refMap lodestone.refmap.json using C:\Users\ahkin\sandbox\hellcraft\build\createSrgToMcp\output.srg
-[31Dec2025 13:23:53.115] [main/INFO] [mixin/]: Selecting config geckolib.mixins.json
-[31Dec2025 13:23:53.115] [main/INFO] [mixin/]: Remapping refMap geckolib.refmap.json using C:\Users\ahkin\sandbox\hellcraft\build\createSrgToMcp\output.srg
-[31Dec2025 13:23:53.115] [main/INFO] [mixin/]: Selecting config architectury.mixins.json
-[31Dec2025 13:23:53.130] [main/INFO] [mixin/]: Remapping refMap architectury-forge-refmap.json using C:\Users\ahkin\sandbox\hellcraft\build\createSrgToMcp\output.srg
-[31Dec2025 13:23:53.130] [main/INFO] [mixin/]: Selecting config architectury-common.mixins.json
-[31Dec2025 13:23:53.131] [main/INFO] [mixin/]: Remapping refMap architectury-common-refmap.json using C:\Users\ahkin\sandbox\hellcraft\build\createSrgToMcp\output.srg
-[31Dec2025 13:23:53.131] [main/INFO] [mixin/]: Preparing mixins.helldivers.json (0)
-[31Dec2025 13:23:53.131] [main/INFO] [mixin/]: Preparing aaa_particles-common.mixins.json (6)
-[31Dec2025 13:23:53.293] [main/INFO] [mixin/]: Preparing aaa_particles.mixins.json (0)
-[31Dec2025 13:23:53.293] [main/INFO] [mixin/]: Preparing lodestone.mixins.json (16)
-[31Dec2025 13:23:53.335] [main/WARN] [mixin/]: Error loading class: dev/shadowsoffire/attributeslib/client/AttributesLibClient (java.lang.ClassNotFoundException: dev.shadowsoffire.attributeslib.client.AttributesLibClient)
-[31Dec2025 13:23:53.407] [main/INFO] [mixin/]: Preparing geckolib.mixins.json (1)
-[31Dec2025 13:23:53.412] [main/INFO] [mixin/]: Preparing architectury.mixins.json (9)
-[31Dec2025 13:23:53.441] [main/INFO] [mixin/]: Preparing architectury-common.mixins.json (10)
-[31Dec2025 13:23:53.656] [main/INFO] [mixin/]: Prepared 41 mixins in 1.388 sec (33.9ms avg) (0ms load, 0ms transform, 0ms plugin)
-[31Dec2025 13:23:54.198] [main/INFO] [mixin/]: Mixing MixinResourceLocation from aaa_particles-common.mixins.json into net.minecraft.resources.ResourceLocation
-[31Dec2025 13:23:54.318] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [helldivers]
-[31Dec2025 13:23:54.527] [main/INFO] [mixin/]: Mixing inject.MixinGameEvent from architectury-common.mixins.json into net.minecraft.world.level.gameevent.GameEvent
-[31Dec2025 13:23:54.609] [main/INFO] [mixin/]: Mixing inject.MixinBlock from architectury-common.mixins.json into net.minecraft.world.level.block.Block
-[31Dec2025 13:23:54.685] [main/INFO] [mixin/]: Mixing common.EntityMixin from lodestone.mixins.json into net.minecraft.world.entity.Entity
-[31Dec2025 13:23:54.814] [main/INFO] [mixin/]: Mixing common.LivingEntityMixin from lodestone.mixins.json into net.minecraft.world.entity.LivingEntity
-[31Dec2025 13:23:55.028] [main/INFO] [mixin/]: Mixing inject.MixinFluid from architectury-common.mixins.json into net.minecraft.world.level.material.Fluid
-[31Dec2025 13:23:55.032] [main/INFO] [mixin/]: Mixing inject.MixinItem from architectury-common.mixins.json into net.minecraft.world.item.Item
-[31Dec2025 13:23:55.074] [main/INFO] [mixin/]: Mixing inject.MixinEntityType from architectury-common.mixins.json into net.minecraft.world.entity.EntityType
-[31Dec2025 13:23:55.637] [main/INFO] [mixin/]: Mixing inject.MixinLiquidBlock from architectury-common.mixins.json into net.minecraft.world.level.block.LiquidBlock
-[31Dec2025 13:23:56.721] [main/INFO] [mixin/]: Mixing MixinFallingBlockEntity from architectury.mixins.json into net.minecraft.world.entity.item.FallingBlockEntity
-[31Dec2025 13:23:57.449] [main/INFO] [mixin/]: Mixing common.ItemStackMixin from lodestone.mixins.json into net.minecraft.world.item.ItemStack
-[31Dec2025 13:23:57.491] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 4 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
-[31Dec2025 13:23:57.491] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 15 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
-[31Dec2025 13:23:57.491] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 50 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
-[31Dec2025 13:23:57.493] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 145 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
-[31Dec2025 13:23:57.493] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 222 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
-[31Dec2025 13:23:57.493] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 238 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
-[31Dec2025 13:23:57.493] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 243 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
-[31Dec2025 13:23:57.493] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 263 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
-[31Dec2025 13:23:57.518] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 284 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
-[31Dec2025 13:23:57.518] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 300 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
-[31Dec2025 13:23:57.950] [main/INFO] [mixin/]: Mixing MixinLightningBolt from architectury-common.mixins.json into net.minecraft.world.entity.LightningBolt
-[31Dec2025 13:23:58.045] [main/INFO] [mixin/]: Mixing common.BlockItemMixin from lodestone.mixins.json into net.minecraft.world.item.BlockItem
-[31Dec2025 13:23:58.092] [main/INFO] [mixin/]: Mixing inject.MixinBucketItem from architectury-common.mixins.json into net.minecraft.world.item.BucketItem
-[31Dec2025 13:23:58.110] [main/INFO] [mixin/]: Mixing inject.MixinItemProperties from architectury-common.mixins.json into net.minecraft.world.item.Item$Properties
-[31Dec2025 13:23:59.064] [main/INFO] [mixin/]: Mixing inject.MixinFoodPropertiesBuilder from architectury-common.mixins.json into net.minecraft.world.food.FoodProperties$Builder
-[31Dec2025 13:23:59.979] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.4.1, for MC 1.20.1 with MCP 20230612.114412
-[31Dec2025 13:23:59.979] [modloading-worker-0/INFO] [mixin/]: Mixing client.MixinMinecraft from aaa_particles-common.mixins.json into net.minecraft.client.Minecraft
-[31Dec2025 13:23:59.985] [modloading-worker-0/INFO] [mixin/]: Mixing MixinMinecraft from architectury.mixins.json into net.minecraft.client.Minecraft
-[31Dec2025 13:24:00.011] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.4.1 Initialized
-[31Dec2025 13:24:00.023] [modloading-worker-0/INFO] [mixin/]: Mixing MixinClientLevel from architectury.mixins.json into net.minecraft.client.multiplayer.ClientLevel
-[31Dec2025 13:24:00.046] [modloading-worker-0/INFO] [mixin/]: Mixing client.MultiPlayerGameModeMixin from lodestone.mixins.json into net.minecraft.client.multiplayer.MultiPlayerGameMode
-[31Dec2025 13:24:00.081] [modloading-worker-0/INFO] [mixin/]: Mixing client.GuiMixin from lodestone.mixins.json into net.minecraft.client.gui.Gui
-[31Dec2025 13:24:00.082] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id architectury:sync_ids
-[31Dec2025 13:24:00.088] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id architectury:sync_ids
-[31Dec2025 13:24:00.088] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id aaa_particles:main/2b101225a0983c178c43c737d76def52
-[31Dec2025 13:24:00.088] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id aaa_particles:main/2b101225a0983c178c43c737d76def52
-[31Dec2025 13:24:00.090] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id aaa_particles:main/878ba3ad853235668eff51eb0a40c900
-[31Dec2025 13:24:00.090] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id aaa_particles:main/878ba3ad853235668eff51eb0a40c900
-[31Dec2025 13:24:00.090] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id aaa_particles:main/878ba3ad853235668eff51eb0a40c900
-[31Dec2025 13:24:00.091] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id aaa_particles:main/878ba3ad853235668eff51eb0a40c900
-[31Dec2025 13:24:00.092] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id aaa_particles:main/9b5bc39f00d53db2acf81d859b596583
-[31Dec2025 13:24:00.092] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id aaa_particles:main/9b5bc39f00d53db2acf81d859b596583
-[31Dec2025 13:24:00.093] [modloading-worker-0/INFO] [mixin/]: Mixing MixinLevelEvent from architectury.mixins.json into net.minecraftforge.event.level.LevelEvent
-[31Dec2025 13:24:00.110] [modloading-worker-0/INFO] [mixin/]: Mixing client.MixinLevelRenderer from aaa_particles-common.mixins.json into net.minecraft.client.renderer.LevelRenderer
-[31Dec2025 13:24:00.146] [modloading-worker-0/INFO] [mixin/]: Mixing client.LevelRendererMixin from lodestone.mixins.json into net.minecraft.client.renderer.LevelRenderer
-[31Dec2025 13:24:00.197] [modloading-worker-0/INFO] [mixin/]: Mixing client.AbstractContainerScreenMixin from lodestone.mixins.json into net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
-[31Dec2025 13:24:00.209] [modloading-worker-0/INFO] [mixin/]: Mixing client.CameraMixin from lodestone.mixins.json into net.minecraft.client.Camera
-[31Dec2025 13:24:00.213] [modloading-worker-0/INFO] [mixin/]: Mixing client.GuiGraphicsMixin from lodestone.mixins.json into net.minecraft.client.gui.GuiGraphics
-[31Dec2025 13:24:00.221] [modloading-worker-0/WARN] [software.bernie.geckolib.GeckoLib/]: Minecraft.getInstance() was null, could not register reload listeners
-[31Dec2025 13:24:00.254] [modloading-worker-0/INFO] [mixin/]: Mixing client.MixinGameRenderer from aaa_particles-common.mixins.json into net.minecraft.client.renderer.GameRenderer
-[31Dec2025 13:24:00.254] [modloading-worker-0/INFO] [mixin/]: Mixing client.GameRendererMixin from lodestone.mixins.json into net.minecraft.client.renderer.GameRenderer
-[31Dec2025 13:24:00.343] [modloading-worker-0/INFO] [mod.chloeprime.aaaparticles.AAAParticles/]: Loading Effekseer native library at C:\Users\ahkin\sandbox\hellcraft\run-data\EffekseerNativeForJava.dll
-[31Dec2025 13:24:00.561] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/ahkin/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
-[31Dec2025 13:24:00.561] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/ahkin/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
-[31Dec2025 13:24:00.695] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
-[31Dec2025 13:24:00.698] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 1 ms
-[31Dec2025 13:24:00.698] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
-[31Dec2025 13:24:00.719] [main/INFO] [mixin/]: Mixing MixinLootDataManager from architectury.mixins.json into net.minecraft.world.level.storage.loot.LootDataManager
-[31Dec2025 13:24:00.738] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 39 ms
-[31Dec2025 13:24:00.738] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block Tags
-[31Dec2025 13:24:00.779] [main/INFO] [net.minecraft.data.DataGenerator/]: Block Tags finished after 40 ms
-[31Dec2025 13:24:00.779] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:fluid mod id helldivers
-[31Dec2025 13:24:00.784] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:fluid mod id helldivers finished after 6 ms
-[31Dec2025 13:24:00.784] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: helldivers
-[31Dec2025 13:24:00.790] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: helldivers finished after 4 ms
-[31Dec2025 13:24:00.790] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Tags
-[31Dec2025 13:24:00.790] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Tags finished after 0 ms
-[31Dec2025 13:24:00.791] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: helldivers
-[31Dec2025 13:24:00.928] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: helldivers finished after 137 ms
-[31Dec2025 13:24:00.928] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Datapack Entries
-[31Dec2025 13:24:00.938] [main/INFO] [net.minecraft.data.DataGenerator/]: Datapack Entries finished after 9 ms
-[31Dec2025 13:24:00.938] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 242 ms
-[31Dec2025 13:24:00.944] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 63, old count: 62, new count: 64, removed stale: 0, written: 1
+[11Jan2026 13:00:55.145] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--launchTarget, forgedatauserdev, --assetIndex, 5, --assetsDir, C:\Users\ahkin\.gradle\caches\forge_gradle\assets, --gameDir, ., --fml.forgeVersion, 47.4.1, --fml.mcVersion, 1.20.1, --fml.forgeGroup, net.minecraftforge, --fml.mcpVersion, 20230612.114412, --mod, helldivers, --all, --output, C:\Users\ahkin\sandbox\hellcraft\src\generated\resources, --existing, C:\Users\ahkin\sandbox\hellcraft\src\main\resources, --mixin.config, mixins.helldivers.json]
+[11Jan2026 13:00:55.149] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 10.0.9+10.0.9+main.dcd20f30 starting: java version 17.0.16 by Eclipse Adoptium; OS Windows 11 arch amd64 version 10.0
+[11Jan2026 13:00:55.254] [main/INFO] [net.minecraftforge.fml.loading.ImmediateWindowHandler/]: ImmediateWindowProvider not loading because launch target is forgedatauserdev
+[11Jan2026 13:00:55.296] [main/INFO] [mixin/]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=union:/C:/Users/ahkin/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/9d1c0c3a304ae6697ecd477218fa61b850bf57fc/mixin-0.8.5.jar%23128!/ Service=ModLauncher Env=CLIENT
+[11Jan2026 13:00:55.542] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\javafmllanguage\1.20.1-47.4.1\97b774cead20444ed9d0c2de762881a15d872397\javafmllanguage-1.20.1-47.4.1.jar is missing mods.toml file
+[11Jan2026 13:00:55.546] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\lowcodelanguage\1.20.1-47.4.1\da4a2af4a4ebbbb33e35b292a16fe3f7122b236\lowcodelanguage-1.20.1-47.4.1.jar is missing mods.toml file
+[11Jan2026 13:00:55.547] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\mclanguage\1.20.1-47.4.1\75a8f0757adad78cbd8108dff9e0d39cbdb3d787\mclanguage-1.20.1-47.4.1.jar is missing mods.toml file
+[11Jan2026 13:00:55.549] [main/WARN] [net.minecraftforge.fml.loading.moddiscovery.ModFileParser/LOADING]: Mod file C:\Users\ahkin\.gradle\caches\modules-2\files-2.1\net.minecraftforge\fmlcore\1.20.1-47.4.1\3061e70b85c05f936d9fa24477be4d4205d8f6b8\fmlcore-1.20.1-47.4.1.jar is missing mods.toml file
+[11Jan2026 13:00:55.682] [main/WARN] [net.minecraftforge.jarjar.selection.JarSelector/]: Attempted to select a dependency jar for JarJar which was passed in as source: architectury. Using Mod File: C:\Users\ahkin\.gradle\caches\forge_gradle\deobf_dependencies\maven\modrinth\architectury-api\9.2.14+forge_mapped_parchment_2023.06.26-1.20.1\architectury-api-9.2.14+forge_mapped_parchment_2023.06.26-1.20.1.jar
+[11Jan2026 13:00:55.683] [main/INFO] [net.minecraftforge.fml.loading.moddiscovery.JarInJarDependencyLocator/]: Found 1 dependencies adding them to mods collection
+[11Jan2026 13:00:56.677] [main/WARN] [mixin/]: Compatibility level JAVA_17 specified by mixins.helldivers.json is higher than the maximum level supported by this version of mixin (JAVA_13).
+[11Jan2026 13:00:56.677] [main/INFO] [mixin/]: Compatibility level set to JAVA_17
+[11Jan2026 13:00:56.677] [main/ERROR] [mixin/]: Mixin config mixins.helldivers.json does not specify "minVersion" property
+[11Jan2026 13:00:56.684] [main/WARN] [mixin/]: Compatibility level JAVA_16 specified by architectury.mixins.json is higher than the maximum level supported by this version of mixin (JAVA_13).
+[11Jan2026 13:00:56.685] [main/WARN] [mixin/]: Compatibility level JAVA_16 specified by architectury-common.mixins.json is higher than the maximum level supported by this version of mixin (JAVA_13).
+[11Jan2026 13:00:56.685] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'forgedatauserdev' with arguments [--gameDir, ., --assetsDir, C:\Users\ahkin\.gradle\caches\forge_gradle\assets, --assetIndex, 5, --mod, helldivers, --all, --output, C:\Users\ahkin\sandbox\hellcraft\src\generated\resources, --existing, C:\Users\ahkin\sandbox\hellcraft\src\main\resources]
+[11Jan2026 13:00:56.750] [main/INFO] [mixin/]: Attempting to load Fernflower decompiler (Threaded mode)
+[11Jan2026 13:00:56.751] [main/INFO] [mixin/]: Fernflower could not be loaded, exported classes will not be decompiled. NoClassDefFoundError: org/jetbrains/java/decompiler/main/extern/IResultSaver
+[11Jan2026 13:00:56.761] [main/INFO] [mixin/]: Preparing mixins for MixinEnvironment[DEFAULT]
+[11Jan2026 13:00:56.763] [main/INFO] [mixin/]: Selecting config mixins.helldivers.json
+[11Jan2026 13:00:56.764] [main/WARN] [mixin/]: Reference map 'helldivers.mixin-refmap.json' for mixins.helldivers.json could not be read. If this is a development environment you can ignore this message
+[11Jan2026 13:00:56.765] [main/INFO] [mixin/]: Selecting config aaa_particles-common.mixins.json
+[11Jan2026 13:00:56.910] [main/INFO] [mixin/]: Remapping refMap aaa_particles-common-refmap.json using C:\Users\ahkin\sandbox\hellcraft\build\createSrgToMcp\output.srg
+[11Jan2026 13:00:56.910] [main/INFO] [mixin/]: Selecting config aaa_particles.mixins.json
+[11Jan2026 13:00:56.911] [main/WARN] [mixin/]: Reference map 'aaa_particles-forge-refmap.json' for aaa_particles.mixins.json could not be read. If this is a development environment you can ignore this message
+[11Jan2026 13:00:56.911] [main/INFO] [mixin/]: Selecting config lodestone.mixins.json
+[11Jan2026 13:00:56.916] [main/INFO] [mixin/]: Remapping refMap lodestone.refmap.json using C:\Users\ahkin\sandbox\hellcraft\build\createSrgToMcp\output.srg
+[11Jan2026 13:00:56.916] [main/INFO] [mixin/]: Selecting config geckolib.mixins.json
+[11Jan2026 13:00:56.917] [main/INFO] [mixin/]: Remapping refMap geckolib.refmap.json using C:\Users\ahkin\sandbox\hellcraft\build\createSrgToMcp\output.srg
+[11Jan2026 13:00:56.917] [main/INFO] [mixin/]: Selecting config architectury.mixins.json
+[11Jan2026 13:00:56.921] [main/INFO] [mixin/]: Remapping refMap architectury-forge-refmap.json using C:\Users\ahkin\sandbox\hellcraft\build\createSrgToMcp\output.srg
+[11Jan2026 13:00:56.922] [main/INFO] [mixin/]: Selecting config architectury-common.mixins.json
+[11Jan2026 13:00:56.922] [main/INFO] [mixin/]: Remapping refMap architectury-common-refmap.json using C:\Users\ahkin\sandbox\hellcraft\build\createSrgToMcp\output.srg
+[11Jan2026 13:00:56.922] [main/INFO] [mixin/]: Preparing mixins.helldivers.json (0)
+[11Jan2026 13:00:56.922] [main/INFO] [mixin/]: Preparing aaa_particles-common.mixins.json (6)
+[11Jan2026 13:00:56.983] [main/INFO] [mixin/]: Preparing aaa_particles.mixins.json (0)
+[11Jan2026 13:00:56.983] [main/INFO] [mixin/]: Preparing lodestone.mixins.json (16)
+[11Jan2026 13:00:57.028] [main/WARN] [mixin/]: Error loading class: dev/shadowsoffire/attributeslib/client/AttributesLibClient (java.lang.ClassNotFoundException: dev.shadowsoffire.attributeslib.client.AttributesLibClient)
+[11Jan2026 13:00:57.046] [main/INFO] [mixin/]: Preparing geckolib.mixins.json (1)
+[11Jan2026 13:00:57.047] [main/INFO] [mixin/]: Preparing architectury.mixins.json (9)
+[11Jan2026 13:00:57.057] [main/INFO] [mixin/]: Preparing architectury-common.mixins.json (10)
+[11Jan2026 13:00:57.220] [main/INFO] [mixin/]: Prepared 41 mixins in 0.457 sec (11.1ms avg) (0ms load, 0ms transform, 0ms plugin)
+[11Jan2026 13:00:57.388] [main/INFO] [mixin/]: Mixing MixinResourceLocation from aaa_particles-common.mixins.json into net.minecraft.resources.ResourceLocation
+[11Jan2026 13:00:57.473] [main/INFO] [net.minecraftforge.data.loading.DatagenModLoader/]: Initializing Data Gatherer for mods [helldivers]
+[11Jan2026 13:00:57.533] [main/INFO] [mixin/]: Mixing inject.MixinGameEvent from architectury-common.mixins.json into net.minecraft.world.level.gameevent.GameEvent
+[11Jan2026 13:00:57.557] [main/INFO] [mixin/]: Mixing inject.MixinBlock from architectury-common.mixins.json into net.minecraft.world.level.block.Block
+[11Jan2026 13:00:57.581] [main/INFO] [mixin/]: Mixing common.EntityMixin from lodestone.mixins.json into net.minecraft.world.entity.Entity
+[11Jan2026 13:00:57.633] [main/INFO] [mixin/]: Mixing common.LivingEntityMixin from lodestone.mixins.json into net.minecraft.world.entity.LivingEntity
+[11Jan2026 13:00:57.710] [main/INFO] [mixin/]: Mixing inject.MixinFluid from architectury-common.mixins.json into net.minecraft.world.level.material.Fluid
+[11Jan2026 13:00:57.716] [main/INFO] [mixin/]: Mixing inject.MixinItem from architectury-common.mixins.json into net.minecraft.world.item.Item
+[11Jan2026 13:00:57.755] [main/INFO] [mixin/]: Mixing inject.MixinEntityType from architectury-common.mixins.json into net.minecraft.world.entity.EntityType
+[11Jan2026 13:00:57.944] [main/INFO] [mixin/]: Mixing inject.MixinLiquidBlock from architectury-common.mixins.json into net.minecraft.world.level.block.LiquidBlock
+[11Jan2026 13:00:58.112] [main/INFO] [mixin/]: Mixing MixinFallingBlockEntity from architectury.mixins.json into net.minecraft.world.entity.item.FallingBlockEntity
+[11Jan2026 13:00:58.411] [main/INFO] [mixin/]: Mixing common.ItemStackMixin from lodestone.mixins.json into net.minecraft.world.item.ItemStack
+[11Jan2026 13:00:58.439] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 4 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
+[11Jan2026 13:00:58.439] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 15 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
+[11Jan2026 13:00:58.439] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 50 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
+[11Jan2026 13:00:58.439] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 145 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
+[11Jan2026 13:00:58.439] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 222 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
+[11Jan2026 13:00:58.439] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 238 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
+[11Jan2026 13:00:58.439] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 243 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
+[11Jan2026 13:00:58.441] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 263 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
+[11Jan2026 13:00:58.447] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 284 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
+[11Jan2026 13:00:58.447] [main/WARN] [mixin/]: @At("STORE" implicit Multimap) has invalid IMPLICIT discriminator for opcode 300 in net/minecraft/world/item/ItemStack::getTooltipLines(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/item/TooltipFlag;)Ljava/util/List;: Found 0 candidate variables but exactly 1 is required.
+[11Jan2026 13:00:58.697] [main/INFO] [mixin/]: Mixing MixinLightningBolt from architectury-common.mixins.json into net.minecraft.world.entity.LightningBolt
+[11Jan2026 13:00:58.765] [main/INFO] [mixin/]: Mixing common.BlockItemMixin from lodestone.mixins.json into net.minecraft.world.item.BlockItem
+[11Jan2026 13:00:58.798] [main/INFO] [mixin/]: Mixing inject.MixinBucketItem from architectury-common.mixins.json into net.minecraft.world.item.BucketItem
+[11Jan2026 13:00:58.829] [main/INFO] [mixin/]: Mixing inject.MixinItemProperties from architectury-common.mixins.json into net.minecraft.world.item.Item$Properties
+[11Jan2026 13:00:59.617] [main/INFO] [mixin/]: Mixing inject.MixinFoodPropertiesBuilder from architectury-common.mixins.json into net.minecraft.world.food.FoodProperties$Builder
+[11Jan2026 13:01:00.266] [modloading-worker-0/INFO] [mixin/]: Mixing client.MixinMinecraft from aaa_particles-common.mixins.json into net.minecraft.client.Minecraft
+[11Jan2026 13:01:00.270] [modloading-worker-0/INFO] [mixin/]: Mixing MixinMinecraft from architectury.mixins.json into net.minecraft.client.Minecraft
+[11Jan2026 13:01:00.300] [modloading-worker-0/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 47.4.1, for MC 1.20.1 with MCP 20230612.114412
+[11Jan2026 13:01:00.300] [modloading-worker-0/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v47.4.1 Initialized
+[11Jan2026 13:01:00.301] [modloading-worker-0/INFO] [mixin/]: Mixing MixinClientLevel from architectury.mixins.json into net.minecraft.client.multiplayer.ClientLevel
+[11Jan2026 13:01:00.329] [modloading-worker-0/INFO] [mixin/]: Mixing client.MultiPlayerGameModeMixin from lodestone.mixins.json into net.minecraft.client.multiplayer.MultiPlayerGameMode
+[11Jan2026 13:01:00.349] [modloading-worker-0/INFO] [mixin/]: Mixing client.GuiMixin from lodestone.mixins.json into net.minecraft.client.gui.Gui
+[11Jan2026 13:01:00.350] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id architectury:sync_ids
+[11Jan2026 13:01:00.356] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id architectury:sync_ids
+[11Jan2026 13:01:00.356] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id aaa_particles:main/2b101225a0983c178c43c737d76def52
+[11Jan2026 13:01:00.356] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id aaa_particles:main/2b101225a0983c178c43c737d76def52
+[11Jan2026 13:01:00.359] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id aaa_particles:main/878ba3ad853235668eff51eb0a40c900
+[11Jan2026 13:01:00.359] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id aaa_particles:main/878ba3ad853235668eff51eb0a40c900
+[11Jan2026 13:01:00.360] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id aaa_particles:main/878ba3ad853235668eff51eb0a40c900
+[11Jan2026 13:01:00.360] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id aaa_particles:main/878ba3ad853235668eff51eb0a40c900
+[11Jan2026 13:01:00.364] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering C2S receiver with id aaa_particles:main/9b5bc39f00d53db2acf81d859b596583
+[11Jan2026 13:01:00.364] [modloading-worker-0/INFO] [dev.architectury.networking.forge.NetworkManagerImpl/]: Registering S2C receiver with id aaa_particles:main/9b5bc39f00d53db2acf81d859b596583
+[11Jan2026 13:01:00.367] [modloading-worker-0/INFO] [mixin/]: Mixing MixinLevelEvent from architectury.mixins.json into net.minecraftforge.event.level.LevelEvent
+[11Jan2026 13:01:00.387] [modloading-worker-0/INFO] [mixin/]: Mixing client.AbstractContainerScreenMixin from lodestone.mixins.json into net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
+[11Jan2026 13:01:00.397] [modloading-worker-0/INFO] [mixin/]: Mixing client.MixinLevelRenderer from aaa_particles-common.mixins.json into net.minecraft.client.renderer.LevelRenderer
+[11Jan2026 13:01:00.428] [modloading-worker-0/INFO] [mixin/]: Mixing client.LevelRendererMixin from lodestone.mixins.json into net.minecraft.client.renderer.LevelRenderer
+[11Jan2026 13:01:00.471] [modloading-worker-0/WARN] [software.bernie.geckolib.GeckoLib/]: Minecraft.getInstance() was null, could not register reload listeners
+[11Jan2026 13:01:00.474] [modloading-worker-0/INFO] [mixin/]: Mixing client.GuiGraphicsMixin from lodestone.mixins.json into net.minecraft.client.gui.GuiGraphics
+[11Jan2026 13:01:00.485] [modloading-worker-0/INFO] [mod.chloeprime.aaaparticles.AAAParticles/]: Loading Effekseer native library at C:\Users\ahkin\sandbox\hellcraft\run-data\EffekseerNativeForJava.dll
+[11Jan2026 13:01:00.488] [modloading-worker-0/INFO] [mixin/]: Mixing client.CameraMixin from lodestone.mixins.json into net.minecraft.client.Camera
+[11Jan2026 13:01:00.528] [modloading-worker-0/INFO] [mixin/]: Mixing client.MixinGameRenderer from aaa_particles-common.mixins.json into net.minecraft.client.renderer.GameRenderer
+[11Jan2026 13:01:00.528] [modloading-worker-0/INFO] [mixin/]: Mixing client.GameRendererMixin from lodestone.mixins.json into net.minecraft.client.renderer.GameRenderer
+[11Jan2026 13:01:00.827] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/ahkin/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/assets/.mcassetsroot' uses unexpected schema
+[11Jan2026 13:01:00.829] [main/WARN] [net.minecraft.server.packs.VanillaPackResourcesBuilder/]: Assets URL 'union:/C:/Users/ahkin/.gradle/caches/forge_gradle/minecraft_user_repo/net/minecraftforge/forge/1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1/forge-1.20.1-47.4.1_mapped_parchment_2023.06.26-1.20.1-recomp.jar%23191!/data/.mcassetsroot' uses unexpected schema
+[11Jan2026 13:01:00.938] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Recipes
+[11Jan2026 13:01:00.940] [main/INFO] [net.minecraft.data.DataGenerator/]: Recipes finished after 2 ms
+[11Jan2026 13:01:00.941] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Loot Tables
+[11Jan2026 13:01:00.965] [main/INFO] [mixin/]: Mixing MixinLootDataManager from architectury.mixins.json into net.minecraft.world.level.storage.loot.LootDataManager
+[11Jan2026 13:01:00.981] [main/INFO] [net.minecraft.data.DataGenerator/]: Loot Tables finished after 39 ms
+[11Jan2026 13:01:00.981] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block Tags
+[11Jan2026 13:01:01.005] [main/INFO] [net.minecraft.data.DataGenerator/]: Block Tags finished after 24 ms
+[11Jan2026 13:01:01.005] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Tags for minecraft:fluid mod id helldivers
+[11Jan2026 13:01:01.010] [main/INFO] [net.minecraft.data.DataGenerator/]: Tags for minecraft:fluid mod id helldivers finished after 5 ms
+[11Jan2026 13:01:01.010] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Models: helldivers
+[11Jan2026 13:01:01.015] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Models: helldivers finished after 4 ms
+[11Jan2026 13:01:01.015] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Item Tags
+[11Jan2026 13:01:01.017] [main/INFO] [net.minecraft.data.DataGenerator/]: Item Tags finished after 0 ms
+[11Jan2026 13:01:01.017] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Block States: helldivers
+[11Jan2026 13:01:01.078] [main/INFO] [net.minecraft.data.DataGenerator/]: Block States: helldivers finished after 61 ms
+[11Jan2026 13:01:01.078] [main/INFO] [net.minecraft.data.DataGenerator/]: Starting provider: Datapack Entries
+[11Jan2026 13:01:01.099] [main/INFO] [net.minecraft.data.DataGenerator/]: Datapack Entries finished after 21 ms
+[11Jan2026 13:01:01.099] [main/INFO] [net.minecraft.data.DataGenerator/]: All providers took: 161 ms
+[11Jan2026 13:01:01.107] [main/INFO] [net.minecraft.data.HashCache/]: Caching: total files: 64, old count: 63, new count: 65, removed stale: 0, written: 1

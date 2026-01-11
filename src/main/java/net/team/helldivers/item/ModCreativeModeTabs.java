@@ -97,6 +97,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.EAGLE_500KG_BOMB.get());
                         output.accept(ModItems.CLUSTER_BOMB.get());
                         output.accept(ModItems.EAGLE_AIRSTRIKE.get());
+                        output.accept(ModItems.ROCKET_PODS.get());
                         output.accept(ModItems.NAPALM_AIRSTRIKE.get());
                     }).build());
 
