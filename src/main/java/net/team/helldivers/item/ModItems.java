@@ -1,8 +1,18 @@
 package net.team.helldivers.item;
 
 
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.RecordItem;
+import net.minecraft.world.level.Level;
 import net.team.helldivers.HelldiversMod;
 import net.team.helldivers.block.ModBlocks;
 import net.team.helldivers.item.custom.*;
@@ -22,6 +32,21 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, HelldiversMod.MOD_ID);
 
+    public static final RegistryObject<Item> STIMS = ITEMS.register("stim_injector",
+            () -> new Item(new Item.Properties().stacksTo(1).fireResistant()) {
+                @Override
+                public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
+                    pLevel.playSound(pPlayer, pPlayer.blockPosition(), SoundEvents.DYE_USE, SoundSource.PLAYERS);
+                    MobEffectInstance regen = new MobEffectInstance(MobEffects.REGENERATION, 80, 5);
+                    MobEffectInstance resistance = new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 80, 2);
+                    MobEffectInstance saturation = new MobEffectInstance(MobEffects.SATURATION, 80, 1);
+                    pPlayer.addEffect(regen);
+                    pPlayer.addEffect(resistance);
+                    pPlayer.addEffect(saturation);
+                    return InteractionResultHolder.consume(pPlayer.getMainHandItem());
+                }
+            });
+
     public static final RegistryObject<Item> TRAP_ROYALTY_MUSIC_DISC = ITEMS.register("trap_royalty_music_disc",
             () -> new RecordItem(6, ModSounds.TRAP_ROYALTY, new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 3300));
 
@@ -35,7 +60,28 @@ public class ModItems {
             () -> new Item(new Item.Properties().fireResistant()));
 
     public static final RegistryObject<Item> SUPPLIES = ITEMS.register("supplies",
-            () -> new Item(new Item.Properties().fireResistant()));
+            () -> new Item(new Item.Properties().fireResistant()) {
+                @Override
+                public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+                    player.getItemInHand(hand).shrink(1);
+                    if (!level.isClientSide) {
+                        ItemStack stack1 = new ItemStack(ModItems.STIMS.get(), 2);
+                        ItemStack stack2 = new ItemStack(ModBlocks.AMMO_CRATE.get(), 5);
+
+                        giveOrDrop(player, stack1);
+                        giveOrDrop(player, stack2);
+                    }
+                    return InteractionResultHolder.sidedSuccess(player.getItemInHand(hand), level.isClientSide);
+                }
+
+                private void giveOrDrop(Player player, ItemStack stack) {
+                    boolean added = player.getInventory().add(stack);
+
+                    if (!added || !stack.isEmpty()) {
+                        player.drop(stack, false);
+                    }
+                }
+            });
 
     public static final RegistryObject<Item> AR23 = ITEMS.register("ar23",
             () -> new Ar23Item(new Item.Properties().stacksTo(1).fireResistant()));
