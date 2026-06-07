@@ -318,7 +318,7 @@ public class StratagemOrbEntity extends AbstractArrow {
             if (strongest == null) {
                 for (LivingEntity nearbyEntity : nearbyEntities) {
                     if (nearbyEntity.getAttribute(Attributes.MAX_HEALTH) == null) continue;
-                    if (nearbyEntity instanceof Player) continue;
+                    if (nearbyEntity instanceof Player) break;
                     if  (!(nearbyEntity instanceof Mob) || !(nearbyEntity instanceof Enemy)) continue;
 
                     double maxHealth = nearbyEntity.getAttributeValue(Attributes.MAX_HEALTH);
